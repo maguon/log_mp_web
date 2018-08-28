@@ -4,7 +4,8 @@
 
 ## intall
    npm install
-
+   
 ## start
 
+   webpack --watch
    npm start

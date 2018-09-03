@@ -1,9 +1,8 @@
 *.log
 config/config.js
+config/SystemConfig.js
 conf.json
-web/js/host/host_config.js
-web/download/host.js
-public/apidocs/json/index.json
+public/docs/json/index.json
 .idea/*
 uploads/*
 node_modules

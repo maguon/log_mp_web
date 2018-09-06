@@ -1,38 +1,49 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+import {Enquiry} from '../main/index';
+
 const localUtil = require('../../util/LocalUtil');
-const httpHeaders = require( '../../util/HttpHeaders');
+const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
+const enquiryAction = require('../../actions/main/EnquiryAction');
 const sysConst = require('../../util/SysConst');
 
-
-
+/**
+ * UI组件：主画面头部。
+ */
 class Header extends React.Component {
 
+    /**
+     * 组件准备要挂载的最一开始，调用执行
+     * @param props
+     */
     constructor(props) {
         super(props);
-
     }
-    componentDidMount(){
 
-
-        const { getUserDetail} = this.props;
+    /**
+     * 组件完全挂载到页面上，调用执行
+     */
+    componentDidMount() {
+        const {getUserDetail} = this.props;
         let userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
-        httpHeaders.set(sysConst.AUTH_TOKEN,token);
+        httpHeaders.set(sysConst.AUTH_TOKEN, token);
         $('.sidenav').sidenav();
         $('.collapsible').collapsible();
         if (userId == null || token == null) {
-            window.location.href ='/login.html';
-        }else{
+            window.location.href = '/login.html';
+        } else {
             getUserDetail(userId);
         }
-
     }
-    render() {
-        const {headerReducer,logout} = this.props;
-        console.log(this.props);
 
+    /**
+     * 渲染(挂载)画面。
+     */
+    render() {
+        //
+        const {headerReducer, enquiry, logout} = this.props;
         return (
             <div>
                 <nav>
@@ -43,12 +54,10 @@ class Header extends React.Component {
                             <i className="mdi mdi-menu mdi-36px"></i>
                         </a>
 
-
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
-
                             <li>
                                 <a className="right-align">
-                                    <i className="mdi mdi-bell mdi-36px"></i>
+                                    <i className="mdi mdi-home-currency-usd mdi-36px" onClick={enquiry}></i>
                                 </a>
                             </li>
                             <li>
@@ -62,25 +71,30 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </nav>
+                <Enquiry/>
             </div>
         )
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         headerReducer: state.HeaderReducer
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
 
     getUserDetail: (userId) => {
-        dispatch(headerAction.getUserDetail({userId:userId}))
+        dispatch(headerAction.getUserDetail({userId: userId}))
     },
-    logout : ()=>{
+    enquiry: () => {
+        dispatch(enquiryAction.openModal())
+    },
+    logout: () => {
         dispatch(headerAction.logout())
     }
 
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

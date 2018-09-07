@@ -1,10 +1,80 @@
 import React from 'react';
 
 import { connect } from 'react-redux'
-import {reduxForm} from "redux-form";
+import {Field,reduxForm} from "redux-form";
 import ReactModal from 'react-modal';
+import Select from 'react-select';
+
+
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
+
+const renderField = ({
+                         input,
+                         label,
+                         type,
+                         meta: { touched, error},
+                         id,
+                         icon
+                     }) => {
+
+    const labelClass ="validate " + (touched &&error?'invalid':'');
+    return (
+        <div className="input-field col s12">
+            <i class={icon}></i>
+            <input id={id} {...input} type={type} className={labelClass} required/>
+            <label for={id}>{label}</label>
+            {( touched &&(error && <span className="helper-text" data-error={error}></span>))}
+        </div>
+    )
+}
+
+const customStyles = {
+    option: (base, state) => ({
+        ...base,
+        borderBottom: '1px dotted pink',
+        padding: 20,
+    }),
+    control: () => ({
+        // none of react-selects styles are passed to <View />
+        width: 200,
+    }),
+    singleValue: (base, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = 'opacity 300ms';
+
+        return { ...base, opacity, transition };
+    }
+}
+
+const singleStyles = {
+    control: styles => ({
+        ...styles,
+        height:'46px',
+        borderRadius:"0",
+        borderTop: "0",
+        borderLeft: "0",
+        borderRight: "0"
+    }),
+    indicatorSeparator: styles => ({ ...styles, display: 'none' }),
+    valueContainer: styles => ({ ...styles, paddingLeft:'0' })
+}
+
+const MySelect= props=>{
+    console.log('props455555',props);
+    const {options,input:{onChange},value, defaultValue,styleMode,searchable,placeholder} =props;
+    return(
+        <Select
+            options={options}
+            onChange={onChange}
+            value={value}
+            defaultValue={defaultValue}
+            styles={styleMode}
+            isSearchable={searchable}
+            // placeholder={placeholder}
+        />
+    )
+}
 
 /**
  * UI组件：询价模块。
@@ -17,11 +87,46 @@ class Enquiry extends React.Component {
     constructor() {
         super();
         this.afterOpenModal = this.afterOpenModal.bind(this);
+
+        this.state = {
+            selectedStartCity: {value: '', label: '始发城市' }
+        }
+
     }
+
+
 
     afterOpenModal() {
         // references are now sync'd and can be accessed.
         // this.subtitle.style.color = '#f00';
+    }
+
+
+
+    changeStartCity;
+
+    handleChange = (selectedStartCity) => {
+        console.log(`Option selected:`, selectedStartCity);
+        this.setState({ selectedStartCity });
+    }
+
+    // handleChange = e => {
+    //     this.setState({
+    //         value: e.target.value
+    //     })
+    // }
+
+    /**
+     * 组件完全挂载到页面上，调用执行
+     */
+    componentDidMount() {
+        // 模拟ajax调用，成功之后把需要改变的默认值赋值给this.state.value
+        // setTimeout(() => {
+        //     this.setState({
+        //         projects: [{ id: 1, name: '花生' }, { id: 2, name: '苹果' }, { id: 3, name: '杨桃' }],
+        //         value: 1
+        //     })
+        // }, 1000)
     }
 
     /**
@@ -32,7 +137,9 @@ class Enquiry extends React.Component {
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
 
-        const {enquiryReducer,closeModal} = this.props;
+        const {enquiryReducer,closeModal, handleSubmit, changeStartCity, enquiry, handleChange, selectedStartCity} = this.props;
+
+// console.log('formReducer',this.props.formReducer)
         return (
             <div>
                 <ReactModal
@@ -43,26 +150,64 @@ class Enquiry extends React.Component {
                     // overlayClassName="Overlay"
                     contentLabel="Example Modal"
                 >
+                    <form onSubmit={handleSubmit(enquiry)}>
 
-                    <div className="modal-title center-align white-text">询&nbsp;价</div>
-                    {/*<h2 ref={subtitle => this.subtitle = subtitle}>Hello</h2>*/}
+                        <div className="modal-title center-align white-text">询&nbsp;价</div>
 
-                    <div className="modal-content">
-                        I am a modal
-                        <form>
-                            <button>tab navigation</button>
-                            <button>stays</button>
-                            <button>inside</button>
+                        <div className="modal-content row">
+                            <div className="input-field col s6">
+                                <div className="input-field col s12">
+                                <Field name="startCity" component={MySelect} defaultValue={enquiryReducer.defaultStartCity} value={enquiryReducer.startCity}
+                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.cityList}/>
+                                </div>
+                            </div>
+                            <div className="input-field col s4">
+                                <div className="input-field col s12">
+                                <Field name="endCity" component={MySelect} defaultValue={enquiryReducer.defaultEndCity} value={enquiryReducer.endCity}
+                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.cityList}/>
+                                </div>
+                            </div>
+                            <div className="input-field col s2 right-align temp">
+                                <div className="input-field col s12">
+                                    <span>{enquiryReducer.mileage}</span>公里
+                                </div>
+                            </div>
 
+                            <div className="input-field col s6">
+                                <div className="input-field col s12">
+                                <Field name="serviceMode" component={MySelect} defaultValue={enquiryReducer.defaultServiceMode} value={enquiryReducer.serviceMode}
+                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.serviceModeList}/>
+                                </div>
+                            </div>
+                            <div className="input-field col s6">
+                                <div className="input-field col s12">
+                                    <Field name="carModel" component={MySelect} defaultValue={enquiryReducer.defaultCarModel} value={enquiryReducer.carModel}
+                                           searchable={false} styleMode={singleStyles} options={enquiryReducer.carModelList}/>
+                                </div>
+                            </div>
 
-                        </form>
-                    </div>
+                            <div className="input-field col s6">
+                                <div className="input-field col s12">
+                                    <Field name="carFlag" component={MySelect} defaultValue={enquiryReducer.defaultCarFlag} value={enquiryReducer.carFlag}
+                                           searchable={false} styleMode={singleStyles} options={enquiryReducer.carFlagList}/>
+                                </div>
+                            </div>
+                            <div className="input-field col s6">
+                                <Field label="估值" name="valuation" type="text" component={renderField}/>
+                            </div>
 
+                            <div className="input-field col s12 right-align temp">
+                                <div className="input-field col s12">
+                                    预计运费：<span>{enquiryReducer.mileage}</span>元
+                                </div>
+                            </div>
+                        </div>
 
-                    <div className="modal-footer">
-                        <a onClick={closeModal} className="btn confirm-btn">确定</a>
-                        <a onClick={closeModal} className="btn close-btn">关闭</a>
-                    </div>
+                        <div className="modal-footer">
+                            <button className="btn confirm-btn" type="submit" onClick={handleSubmit}>确定</button>
+                            <button className="btn close-btn" onClick={closeModal}>关闭</button>
+                        </div>
+                    </form>
                 </ReactModal>
             </div>
         );
@@ -75,7 +220,6 @@ class Enquiry extends React.Component {
  * @returns {{initialValues}} 初期数据
  */
 const mapStateToProps = (state) => {
-    console.log('Enquiry mapStateToProps');
     return {
         enquiryReducer: state.EnquiryReducer
     }
@@ -88,8 +232,6 @@ const mapStateToProps = (state) => {
  */
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => {
-        // console.log(values)
-        // console.log(dispatch)
         dispatch(enquiryAction.closeModal())
     }
 });
@@ -105,6 +247,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             // 可选参数 onSubmit : Function [optional[ : 表单提交配置，可以配置需要提交哪些参数，还有提交时触发的 dispatch等
             // 验证
             // validate
+            onSubmit:(values, dispatch,props)=>{
+                console.log(typeof(values.startCity) === "undefined")
+                if (typeof(values.startCity) == "undefined" || values.endCity.value === "" || values.serviceMode.value === ""
+                    || values.carModel.value === "" || values.carFlag.value === "" || values.valuation === "") {
+
+
+                }
+                console.log('values is : ',values)
+
+            }
         }
     )(Enquiry)
 );

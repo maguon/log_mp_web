@@ -1,3 +1,4 @@
+/** 项目整体 */
 html{
     position: relative;
     height: 100%;
@@ -10,7 +11,47 @@ body{
     /*background: #f1f5f5;*/
     overflow-x: auto;
     overflow-y: hidden;
+    font-size: 15px;
 }
+
+/** material样式 变更部分 */
+.input-field {
+    margin-bottom: 0;
+}
+
+/*.input-field .prefix.active {*/
+    /*color: #4e84cb;*/
+/*}*/
+/*.input-field label {*/
+    /*color: #000;*/
+/*}*/
+/*.input-field input[type=text]:focus + label {*/
+    /*color: #4e84cb;*/
+/*}*/
+/*.input-field input[type=password]:focus + label {*/
+    /*color: #4e84cb;*/
+/*}*/
+/*.input-field input[type=text]:focus  {*/
+    /*color: #4e84cb;*/
+    /*border-bottom: 1px solid #4e84cb;*/
+    /*box-shadow: 0 1px 0 0 #4e84cb;*/
+/*}*/
+/*.input-field input[type=password]:focus  {*/
+    /*color: #4e84cb;*/
+    /*border-bottom: 1px solid #4e84cb;*/
+    /*box-shadow: 0 1px 0 0 #4e84cb;*/
+/*}*/
+/*.input-field input[type=text]:focus  {*/
+    /*color: #4e84cb;*/
+    /*border-bottom: 1px solid #4e84cb;*/
+    /*box-shadow: 0 1px 0 0 #4e84cb;*/
+/*}*/
+
+
+
+
+
+
 /** 画面加载样式 */
 .c-loader-wrapper {
     display: none;
@@ -44,19 +85,25 @@ body{
 
 /** react-modal 样式定义部分 start */
 .Modal {
-    position: absolute;
+    position: fixed;
     top: 40%;
     left: 50%;
     right: auto;
     bottom: auto;
-    /*marginRight: -50%;*/
     transform: translate(-50%, -50%);
-    /*padding :0;*/
-    min-height: 30%;
+
+    background-color: #fafafa;
+    padding: 0;
+    min-height: 50%;
     max-height: 70%;
-    width: 55%;
     min-width: 900px;
+    width: 55%;
+    margin: auto;
     overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+
+
     /*border:1px solid #f1f5f5;*/
 
     /*display: none;*/
@@ -111,6 +158,13 @@ body{
     background-color: #724278;
 }
 
+/** 下面是要删除的 */
 .temp {
-    border: 1px solid #ff0000;
+    font-size: 15px;
+    display: block;
+    border:1px solid #ff0000;
+}
+
+.ttt {
+    border:1px solid #ff0000;
 }

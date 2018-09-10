@@ -1,10 +1,9 @@
 import React from 'react';
 
-import { connect } from 'react-redux'
-import {Field,reduxForm} from "redux-form";
+import {connect} from 'react-redux'
+import {Field, reduxForm} from "redux-form";
 import ReactModal from 'react-modal';
 import Select from 'react-select';
-
 
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
@@ -13,68 +12,67 @@ const renderField = ({
                          input,
                          label,
                          type,
-                         meta: { touched, error},
+                         meta: {touched, error},
                          id,
-                         icon
                      }) => {
 
-    const labelClass ="validate " + (touched &&error?'invalid':'');
+    const labelClass = "validate " + (touched && error ? 'invalid' : '');
+    console.log(input)
+    const {value} = input.value;
     return (
         <div className="input-field col s12">
-            <i class={icon}></i>
-            <input id={id} {...input} type={type} className={labelClass} required/>
+            <input id={id} type={type} value={value} className={labelClass} required/>
             <label for={id}>{label}</label>
-            {( touched &&(error && <span className="helper-text" data-error={error}></span>))}
+            {(touched && (error && <span className="helper-text" data-error={error}></span>))}
         </div>
     )
 }
 
-const customStyles = {
-    option: (base, state) => ({
-        ...base,
-        borderBottom: '1px dotted pink',
-        padding: 20,
-    }),
-    control: () => ({
-        // none of react-selects styles are passed to <View />
-        width: 200,
-    }),
-    singleValue: (base, state) => {
-        const opacity = state.isDisabled ? 0.5 : 1;
-        const transition = 'opacity 300ms';
+const MySelect = props => {
+    const {options, input: {onChange}, defaultValue, styleMode, searchable} = props;
+    return (
+        <Select
+            options={options}
+            onChange={onChange}
+            defaultValue={defaultValue}
+            styles={styleMode}
+            isSearchable={searchable}
+        />
+    )
+};
 
-        return { ...base, opacity, transition };
-    }
-}
+// const customStyles = {
+//     option: (base, state) => ({
+//         ...base,
+//         borderBottom: '1px dotted pink',
+//         padding: 20,
+//     }),
+//     control: () => ({
+//         // none of react-selects styles are passed to <View />
+//         width: 200,
+//     }),
+//     singleValue: (base, state) => {
+//         const opacity = state.isDisabled ? 0.5 : 1;
+//         const transition = 'opacity 300ms';
+//
+//         return {...base, opacity, transition};
+//     }
+// }
 
 const singleStyles = {
     control: styles => ({
         ...styles,
-        height:'46px',
-        borderRadius:"0",
+        height: '47px',
+        borderRadius: "0",
         borderTop: "0",
         borderLeft: "0",
         borderRight: "0"
     }),
-    indicatorSeparator: styles => ({ ...styles, display: 'none' }),
-    valueContainer: styles => ({ ...styles, paddingLeft:'0' })
-}
+    indicatorSeparator: styles => ({...styles, display: 'none'}),
+    valueContainer: styles => ({...styles, paddingLeft: '0'})
+};
 
-const MySelect= props=>{
-    console.log('props455555',props);
-    const {options,input:{onChange},value, defaultValue,styleMode,searchable,placeholder} =props;
-    return(
-        <Select
-            options={options}
-            onChange={onChange}
-            value={value}
-            defaultValue={defaultValue}
-            styles={styleMode}
-            isSearchable={searchable}
-            // placeholder={placeholder}
-        />
-    )
-}
+
 
 /**
  * UI组件：询价模块。
@@ -87,13 +85,7 @@ class Enquiry extends React.Component {
     constructor() {
         super();
         this.afterOpenModal = this.afterOpenModal.bind(this);
-
-        this.state = {
-            selectedStartCity: {value: '', label: '始发城市' }
-        }
-
     }
-
 
 
     afterOpenModal() {
@@ -102,12 +94,11 @@ class Enquiry extends React.Component {
     }
 
 
-
     changeStartCity;
 
     handleChange = (selectedStartCity) => {
         console.log(`Option selected:`, selectedStartCity);
-        this.setState({ selectedStartCity });
+        this.setState({selectedStartCity});
     }
 
     // handleChange = e => {
@@ -137,7 +128,7 @@ class Enquiry extends React.Component {
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
 
-        const {enquiryReducer,closeModal, handleSubmit, changeStartCity, enquiry, handleChange, selectedStartCity} = this.props;
+        const {enquiryReducer, closeModal, handleSubmit, changeStartCity, enquiry, handleChange, selectedStartCity} = this.props;
 
 // console.log('formReducer',this.props.formReducer)
         return (
@@ -150,24 +141,38 @@ class Enquiry extends React.Component {
                     // overlayClassName="Overlay"
                     contentLabel="Example Modal"
                 >
-                    <form onSubmit={handleSubmit(enquiry)}>
+                    <form>
 
                         <div className="modal-title center-align white-text">询&nbsp;价</div>
 
                         <div className="modal-content row">
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                <Field name="startCity" component={MySelect} defaultValue={enquiryReducer.defaultStartCity} value={enquiryReducer.startCity}
-                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.cityList}/>
+                                    <Field name="startCity" component={MySelect}
+                                           props={{
+                                               value:enquiryReducer.startCity,
+                                               defaultValue: enquiryReducer.defaultStartCity,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.cityList
+                                           }}
+                                    />
                                 </div>
                             </div>
                             <div className="input-field col s4">
                                 <div className="input-field col s12">
-                                <Field name="endCity" component={MySelect} defaultValue={enquiryReducer.defaultEndCity} value={enquiryReducer.endCity}
-                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.cityList}/>
+                                    <Field name="endCity" component={MySelect}
+                                           props={{
+                                               value:enquiryReducer.endCity,
+                                               defaultValue: enquiryReducer.defaultEndCity,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.cityList
+                                           }}
+                                    />
                                 </div>
                             </div>
-                            <div className="input-field col s2 right-align temp">
+                            <div className="input-field col s2 right-align">
                                 <div className="input-field col s12">
                                     <span>{enquiryReducer.mileage}</span>公里
                                 </div>
@@ -175,30 +180,52 @@ class Enquiry extends React.Component {
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                <Field name="serviceMode" component={MySelect} defaultValue={enquiryReducer.defaultServiceMode} value={enquiryReducer.serviceMode}
-                                       searchable={false} styleMode={singleStyles} options={enquiryReducer.serviceModeList}/>
+                                    <Field name="serviceMode" component={MySelect}
+                                           props={{
+                                               value: enquiryReducer.serviceMode,
+                                               defaultValue: enquiryReducer.defaultServiceMode,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.serviceModeList
+                                           }}
+                                    />
+
                                 </div>
                             </div>
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                    <Field name="carModel" component={MySelect} defaultValue={enquiryReducer.defaultCarModel} value={enquiryReducer.carModel}
-                                           searchable={false} styleMode={singleStyles} options={enquiryReducer.carModelList}/>
+                                    <Field name="carModel" component={MySelect}
+                                           props={{
+                                               value: enquiryReducer.carModel,
+                                               defaultValue: enquiryReducer.defaultCarModel,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.carModelList
+                                           }}
+                                    />
                                 </div>
                             </div>
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                    <Field name="carFlag" component={MySelect} defaultValue={enquiryReducer.defaultCarFlag} value={enquiryReducer.carFlag}
-                                           searchable={false} styleMode={singleStyles} options={enquiryReducer.carFlagList}/>
+                                    <Field name="carFlag" component={MySelect}
+                                           props={{
+                                               value: enquiryReducer.carFlag,
+                                               defaultValue: enquiryReducer.defaultCarFlag,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.carFlagList
+                                           }}
+                                    />
                                 </div>
                             </div>
                             <div className="input-field col s6">
-                                <Field label="估值" name="valuation" type="text" component={renderField}/>
+                                <Field label="估值" name="valuation" id="valuation" type="text" component={renderField}/>
                             </div>
 
-                            <div className="input-field col s12 right-align temp">
+                            <div className="input-field col s12 right-align">
                                 <div className="input-field col s12">
-                                    预计运费：<span>{enquiryReducer.mileage}</span>元
+                                    预计运费：<span>{enquiryReducer.freight}</span>元
                                 </div>
                             </div>
                         </div>
@@ -245,18 +272,24 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             form: 'loginForm',
             // 可选参数 onChange : Function [optional] : 表单触发 onChange 事件后的回调。
             // 可选参数 onSubmit : Function [optional[ : 表单提交配置，可以配置需要提交哪些参数，还有提交时触发的 dispatch等
+            onSubmit: (values, dispatch, props) => {
+                console.log("reduxForm onSubmit inner");
+                console.log('values is : ', values)
+
+                if (typeof(values.startCity) === "undefined" || typeof(values.endCity) === "undefined" === ""
+                    || typeof(values.serviceMode) === "undefined" === "" || typeof(values.carModel) === "undefined" === ""
+                    || typeof(values.carFlag) === "undefined" === "" || typeof(values.valuation) === "undefined" === "") {
+
+                    console.log('--------------------------------has error--------------------------------');
+
+                } else {
+                    console.log('calculation success');
+                    dispatch(enquiryAction.calculateFreight(100));
+                }
+            }
             // 验证
             // validate
-            onSubmit:(values, dispatch,props)=>{
-                console.log(typeof(values.startCity) === "undefined")
-                if (typeof(values.startCity) == "undefined" || values.endCity.value === "" || values.serviceMode.value === ""
-                    || values.carModel.value === "" || values.carFlag.value === "" || values.valuation === "") {
 
-
-                }
-                console.log('values is : ',values)
-
-            }
         }
     )(Enquiry)
 );

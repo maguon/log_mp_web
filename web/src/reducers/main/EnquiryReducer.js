@@ -11,6 +11,13 @@ const initialState = {
         { value: '100', label: '大连' },
         { value: '101', label: '北京' },
         { value: '102', label: '上海' }],
+    // 服务方式列表
+    serviceModeList: ConstConfig.SERVICE_MODE,
+    // 车型列表
+    carModelList: ConstConfig.CAR_MODEL,
+    // 是否新车列表
+    carFlagList: ConstConfig.YES_NO,
+
     // 始发城市
     startCity: { value: '', label: '' },
     defaultStartCity: { value: '', label: '始发城市' },
@@ -19,24 +26,24 @@ const initialState = {
     defaultEndCity: { value: '', label: '终到城市' },
     // 里程
     mileage : 0,
-    // 服务方式列表
-    serviceModeList: ConstConfig.SERVICE_MODE,
+
     // 服务方式
     serviceMode: { value: '', label: '' },
     defaultServiceMode: { value: '', label: '服务方式' },
-    // 车型列表
-    carModelList: ConstConfig.CAR_MODEL,
+
     // 车型
     carModel: { value: '', label: '' },
     defaultCarModel: { value: '', label: '车型' },
 
-    // 是否新车列表
-    carFlagList: ConstConfig.YES_NO,
     // 是否新车
     carFlag: { value: '', label: '' },
     defaultCarFlag: { value: '', label: '是否新车' },
 
-    xxxxx : {}
+    // 估值
+    valuation : '',
+
+    // 预计运费
+    freight : 0.00
 };
 
 export default handleActions(
@@ -46,6 +53,13 @@ export default handleActions(
             return {
                 ...state,
                 modalIsOpen: action.payload
+            }
+        },
+        [EnquiryActionType.enquiryFreight]: (state, action) => {
+            console.log('EnquiryReducer enquiryFreight inner');
+            return {
+                ...state,
+                freight: action.payload
             }
         }
     }, initialState)

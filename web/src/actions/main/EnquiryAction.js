@@ -1,5 +1,4 @@
 import {EnquiryActionType} from "../../actionTypes";
-
 // export const enquiry = () => async (dispatch) => {
 //     try {
 //
@@ -24,4 +23,10 @@ export const openModal = () => async (dispatch) => {
 export const closeModal = () => async (dispatch) => {
     console.log('enquiry close');
     dispatch({type: EnquiryActionType.enquiryModal, payload: false})
+};
+
+export const calculateFreight = (value) => async (dispatch) => {
+    console.log('enquiry calculateFreight dispatch ');
+    console.log(value);
+    dispatch({type: EnquiryActionType.enquiryFreight, payload: value})
 };

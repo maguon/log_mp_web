@@ -1,4 +1,5 @@
 import {EnquiryActionType} from "../../actionTypes";
+// import { reset } from'redux-form'
 // export const enquiry = () => async (dispatch) => {
 //     try {
 //
@@ -23,6 +24,7 @@ export const openModal = () => async (dispatch) => {
 export const closeModal = () => async (dispatch) => {
     console.log('enquiry close');
     dispatch({type: EnquiryActionType.enquiryModal, payload: false})
+     // dispatch(reset('enquiryForm'))
 };
 
 export const calculateFreight = (value) => async (dispatch) => {

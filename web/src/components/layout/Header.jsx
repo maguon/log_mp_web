@@ -43,7 +43,7 @@ class Header extends React.Component {
      */
     render() {
         //
-        const {headerReducer, enquiry, logout} = this.props;
+        const {headerReducer,enquiryReducer, enquiry, logout} = this.props;
         return (
             <div>
                 <nav>
@@ -71,7 +71,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </nav>
-                <Enquiry/>
+                {enquiryReducer.modalIsOpen && <Enquiry/>}
             </div>
         )
     }
@@ -79,7 +79,8 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        headerReducer: state.HeaderReducer
+        headerReducer: state.HeaderReducer,
+        enquiryReducer: state.EnquiryReducer
     }
 };
 

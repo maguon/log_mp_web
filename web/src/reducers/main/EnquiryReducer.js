@@ -19,7 +19,7 @@ const initialState = {
     carFlagList: ConstConfig.YES_NO,
 
     // 始发城市
-    startCity: { value: '', label: '' },
+    startCity: '',
     defaultStartCity: { value: '', label: '始发城市' },
     // 终到城市
     endCity: { value: '', label: '' },
@@ -49,14 +49,12 @@ const initialState = {
 export default handleActions(
     {
         [EnquiryActionType.enquiryModal]: (state, action) => {
-            console.log('EnquiryReducer inner');
             return {
                 ...state,
                 modalIsOpen: action.payload
             }
         },
         [EnquiryActionType.enquiryFreight]: (state, action) => {
-            console.log('EnquiryReducer enquiryFreight inner');
             return {
                 ...state,
                 freight: action.payload

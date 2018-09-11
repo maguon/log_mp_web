@@ -31,6 +31,7 @@ class Header extends React.Component {
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
         $('.sidenav').sidenav();
         $('.collapsible').collapsible();
+        $('select').formSelect();
         if (userId == null || token == null) {
             window.location.href = '/login.html';
         } else {
@@ -71,7 +72,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </nav>
-                {enquiryReducer.modalIsOpen && <Enquiry/>}
+                <Enquiry/>
             </div>
         )
     }

@@ -7,27 +7,30 @@ import Select from 'react-select';
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
 
-// const vvv = msg => value => (!value && value != 0 && value != '') ? msg : undefined
-// const vn = vvv('不能为空！')
+const vvv = msg => value => (!value && value != 0 && value != '') ? msg : undefined;
+const vn = vvv('不能为空！!!!!');
+
+const hasSelect = msg => value => (value === '') ? msg : undefined;
+const vn2 = hasSelect('error!!!!!!');
 
 const validate = (values) => {
     const errors = {};
     const requiredFields = [
         'startCity',
+        'endCity',
+        'serviceMode',
+        'carModel',
+        'carFlag'
     ];
     const requiredTexts = [
         'valuation'
     ];
-    // requiredFields.forEach(field => {
-    //     console.log('selected value')
-    //     console.log(values[field]);
-    //     if (!values[field]) {
-    //         errors[field] = '必填'
-    //     }
-    // });
+    requiredFields.forEach(field => {
+        if (!values[field]) {
+            errors[field] = '必填'
+        }
+    });
     requiredTexts.forEach(field => {
-        console.log('text')
-        console.log(values[field]);
         if (!values[field]) {
             errors[field] = '必填'
         }
@@ -44,77 +47,82 @@ const renderField = ({
                      }) => {
 
     const labelClass = "validate " + (touched && error ? 'invalid' : '');
-    const {value} = input.value;
+    // const {value} = input.value;
+
+    // console.log('touched', touched)
+    // console.log('error', error)
     return (
         <div className="input-field col s12">
-            <input id={id} {...input} type={type} value={value} className={labelClass} required/>
+            <input id={id} {...input} type={type} className={labelClass}/>
             <label for={id}>{label}</label>
-            {(touched && (error && <span className="helper-text" data-error={error}></span>))}
+            {((error && <span className="helper-text" data-error={error}></span>))}
         </div>
     )
 };
 
 // const MySelect = ({
 //                       input,
-//                       label,
-//                       type,
 //                       meta: {touched, error},
 //                       id,
 //                       sets
 //                   }) => {
-//     // const {value} = input.value;
-//     console.log(props);
+//     const {value} = input.value;
+//     console.log('sets',sets);
+//     const {onChange} = input.onChange;
 //
-//     const {options, input: {onChange}, defaultValue, styleMode, searchable} = props;
+//     const {options, defaultValue, searchable} = sets;
 //     return (
-//         (error && <div className="temp">)
-//             <Select
+//             <Select {...input}
 //                 options={options}
-//                 onChange={onChange}
+//                 value={value}
 //                 defaultValue={defaultValue}
-//                 styles={styleMode}
+//                 styles={touched && error ? singleErrStyles : singleStyles}
 //                 isSearchable={searchable}
 //             />
-//         (error && </div>)
 //     )
 // };
 
 const MySelect = props => {
-    const {options, input: {onChange}, defaultValue, styleMode, searchable} = props;
+
+    const {options, input: {onChange}, defaultValue, hasError, searchable, validate} = props;
+    // console.log('validate is : ', validate);
+    // console.log(props);
+
     return (
-            <Select
-                options={options}
-                onChange={onChange}
-                defaultValue={defaultValue}
-                styles={styleMode}
-                isSearchable={searchable}
-            />
+        <Select
+            options={options}
+            onChange={onChange}
+            defaultValue={defaultValue}
+            styles={typeof(validate) === "undefined" ? singleStyles : singleErrStyles}
+            isSearchable={searchable}
+        />
     )
 };
 
 
-// const selectField = ({
-//                          input,
-//                          label,
-//                          selects,
-//                          meta: { touched, error, warning }
-//                      }) => (
-//     <div className={touched && error ? 'has-error form-group':'form-group'}>
-//         <div className="input-group">
-//             <span className="input-group-addon">{label}</span>
-//             <select {...input} className="form-control">
-//                 {
-//                     selects.map((item, i) => (
-//                         <option key={i} value={item.value}>{item.text}</option>
-//                     ))
-//                 }
-//             </select>
-//         </div>
-//         {touched &&
-//         ((error && <div className="help-block with-errors">{error}</div>) ||
-//             (warning && <div className="help-block with-errors">{warning}</div>))}
-//     </div>
-// )
+const selectField = ({
+                         input,
+                         label,
+                         selects,
+                         meta: {touched, error, warning}
+                     }) => {
+    // console.log('input.value',input)
+    return (
+        <div className={touched && error ? 'temp' : ''}>
+            <div className="input-field col s12">
+                <select {...input}>
+                    <option value="" disabled>{label}</option>
+                    {
+                        selects.map((item, i) => (
+                            <option value={item.value}>{item.label}</option>
+                        ))
+                    }
+                </select>
+            </div>
+            {((touched && error && <span className="helper-text" data-error={error}></span>))}
+        </div>
+    )
+};
 
 const singleStyles = {
     control: styles => ({
@@ -124,6 +132,20 @@ const singleStyles = {
         borderTop: "0",
         borderLeft: "0",
         borderRight: "0"
+    }),
+    indicatorSeparator: styles => ({...styles, display: 'none'}),
+    valueContainer: styles => ({...styles, paddingLeft: '0'})
+};
+
+const singleErrStyles = {
+    control: styles => ({
+        ...styles,
+        height: '47px',
+        borderRadius: "0",
+        borderTop: "0",
+        borderLeft: "0",
+        borderRight: "0",
+        borderBottom: '2px solid #ff0000'
     }),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     valueContainer: styles => ({...styles, paddingLeft: '0'})
@@ -140,14 +162,13 @@ class Enquiry extends React.Component {
      */
     constructor() {
         super();
-        // this.afterOpenModal = this.afterOpenModal.bind(this);
+        console.log('Enquiry constructor')
     }
 
 
-    // afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.subtitle.style.color = '#f00';
-    // }
+    hiddenModal() {
+        this.props.closeModal();
+    }
 
     // handleChange = e => {
     //     this.setState({
@@ -159,6 +180,11 @@ class Enquiry extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
+        console.log('componentDidMount');
+
+        // console.log('componentDidMount start..................')
+        // $('select').formSelect();
+        // console.log('componentDidMount end..................')
         // 模拟ajax调用，成功之后把需要改变的默认值赋值给this.state.value
         // setTimeout(() => {
         //     this.setState({
@@ -166,11 +192,14 @@ class Enquiry extends React.Component {
         //         value: 1
         //     })
         // }, 1000)
+
+        $('select').formSelect();
     }
 
-    // componentWillUnmount() {
-    //     this.props.clearForm()
-    // }
+    componentWillUnmount() {
+        console.log('componentWillUnmount');
+        // this.props.clearForm()
+    }
 
     /**
      * 渲染(挂载)画面。
@@ -180,46 +209,38 @@ class Enquiry extends React.Component {
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
 
-        const {enquiryReducer, closeModal, handleSubmit, enquiry, selectedStartCity} = this.props;
+        const {enquiryReducer, handleSubmit, closeModal} = this.props;
 
         return (
             <div>
-                <ReactModal
-                    isOpen={true}
-                    // onAfterOpen={this.afterOpenModal}
-                    onRequestClose={closeModal}
-                    className="Modal z-depth-3"
-                    // overlayClassName="Overlay"
-                    contentLabel="Example Modal"
-                >
-                    <form>
+                <div id="enquiryDiv" className="modal modal-fixed-footer row">
 
-                        <div className="modal-title center-align white-text">询&nbsp;价</div>
+                        <div className="modal-title center-align white-text">新增金融车</div>
 
-                        <div className="modal-content row">
+                        <div className="modal-content">
+                            <form>
                             <div className="input-field col s6">
-                                <div className="input-field col s12">
-                                    <Field id="startCity" name="startCity" component={MySelect}
-                                           props={{
-                                               value: enquiryReducer.startCity,
-                                               defaultValue: enquiryReducer.defaultStartCity,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.cityList
-                                           }}/>
-                                </div>
+                                    <Field name="startCity" component={selectField} selects={enquiryReducer.cityList} label="始发城市"/>
+
+                                    {/*<Field id="startCity" name="startCity" component={MySelect}*/}
+                                           {/*props={{*/}
+                                               {/*value: enquiryReducer.startCity,*/}
+                                               {/*defaultValue: enquiryReducer.defaultStartCity,*/}
+                                               {/*searchable: false,*/}
+                                               {/*styleMode: singleStyles,*/}
+                                               {/*options: enquiryReducer.cityList*/}
+                                           {/*}}/>*/}
                             </div>
                             <div className="input-field col s4">
-                                <div className="input-field col s12">
-                                    <Field name="endCity" component={MySelect}
-                                           props={{
-                                               value: enquiryReducer.endCity,
-                                               defaultValue: enquiryReducer.defaultEndCity,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.cityList
-                                           }}/>
-                                </div>
+                                    <Field id="endCity" name="endCity" component={selectField} selects={enquiryReducer.cityList} label="终到城市"/>
+                                    {/*<Field name="endCity" component={MySelect}*/}
+                                           {/*props={{*/}
+                                               {/*value: enquiryReducer.endCity,*/}
+                                               {/*defaultValue: enquiryReducer.defaultEndCity,*/}
+                                               {/*searchable: false,*/}
+                                               {/*styleMode: singleStyles,*/}
+                                               {/*options: enquiryReducer.cityList*/}
+                                           {/*}}/>*/}
                             </div>
                             <div className="input-field col s2 right-align">
                                 <div className="input-field col s12">
@@ -228,7 +249,7 @@ class Enquiry extends React.Component {
                             </div>
 
                             <div className="input-field col s6">
-                                <div className="input-field col s12">
+                                    {/*<Field id="serviceMode" name="serviceMode" component={selectField} selects={enquiryReducer.serviceModeList} label="服务方式"/>*/}
                                     <Field name="serviceMode" component={MySelect}
                                            props={{
                                                value: enquiryReducer.serviceMode,
@@ -237,10 +258,9 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.serviceModeList
                                            }}/>
-                                </div>
                             </div>
                             <div className="input-field col s6">
-                                <div className="input-field col s12">
+                                    {/*<Field id="carModel" name="carModel" component={selectField} selects={enquiryReducer.carModelList} label="车型"/>*/}
                                     <Field name="carModel" component={MySelect}
                                            props={{
                                                value: enquiryReducer.carModel,
@@ -249,11 +269,10 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.carModelList
                                            }}/>
-                                </div>
                             </div>
 
                             <div className="input-field col s6">
-                                <div className="input-field col s12">
+                                    {/*<Field id="carFlag" name="carFlag" component={selectField} selects={enquiryReducer.carFlagList} label="是否新车"/>*/}
                                     <Field name="carFlag" component={MySelect}
                                            props={{
                                                value: enquiryReducer.carFlag,
@@ -262,11 +281,9 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.carFlagList
                                            }}/>
-                                </div>
                             </div>
                             <div className="input-field col s6">
-                                <Field label="估值" name="valuation" id="valuation" type="text"
-                                       component={renderField}/>
+                                <Field label="估值" name="valuation" id="valuation" type="text" component={renderField}/>
                             </div>
 
                             <div className="input-field col s12 right-align">
@@ -274,14 +291,15 @@ class Enquiry extends React.Component {
                                     预计运费：<span>{enquiryReducer.freight}</span>元
                                 </div>
                             </div>
+                            </form>
                         </div>
 
-                        <div className="modal-footer">
+                        <div className="modal-footer right-align">
                             <button className="btn confirm-btn" type="submit" onClick={handleSubmit}>确定</button>
                             <button className="btn close-btn" onClick={closeModal}>关闭</button>
                         </div>
-                    </form>
-                </ReactModal>
+
+                </div>
             </div>
         );
     }
@@ -293,6 +311,7 @@ class Enquiry extends React.Component {
  * @returns {{initialValues}} 初期数据
  */
 const mapStateToProps = (state) => {
+    // console.log(state.EnquiryReducer.modalIsOpen);
     return {
         enquiryReducer: state.EnquiryReducer
     }
@@ -305,7 +324,12 @@ const mapStateToProps = (state) => {
  */
 const mapDispatchToProps = (dispatch) => ({
     closeModal: () => {
-        dispatch(enquiryAction.closeModal())
+
+        // console.log('mapDispatchToProps close ')
+        // dispatch(enquiryAction.closeModal())
+
+        // $('.modal').modal();
+        $('#enquiryDiv').modal('close');
     }
 });
 
@@ -317,7 +341,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             // 必要参数，表单命名
             form: 'enquiryForm',
             // 验证
-            validate,
+            // validate,
             // 可选参数 onChange : Function [optional] : 表单触发 onChange 事件后的回调。
             // 可选参数 onSubmit : Function [optional[ : 表单提交配置，可以配置需要提交哪些参数，还有提交时触发的 dispatch等
             onSubmit: (values, dispatch, props) => {
@@ -326,7 +350,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(
 
                 dispatch(enquiryAction.calculateFreight(100));
             }
-
         }
     )(Enquiry)
 );

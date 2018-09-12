@@ -1,4 +1,5 @@
 *.log
+*.bundle.js
 config/config.js
 config/SystemConfig.js
 conf.json

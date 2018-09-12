@@ -42,7 +42,12 @@ class Container extends React.Component {
     render() {
         const {headerReducer} = this.props;
         console.log(headerReducer.userInfo);
-        const avatarUrl = "http://" + fileHost + "/api/image/" + headerReducer.userInfo.avatar_image;
+        let avatarUrl = "";
+        if(headerReducer.userInfo && headerReducer.userInfo.avatar_image) {
+           avatarUrl = "http://" + fileHost + "/api/image/" + headerReducer.userInfo.avatar_image;
+        }else{
+            avatarUrl = "/assets/images/avatar.png"
+        }
         return (
             <Router hashType={"hashbang"}>
                 <div className="context-height">

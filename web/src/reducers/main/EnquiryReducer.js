@@ -4,6 +4,27 @@ const ConstConfig = require('../../config/ConstConfig');
 
 // 画面用初期数据
 const initialState = {
+    data: {
+        // 始发城市
+        startCity: 'Red',
+        // 终到城市
+        endCity: { value: '', label: '' },
+        // 里程
+        mileage : 0,
+        // 服务方式
+        serviceMode: { value: '', label: '' },
+        // 车型
+        carModel: { value: '', label: '' },
+        // 是否新车
+        carFlag: { value: '', label: '' },
+
+        // 估值
+        valuation : '',
+
+        // 预计运费
+        freight : 0.00
+    },
+
     // 模态状态 关闭
     modalIsOpen: false,
     // 城市列表
@@ -18,32 +39,11 @@ const initialState = {
     // 是否新车列表
     carFlagList: ConstConfig.YES_NO,
 
-    // 始发城市
-    startCity: '',
     defaultStartCity: { value: '', label: '始发城市' },
-    // 终到城市
-    endCity: { value: '', label: '' },
     defaultEndCity: { value: '', label: '终到城市' },
-    // 里程
-    mileage : 0,
-
-    // 服务方式
-    serviceMode: { value: '', label: '' },
     defaultServiceMode: { value: '', label: '服务方式' },
-
-    // 车型
-    carModel: { value: '', label: '' },
     defaultCarModel: { value: '', label: '车型' },
-
-    // 是否新车
-    carFlag: { value: '', label: '' },
     defaultCarFlag: { value: '', label: '是否新车' },
-
-    // 估值
-    valuation : '',
-
-    // 预计运费
-    freight : 0.00
 };
 
 export default handleActions(

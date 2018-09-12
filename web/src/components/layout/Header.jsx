@@ -31,7 +31,7 @@ class Header extends React.Component {
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
         $('.sidenav').sidenav();
         $('.collapsible').collapsible();
-        $('select').formSelect();
+        // $('select').formSelect();
         if (userId == null || token == null) {
             window.location.href = '/login.html';
         } else {

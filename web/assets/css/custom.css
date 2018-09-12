@@ -95,8 +95,8 @@ body{
     min-width: 900px;
 }
 
-#enquiryDiv{
-    max-height: 856px;
+#enquiryModal{
+    max-height: 556px;
 }
 
 .modal-title{

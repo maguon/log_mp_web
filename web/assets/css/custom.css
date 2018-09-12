@@ -13,8 +13,11 @@ body{
     overflow-y: hidden;
     font-size: 15px;
 }
+.custom-purple {
+    background-color: #724278 !important;
+}
 
-/*固定底部样式*/
+/* 固定 主画面底部样式 */
 .footer{
     width: 100%;
     position: fixed;

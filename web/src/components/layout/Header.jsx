@@ -48,7 +48,7 @@ class Header extends React.Component {
         return (
             <div>
                 <nav>
-                    <div className="nav-wrapper z-depth-3 purple">
+                    <div className="nav-wrapper z-depth-3 custom-purple">
 
                         <a href="#" data-target="slide-out" className="sidenav-trigger brand-logo"
                            style={{display: 'block'}}>

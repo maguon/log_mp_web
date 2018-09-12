@@ -14,51 +14,6 @@ body{
     font-size: 15px;
 }
 
-/** material样式 变更部分 */
-.input-field {
-    margin-bottom: 0;
-}
-
-.btn:hover{
-    background: #724278;
-}
-.btn{
-    background: #724278;
-}
-
-/*.input-field .prefix.active {*/
-    /*color: #4e84cb;*/
-/*}*/
-/*.input-field label {*/
-    /*color: #000;*/
-/*}*/
-/*.input-field input[type=text]:focus + label {*/
-    /*color: #4e84cb;*/
-/*}*/
-/*.input-field input[type=password]:focus + label {*/
-    /*color: #4e84cb;*/
-/*}*/
-/*.input-field input[type=text]:focus  {*/
-    /*color: #4e84cb;*/
-    /*border-bottom: 1px solid #4e84cb;*/
-    /*box-shadow: 0 1px 0 0 #4e84cb;*/
-/*}*/
-/*.input-field input[type=password]:focus  {*/
-    /*color: #4e84cb;*/
-    /*border-bottom: 1px solid #4e84cb;*/
-    /*box-shadow: 0 1px 0 0 #4e84cb;*/
-/*}*/
-/*.input-field input[type=text]:focus  {*/
-    /*color: #4e84cb;*/
-    /*border-bottom: 1px solid #4e84cb;*/
-    /*box-shadow: 0 1px 0 0 #4e84cb;*/
-/*}*/
-
-
-
-
-
-
 /** 画面加载样式 Start */
 .c-loader-wrapper {
     display: none;
@@ -84,6 +39,18 @@ body{
 }
 /** 画面加载样式 End */
 
+/** material样式 变更部分 Start */
+.input-field {
+    margin-bottom: 0;
+}
+
+.btn:hover{
+    background: #6E2678;
+}
+.btn{
+    background: #724278;
+}
+/** material样式 变更部分 End */
 
 /** 画面主体部分样式 */
 .context-height{
@@ -93,13 +60,18 @@ body{
     margin-top: 20px;
 }
 
+/** react-select 错误信息样式 */
+.error-msg {
+    position: relative;
+    min-height: 18px;
+    display: block;
+    font-size: 12px;
+    color: #F44336;
+}
+
 /** modal 样式定义部分 start */
 .modal{
     min-width: 900px;
-}
-
-#enquiryModal{
-    max-height: 556px;
 }
 
 .modal-title{
@@ -109,7 +81,9 @@ body{
     background-color: #724278;
 }
 
-/** modal 样式定义部分 end */
+.modal .modal-footer .btn{
+    margin: 6px 0 0 20px;
+}
 
 .close-btn {
     width: 110px;
@@ -120,6 +94,11 @@ body{
     width: 110px;
     background-color: #724278;
 }
+
+#enquiryModal{
+    max-height: 556px;
+}
+/** modal 样式定义部分 end */
 
 /** 下面是要删除的 */
 .temp {
@@ -133,10 +112,3 @@ body{
 }
 
 
-.error-msg {
-    position: relative;
-    min-height: 18px;
-    display: block;
-    font-size: 12px;
-    color: #F44336;
-}

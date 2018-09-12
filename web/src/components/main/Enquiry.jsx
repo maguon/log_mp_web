@@ -212,7 +212,7 @@ class Enquiry extends React.Component {
         //     })
         // }, 1000)
 
-        $('select').formSelect();
+        // $('select').formSelect();
     }
 
     componentWillUnmount() {
@@ -229,7 +229,7 @@ class Enquiry extends React.Component {
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
 
         const {enquiryReducer, handleSubmit, closeModal, pristine, submitting, calculateFreight} = this.props;
-
+        const colors = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'];
         return (
             <div>
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
@@ -242,14 +242,23 @@ class Enquiry extends React.Component {
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
                                     {/*<Field name="startCity" component={selectField} selects={enquiryReducer.cityList} label="始发城市"/>*/}
-                                    <Field id="startCity" name="startCity" component={MySelect}
-                                           props={{
-                                               value: enquiryReducer.startCity,
-                                               defaultValue: enquiryReducer.defaultStartCity,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.cityList
-                                           }}/>
+                                    <Field name="startCity" component="select" className="custom-select">
+                                        <option value="">Select a color...</option>
+                                        {colors.map(colorOption => (
+                                            <option value={colorOption} key={colorOption}>
+                                                {colorOption}
+                                            </option>
+                                        ))}
+                                    </Field>
+
+                                    {/*<Field id="startCity" name="startCity" component={MySelect}*/}
+                                           {/*props={{*/}
+                                               {/*value: enquiryReducer.startCity,*/}
+                                               {/*defaultValue: enquiryReducer.defaultStartCity,*/}
+                                               {/*searchable: false,*/}
+                                               {/*styleMode: singleStyles,*/}
+                                               {/*options: enquiryReducer.cityList*/}
+                                           {/*}}/>*/}
                                 </div>
                             </div>
                             <div className="input-field col s4">
@@ -337,9 +346,12 @@ class Enquiry extends React.Component {
  * @param state
  * @returns {{initialValues}} 初期数据
  */
-const mapStateToProps = (state) => {
+const mapStateToProps = (state,ownProps) => {
+    console.log('map state to props')
     return {
+        initialValues : state.EnquiryReducer.data,
         enquiryReducer: state.EnquiryReducer
+        // ownProps : state.EnquiryReducer.startCity
     }
 };
 

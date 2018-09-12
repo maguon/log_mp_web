@@ -44,7 +44,7 @@ class Header extends React.Component {
      */
     render() {
         //
-        const {headerReducer,enquiryReducer, enquiry, logout} = this.props;
+        const {headerReducer,enquiryReducer, initData, logout} = this.props;
         return (
             <div>
                 <nav>
@@ -58,7 +58,7 @@ class Header extends React.Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
                                 <a className="right-align">
-                                    <i className="mdi mdi-home-currency-usd mdi-36px" onClick={enquiry}></i>
+                                    <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={initData}></i>
                                 </a>
                             </li>
                             <li>
@@ -90,8 +90,8 @@ const mapDispatchToProps = (dispatch) => ({
     getUserDetail: (userId) => {
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
-    enquiry: () => {
-        dispatch(enquiryAction.openModal())
+    initData: () => {
+        dispatch(enquiryAction.resetForm())
     },
     logout: () => {
         dispatch(headerAction.logout())

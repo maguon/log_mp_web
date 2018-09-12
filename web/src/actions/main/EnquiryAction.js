@@ -16,9 +16,14 @@ import { reset } from'redux-form'
 //     }
 // };
 
+export const resetForm = () => async (dispatch) => {
+    console.log('resetForm inner')
+    dispatch(reset('enquiryForm'))
+};
+
 export const openModal = () => async (dispatch) => {
     console.log('open modal')
-    dispatch(reset('enquiryForm'))
+    // dispatch(reset('enquiryForm'))
     $('.modal').modal(
         {
             dismissible: true, // Modal can be dismissed by clicking outside of the modal

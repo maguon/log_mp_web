@@ -13,52 +13,70 @@ const vn = vvv('不能为空！!!!!');
 const hasSelect = msg => value => (value === '') ? msg : undefined;
 const vn2 = hasSelect('error!!!!!!');
 
-const validate = (values) => {
-    const errors = {};
-    const requiredFields = [
-        'startCity',
-        'endCity',
-        'serviceMode',
-        'carModel',
-        'carFlag'
-    ];
-    const requiredTexts = [
-        'valuation'
-    ];
-    requiredFields.forEach(field => {
-        if (!values[field]) {
-            errors[field] = '必填'
-        }
-    });
-    requiredTexts.forEach(field => {
-        if (!values[field]) {
-            errors[field] = '必填'
-        }
-    });
+const validate = values => {
+    const errors = {}
+
+    // if (!values.startCity) {
+    //     errors.startCity = 'Required'
+    // } else if (values.startCity.value === "") {
+    //     errors.startCity = 'Must be 15 characters or less'
+    // }
+
+    if (!values.valuation) {
+        errors.valuation = 'Required'
+    } else if (values.valuation.length > 15) {
+        errors.valuation = 'Must be 15 characters or less'
+    }
+
+
+
+    if (!values.email) {
+        errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    if (!values.age) {
+        errors.age = 'Required'
+    } else if (isNaN(Number(values.age))) {
+        errors.age = 'Must be a number'
+    } else if (Number(values.age) < 18) {
+        errors.age = 'Sorry, you must be at least 18 years old'
+    }
     return errors
-};
+}
+
+// const validate = (values) => {
+//
+//     const errors = {}
+//     const requiredFields = [
+//         'valuation'
+//     ]
+//     requiredFields.forEach(field => {
+//         if (!values[field]) {
+//             errors[field] = '必填'
+//         }
+//
+//     })
+//     return errors
+// }
 
 const renderField = ({
                          input,
                          label,
                          type,
                          meta: {touched, error},
-                         id,
+                         id
                      }) => {
 
     const labelClass = "validate " + (touched && error ? 'invalid' : '');
-    // const {value} = input.value;
-
-    // console.log('touched', touched)
-    // console.log('error', error)
     return (
         <div className="input-field col s12">
-            <input id={id} {...input} type={type} className={labelClass}/>
+            <input id={id} {...input} type={type} className={labelClass} required/>
             <label for={id}>{label}</label>
-            {((error && <span className="helper-text" data-error={error}></span>))}
+            {(touched && (error && <span className="helper-text" data-error={error}></span>))}
         </div>
     )
-};
+}
 
 // const MySelect = ({
 //                       input,
@@ -84,8 +102,8 @@ const renderField = ({
 
 const MySelect = props => {
 
-    const {options, input: {onChange}, defaultValue, hasError, searchable, validate} = props;
-    // console.log('validate is : ', validate);
+    const {options, input: {onChange}, meta: {error} ,defaultValue, hasError, searchable, validate} = props;
+    // console.log('meta error is : ', error);
     // console.log(props);
 
     return (
@@ -93,7 +111,8 @@ const MySelect = props => {
             options={options}
             onChange={onChange}
             defaultValue={defaultValue}
-            styles={typeof(validate) === "undefined" ? singleStyles : singleErrStyles}
+            // styles={validate === "undefined" ? singleStyles : singleErrStyles}
+            styles={ singleStyles }
             isSearchable={searchable}
         />
     )
@@ -181,7 +200,7 @@ class Enquiry extends React.Component {
      */
     componentDidMount() {
         console.log('componentDidMount');
-
+        $('.modal').modal();
         // console.log('componentDidMount start..................')
         // $('select').formSelect();
         // console.log('componentDidMount end..................')
@@ -209,38 +228,40 @@ class Enquiry extends React.Component {
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
 
-        const {enquiryReducer, handleSubmit, closeModal} = this.props;
+        const {enquiryReducer, handleSubmit, closeModal, pristine, submitting, calculateFreight} = this.props;
 
         return (
             <div>
-                <div id="enquiryDiv" className="modal modal-fixed-footer row">
+                <div id="enquiryModal" className="modal modal-fixed-footer row">
 
-                        <div className="modal-title center-align white-text">新增金融车</div>
+                    <form onSubmit={handleSubmit(calculateFreight)}>
+                    <div className="modal-title center-align white-text">询&nbsp;价</div>
 
-                        <div className="modal-content">
-                            <form>
+                    <div className="modal-content row">
+
                             <div className="input-field col s6">
-                                    <Field name="startCity" component={selectField} selects={enquiryReducer.cityList} label="始发城市"/>
-
-                                    {/*<Field id="startCity" name="startCity" component={MySelect}*/}
-                                           {/*props={{*/}
-                                               {/*value: enquiryReducer.startCity,*/}
-                                               {/*defaultValue: enquiryReducer.defaultStartCity,*/}
-                                               {/*searchable: false,*/}
-                                               {/*styleMode: singleStyles,*/}
-                                               {/*options: enquiryReducer.cityList*/}
-                                           {/*}}/>*/}
+                                <div className="input-field col s12">
+                                    <Field id="startCity" name="startCity" component={MySelect}
+                                           props={{
+                                               value: enquiryReducer.startCity,
+                                               defaultValue: enquiryReducer.defaultStartCity,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.cityList
+                                           }}/>
+                                </div>
                             </div>
                             <div className="input-field col s4">
-                                    <Field id="endCity" name="endCity" component={selectField} selects={enquiryReducer.cityList} label="终到城市"/>
-                                    {/*<Field name="endCity" component={MySelect}*/}
-                                           {/*props={{*/}
-                                               {/*value: enquiryReducer.endCity,*/}
-                                               {/*defaultValue: enquiryReducer.defaultEndCity,*/}
-                                               {/*searchable: false,*/}
-                                               {/*styleMode: singleStyles,*/}
-                                               {/*options: enquiryReducer.cityList*/}
-                                           {/*}}/>*/}
+                                <div className="input-field col s12">
+                                    <Field name="endCity" component={MySelect}
+                                           props={{
+                                               value: enquiryReducer.endCity,
+                                               defaultValue: enquiryReducer.defaultEndCity,
+                                               searchable: false,
+                                               styleMode: singleStyles,
+                                               options: enquiryReducer.cityList
+                                           }}/>
+                                </div>
                             </div>
                             <div className="input-field col s2 right-align">
                                 <div className="input-field col s12">
@@ -249,7 +270,7 @@ class Enquiry extends React.Component {
                             </div>
 
                             <div className="input-field col s6">
-                                    {/*<Field id="serviceMode" name="serviceMode" component={selectField} selects={enquiryReducer.serviceModeList} label="服务方式"/>*/}
+                                <div className="input-field col s12">
                                     <Field name="serviceMode" component={MySelect}
                                            props={{
                                                value: enquiryReducer.serviceMode,
@@ -258,9 +279,10 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.serviceModeList
                                            }}/>
+                                </div>
                             </div>
                             <div className="input-field col s6">
-                                    {/*<Field id="carModel" name="carModel" component={selectField} selects={enquiryReducer.carModelList} label="车型"/>*/}
+                                <div className="input-field col s12">
                                     <Field name="carModel" component={MySelect}
                                            props={{
                                                value: enquiryReducer.carModel,
@@ -269,10 +291,11 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.carModelList
                                            }}/>
+                                </div>
                             </div>
 
                             <div className="input-field col s6">
-                                    {/*<Field id="carFlag" name="carFlag" component={selectField} selects={enquiryReducer.carFlagList} label="是否新车"/>*/}
+                                <div className="input-field col s12">
                                     <Field name="carFlag" component={MySelect}
                                            props={{
                                                value: enquiryReducer.carFlag,
@@ -281,9 +304,11 @@ class Enquiry extends React.Component {
                                                styleMode: singleStyles,
                                                options: enquiryReducer.carFlagList
                                            }}/>
+                                </div>
                             </div>
                             <div className="input-field col s6">
-                                <Field label="估值" name="valuation" id="valuation" type="text" component={renderField}/>
+                                <Field label="估值" name="valuation" id="valuation" type="text"
+                                       component={renderField}/>
                             </div>
 
                             <div className="input-field col s12 right-align">
@@ -291,14 +316,15 @@ class Enquiry extends React.Component {
                                     预计运费：<span>{enquiryReducer.freight}</span>元
                                 </div>
                             </div>
-                            </form>
-                        </div>
 
-                        <div className="modal-footer right-align">
-                            <button className="btn confirm-btn" type="submit" onClick={handleSubmit}>确定</button>
-                            <button className="btn close-btn" onClick={closeModal}>关闭</button>
-                        </div>
+                    </div>
 
+
+                    <div className="modal-footer">
+                        <button className="btn confirm-btn" type="submit" disabled={submitting}>确定</button>
+                        <button className="btn close-btn" onClick={closeModal}>关闭</button>
+                    </div>
+                </form>
                 </div>
             </div>
         );
@@ -311,7 +337,6 @@ class Enquiry extends React.Component {
  * @returns {{initialValues}} 初期数据
  */
 const mapStateToProps = (state) => {
-    // console.log(state.EnquiryReducer.modalIsOpen);
     return {
         enquiryReducer: state.EnquiryReducer
     }
@@ -329,7 +354,11 @@ const mapDispatchToProps = (dispatch) => ({
         // dispatch(enquiryAction.closeModal())
 
         // $('.modal').modal();
-        $('#enquiryDiv').modal('close');
+        $('#enquiryModal').modal('close');
+    },
+    calculateFreight: (values) => {
+        console.log('values is : ', values);
+        dispatch(enquiryAction.calculateFreight(100));
     }
 });
 
@@ -341,14 +370,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(
             // 必要参数，表单命名
             form: 'enquiryForm',
             // 验证
-            // validate,
+            validate,
             // 可选参数 onChange : Function [optional] : 表单触发 onChange 事件后的回调。
             // 可选参数 onSubmit : Function [optional[ : 表单提交配置，可以配置需要提交哪些参数，还有提交时触发的 dispatch等
             onSubmit: (values, dispatch, props) => {
                 console.log("reduxForm onSubmit inner");
                 console.log('values is : ', values);
-
-                dispatch(enquiryAction.calculateFreight(100));
             }
         }
     )(Enquiry)

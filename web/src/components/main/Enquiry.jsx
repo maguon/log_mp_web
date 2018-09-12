@@ -237,10 +237,11 @@ class Enquiry extends React.Component {
                     <form onSubmit={handleSubmit(calculateFreight)}>
                     <div className="modal-title center-align white-text">询&nbsp;价</div>
 
-                    <div className="modal-content row">
+                    <div className="modal-content">
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
+                                    {/*<Field name="startCity" component={selectField} selects={enquiryReducer.cityList} label="始发城市"/>*/}
                                     <Field id="startCity" name="startCity" component={MySelect}
                                            props={{
                                                value: enquiryReducer.startCity,

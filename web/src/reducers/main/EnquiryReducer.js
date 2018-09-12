@@ -6,27 +6,21 @@ const ConstConfig = require('../../config/ConstConfig');
 const initialState = {
     data: {
         // 始发城市
-        startCity: 'Red',
+        startCity: { value: '', label: '始发城市' },
         // 终到城市
-        endCity: { value: '', label: '' },
-        // 里程
-        mileage : 0,
+        endCity: { value: '', label: '终到城市' },
         // 服务方式
-        serviceMode: { value: '', label: '' },
+        serviceMode: { value: '', label: '服务方式' },
         // 车型
-        carModel: { value: '', label: '' },
+        carModel: { value: '', label: '车型' },
         // 是否新车
-        carFlag: { value: '', label: '' },
-
+        carFlag: { value: '', label: '是否新车' },
         // 估值
         valuation : '',
-
-        // 预计运费
-        freight : 0.00
     },
 
-    // 模态状态 关闭
-    modalIsOpen: false,
+    // // 模态状态 关闭
+    // modalIsOpen: false,
     // 城市列表
     cityList: [
         { value: '100', label: '大连' },
@@ -39,11 +33,10 @@ const initialState = {
     // 是否新车列表
     carFlagList: ConstConfig.YES_NO,
 
-    defaultStartCity: { value: '', label: '始发城市' },
-    defaultEndCity: { value: '', label: '终到城市' },
-    defaultServiceMode: { value: '', label: '服务方式' },
-    defaultCarModel: { value: '', label: '车型' },
-    defaultCarFlag: { value: '', label: '是否新车' },
+    // 里程
+    mileage : 0,
+    // 预计运费
+    freight : 0
 };
 
 export default handleActions(
@@ -51,7 +44,11 @@ export default handleActions(
         [EnquiryActionType.enquiryModal]: (state, action) => {
             return {
                 ...state,
-                modalIsOpen: action.payload
+                // 里程
+                mileage : action.payload,
+                // 预计运费
+                freight: action.payload,
+
             }
         },
         [EnquiryActionType.enquiryFreight]: (state, action) => {

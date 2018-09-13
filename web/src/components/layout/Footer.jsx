@@ -6,20 +6,19 @@ class Footer extends React.Component {
         super(props);
         this.state = {date: new Date(),message:"abc",count:0};
     }
+
     componentDidMount(){
-
-
     }
+
     render() {
         return (
-            <footer className="page-footer">
-                <div className="container">
-                    <h5>Footer</h5>
+            <footer>
+                <div className="footer">
+                    <span className="footer-msg">洺源信息技术</span>
+                    <span className="footer-msg">物流系统1.0版</span>
                 </div>
             </footer>
         )
-
-
     }
 }
 

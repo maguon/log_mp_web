@@ -1,32 +1,28 @@
 import React from 'react';
 
 import {connect} from 'react-redux'
-import {Field, reduxForm, reset} from "redux-form";
-import ReactModal from 'react-modal';
+import {Field, reduxForm} from "redux-form";
 import Select from 'react-select';
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
 
-const vvv = msg => value => (!value && value != 0 && value != '') ? msg : undefined;
-const vn = vvv('不能为空！!!!!');
-
-const hasSelect = msg => value => (value === '') ? msg : undefined;
-const vn2 = hasSelect('error!!!!!!');
+// const vvv = msg => value => (!value && value != 0 && value != '') ? msg : undefined;
+// const vn = vvv('不能为空！!!!!');
+//
+// const hasSelect = msg => value => (value === '') ? msg : undefined;
+// const vn2 = hasSelect('error!!!!!!');
 
 const validate = values => {
-    const errors = {}
+    const errors = {};
 
-    // if (!values.startCity) {
-    //     errors.startCity = 'Required'
-    // } else if (values.startCity.value === "") {
-    //     errors.startCity = 'Must be 15 characters or less'
-    // }
-
-    if (!values.valuation) {
-        errors.valuation = 'Required'
-    } else if (values.valuation.length > 15) {
-        errors.valuation = 'Must be 15 characters or less'
+    if (!values.startCity || values.startCity.value === "") {
+        errors.startCity = 'Required'
     }
+
+    if (!values.endCity || values.endCity.value === "") {
+        errors.endCity = 'Required'
+    }
+
 
 
 
@@ -42,8 +38,14 @@ const validate = values => {
     } else if (Number(values.age) < 18) {
         errors.age = 'Sorry, you must be at least 18 years old'
     }
+
+    if (!values.valuation) {
+        errors.valuation = 'Required'
+    } else if (values.valuation.length > 15) {
+        errors.valuation = 'Must be 15 characters or less'
+    }
     return errors
-}
+};
 
 // const validate = (values) => {
 //
@@ -78,43 +80,21 @@ const renderField = ({
     )
 }
 
-// const MySelect = ({
-//                       input,
-//                       meta: {touched, error},
-//                       id,
-//                       sets
-//                   }) => {
-//     const {value} = input.value;
-//     console.log('sets',sets);
-//     const {onChange} = input.onChange;
-//
-//     const {options, defaultValue, searchable} = sets;
-//     return (
-//             <Select {...input}
-//                 options={options}
-//                 value={value}
-//                 defaultValue={defaultValue}
-//                 styles={touched && error ? singleErrStyles : singleStyles}
-//                 isSearchable={searchable}
-//             />
-//     )
-// };
-
-const MySelect = props => {
-
-    const {options, input: {onChange}, meta: {error} ,defaultValue, hasError, searchable, validate} = props;
-    // console.log('meta error is : ', error);
-    // console.log(props);
-
+const reactSelect = props => {
+    const {options, input: {onChange, value}, meta: {touched, error}, defaultValue, searchable} = props;
     return (
-        <Select
-            options={options}
-            onChange={onChange}
-            defaultValue={defaultValue}
-            // styles={validate === "undefined" ? singleStyles : singleErrStyles}
-            styles={ singleStyles }
-            isSearchable={searchable}
-        />
+        <div>
+            <Select
+                options={options}
+                onChange={onChange}
+                defaultValue={defaultValue}
+                value={value}
+                styles={error === "undefined" ? singleStyles : singleErrStyles}
+                styles={singleStyles}
+                isSearchable={searchable}
+            />
+            {(touched && (error && <span className="error-msg">{error}</span>))}
+        </div>
     )
 };
 
@@ -150,7 +130,8 @@ const singleStyles = {
         borderRadius: "0",
         borderTop: "0",
         borderLeft: "0",
-        borderRight: "0"
+        borderRight: "0",
+        margin: "0 0 8px 0"
     }),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     valueContainer: styles => ({...styles, paddingLeft: '0'})
@@ -164,6 +145,7 @@ const singleErrStyles = {
         borderTop: "0",
         borderLeft: "0",
         borderRight: "0",
+        margin: "0 0 8px 0",
         borderBottom: '2px solid #ff0000'
     }),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
@@ -201,9 +183,7 @@ class Enquiry extends React.Component {
     componentDidMount() {
         console.log('componentDidMount');
         $('.modal').modal();
-        // console.log('componentDidMount start..................')
         // $('select').formSelect();
-        // console.log('componentDidMount end..................')
         // 模拟ajax调用，成功之后把需要改变的默认值赋值给this.state.value
         // setTimeout(() => {
         //     this.setState({
@@ -235,41 +215,37 @@ class Enquiry extends React.Component {
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
 
                     <form onSubmit={handleSubmit(calculateFreight)}>
-                    <div className="modal-title center-align white-text">询&nbsp;价</div>
+                        <div className="modal-title center-align white-text">询&nbsp;价</div>
 
-                    <div className="modal-content">
+                        <div className="modal-content">
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
                                     {/*<Field name="startCity" component={selectField} selects={enquiryReducer.cityList} label="始发城市"/>*/}
-                                    <Field name="startCity" component="select" className="custom-select">
-                                        <option value="">Select a color...</option>
-                                        {colors.map(colorOption => (
-                                            <option value={colorOption} key={colorOption}>
-                                                {colorOption}
-                                            </option>
-                                        ))}
-                                    </Field>
+                                    {/*<Field name="startCity" component="select" className="custom-select">*/}
+                                    {/*<option value="">Select a color...</option>*/}
+                                    {/*{colors.map(colorOption => (*/}
+                                    {/*<option value={colorOption} key={colorOption}>*/}
+                                    {/*{colorOption}*/}
+                                    {/*</option>*/}
+                                    {/*))}*/}
+                                    {/*</Field>*/}
 
-                                    {/*<Field id="startCity" name="startCity" component={MySelect}*/}
-                                           {/*props={{*/}
-                                               {/*value: enquiryReducer.startCity,*/}
-                                               {/*defaultValue: enquiryReducer.defaultStartCity,*/}
-                                               {/*searchable: false,*/}
-                                               {/*styleMode: singleStyles,*/}
-                                               {/*options: enquiryReducer.cityList*/}
-                                           {/*}}/>*/}
+                                    <Field name="startCity" component={reactSelect}
+                                           props={{
+                                               value: enquiryReducer.startCity,
+                                               options: enquiryReducer.cityList,
+                                               searchable: false
+                                           }}/>
                                 </div>
                             </div>
                             <div className="input-field col s4">
                                 <div className="input-field col s12">
-                                    <Field name="endCity" component={MySelect}
+                                    <Field name="endCity" component={reactSelect}
                                            props={{
                                                value: enquiryReducer.endCity,
-                                               defaultValue: enquiryReducer.defaultEndCity,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.cityList
+                                               options: enquiryReducer.cityList,
+                                               searchable: false
                                            }}/>
                                 </div>
                             </div>
@@ -281,44 +257,37 @@ class Enquiry extends React.Component {
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                    <Field name="serviceMode" component={MySelect}
+                                    <Field name="serviceMode" component={reactSelect}
                                            props={{
                                                value: enquiryReducer.serviceMode,
-                                               defaultValue: enquiryReducer.defaultServiceMode,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.serviceModeList
+                                               options: enquiryReducer.serviceModeList,
+                                               searchable: false
                                            }}/>
                                 </div>
                             </div>
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                    <Field name="carModel" component={MySelect}
+                                    <Field name="carModel" component={reactSelect}
                                            props={{
                                                value: enquiryReducer.carModel,
-                                               defaultValue: enquiryReducer.defaultCarModel,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.carModelList
+                                               options: enquiryReducer.carModelList,
+                                               searchable: false
                                            }}/>
                                 </div>
                             </div>
 
                             <div className="input-field col s6">
                                 <div className="input-field col s12">
-                                    <Field name="carFlag" component={MySelect}
+                                    <Field name="carFlag" component={reactSelect}
                                            props={{
                                                value: enquiryReducer.carFlag,
-                                               defaultValue: enquiryReducer.defaultCarFlag,
-                                               searchable: false,
-                                               styleMode: singleStyles,
-                                               options: enquiryReducer.carFlagList
+                                               options: enquiryReducer.carFlagList,
+                                               searchable: false
                                            }}/>
                                 </div>
                             </div>
                             <div className="input-field col s6">
-                                <Field label="估值" name="valuation" id="valuation" type="text"
-                                       component={renderField}/>
+                                <Field label="估值" name="valuation" id="valuation" type="text" component={renderField}/>
                             </div>
 
                             <div className="input-field col s12 right-align">
@@ -327,14 +296,14 @@ class Enquiry extends React.Component {
                                 </div>
                             </div>
 
-                    </div>
+                        </div>
 
+                        <div className="modal-footer">
+                            <button type="submit" className="btn confirm-btn" disabled={submitting}>确定</button>
+                            <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>
+                        </div>
 
-                    <div className="modal-footer">
-                        <button className="btn confirm-btn" type="submit" disabled={submitting}>确定</button>
-                        <button className="btn close-btn" onClick={closeModal}>关闭</button>
-                    </div>
-                </form>
+                    </form>
                 </div>
             </div>
         );
@@ -346,12 +315,10 @@ class Enquiry extends React.Component {
  * @param state
  * @returns {{initialValues}} 初期数据
  */
-const mapStateToProps = (state,ownProps) => {
-    console.log('map state to props')
+const mapStateToProps = (state) => {
     return {
-        initialValues : state.EnquiryReducer.data,
+        initialValues: state.EnquiryReducer.data,
         enquiryReducer: state.EnquiryReducer
-        // ownProps : state.EnquiryReducer.startCity
     }
 };
 

@@ -44,11 +44,11 @@ class Header extends React.Component {
      */
     render() {
         //
-        const {headerReducer,enquiryReducer, initData, logout} = this.props;
+        const {headerReducer,enquiryReducer, openEnquiryModal, logout} = this.props;
         return (
             <div>
                 <nav>
-                    <div className="nav-wrapper z-depth-3 purple">
+                    <div className="nav-wrapper z-depth-3 custom-purple">
 
                         <a href="#" data-target="slide-out" className="sidenav-trigger brand-logo"
                            style={{display: 'block'}}>
@@ -58,7 +58,7 @@ class Header extends React.Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
                                 <a className="right-align">
-                                    <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={initData}></i>
+                                    <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={openEnquiryModal}/>
                                 </a>
                             </li>
                             <li>
@@ -90,13 +90,12 @@ const mapDispatchToProps = (dispatch) => ({
     getUserDetail: (userId) => {
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
-    initData: () => {
-        dispatch(enquiryAction.resetForm())
+    openEnquiryModal: () => {
+        dispatch(enquiryAction.openEnquiryModal())
     },
     logout: () => {
         dispatch(headerAction.logout())
     }
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

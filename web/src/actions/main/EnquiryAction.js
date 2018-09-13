@@ -1,5 +1,5 @@
 import {EnquiryActionType} from "../../actionTypes";
-import { reset } from'redux-form'
+import {reduxForm, reset} from 'redux-form'
 // export const enquiry = () => async (dispatch) => {
 //     try {
 //
@@ -16,9 +16,12 @@ import { reset } from'redux-form'
 //     }
 // };
 
-export const resetForm = () => async (dispatch) => {
-    console.log('resetForm inner')
-    dispatch(reset('enquiryForm'))
+export const openEnquiryModal = () => async (dispatch) => {
+    console.log('resetForm inner');
+    // 清空reduxForm
+    dispatch(reset('enquiryForm'));
+    // 询价画面 初期时，【里程】和【预计运费】默认为：0
+    dispatch({type: EnquiryActionType.enquiryModal, payload: 0});
 };
 
 export const openModal = () => async (dispatch) => {

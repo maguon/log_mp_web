@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Panel, Setting, User, UserDetail} from '../main/index';
+import {Panel, Setting, User, UserDetail,CitySetting} from '../main/index';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 
 import {fileHost} from '../../config/HostConfig';
@@ -27,6 +27,11 @@ const routes = [
         path: "/panel",
         exact: true,
         component: Panel
+    },
+    {
+        path: "/city_setting",
+        exact: true,
+        component: CitySetting
     }
 ];
 
@@ -81,10 +86,10 @@ class Container extends React.Component {
                         <li className="no-padding">
                             <ul className="collapsible collapsible-accordion">
                                 <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-lock"></i>选项</a>
+                                    <a className="collapsible-header"><i className="mdi mdi-lock"></i>设置</a>
                                     <div className="collapsible-body">
                                         <ul>
-                                            <li><Link to="/setting">设置</Link></li>
+                                            <li><Link to="/city_setting">城市</Link></li>
                                         </ul>
                                     </div>
                                 </li>

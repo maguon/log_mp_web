@@ -1,4 +1,4 @@
-const apiHost = "stg.myxxjs.com:9001";
+const apiHost = "stg.myxxjs.com:9101";
 const fileHost = "stg.myxxjs.com:9002";
 const recordHost = "stg.myxxjs.com:9004";
 

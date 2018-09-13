@@ -91,7 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
     openEnquiryModal: () => {
-        dispatch(enquiryAction.openEnquiryModal())
+        dispatch(enquiryAction.getCityList());
+        dispatch(enquiryAction.openEnquiryModal());
     },
     logout: () => {
         dispatch(headerAction.logout())

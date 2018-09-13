@@ -1,20 +1,33 @@
 import {EnquiryActionType} from "../../actionTypes";
-import {reduxForm, reset} from 'redux-form'
-// export const enquiry = () => async (dispatch) => {
-//     try {
-//
-//         console.log('enquiry innser');
-//         dispatch({type: EnquiryActionType.enquiryModal, payload: true})
-//
-//     } catch (err) {
-//         // alert message
-//         swal({
-//             type: 'error',
-//             title: '系统异常',
-//             text: '服务器内部错误!'
-//         })
-//     }
-// };
+import {reset} from 'redux-form'
+import {apiHost} from '../../config/HostConfig';
+
+const httpUtil = require('../../util/HttpUtil');
+
+export const getCityList = () => async (dispatch) => {
+    try {
+        const url = apiHost + '/api/city';
+        const res = await httpUtil.httpGet(url)
+
+        if (res.success) {
+            dispatch({type: EnquiryActionType.getCityList, payload: res.result})
+        } else {
+            swal({
+                type: 'warning',
+                title: '错误',
+                text: '获取城市信息失败'
+            })
+        }
+
+    } catch (err) {
+        // alert message
+        swal({
+            type: 'error',
+            title: '系统异常',
+            text: '服务器内部错误!'
+        })
+    }
+};
 
 export const openEnquiryModal = () => async (dispatch) => {
     console.log('resetForm inner');
@@ -40,7 +53,7 @@ export const openModal = () => async (dispatch) => {
             //     console.log(modal, trigger);
             // },
             // onCloseStart: function() { dispatch({type: EnquiryActionType.enquiryModal, payload: false}) },
-            onCloseEnd: function() {
+            onCloseEnd: function () {
                 $('#enquiryDiv').modal('destroy');
 
                 console.log('close...........')
@@ -60,7 +73,7 @@ export const closeModal = () => async (dispatch) => {
     // $('.modal').modal();
     // $('#enquiryDiv').modal('close');
     dispatch({type: EnquiryActionType.enquiryModal, payload: false})
-     // dispatch(reset('enquiryForm'))
+    // dispatch(reset('enquiryForm'))
 };
 
 export const calculateFreight = (value) => async (dispatch) => {

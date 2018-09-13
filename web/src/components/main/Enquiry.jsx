@@ -299,8 +299,8 @@ class Enquiry extends React.Component {
                         </div>
 
                         <div className="modal-footer">
-                            <button type="submit" className="btn confirm-btn" disabled={submitting}>确定</button>
                             <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>
+                            <button type="submit" className="btn confirm-btn" disabled={submitting}>确定</button>
                         </div>
 
                     </form>

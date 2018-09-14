@@ -5,20 +5,20 @@ const ConstConfig = require('../../config/ConstConfig');
 
 // 画面用初期数据
 const initialState = {
-    data: {
-        // 始发城市
-        startCity: {value: '', label: '始发城市'},
-        // 终到城市
-        endCity: {value: '', label: '终到城市'},
-        // 服务方式
-        serviceMode: {value: '', label: '服务方式'},
-        // 车型
-        carModel: {value: '', label: '车型'},
-        // 是否新车
-        carFlag: {value: '', label: '是否新车'},
-        // 估值
-        valuation: '',
-    },
+    // data: {
+    //     // 始发城市
+    //     startCity: {value: '', label: '始发城市'},
+    //     // 终到城市
+    //     endCity: {value: '', label: '终到城市'},
+    //     // 服务方式
+    //     serviceMode: {value: '', label: '服务方式'},
+    //     // 车型
+    //     carModel: {value: '', label: '车型'},
+    //     // 是否新车
+    //     carFlag: {value: '', label: '是否新车'},
+    //     // 估值
+    //     valuation: '',
+    // },
     // 城市列表
     cityList: [],
     // 服务方式列表

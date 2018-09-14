@@ -15,7 +15,7 @@ class CitySetting extends React.Component {
         setCityFormFlag(false);
     }
     render() {
-        const {citySettingReducer,setCityFormFlag,setCityName} = this.props;
+        const {citySettingReducer,setCityFormFlag,setCityName,addCity} = this.props;
 
         const showCityForm = ()=>{
             setCityFormFlag(true);
@@ -25,9 +25,9 @@ class CitySetting extends React.Component {
             setCityName('');
         };
         const changeCityName = (event) => {
-            console.log(citySettingReducer)
             setCityName(event.target.value);
         }
+
         return (
 
             <div>
@@ -39,7 +39,7 @@ class CitySetting extends React.Component {
                                 <label for="city_name">城市</label>
                             </div>
                             <btn className="btn-floating waves-effect waves-light orange" onClick={hideCityForm}><i class="mdi mdi-cancel"></i></btn>
-                            <btn className="btn-floating waves-effect waves-light purple"><i class="mdi mdi-check"></i></btn>
+                            <btn className="btn-floating waves-effect waves-light purple" onClick={addCity}><i class="mdi mdi-check"></i></btn>
                         </form>
                         :
                         <btn class="right  btn btn-large btn-floating waves-effect purple lighten-1 waves-light" onClick={showCityForm}><i class="mdi mdi-plus"></i></btn>
@@ -76,6 +76,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     getCityList: () => {
         dispatch(citySettingAction.getCityList())
+    },
+    addCity: () => {
+        dispatch(citySettingAction.addCity())
     },
     setCityFormFlag: (flag) => {
         dispatch(CitySettingActionType.setCityFormFlag(flag))

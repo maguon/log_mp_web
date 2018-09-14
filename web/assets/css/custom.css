@@ -91,6 +91,14 @@ body{
     color: #F44336;
 }
 
+/** react-select 错误信息样式 */
+.red-font {
+    /*color : red;*/
+    color: #F44336;
+    font-size: 18px;
+    margin: 0 5px 0 5px;
+}
+
 /** modal 样式定义部分 start */
 .modal{
     min-width: 900px;
@@ -142,5 +150,3 @@ body{
 .custom-select {
     display: block;
 }
-
-

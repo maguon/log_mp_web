@@ -69,22 +69,22 @@ class TempComponent extends React.Component {
         // getCityList();
         // setCityFormFlag(false);
 
-        $('.datepicker').datepicker(
-            {
-                format: 'yyyy-mm-dd',
-                showClearBtn : true,
-                // onSelect: function (value) {
-                //     $('#enquiryDiv').modal('destroy');
-                //
-                //     console.log('value',value)
-                //     console.log('aaaaaaaaaaa')
-                //     // this.props.closeModal();
-                //
-                //     // this.hiddenModal();
-                //     //dispatch({type: EnquiryActionType.enquiryModal, payload: false})
-                // }
-            }
-            );
+        // $('.datepicker').datepicker(
+        //     {
+        //         format: 'yyyy-mm-dd',
+        //         showClearBtn : true,
+        //         // onSelect: function (value) {
+        //         //     $('#enquiryDiv').modal('destroy');
+        //         //
+        //         //     console.log('value',value)
+        //         //     console.log('aaaaaaaaaaa')
+        //         //     // this.props.closeModal();
+        //         //
+        //         //     // this.hiddenModal();
+        //         //     //dispatch({type: EnquiryActionType.enquiryModal, payload: false})
+        //         // }
+        //     }
+        //     );
         // $('.datepicker').pickadate({
         //     format: 'yyyy-mm-dd',
         //     onSet: function (arg) {

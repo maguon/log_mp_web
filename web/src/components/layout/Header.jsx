@@ -29,7 +29,8 @@ class Header extends React.Component {
         let userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
-        $('.sidenav').sidenav();
+        // $('.sidenav').sidenav();
+        $("#sideNav").sideNav();
         $('.collapsible').collapsible();
         // $('select').formSelect();
         if (userId == null || token == null) {
@@ -50,7 +51,7 @@ class Header extends React.Component {
                 <nav>
                     <div className="nav-wrapper z-depth-3 custom-purple">
 
-                        <a href="#" data-target="slide-out" className="sidenav-trigger brand-logo"
+                        <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo"
                            style={{display: 'block'}}>
                             <i className="mdi mdi-menu mdi-36px"></i>
                         </a>

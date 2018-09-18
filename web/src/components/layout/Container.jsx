@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Panel, Setting, User, UserDetail,CitySetting} from '../main/index';
+import {Panel, Setting, User, UserDetail,CitySetting,TempComponent} from '../main/index';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 
 import {fileHost} from '../../config/HostConfig';
@@ -8,6 +8,11 @@ import {fileHost} from '../../config/HostConfig';
 import {connect} from 'react-redux';
 
 const routes = [
+    {
+        path: "/temp",
+        exact: true,
+        component: TempComponent
+    },
     {
         path: "/user",
         exact: true,
@@ -71,22 +76,23 @@ class Container extends React.Component {
                                 </a>
                             </div>
                         </li>
+                        <li className="no-padding"><Link to="/temp" className="collapsible-header"><i
+                            className="mdi mdi-cards-variant"/>测试组件画面</Link></li>
+                        <li><div className="divider"/></li>
+
                         <li className="no-padding"><Link to="/panel" className="collapsible-header"><i
-                            className="mdi mdi-cards-variant"></i>面板</Link></li>
-                        <li>
-                            <div class="divider"></div>
+                            className="mdi mdi-cards-variant"/>面板</Link>
                         </li>
+                        <li><div className="divider"/></li>
 
                         <li className="no-padding"><Link to="/user" className="collapsible-header"><i
-                            className="mdi mdi-account-group"></i>用户</Link></li>
-
-                        <li>
-                            <div class="divider"></div>
+                            className="mdi mdi-account-group"/>用户</Link>
                         </li>
+                        <li><div className="divider"/></li>
                         <li className="no-padding">
                             <ul className="collapsible collapsible-accordion">
                                 <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-lock"></i>设置</a>
+                                    <a className="collapsible-header"><i className="mdi mdi-lock"/>设置</a>
                                     <div className="collapsible-body">
                                         <ul>
                                             <li><Link to="/city_setting">城市</Link></li>

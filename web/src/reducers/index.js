@@ -7,8 +7,9 @@ import LoginReducer from './layout/LoginReducer';
 import EnquiryReducer from './main/EnquiryReducer';
 import UserReducer from './main/UserReducer';
 import CitySettingReducer from './main/CitySettingReducer';
+import TempReducer from './main/TempReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
-    UserReducer,LoginReducer,HeaderReducer,EnquiryReducer,CitySettingReducer
+    UserReducer,LoginReducer,HeaderReducer,EnquiryReducer,CitySettingReducer,TempReducer
 })

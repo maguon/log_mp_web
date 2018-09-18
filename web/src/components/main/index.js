@@ -4,3 +4,4 @@ export Setting from "./Setting";
 export User from "./User";
 export UserDetail from "./UserDetail";
 export CitySetting from "./CitySetting";
+export TempComponent from "./TempComponent";

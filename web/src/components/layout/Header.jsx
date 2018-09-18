@@ -29,7 +29,6 @@ class Header extends React.Component {
         let userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
-        // $('.sidenav').sidenav();
         $("#sideNav").sideNav();
         $('.collapsible').collapsible();
         // $('select').formSelect();
@@ -53,7 +52,7 @@ class Header extends React.Component {
 
                         <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo"
                            style={{display: 'block'}}>
-                            <i className="mdi mdi-menu mdi-36px"></i>
+                            <i className="mdi mdi-menu mdi-36px"/>
                         </a>
 
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
@@ -64,11 +63,11 @@ class Header extends React.Component {
                             </li>
                             <li>
                                 <a className="right-align">
-                                    <i className="mdi mdi-account mdi-36px"></i>
+                                    <i className="mdi mdi-account mdi-36px"/>
                                 </a>
                             </li>
                             <li>
-                                <a><i className="mdi mdi-exit-to-app mdi-36px" onClick={logout}></i></a>
+                                <a><i className="mdi mdi-exit-to-app mdi-36px" onClick={logout}/></a>
                             </li>
                         </ul>
                     </div>

@@ -65,7 +65,7 @@ const renderField = ({
         <div className="input-field col s12">
             {/*<input id={id} {...input} type={type} className={labelClass}/>*/}
             <input id={id} {...input} type={type}/>
-            <label for={id}>{label}</label>
+            <label for={id}><span className="red-text">*</span>{label}</label>
             {/*{(touched && (error && <span className="helper-text" data-error={error}></span>))}*/}
             {(touched && (error && <span className="error-msg">{error}</span>))}
         </div>

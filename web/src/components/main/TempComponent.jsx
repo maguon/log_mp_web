@@ -5,6 +5,11 @@ import {Field, reduxForm} from "redux-form";
 const citySettingAction = require('../../actions/main/CitySettingAction');
 import {ReactSelect} from "../utils";
 import { Input ,Button, Card, Row, Col } from 'react-materialize';
+const ConstConfig = require('../../config/ConstConfig');
+
+const FormatUtil = require('../../util/FormatUtil');
+
+
 
 const renderField = ({
                          input,
@@ -85,17 +90,6 @@ class TempComponent extends React.Component {
         //         // }
         //     }
         //     );
-        // $('.datepicker').pickadate({
-        //     format: 'yyyy-mm-dd',
-        //     onSet: function (arg) {
-        //         if ('select' in arg) {
-        //             this.close();
-        //         }
-        //     },
-        //     selectMonths: false, // Creates a dropdown to control month
-        //     selectYears: 0 // Creates a dropdown of 15 years to control year
-        // });
-        // });
     }
 
     render() {
@@ -108,6 +102,19 @@ class TempComponent extends React.Component {
         //     setCityFormFlag(false);
         //     setCityName('');
         // };
+
+        let date = new Date();
+        console.log('---------------------------------');
+        console.log(FormatUtil.DateFormat(date,'yyyy/MM/dd hh:mm:ss.S q'))
+
+        let number = 123456.789;
+
+// 请求一个货币格式
+        console.log(FormatUtil.NumberFormat(123456.789));
+
+        console.log(FormatUtil.CurrencyFormat(number));
+        //gives 42 661,56
+        console.log(FormatUtil.NumberFormat(42661.55556, 3));
 
         const changeStartDate = (event, value) => {
             // setCityName(event.target.value);
@@ -122,19 +129,20 @@ class TempComponent extends React.Component {
                     aaaaaaaaaaaaaaaaaa
 
                     <form onSubmit={handleSubmit}>
-                    <div className="input-field col s3">
-                        <input type="text" name="startDate" onChange={changeStartDate}></input>
+                    {/*<div className="input-field col s3">*/}
+                        {/*<input type="text" name="startDate" onChange={changeStartDate}></input>*/}
 
-                        {/*<input type="text" id="createdOnStartText" className="datepicker">*/}
-                            {/*<i className="mdi dataIcon mdi-table-large"></i>*/}
-                            {/*<label for="createdOnStartText">贷入日期(始)</label>*/}
-                        {/*</input>*/}
-                    </div>
+                        {/*/!*<input type="text" id="createdOnStartText" className="datepicker">*!/*/}
+                            {/*/!*<i className="mdi dataIcon mdi-table-large"></i>*!/*/}
+                            {/*/!*<label for="createdOnStartText">贷入日期(始)</label>*!/*/}
+                        {/*/!*</input>*!/*/}
+                    {/*</div>*/}
 
                     <div className="input-field col s3">
-                        <input type="text" name="endDate" className="datepicker" onChange={changeStartDate}></input>
+                        <input type="text" name="endDate" className="datepicker" onChange={changeStartDate}/>
                         {/*<Input s={6} label="First Name" name="tempName" validate defaultValue='Alvin' />*/}
-                        <Input name='on' label="React-datepicker测试日期" type='date' id='tttDate' options={{format: 'yyyy-mm-dd',autoClose: true}} onChange={changeStartDate} />
+                        <Input name='on' type='date' options={ConstConfig.DATE_PICKER_OPTION} onChange={changeStartDate} />
+                        {/*<Input name='on' label="React-date-picker" className="datepicker" type='date' id='tttDate' onChange={changeStartDate} />*/}
                         {/*<input type="text" id="createdOnStartText" className="datepicker">*/}
                         {/*<i className="mdi dataIcon mdi-table-large"></i>*/}
                         {/*<label for="createdOnStartText">贷入日期(始)</label>*/}
@@ -153,7 +161,6 @@ class TempComponent extends React.Component {
 
                         <button type="submit" className="btn confirm-btn" disabled={submitting }>确定</button>
                         <Button waves='light'>button</Button>
-                        <Input name='on' type='date' id='tttDat1e' onChange={changeStartDate} />
                     </form>
 
 

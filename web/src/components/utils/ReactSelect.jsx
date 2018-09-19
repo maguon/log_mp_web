@@ -9,23 +9,27 @@ const ReactSelect = props => {
     // defaultValue：默认值
     // searchable：是否提供检索功能
     // placeholder：提示文字
-    const {options, input: {onChange, value}, meta: {touched, error}, defaultValue, searchable, placeholder} = props;
+    const {options, input: {onChange, value}, meta: {touched, error}, defaultValue, searchable, placeholder,onInputChange} = props;
     return (
         <div>
             <Select
                 options={options}
                 onChange={onChange}
-                defaultValue={defaultValue}
                 value={value}
-                // styles={error === "" ? singleStyles : singleErrStyles}
-                styles={singleStyles}
-                // autoFocus='true'
+                defaultValue={defaultValue}
                 isSearchable={searchable}
-                isClearable={false}
                 placeholder={placeholder}
+                styles={singleStyles}
+                isClearable={false}
+                // autoFocus='true'
+                // styles={error === "" ? singleStyles : singleErrStyles}
                 // isRtl={true}
                 // onFocus={null}
                 // className="temp"
+                // onBlur={onInputChange}
+                onInputChange={onInputChange}
+                // onMenuClose={onInputChange}
+
             />
             {(touched && (error && <span className="error-msg">{error}</span>))}
         </div>
@@ -46,7 +50,8 @@ const singleStyles = {
         borderRight: '0',
         // borderBottom: '1px solid #26a69a',
         background: '#FAFAFA',
-        margin: "0 0 8px 0",
+        // margin: "0 0 8px 0",
+        margin: "0 0 20px 0",
         borderColor: isFocused ? '#26a69a' : '#ACACAC',
         ':hover': {
             borderColor: "#26a69a"

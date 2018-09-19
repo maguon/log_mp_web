@@ -3,6 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux'
 import {Field, reduxForm} from "redux-form";
 import {ReactSelect} from '../utils/index';
+import {EnquiryActionType} from "../../actionTypes";
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
 
@@ -62,7 +63,7 @@ const renderField = ({
 
     // const labelClass = "validate " + (touched && error ? 'invalid' : '');
     return (
-        <div className="input-field col s12">
+        <div>
             {/*<input id={id} {...input} type={type} className={labelClass}/>*/}
             <input id={id} {...input} type={type}/>
             <label for={id}><span className="red-text">*</span>{label}</label>
@@ -88,6 +89,7 @@ class Enquiry extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
+        const {changeStartCity} = this.props;
         console.log('componentDidMount');
         $('.modal').modal();
         // $('select').formSelect();
@@ -106,6 +108,7 @@ class Enquiry extends React.Component {
     //     // this.props.clearForm()
     // }
 
+
     /**
      * 渲染(挂载)画面。
      */
@@ -113,62 +116,71 @@ class Enquiry extends React.Component {
         // pristine : true 表示表单数据为原始数据没被修改过，反之为 dirty。
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
-        const {enquiryReducer, handleSubmit, closeModal, pristine, submitting, calculateFreight} = this.props;
+        const {enquiryReducer, handleSubmit, closeModal, pristine, submitting, setStartCity, setEndCity, calculateMileage, calculateFreight} = this.props;
+
+        const handleInputChange = (value, actionMeta) => {
+            // 如果action 是 set-value 时（避免重复调用），执行计算里程
+            console.log('actionMeta',actionMeta);
+            console.log('value',value);
+            if (actionMeta.action === 'set-value') {
+                console.log('计算里程开始。。。。',enquiryReducer);
+                calculateMileage(enquiryReducer.startCity, enquiryReducer.endCity);
+            }
+        };
+
         return (
             <div>
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
 
                     <form onSubmit={handleSubmit(calculateFreight)}>
+
+                        {/** Modal头部：Title */}
                         <div className="modal-title center-align white-text">询&nbsp;价</div>
 
+                        {/** Modal主体 */}
                         <div className="modal-content">
 
-                            <div className="input-field col s6">
-                                <div className="input-field col s12">
+                            {/** 第一行 */}
+                            <div className="row">
+                                <div className="input-field col s6">
                                     <Field name="startCity" component={ReactSelect}
                                            props={{
-                                               // value: enquiryReducer.startCity,
                                                options: enquiryReducer.cityList,
+                                               // selectValue : enquiryReducer.startCity,
                                                placeholder: "始发城市",
-                                               searchable: true
+                                               searchable: true,
+                                               onInputChange: handleInputChange
                                            }}/>
                                 </div>
-                            </div>
-                            <div className="input-field col s4">
-                                <div className="input-field col s12">
+                                <div className="input-field col s4">
                                     <Field name="endCity" component={ReactSelect}
                                            props={{
-                                               // value: enquiryReducer.endCity,
                                                options: enquiryReducer.cityList,
                                                placeholder: "终到城市",
-                                               searchable: true
+                                               searchable: true,
+                                               // onInputChange: changeStartCity
                                            }}/>
                                 </div>
-                            </div>
-                            <div className="input-field col s2 right-align">
-                                <div className="input-field col s12">
+                                <div className="input-field col s2 right-align">
                                     <div className="input-field col s12">
-                                    <span className="red-font">{enquiryReducer.mileage}</span>公里
+                                        <span className="red-font">{enquiryReducer.mileage}</span>公里
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="input-field col s6">
-                                <div className="input-field col s12">
+                            {/** 第二行 */}
+                            <div className="row">
+                                <div className="input-field col s6">
                                     <Field name="serviceMode" component={ReactSelect}
                                            props={{
-                                               // value: enquiryReducer.serviceMode,
                                                options: enquiryReducer.serviceModeList,
                                                placeholder: "服务方式",
                                                searchable: false
                                            }}/>
                                 </div>
-                            </div>
-                            <div className="input-field col s6">
-                                <div className="input-field col s12">
+                                <div className="input-field col s6">
                                     <Field name="carModel" component={ReactSelect}
                                            props={{
-                                               // value: enquiryReducer.carModel,
                                                options: enquiryReducer.carModelList,
                                                placeholder: "车型",
                                                searchable: false
@@ -176,32 +188,33 @@ class Enquiry extends React.Component {
                                 </div>
                             </div>
 
-                            <div className="input-field col s6">
-                                <div className="input-field col s12">
+                            {/** 第三行 */}
+                            <div className="row">
+                                <div className="input-field col s6">
                                     <Field name="carFlag" component={ReactSelect}
                                            props={{
-                                               // value: enquiryReducer.carFlag,
                                                options: enquiryReducer.carFlagList,
                                                placeholder: "是否新车",
                                                searchable: false
                                            }}/>
                                 </div>
-                            </div>
-                            <div className="input-field col s6">
-                                <Field type="text" label="估值" id="valuation" name="valuation" component={renderField}/>
+                                <div className="input-field col s6">
+                                    <Field type="text" label="估值" id="valuation" name="valuation" component={renderField}/>
+                                </div>
                             </div>
 
-                            <div className="input-field col s12 right-align">
+                            {/** 最终行：预计运费 */}
+                            <div className="row input-field col s12 right-align">
                                 <div className="input-field col s12">
                                     预计运费：<span className="red-font">{enquiryReducer.freight}</span>元
                                 </div>
                             </div>
                         </div>
 
+                        {/** Modal固定底部：取消确定按钮 */}
                         <div className="modal-footer">
                             <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>
-                            <button type="submit" className="btn confirm-btn" disabled={submitting | pristine}>确定
-                            </button>
+                            <button type="submit" className="btn confirm-btn" disabled={submitting | pristine}>确定</button>
                         </div>
 
                     </form>
@@ -229,8 +242,21 @@ const mapStateToProps = (state) => {
  * @returns {{login: function(*=)}}
  */
 const mapDispatchToProps = (dispatch) => ({
+    //
+    setStartCity: (startCity) => {
+        dispatch(EnquiryActionType.setStartCity(startCity))
+    },
+    setEndCity: (endCity) => {
+        dispatch(EnquiryActionType.setEndCity(endCity))
+    },
+
+
+
     closeModal: () => {
         $('#enquiryModal').modal('close');
+    },
+    calculateMileage: () => {
+        // dispatch(enquiryAction.calculateMileage())
     },
     calculateFreight: (values) => {
         console.log('values is : ', values);

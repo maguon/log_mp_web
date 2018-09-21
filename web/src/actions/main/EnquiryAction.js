@@ -4,6 +4,8 @@ import {apiHost} from '../../config/HostConfig';
 import {createAction} from "redux-actions";
 
 const httpUtil = require('../../util/HttpUtil');
+const FormatUtil = require('../../util/FormatUtil');
+const ConstConfig = require('../../config/ConstConfig');
 
 export const getCityList = () => async (dispatch) => {
     try {
@@ -34,9 +36,24 @@ export const openEnquiryModal = () => async (dispatch) => {
     console.log('resetForm inner');
     // 清空reduxForm
     dispatch(reset('EnquiryFormValues'));
-    // 询价画面 初期时，【里程】和【预计运费】默认为：0
+    // 询价画面 初期
+    // 始发城市
+    dispatch({type: EnquiryActionType.setStartCity, payload: {value: '', label: '始发城市'}});
+    // 终到城市
+    dispatch({type: EnquiryActionType.setEndCity, payload: {value: '', label: '终到城市'}});
+    // 服务方式
+    dispatch({type: EnquiryActionType.setServiceMode, payload: {value: '', label: '服务方式'}});
+    // 车型
+    dispatch({type: EnquiryActionType.setCarModel, payload: {value: '', label: '车型'}});
+    // 是否新车
+    dispatch({type: EnquiryActionType.setCarFlag, payload: {value: '', label: '是否新车'}});
+    // 估值
+    dispatch({type: EnquiryActionType.setValuation, payload: ''});
+    // 里程
+    dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: false});
     dispatch({type: EnquiryActionType.setMileage, payload: 0});
-    dispatch({type: EnquiryActionType.setFreight, payload: 0});
+    // 预计运费
+    dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(0, 2)})
 };
 
 // export const openModal = () => async (dispatch) => {
@@ -86,24 +103,26 @@ export const calculateMileage = () => async (dispatch, getState) => {
             // 'http://stg.myxxjs.com:9101/api/route?routeStartId=101&routeEndId=102'
             const url = apiHost + '/api/route?routeStartId=' + startCityId + '&routeEndId=' + endCityId;
             const res = await httpUtil.httpGet(url);
-
-            console.log('res is : ',res)
             if (res.success) {
-                // dispatch({type: EnquiryActionType.getCityList, payload: res.result})
                 // 有数据时，更新里程，清除画面提示文字
                 if (res.result.length > 0) {
                     dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: false})
                     dispatch({type: EnquiryActionType.setMileage, payload: res.result[0].distance})
+
+                    dispatch(calculateFreight())
                 } else {
                     // 无数据时，更新里程，清除画面提示文字
                     dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: true})
-                    dispatch({type: EnquiryActionType.setMileage, payload: 0})
+                    // 里程
+                    dispatch({type: EnquiryActionType.setMileage, payload: 0});
+                    // 预计运费
+                    dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(0, 2)})
                 }
             } else {
                 swal({
                     type: 'warning',
-                    title: '错误',
-                    text: '获取城市信息失败'
+                    title: '',
+                    text: res.msg
                 })
             }
         }
@@ -120,9 +139,9 @@ export const calculateMileage = () => async (dispatch, getState) => {
 /**
  * 设定画面预计运费结果。
  */
-export const calculateFreight = () => async (dispatch, getState) => {
+export const calculateFreight = () => (dispatch, getState) => {
     // 里程
-    const mileage = getState().EnquiryReducer.mileage.value;
+    const mileage = getState().EnquiryReducer.mileage;
     // 服务方式
     const serviceMode = getState().EnquiryReducer.serviceMode.value;
     // 车型
@@ -132,22 +151,22 @@ export const calculateFreight = () => async (dispatch, getState) => {
     // 估值
     const valuation = getState().EnquiryReducer.valuation;
 
-    console.log('mileage',mileage)
-    console.log('serviceMode',serviceMode)
-    console.log('carModel',carModel)
-    console.log('carFlag',carFlag)
-    console.log('valuation',valuation)
-
+    // 预计运费
     let freight = 0;
-    if (mileage !== '' && serviceMode !== ''  && carModel !== '' && carFlag !== ''&& valuation !== '') {
-        freight = 9990;
 
+    if (mileage !== 0 && serviceMode !== '' && carModel !== '' && carFlag !== '' && valuation !== '') {
+        // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
+        // 里程单价 --> ConstConfig.ENQUIRY_PARAMS.unitPrice
+        // 车型系数 --> ConstConfig.CAR_MODEL[x].ratio
+        // 是否新车系数 --> ConstConfig.YES_NO[x].ratio
+        // 估值比率 --> ConstConfig.ENQUIRY_PARAMS.valuationRate
+        // 服务方式费用 --> ConstConfig.SERVICE_MODE[x].fee
+
+        freight = mileage * ConstConfig.ENQUIRY_PARAMS.unitPrice * ConstConfig.CAR_MODEL[carModel - 1].ratio * ConstConfig.YES_NO[carFlag].ratio
+            + valuation * ConstConfig.ENQUIRY_PARAMS.valuationRate + ConstConfig.SERVICE_MODE[serviceMode - 1].fee;
+        console.log(freight)
     }
-    // 计算公式暂无
 
-    // 暂定公式：里程 * 里程单价(暂定 1.2 元) * 车型系数（标准SUV：1.0 ，标准轿车：0.9，大型SUV：1.1，标准商务车：1.1，大型商务车：1.2）* 是否新车系数(新车：1.0，旧车：0.8) * 估值的0.5%  + 服务方式费用(自提：0，指定地点：500)
-
-
-    dispatch({type: EnquiryActionType.setFreight, payload: freight})
+    dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(freight, 2)})
 };
 

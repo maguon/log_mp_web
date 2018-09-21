@@ -113,13 +113,13 @@ class EnquiryForm extends React.Component {
         const changeStartCity = (value) => {
             setStartCity(value);
             calculateMileage();
-            calculateFreight();
+            // calculateFreight();
         };
 
         const changeEndCity = (value) => {
             setEndCity(value);
             calculateMileage();
-            calculateFreight();
+            // calculateFreight();
         };
 
         const changeServiceMode = (value) => {

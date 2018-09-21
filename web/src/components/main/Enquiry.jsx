@@ -6,51 +6,6 @@ import {EnquiryActionType} from "../../actionTypes";
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
 
-// const vvv = msg => value => (!value && value != 0 && value != '') ? msg : undefined;
-// const vn = vvv('不能为空！!!!!');
-// const hasSelect = msg => value => (value === '') ? msg : undefined;
-// const vn2 = hasSelect('error!!!!!!');
-// const validate = values => {
-//     const errors = {};
-//     // 始发城市
-//     if (!values.startCity || values.startCity.length === 0 || values.startCity.value === "") {
-//         errors.startCity = '必填'
-//     }
-//     // 终到城市
-//     if (!values.endCity || values.endCity.length === 0 || values.endCity.value === "") {
-//         errors.endCity = '必填'
-//     }
-//     // 服务方式
-//     if (!values.serviceMode || values.serviceMode.length === 0 || values.serviceMode.value === "") {
-//         errors.serviceMode = '必填'
-//     }
-//     // 车型
-//     if (!values.carModel || values.carModel.length === 0 || values.carModel.value === "") {
-//         errors.carModel = '必填'
-//     }
-//     // 是否新车
-//     if (!values.carFlag || values.carFlag.length === 0 || values.carFlag.value === "") {
-//         errors.carFlag = '必填'
-//     }
-//     // if (!values.email) {
-//     //     errors.email = 'Required'
-//     // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-//     //     errors.email = 'Invalid email address'
-//     // }
-//     // if (!values.age) {
-//     //     errors.age = 'Required'
-//     // } else if (isNaN(Number(values.age))) {
-//     //     errors.age = 'Must be a number'
-//     // } else if (Number(values.age) < 18) {
-//     //     errors.age = 'Sorry, you must be at least 18 years old'
-//     // }
-//     // 估值
-//     if (!values.valuation) {
-//         errors.valuation = '必填'
-//     }
-//     return errors
-// };
-
 const renderField = ({
                          input,
                          label,
@@ -58,14 +13,10 @@ const renderField = ({
                          meta: {touched, error},
                          id
                      }) => {
-
-    // const labelClass = "validate " + (touched && error ? 'invalid' : '');
     return (
         <div>
-            {/*<input id={id} {...input} type={type} className={labelClass}/>*/}
             <input id={id} {...input} type={type}/>
             <label for={id}>{label}</label>
-            {/*{(touched && (error && <span className="helper-text" data-error={error}></span>))}*/}
             {(touched && (error && <span className="error-msg">{error}</span>))}
         </div>
     )
@@ -196,7 +147,8 @@ class EnquiryForm extends React.Component {
                                            }}/>
                                 </div>
                                 <div className="input-field col s6">
-                                    <Field type="text" label="估值" id="valuation" name="valuation" onChange={changeValuation}
+                                    <Field type="text" label="估值" id="valuation" name="valuation"
+                                           onChange={changeValuation}
                                            component={renderField}/>
                                 </div>
                             </div>

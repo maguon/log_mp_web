@@ -1,13 +1,8 @@
 import React from 'react';
-
 import {connect} from 'react-redux';
-import Select from 'react-select';
-
-import {Input} from 'react-materialize'
-import {Field, formValueSelector, reduxForm} from "redux-form";
+import {Field, reduxForm} from "redux-form";
 import {ReactSelect} from '../utils/index';
 import {EnquiryActionType} from "../../actionTypes";
-import {createAction} from "redux-actions";
 
 const enquiryAction = require('../../actions/main/EnquiryAction');
 
@@ -103,23 +98,15 @@ class EnquiryForm extends React.Component {
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
         const {enquiryReducer, setStartCity, setEndCity, setServiceMode, setCarModel, setCarFlag, setValuation, calculateMileage, calculateFreight, closeModal} = this.props;
-        // const endCityFiled = ({options,input})=>{
-        //     return (
-        //         <Select  options={options} {...input} onInputChange={handleInputChange}>
-        //         </Select>
-        //     )
-        // }
 
         const changeStartCity = (value) => {
             setStartCity(value);
             calculateMileage();
-            // calculateFreight();
         };
 
         const changeEndCity = (value) => {
             setEndCity(value);
             calculateMileage();
-            // calculateFreight();
         };
 
         const changeServiceMode = (value) => {
@@ -138,7 +125,6 @@ class EnquiryForm extends React.Component {
         };
 
         const changeValuation = (event) => {
-            console.log('event.target.value',event.target.value);
             setValuation(event.target.value);
             calculateFreight();
         };
@@ -193,7 +179,6 @@ class EnquiryForm extends React.Component {
                                     <Field name="carModel" component={ReactSelect} onChange={changeCarModel}
                                            props={{
                                                options: enquiryReducer.carModelList,
-                                               // selectValue : enquiryReducer.carModel,
                                                placeholder: "车型",
                                                searchable: false
                                            }}/>
@@ -206,7 +191,6 @@ class EnquiryForm extends React.Component {
                                     <Field name="carFlag" component={ReactSelect} onChange={changeCarFlag}
                                            props={{
                                                options: enquiryReducer.carFlagList,
-                                               // selectValue : enquiryReducer.carFlag,
                                                placeholder: "是否新车",
                                                searchable: false
                                            }}/>
@@ -254,23 +238,17 @@ class EnquiryForm extends React.Component {
 
 /**
  * 输入逻辑：外部的数据（即state对象）转换为 UI 组件的参数。
- * @param state
- * @returns {{initialValues}} 初期数据
  */
 const mapStateToProps = (state) => {
     return {
-        // initialValues: state.EnquiryReducer.data,
         enquiryReducer: state.EnquiryReducer
     }
 };
 
 /**
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
- * @param dispatch
- * @returns {{login: function(*=)}}
  */
 const mapDispatchToProps = (dispatch) => ({
-    //
     setStartCity: (startCity) => {
         dispatch(EnquiryActionType.setStartCity(startCity))
     },
@@ -290,12 +268,10 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(EnquiryActionType.setValuation(valuation))
     },
 
-
     closeModal: () => {
         $('#enquiryModal').modal('close');
     },
     calculateMileage: () => {
-        console.log('mapDispatchToProps calculateMileage inner')
         dispatch(enquiryAction.calculateMileage())
     },
     calculateFreight: () => {

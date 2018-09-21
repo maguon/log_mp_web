@@ -33,7 +33,6 @@ export const getCityList = () => async (dispatch) => {
 };
 
 export const openEnquiryModal = () => async (dispatch) => {
-    console.log('resetForm inner');
     // 清空reduxForm
     dispatch(reset('EnquiryFormValues'));
     // 询价画面 初期
@@ -57,7 +56,6 @@ export const openEnquiryModal = () => async (dispatch) => {
 };
 
 // export const openModal = () => async (dispatch) => {
-//     console.log('open modal')
 //     // dispatch(reset('enquiryForm'))
 //     $('.modal').modal(
 //         {
@@ -69,14 +67,11 @@ export const openEnquiryModal = () => async (dispatch) => {
 //             // ending_top: '10%', // Ending top style attribute
 //             // ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
 //             //     alert("Ready");
-//             //     console.log(modal, trigger);
 //             // },
 //             // onCloseStart: function() { dispatch({type: EnquiryActionType.enquiryModal, payload: false}) },
 //             onCloseEnd: function () {
 //                 $('#enquiryDiv').modal('destroy');
 //
-//                 console.log('close...........')
-//                 console.log('aaaaaaaaaaa')
 //                 // this.props.closeModal();
 //
 //                 // this.hiddenModal();
@@ -92,7 +87,7 @@ export const openEnquiryModal = () => async (dispatch) => {
  */
 export const calculateMileage = () => async (dispatch, getState) => {
     try {
-        console.log('getState()', getState());
+        // console.log('getState()', getState());
         // const enquiryFormValues = getState().form.EnquiryFormValues.values;
 
         const startCityId = getState().EnquiryReducer.startCity.value;
@@ -164,7 +159,6 @@ export const calculateFreight = () => (dispatch, getState) => {
 
         freight = mileage * ConstConfig.ENQUIRY_PARAMS.unitPrice * ConstConfig.CAR_MODEL[carModel - 1].ratio * ConstConfig.YES_NO[carFlag].ratio
             + valuation * ConstConfig.ENQUIRY_PARAMS.valuationRate + ConstConfig.SERVICE_MODE[serviceMode - 1].fee;
-        console.log(freight)
     }
 
     dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(freight, 2)})

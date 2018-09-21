@@ -1,7 +1,6 @@
 import {EnquiryActionType} from "../../actionTypes";
 import {reset} from 'redux-form'
 import {apiHost} from '../../config/HostConfig';
-import {createAction} from "redux-actions";
 
 const httpUtil = require('../../util/HttpUtil');
 const FormatUtil = require('../../util/FormatUtil');
@@ -10,7 +9,7 @@ const ConstConfig = require('../../config/ConstConfig');
 export const getCityList = () => async (dispatch) => {
     try {
         const url = apiHost + '/api/city';
-        const res = await httpUtil.httpGet(url)
+        const res = await httpUtil.httpGet(url);
 
         if (res.success) {
             dispatch({type: EnquiryActionType.getCityList, payload: res.result})
@@ -33,7 +32,7 @@ export const getCityList = () => async (dispatch) => {
 };
 
 export const openEnquiryModal = () => async (dispatch) => {
-    // 清空reduxForm
+    // 清空画面数据
     dispatch(reset('EnquiryFormValues'));
     // 询价画面 初期
     // 始发城市
@@ -55,32 +54,6 @@ export const openEnquiryModal = () => async (dispatch) => {
     dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(0, 2)})
 };
 
-// export const openModal = () => async (dispatch) => {
-//     // dispatch(reset('enquiryForm'))
-//     $('.modal').modal(
-//         {
-//             dismissible: true, // Modal can be dismissed by clicking outside of the modal
-//             // opacity: .5, // Opacity of modal background
-//             // in_duration: 300, // Transition in duration
-//             // out_duration: 200, // Transition out duration
-//             // starting_top: '4%', // Starting top style attribute
-//             // ending_top: '10%', // Ending top style attribute
-//             // ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-//             //     alert("Ready");
-//             // },
-//             // onCloseStart: function() { dispatch({type: EnquiryActionType.enquiryModal, payload: false}) },
-//             onCloseEnd: function () {
-//                 $('#enquiryDiv').modal('destroy');
-//
-//                 // this.props.closeModal();
-//
-//                 // this.hiddenModal();
-//                 //dispatch({type: EnquiryActionType.enquiryModal, payload: false})
-//             } // Callback for Modal close
-//         }
-//     );
-//     $('#enquiryDiv').modal('open');
-// };
 
 /**
  * 根据开始城市-终到城市，设定画面里程显示。
@@ -95,19 +68,18 @@ export const calculateMileage = () => async (dispatch, getState) => {
 
         // 当 始发城市，终到城市 都选择的时候，调用接口
         if (startCityId !== '' && endCityId !== '') {
-            // 'http://stg.myxxjs.com:9101/api/route?routeStartId=101&routeEndId=102'
             const url = apiHost + '/api/route?routeStartId=' + startCityId + '&routeEndId=' + endCityId;
             const res = await httpUtil.httpGet(url);
             if (res.success) {
                 // 有数据时，更新里程，清除画面提示文字
                 if (res.result.length > 0) {
-                    dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: false})
-                    dispatch({type: EnquiryActionType.setMileage, payload: res.result[0].distance})
+                    dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: false});
+                    dispatch({type: EnquiryActionType.setMileage, payload: res.result[0].distance});
 
                     dispatch(calculateFreight())
                 } else {
                     // 无数据时，更新里程，清除画面提示文字
-                    dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: true})
+                    dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: true});
                     // 里程
                     dispatch({type: EnquiryActionType.setMileage, payload: 0});
                     // 预计运费

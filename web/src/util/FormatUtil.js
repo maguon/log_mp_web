@@ -42,7 +42,7 @@ export const DateFormat = (date, format) => {
  * @returns {string} 标准格式 例：FormatUtil.NumberFormat(123456.789, 2) ==> 123,456.79
  */
 export const NumberFormat = (number, decimals) => {
-    decimals = typeof undefined === 'undefined'? 0 : decimals;
+    decimals = typeof decimals === 'undefined'? 0 : decimals;
     // 保留指定小数点后位数，并分割数组
     let x = number.toFixed(decimals).split('.');
     let x1 = x[0];

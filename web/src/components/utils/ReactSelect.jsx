@@ -4,18 +4,25 @@ import Select from 'react-select';
 /**
  * 自定义封装react-select组件
  */
-const ReactSelect = props => {
+const ReactSelect = (props) => {
     // options：下拉菜单列表数据，接受类型为，value,label
     // defaultValue：默认值
     // searchable：是否提供检索功能
     // placeholder：提示文字
-    const {options, input: {onChange, value}, meta: {touched, error}, defaultValue, searchable, placeholder,onInputChange} = props;
+    const {options, input: {onChange, value}, meta: {touched, error}, defaultValue, searchable, placeholder} = props;
     return (
         <div>
             <Select
                 options={options}
                 onChange={onChange}
                 value={value}
+                // value={selectValue}
+                // onChange={(option) => {
+                //     console.log('option111111++++++++++++++++++++-------------------------', option);
+                //     onChange(option);
+                //     onInputChange(option);
+                //     }
+                // }
                 defaultValue={defaultValue}
                 isSearchable={searchable}
                 placeholder={placeholder}
@@ -27,7 +34,7 @@ const ReactSelect = props => {
                 // onFocus={null}
                 // className="temp"
                 // onBlur={onInputChange}
-                onInputChange={onInputChange}
+                // onInputChange={onInputChange}
                 // onMenuClose={onInputChange}
 
             />

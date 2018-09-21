@@ -27,6 +27,7 @@ const initialState = {
     // 估值
     valuation: '',
 
+    errorRouteFlg: false,
     // 里程
     mileage: 0,
     // 预计运费
@@ -45,6 +46,7 @@ export default handleActions(
                 cityList: cityList
             }
         },
+
         [EnquiryActionType.setStartCity]: (state, action) => {
             return {
                 ...state,
@@ -55,6 +57,37 @@ export default handleActions(
             return {
                 ...state,
                 endCity: action.payload
+            }
+        },
+        [EnquiryActionType.setServiceMode]: (state, action) => {
+            return {
+                ...state,
+                serviceMode: action.payload
+            }
+        },
+        [EnquiryActionType.setCarModel]: (state, action) => {
+            return {
+                ...state,
+                carModel: action.payload
+            }
+        },
+        [EnquiryActionType.setCarFlag]: (state, action) => {
+            return {
+                ...state,
+                carFlag: action.payload
+            }
+        },
+        [EnquiryActionType.setValuation]: (state, action) => {
+            return {
+                ...state,
+                valuation: action.payload
+            }
+        },
+
+        [EnquiryActionType.setErrorRouteFlg]: (state, action) => {
+            return {
+                ...state,
+                errorRouteFlg: action.payload
             }
         },
         [EnquiryActionType.setMileage]: (state, action) => {

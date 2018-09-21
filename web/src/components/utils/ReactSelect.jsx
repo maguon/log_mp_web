@@ -16,27 +16,11 @@ const ReactSelect = (props) => {
                 options={options}
                 onChange={onChange}
                 value={value}
-                // value={selectValue}
-                // onChange={(option) => {
-                //     console.log('option111111++++++++++++++++++++-------------------------', option);
-                //     onChange(option);
-                //     onInputChange(option);
-                //     }
-                // }
                 defaultValue={defaultValue}
                 isSearchable={searchable}
                 placeholder={placeholder}
                 styles={singleStyles}
                 isClearable={false}
-                // autoFocus='true'
-                // styles={error === "" ? singleStyles : singleErrStyles}
-                // isRtl={true}
-                // onFocus={null}
-                // className="temp"
-                // onBlur={onInputChange}
-                // onInputChange={onInputChange}
-                // onMenuClose={onInputChange}
-
             />
             {(touched && (error && <span className="error-msg">{error}</span>))}
         </div>
@@ -64,34 +48,11 @@ const singleStyles = {
             borderColor: "#26a69a"
         }
     }),
-    // input: styles => ({...styles, border: '2px solid #ff0000'}),
-    indicatorSeparator: styles => ({...styles, display: 'none'}),
-    // singleValue: (base, state) => {
-    //     return { ...base, color: state.isFocused ? 'blue' : 'red' };
-    // }
-    valueContainer: styles => ({...styles, paddingLeft: '0'})
-};
-
-/**
- * 单选下拉菜单样式（自定义error style，暂未使用）
- */
-const singleErrStyles = {
-    control: styles => ({
-        ...styles,
-        height: '47px',
-        borderRadius: "0",
-        borderTop: "0",
-        borderLeft: "0",
-        borderRight: "0",
-        margin: "0 0 8px 0",
-        borderBottom: '2px solid #ff0000'
-    }),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     valueContainer: styles => ({...styles, paddingLeft: '0'})
 };
 
 /**
  * 自定义封装react-select组件
- * @type {function(*)}
  */
 module.exports = ReactSelect;

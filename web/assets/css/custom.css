@@ -86,7 +86,11 @@ body {
 }
 
 .btn:focus {
-    background-color: #6E2678;
+    background-color: #6E2678 !important;
+}
+.btn:hover {
+    background-color: #6E2678 !important;
+    color: white;
 }
 
 /** material样式 变更部分 End */

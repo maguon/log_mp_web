@@ -17,8 +17,7 @@ export const getCityList = () => async (dispatch, getState) => {
                 text: res.msg
             })
         }
-    }
-    catch (err) {
+    } catch (err) {
         swal({
             type: 'error',
             title: '操作失败',
@@ -27,7 +26,7 @@ export const getCityList = () => async (dispatch, getState) => {
     }
 };
 
-export const addCity = (param) => async (dispatch, getState) => {
+export const addCity = () => async (dispatch, getState) => {
     try {
         const cityName = getState().CitySettingReducer.cityName;
         if (cityName === '') {
@@ -45,9 +44,11 @@ export const addCity = (param) => async (dispatch, getState) => {
             const res = await httpUtil.httpPost(url, params);
 
             if (res.success) {
-                dispatch({type: CitySettingActionType.getCityInfo, payload: getState().CitySettingReducer.cityArray});
+                // 恢复添加前画面样子
                 dispatch({type: CitySettingActionType.setCityFormFlag, payload: false});
                 dispatch({type: CitySettingActionType.setCityName, payload: ''});
+                // 添加成功后，重新检索画面数据
+                dispatch(getCityList());
             } else {
                 swal({
                     type: 'warning',
@@ -56,8 +57,7 @@ export const addCity = (param) => async (dispatch, getState) => {
                 })
             }
         }
-    }
-    catch (err) {
+    } catch (err) {
         swal({
             type: 'error',
             title: '操作失败',

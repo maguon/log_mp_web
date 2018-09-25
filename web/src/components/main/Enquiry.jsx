@@ -147,7 +147,7 @@ class EnquiryForm extends React.Component {
                                            }}/>
                                 </div>
                                 <div className="input-field col s6">
-                                    <Field type="text" label="估值" id="valuation" name="valuation"
+                                    <Field type="number" label="估值" id="valuation" name="valuation"
                                            onChange={changeValuation}
                                            component={renderField}/>
                                 </div>

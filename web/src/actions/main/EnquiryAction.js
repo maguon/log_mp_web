@@ -16,17 +16,16 @@ export const getCityList = () => async (dispatch) => {
         } else {
             swal({
                 type: 'warning',
-                title: '错误',
-                text: '获取城市信息失败'
+                title: '获取城市信息失败',
+                text: res.msg
             })
         }
-
     } catch (err) {
         // alert message
         swal({
             type: 'error',
-            title: '系统异常',
-            text: '服务器内部错误!'
+            title: '操作失败',
+            text: err.message
         })
     }
 };
@@ -94,11 +93,10 @@ export const calculateMileage = () => async (dispatch, getState) => {
             }
         }
     } catch (err) {
-        // alert message
         swal({
             type: 'error',
-            title: '系统异常',
-            text: '服务器内部错误!'
+            title: '操作失败',
+            text: err.message
         })
     }
 };

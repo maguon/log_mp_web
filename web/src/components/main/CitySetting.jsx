@@ -85,7 +85,7 @@ class CitySetting extends React.Component {
                             citySettingReducer.cityArray.map(function (item) {
                                 return (
                                     <div className="col s2">
-                                        <div className="col s12 city_model_panel z-depth-1 center-align">
+                                        <div className="col s12 card-unit z-depth-1 center-align">
                                             <div style={{marginTop:'8px',marginBottom:'8px'}}>{item.id} - {item.city_name}</div>
                                         </div>
                                     </div>

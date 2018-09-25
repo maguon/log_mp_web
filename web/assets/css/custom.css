@@ -265,8 +265,8 @@ body{
     font-size: 50px;
 }
 
-/** 设置：城市设置画面 数据列表样式 */
-.city_model_panel{
+/** 设置：卡片布局时，数据列表样式 */
+.card-unit{
     margin-top: 8px;
     margin-bottom: 10px;
     color:#B6598F;

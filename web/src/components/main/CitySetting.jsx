@@ -1,77 +1,109 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
+
 const citySettingAction = require('../../actions/main/CitySettingAction');
 import {CitySettingActionType} from '../../actionTypes';
+
 class CitySetting extends React.Component {
 
     constructor(props) {
         super(props);
-
     }
-    componentDidMount(){
-        const {getCityList,setCityFormFlag} = this.props;
+
+    componentDidMount() {
+        const {getCityList, setCityFormFlag} = this.props;
         getCityList();
         setCityFormFlag(false);
     }
-    render() {
-        const {citySettingReducer,setCityFormFlag,setCityName,addCity} = this.props;
 
-        const showCityForm = ()=>{
+    render() {
+        const {citySettingReducer, setCityFormFlag, setCityName, addCity} = this.props;
+
+        const showCityForm = () => {
             setCityFormFlag(true);
         };
-        const hideCityForm =()=>{
+        const hideCityForm = () => {
             setCityFormFlag(false);
             setCityName('');
         };
         const changeCityName = (event) => {
             setCityName(event.target.value);
-        }
+        };
 
         return (
 
             <div>
+                {/* 标题部分 */}
                 <div className="row">
-                    { citySettingReducer.cityFormFlag ?
+                    <div className="input-field col s12 page-title">
+                        城市设置
+                        <div className="divider" style={{marginTop:'10px'}}/>
+                    </div>
+                </div>
+
+                {/* 操作按钮 部分 */}
+                <div className="row">
+                    {citySettingReducer.cityFormFlag ?
                         <form>
-                            <div className="input-field inline">
-                                <input id="city_name" type="text" value={citySettingReducer.cityName} onChange={changeCityName}/>
-                                <label for="city_name">城市</label>
+                            <div className="col s12">
+                                <div className="input-field col s8">
+                                    <input id="city_name" type="text" value={citySettingReducer.cityName}
+                                           onChange={changeCityName}/>
+                                    <label for="city_name">城市</label>
+                                </div>
+
+                                <div className="col s3 right-align">
+                                      <btn className="btn-floating waves-effect waves-light pink lighten-3" onClick={hideCityForm}>
+                                        <i className="mdi mdi-close"/>
+                                    </btn>
+                                </div>
+                                <div className="col s1 right-align">
+                                    <btn className="btn-floating waves-effect waves-light custom-purple" onClick={addCity}>
+                                        <i className="mdi mdi-check"/>
+                                    </btn>
+                                </div>
                             </div>
-                            <btn className="btn-floating waves-effect waves-light orange" onClick={hideCityForm}><i class="mdi mdi-cancel"></i></btn>
-                            <btn className="btn-floating waves-effect waves-light purple" onClick={addCity}><i class="mdi mdi-check"></i></btn>
                         </form>
                         :
-                        <btn class="right  btn btn-large btn-floating waves-effect purple lighten-1 waves-light" onClick={showCityForm}><i class="mdi mdi-plus"></i></btn>
+                        <div className="col s12">
+                            <div className="col s12 right-align">
+                                <btn className="btn-floating waves-effect waves-light custom-purple" onClick={showCityForm}>
+                                    <i className="mdi mdi-plus"/>
+                                </btn>
+                                <div className="divider" style={{marginTop:'20px'}}/>
+                            </div>
+                        </div>
                     }
-
-
                 </div>
-                <div class="divider"></div>
+
+
+                {/* 数据列表 部分 */}
                 <div className="row">
                     <div className="col s12">
                         {
                             citySettingReducer.cityArray.map(function (item) {
                                 return (
                                     <div className="col s2">
-                                        <div className="col s12 city_model_panel z-depth-1 center-align">{item.id}-{item.city_name}</div>
+                                        <div className="col s12 city_model_panel z-depth-1 center-align">
+                                            <div style={{marginTop:'8px',marginBottom:'8px'}}>{item.id} - {item.city_name}</div>
+                                        </div>
                                     </div>
-                                )})
+                                )
+                            })
                         }
                     </div>
                 </div>
             </div>
-
-
         )
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        citySettingReducer : state.CitySettingReducer
+        citySettingReducer: state.CitySettingReducer
     }
-}
+};
 
 const mapDispatchToProps = (dispatch) => ({
     getCityList: () => {
@@ -83,9 +115,9 @@ const mapDispatchToProps = (dispatch) => ({
     setCityFormFlag: (flag) => {
         dispatch(CitySettingActionType.setCityFormFlag(flag))
     },
-    setCityName :(cityName) => {
+    setCityName: (cityName) => {
         dispatch(CitySettingActionType.setCityName(cityName))
     }
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CitySetting)

@@ -17,6 +17,13 @@ body{
     background-color: #724278 !important;
 }
 
+/** 标题：画面主体部分，标题部分样式 */
+.page-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #724278 !important;
+}
+
 /* 固定 主画面底部样式 */
 .footer{
     width: 100%;
@@ -257,6 +264,17 @@ body{
 .fz50{
     font-size: 50px;
 }
+
+/** 设置：城市设置画面 数据列表样式 */
+.city_model_panel{
+    margin-top: 8px;
+    margin-bottom: 10px;
+    color:#B6598F;
+    border: 1px solid #DCAFC9;
+}
+
+
+
 
 /** 下面是要删除的 */
 .temp {

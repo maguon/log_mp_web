@@ -1,18 +1,20 @@
 /** 项目整体 */
-html{
+html {
     position: relative;
     height: 100%;
     overflow-y: hidden;
 }
-body{
+
+body {
     position: relative;
     height: 100%;
-    min-width: 1280px;
+    min-width: 1368px;
     /*background: #f1f5f5;*/
     overflow-x: auto;
     overflow-y: hidden;
     font-size: 15px;
 }
+
 .custom-purple {
     background-color: #724278 !important;
 }
@@ -24,8 +26,12 @@ body{
     color: #724278 !important;
 }
 
+.context-title {
+    color: #724278 !important;
+}
+
 /* 固定 主画面底部样式 */
-.footer{
+.footer {
     width: 100%;
     position: fixed;
     bottom: 0;
@@ -35,7 +41,8 @@ body{
     padding-top: 12px;
     text-align: right;
 }
-.footer-msg{
+
+.footer-msg {
     color: white;
     padding-right: 20px;
     font-size: 15px;
@@ -49,21 +56,24 @@ body{
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     z-index: 10000000000;
 }
+
 .c-loader-box {
     width: 100%;
     height: 100%;
-    display: flex;=
-    align-items: center;
+    display: flex;
+= align-items: center;
     align-items: center;
     justify-content: center;
 }
+
 .c-loader-circle {
-    width :9em;
-    height :9em;
+    width: 9em;
+    height: 9em;
 }
+
 /** 画面加载样式 End */
 
 /** material样式 变更部分 Start */
@@ -71,7 +81,7 @@ body{
     margin-bottom: 0;
 }
 
-.btn{
+.btn {
     background: #724278;
 }
 
@@ -82,7 +92,7 @@ body{
 /** material样式 变更部分 End */
 
 /** 画面主体部分样式 */
-.context-height{
+.context-height {
     height: calc(100% - 147px);
     /*background: #f1f5f5;*/
     overflow-y: auto;
@@ -107,11 +117,11 @@ body{
 }
 
 /** modal 样式定义部分 start */
-.modal{
+.modal {
     min-width: 900px;
 }
 
-.modal-title{
+.modal-title {
     height: 50px;
     font-size: 20px;
     line-height: 50px;
@@ -122,7 +132,7 @@ body{
     padding: 4px 20px;
 }
 
-.modal .modal-footer .btn{
+.modal .modal-footer .btn {
     margin: 6px 0 0 20px;
 }
 
@@ -130,7 +140,8 @@ body{
     width: 110px;
     background-color: #9E9E9E;
 }
-.close-btn:hover{
+
+.close-btn:hover {
     background: #8D8D8D;
 }
 
@@ -138,149 +149,209 @@ body{
     width: 110px;
     background-color: #724278;
 }
-.confirm-btn:hover{
+
+.confirm-btn:hover {
     background: #6E2678;
 }
 
-#enquiryModal{
+#enquiryModal {
     max-height: 556px;
 }
+
 /** modal 样式定义部分 end */
 
-.fz12{
+.fz12 {
     font-size: 12px;
 }
-.fz13{
+
+.fz13 {
     font-size: 13px;
 }
-.fz14{
+
+.fz14 {
     font-size: 14px;
 }
-.fz15{
+
+.fz15 {
     font-size: 15px;
 }
-.fz16{
+
+.fz16 {
     font-size: 16px;
 }
-.fz17{
+
+.fz17 {
     font-size: 17px;
 }
-.fz18{
+
+.fz18 {
     font-size: 18px;
 }
-.fz19{
+
+.fz19 {
     font-size: 19px;
 }
-.fz20{
+
+.fz20 {
     font-size: 20px;
 }
-.fz21{
+
+.fz21 {
     font-size: 21px;
 }
-.fz22{
+
+.fz22 {
     font-size: 22px;
 }
-.fz23{
+
+.fz23 {
     font-size: 23px;
 }
-.fz24{
+
+.fz24 {
     font-size: 24px;
 }
-.fz25{
+
+.fz25 {
     font-size: 25px;
 }
-.fz26{
+
+.fz26 {
     font-size: 26px;
 }
-.fz27{
+
+.fz27 {
     font-size: 27px;
 }
-.fz28{
+
+.fz28 {
     font-size: 28px;
 }
-.fz29{
+
+.fz29 {
     font-size: 29px;
 }
-.fz30{
+
+.fz30 {
     font-size: 30px;
 }
-.fz31{
+
+.fz31 {
     font-size: 31px;
 }
-.fz32{
+
+.fz32 {
     font-size: 32px;
 }
-.fz33{
+
+.fz33 {
     font-size: 33px;
 }
-.fz34{
+
+.fz34 {
     font-size: 34px;
 }
-.fz35{
+
+.fz35 {
     font-size: 35px;
 }
-.fz36{
+
+.fz36 {
     font-size: 36px;
 }
-.fz37{
+
+.fz37 {
     font-size: 37px;
 }
-.fz38{
+
+.fz38 {
     font-size: 38px;
 }
-.fz39{
+
+.fz39 {
     font-size: 39px;
 }
-.fz40{
+
+.fz40 {
     font-size: 40px;
 }
-.fz41{
+
+.fz41 {
     font-size: 41px;
 }
-.fz42{
+
+.fz42 {
     font-size: 42px;
 }
-.fz43{
+
+.fz43 {
     font-size: 43px;
 }
-.fz44{
+
+.fz44 {
     font-size: 44px;
 }
-.fz45{
+
+.fz45 {
     font-size: 45px;
 }
-.fz46{
+
+.fz46 {
     font-size: 46px;
 }
-.fz47{
+
+.fz47 {
     font-size: 47px;
 }
-.fz48{
+
+.fz48 {
     font-size: 48px;
 }
-.fz49{
+
+.fz49 {
     font-size: 49px;
 }
-.fz50{
+
+.fz50 {
     font-size: 50px;
 }
 
 /** 设置：卡片布局时，数据列表样式 */
-.card-unit{
+.card-unit {
     margin-top: 8px;
     margin-bottom: 10px;
-    color:#B6598F;
+    color: #B6598F;
     border: 1px solid #DCAFC9;
 }
 
+/** 设置：卡片布局时，数据列表样式 */
+.route-city-header {
+    padding-left:0;
+    padding-right:0;
+    height: 52px;
+    background: #F2EFF5;
+    border-bottom: 1px solid #E5DFEB;
+    margin-bottom: 15px;
+}
 
-
+/** 设置：卡片布局时，数据列表样式 */
+.route-card {
+    margin-bottom: 15px;
+    border: 1px solid #DCAFC9;
+    background: white;
+    color: #B6598F;
+    width: 100%;
+    height: 56px;
+    font-size: 10px;
+    padding-left: 0;
+    padding-right: 0;
+}
 
 /** 下面是要删除的 */
 .temp {
     font-size: 15px;
     display: block;
-    border:1px solid #ff0000;
+    border: 1px solid #ff0000;
 }
 
 .custom-select {

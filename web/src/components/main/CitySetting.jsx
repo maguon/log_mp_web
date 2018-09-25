@@ -48,9 +48,8 @@ class CitySetting extends React.Component {
                         <form>
                             <div className="col s12">
                                 <div className="input-field col s8">
-                                    <input id="city_name" type="text" value={citySettingReducer.cityName}
-                                           onChange={changeCityName}/>
-                                    <label for="city_name">城市</label>
+                                    <input id="city_name" type="text" value={citySettingReducer.cityName} onChange={changeCityName}/>
+                                    <label htmlFor="city_name">城市</label>
                                 </div>
 
                                 <div className="col s3 right-align">

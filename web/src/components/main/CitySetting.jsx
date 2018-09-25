@@ -85,7 +85,9 @@ class CitySetting extends React.Component {
                                 return (
                                     <div className="col s2">
                                         <div className="col s12 card-unit z-depth-1 center-align">
-                                            <div style={{marginTop:'8px',marginBottom:'8px'}}>{item.id} - {item.city_name}</div>
+                                            <div style={(item.city_name.length>8) ? {marginTop:'8px',marginBottom:'8px',fontSize:'12px'} : {marginTop:'8px',marginBottom:'8px'}}>
+                                                {item.id} - {item.city_name}
+                                                </div>
                                         </div>
                                     </div>
                                 )

@@ -21,11 +21,10 @@ export const getUserDetail = (params) => async (dispatch) => {
             })
         }
     } catch (err) {
-        // alert message
         swal({
             type: 'error',
-            title: '系统异常',
-            text: '服务器内部错误!'
+            title: '操作失败',
+            text: err.message
         })
     }
 };

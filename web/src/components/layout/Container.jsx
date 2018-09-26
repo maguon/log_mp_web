@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Panel, Setting, User, UserDetail,CitySetting,TempComponent} from '../main/index';
+import {Panel, Setting, User, UserDetail, CitySetting,RouteSetting, TempComponent} from '../main/index';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 
 import {fileHost} from '../../config/HostConfig';
@@ -37,6 +37,11 @@ const routes = [
         path: "/city_setting",
         exact: true,
         component: CitySetting
+    },
+    {
+        path: "/route_setting",
+        exact: true,
+        component: RouteSetting
     }
 ];
 
@@ -53,9 +58,9 @@ class Container extends React.Component {
         const {headerReducer} = this.props;
         console.log(headerReducer.userInfo);
         let avatarUrl = "";
-        if(headerReducer.userInfo && headerReducer.userInfo.avatar_image) {
-           avatarUrl = "http://" + fileHost + "/api/image/" + headerReducer.userInfo.avatar_image;
-        }else{
+        if (headerReducer.userInfo && headerReducer.userInfo.avatar_image) {
+            avatarUrl = "http://" + fileHost + "/api/image/" + headerReducer.userInfo.avatar_image;
+        } else {
             avatarUrl = "/assets/images/avatar.png"
         }
         return (
@@ -78,17 +83,23 @@ class Container extends React.Component {
                         </li>
                         <li className="no-padding"><Link to="/temp" className="collapsible-header"><i
                             className="mdi mdi-cards-variant"/>测试组件画面</Link></li>
-                        <li><div className="divider"/></li>
+                        <li>
+                            <div className="divider"/>
+                        </li>
 
                         <li className="no-padding"><Link to="/panel" className="collapsible-header"><i
                             className="mdi mdi-cards-variant"/>面板</Link>
                         </li>
-                        <li><div className="divider"/></li>
+                        <li>
+                            <div className="divider"/>
+                        </li>
 
                         <li className="no-padding"><Link to="/user" className="collapsible-header"><i
                             className="mdi mdi-account-group"/>用户</Link>
                         </li>
-                        <li><div className="divider"/></li>
+                        <li>
+                            <div className="divider"/>
+                        </li>
                         <li className="no-padding">
                             <ul className="collapsible collapsible-accordion">
                                 <li>
@@ -96,6 +107,7 @@ class Container extends React.Component {
                                     <div className="collapsible-body">
                                         <ul>
                                             <li><Link to="/city_setting">城市</Link></li>
+                                            <li><Link to="/route_setting">线路</Link></li>
                                         </ul>
                                     </div>
                                 </li>

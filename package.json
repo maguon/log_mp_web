@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "express": "4.16.3",
-    "prop-types" : "15.6.2",
+    "prop-types": "15.6.2",
     "react": "16.3.2",
     "react-dom": "16.3.2",
     "react-materialize": "^2.4.5",
@@ -17,7 +17,8 @@
     "store2": "2.7.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "webpack"
   },
   "devDependencies": {
     "babel": "6.23.0",
@@ -35,6 +36,7 @@
     "babel-runtime": "6.26.0",
     "jsx-loader": "0.13.2",
     "jsxobj": "1.1.0",
+    "uglifyjs-webpack-plugin": "2.0.1",
     "webpack": "4.8.2",
     "webpack-cli": "^3.1.0"
   }

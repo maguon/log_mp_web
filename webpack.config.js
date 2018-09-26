@@ -1,5 +1,6 @@
 const path = require('path');
-
+const webpack = require('webpack');
+const UglifyPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
     entry: {
@@ -24,9 +25,17 @@ module.exports = {
         extensions: ['*', '.js', '.jsx','es6']
     },
     watchOptions: {
-        aggregateTimeout: 500,
+        aggregateTimeout: 1000,
         ignored: '/node_modules/',
         poll: 1000
     },
-    devtool: 'cheap-eval-source-map'
+    plugins:[
+        new webpack.DefinePlugin({
+            'process.env': {'NODE_ENV': JSON.stringify('production')}
+        }),
+        new UglifyPlugin({ uglifyOptions: { output: { comments: false } } }),
+        new webpack.optimize.AggressiveMergingPlugin()
+    ],
+    devtool: process.env.NODE_ENV === 'production'
+        ? 'false':'cheap-eval-source-map'
 };

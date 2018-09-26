@@ -1,9 +1,8 @@
 import React from 'react';
-
 import {connect} from 'react-redux';
+import {RouteSettingActionType} from '../../actionTypes';
 
-const citySettingAction = require('../../actions/main/CitySettingAction');
-import {CitySettingActionType} from '../../actionTypes';
+const routeSettingAction = require('../../actions/main/RouteSettingAction');
 
 class RouteSetting extends React.Component {
 
@@ -12,23 +11,18 @@ class RouteSetting extends React.Component {
     }
 
     componentDidMount() {
-        const {getCityList, setCityFormFlag} = this.props;
-        getCityList();
-        setCityFormFlag(false);
+        const {getAllCityList} = this.props;
+        getAllCityList();
     }
 
     render() {
-        const {citySettingReducer, setCityFormFlag, setCityName, addCity} = this.props;
+        const {routeSettingReducer, setStartCityName} = this.props;
 
-        const showCityForm = () => {
-            setCityFormFlag(true);
-        };
-        const hideCityForm = () => {
-            setCityFormFlag(false);
-            setCityName('');
-        };
-        const changeCityName = (event) => {
-            setCityName(event.target.value);
+        const handleClick = (event,cityId,cityNm) => {
+            //const cityName = event.target.value;
+            console.log( 'cityId',cityId)
+            console.log( 'cityNm',cityNm)
+            setStartCityName(cityNm);
         };
 
         return (
@@ -38,59 +32,61 @@ class RouteSetting extends React.Component {
                 <div className="row">
                     <div className="input-field col s12 page-title">
                         线路设置
-                        <div className="divider" style={{marginTop:'10px'}}/>
+                        <div className="divider" style={{marginTop: '10px'}}/>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="input-field col s12 center-align">
+                        当前起始城市：{routeSettingReducer.startCityName}
                     </div>
                 </div>
 
                 {/* 数据列表 部分 */}
                 <div className="row">
                     {/* 数据列表 左侧 */}
-                    <div className="col s6" style={{paddingRight:'5px'}}>
+                    <div className="col s6" style={{paddingRight: '5px'}}>
                         <div className="col s12">
-                            <div className="col s12 z-depth-1" style={{paddingLeft:'0',paddingRight:'0'}}>
-                                <div className="input-field col s12 route-city-header" style={{marginTop:'0'}}>
-                                    <input type="text" placeholder="输入城市" value={citySettingReducer.cityName} onChange={changeCityName} />
-                                </div>
-                            {
-                                citySettingReducer.cityArray.map(function (item) {
-                                    return (
-                                        <div className="col s2" style={{paddingLeft:'10px',paddingRight:'10px'}}>
-                                            <a className="btn route-card">
-                                                <div style={(item.city_name.length > 7) ? {height: '20px',lineHeight: '15px',marginTop:'16px'} :{height: '20px',lineHeight: '15px',marginTop:'20px'}}>
-                                                    {item.city_name}
-                                                </div>
-                                            </a>
-                                        </div>
-                                    )
-                                })
-                            }
+                            <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0'}}>
+                                {
+                                    routeSettingReducer.cityArray.map(function (item) {
+                                        return (
+                                            <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
+                                                <button className="btn route-card" data-index={item.id} onClick={()=>{handleClick(event,item.id,item.city_name)}}>
+                                                    <div style={(item.city_name.length > 7) ? {height: '25px',lineHeight: '15px'}
+                                                    : {height: '10px', lineHeight: '15px'}}>
+                                                        {item.city_name}
+                                                    </div>
+                                                </button>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
 
                     {/* 数据列表 右侧 */}
-                    <div className="col s6" style={{paddingLeft:'5px'}}>
+                    <div className="col s6" style={{paddingLeft: '5px'}}>
                         <div className="col s12">
-                            <div className="col s12 z-depth-1" style={{paddingLeft:'0',paddingRight:'0'}}>
-                                <div className="input-field col s12 route-city-header" style={{marginTop:'0'}}>
-                                    <span className="input-field col s6 left-align context-title">大连</span>
-                                    <span className="input-field col s6 right-align grey-text" style={{fontSize:'13px'}}>
-                                        已设置线路：<span style={{fontSize:'15px',color:'#B6598F'}}>99</span>
-                                    </span>
-                                </div>
-                            {
-                                citySettingReducer.cityArray.map(function (item) {
-                                    return (
-                                        <div className="col s2" style={{paddingLeft:'10px',paddingRight:'10px'}}>
-                                            <a className="btn route-card">
-                                                {/* marginTop:5px or 20px */}
-                                                <div style={{height: '20px',lineHeight: '15px',marginTop:'5px'}}>{item.city_name}</div>
-                                                <div>1000km</div>
-                                            </a>
-                                        </div>
-                                    )
-                                })
-                            }
+                            <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0'}}>
+                                {
+                                    routeSettingReducer.cityArray.map(function (item) {
+                                        return (
+                                            <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
+                                                <a className="btn route-card">
+                                                    {/* marginTop:5px or 20px */}
+                                                    <div style={{
+                                                        height: '20px',
+                                                        lineHeight: '15px',
+                                                        marginTop: '5px'
+                                                    }}>{item.city_name}</div>
+                                                    <div>1000km</div>
+                                                </a>
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
                     </div>
@@ -102,23 +98,23 @@ class RouteSetting extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        citySettingReducer: state.CitySettingReducer
+        routeSettingReducer: state.RouteSettingReducer
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getCityList: () => {
-        dispatch(citySettingAction.getCityList())
+    getAllCityList: () => {
+        dispatch(routeSettingAction.getAllCityList())
     },
+    setStartCityName: (cityName) => {
+        dispatch(RouteSettingActionType.setStartCityName(cityName))
+    },
+
+
     addCity: () => {
-        dispatch(citySettingAction.addCity())
+        dispatch(routeSettingAction.addCity())
     },
-    setCityFormFlag: (flag) => {
-        dispatch(CitySettingActionType.setCityFormFlag(flag))
-    },
-    setCityName: (cityName) => {
-        dispatch(CitySettingActionType.setCityName(cityName))
-    }
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RouteSetting)

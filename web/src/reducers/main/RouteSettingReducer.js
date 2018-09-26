@@ -3,9 +3,11 @@ import {RouteSettingActionType} from '../../actionTypes';
 
 const initialState = {
     // 开始城市
-    startCityName: '暂无',
+    startCityName: '',
+    // 所有城市列表(左侧)
+    startCityArray: [],
     // 所有城市列表(右侧)
-    cityArray: [],
+    endCityArray: []
 };
 
 export default handleActions({
@@ -15,10 +17,16 @@ export default handleActions({
             startCityName: action.payload
         }
     },
-    [RouteSettingActionType.getCityArray]: (state, action) => {
+    [RouteSettingActionType.getStartCityArray]: (state, action) => {
         return {
             ...state,
-            cityArray: action.payload
+            startCityArray: action.payload
+        }
+    },
+    [RouteSettingActionType.getEndCityArray]: (state, action) => {
+        return {
+            ...state,
+            endCityArray: action.payload
         }
     }
 }, initialState)

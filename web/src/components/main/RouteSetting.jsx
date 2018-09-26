@@ -11,18 +11,24 @@ class RouteSetting extends React.Component {
     }
 
     componentDidMount() {
-        const {getAllCityList} = this.props;
+        const {getAllCityList,setStartCityName} = this.props;
         getAllCityList();
+        setStartCityName('暂无');
     }
 
     render() {
-        const {routeSettingReducer, setStartCityName} = this.props;
+        const {routeSettingReducer, setStartCityName, getRouteCityList} = this.props;
 
-        const handleClick = (event,cityId,cityNm) => {
-            //const cityName = event.target.value;
-            console.log( 'cityId',cityId)
-            console.log( 'cityNm',cityNm)
+        const clickStartCity = (event, cityId, cityNm) => {
             setStartCityName(cityNm);
+            getRouteCityList(cityId);
+        };
+
+        const editRoute = (event, cityId, cityNm) => {
+            //const cityName = event.target.value;
+            console.log('cityId ', cityId)
+            // setStartCityName(cityNm);
+            // getRouteCityList(cityId);
         };
 
         return (
@@ -49,10 +55,11 @@ class RouteSetting extends React.Component {
                         <div className="col s12">
                             <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0'}}>
                                 {
-                                    routeSettingReducer.cityArray.map(function (item) {
+                                    routeSettingReducer.startCityArray.map(function (item) {
                                         return (
                                             <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                                                <button className="btn route-card" data-index={item.id} onClick={()=>{handleClick(event,item.id,item.city_name)}}>
+                                                <button className="btn route-card" style={item.city_name === routeSettingReducer.startCityName ? {backgroundColor: '#6E2678',color: 'white'} : {}}
+                                                        data-index={item.id} onClick={()=>{clickStartCity(event,item.id,item.city_name)}}>
                                                     <div style={(item.city_name.length > 7) ? {height: '25px',lineHeight: '15px'}
                                                     : {height: '10px', lineHeight: '15px'}}>
                                                         {item.city_name}
@@ -71,17 +78,18 @@ class RouteSetting extends React.Component {
                         <div className="col s12">
                             <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0'}}>
                                 {
-                                    routeSettingReducer.cityArray.map(function (item) {
+                                    routeSettingReducer.endCityArray.map(function (item) {
                                         return (
                                             <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                                                <a className="btn route-card">
+                                                <a className="btn route-card" style={item.route_flag ? {backgroundColor: '#6E2678',color: 'white'} : {}}
+                                                   onClick={()=>{editRoute(event,item.id,item.city_name)}}>
                                                     {/* marginTop:5px or 20px */}
                                                     <div style={{
                                                         height: '20px',
                                                         lineHeight: '15px',
                                                         marginTop: '5px'
                                                     }}>{item.city_name}</div>
-                                                    <div>1000km</div>
+                                                    {item.route_flag && <div>{item.distance}公里</div>}
                                                 </a>
                                             </div>
                                         )
@@ -105,6 +113,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     getAllCityList: () => {
         dispatch(routeSettingAction.getAllCityList())
+    },
+    getRouteCityList: (cityId) => {
+        dispatch(routeSettingAction.getRouteCityList(cityId))
     },
     setStartCityName: (cityName) => {
         dispatch(RouteSettingActionType.setStartCityName(cityName))

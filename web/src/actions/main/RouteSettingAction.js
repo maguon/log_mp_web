@@ -9,7 +9,10 @@ export const getAllCityList = () => async (dispatch) => {
         const res = await httpUtil.httpGet(url);
 
         if (res.success) {
-            dispatch({type: RouteSettingActionType.getCityArray, payload: res.result});
+            // 左侧 城市列表
+            dispatch({type: RouteSettingActionType.getStartCityArray, payload: res.result});
+            // 右侧 城市列表
+            dispatch({type: RouteSettingActionType.getEndCityArray, payload: res.result});
         } else {
             swal({
                 type: 'warning',
@@ -26,67 +29,61 @@ export const getAllCityList = () => async (dispatch) => {
     }
 };
 
-export const getStartCityList = (cityName) => async (dispatch, getState) => {
+export const getRouteCityList = (cityId) => async (dispatch, getState) => {
     try {
-        console.log('cityName',cityName);
+        // 检索条件
         let condition = '';
-        // 没有输入城市的时候
-        if (typeof cityName !== 'undefined' && cityName !== '') {
-            condition = '?cityName=' + cityName;
+        if (typeof cityId !== 'undefined' && cityId !== '') {
+            condition = '?routeStartId=' + cityId;
         }
-
-        const url = apiHost + '/api/city' + condition;
-        console.log('url ',url);
+        // 检索url
+        const url = apiHost + '/api/route' + condition;
         const res = await httpUtil.httpGet(url);
-
         if (res.success) {
-            dispatch({type: RouteSettingActionType.getStartCityList, payload: res.result})
+            // 路线结果列表
+            let routeList = res.result;
+
+            // 新的右侧城市列表(包含路线信息)
+            let newEndCityList = [];
+            // 临时单个城市信息
+            let cityItem = {};
+            // 遍历所有的城市
+            getState().RouteSettingReducer.endCityArray.map(function (item) {
+                // 当没有路线时，城市信息
+                if (routeList.length === 0) {
+                    cityItem = {id: item.id, city_name: item.city_name, status: item.status, route_flag: false, distance: 0};
+                }
+                // 遍历路线
+                for (let i = 0; i < routeList.length; i++) {
+                    // 路线中的开始城市为 检索城市时，路线中的结束城市和遍历城市相同，则为：可用路线
+                    if (routeList[i].route_start_id === cityId && routeList[i].route_end_id === item.id ) {
+                        cityItem = {id: item.id, city_name: item.city_name, status: item.status, route_flag: true, distance: routeList[i].distance};
+                        // 删除当前路线，减少开销
+                        routeList.splice(i,1);
+                        break;
+
+                    // 路线中的结束城市为 检索城市时，路线中的开始城市和遍历城市相同，则为：可用路线
+                    } else if (routeList[i].route_end_id === cityId && routeList[i].route_start_id === item.id ) {
+                        cityItem = {id: item.id, city_name: item.city_name, status: item.status, route_flag: true, distance: routeList[i].distance};
+                        // 删除当前路线，减少开销
+                        routeList.splice(i,1);
+                        break;
+
+                    // 非可用路线，标记flag false
+                    } else {
+                        cityItem = {id: item.id, city_name: item.city_name, status: item.status, route_flag: false, distance: 0};
+                    }
+                }
+                // 将城市信息 追加到 新城市列表
+                newEndCityList.push(cityItem);
+            });
+            dispatch({type: RouteSettingActionType.getEndCityArray, payload: newEndCityList});
         } else {
             swal({
                 type: 'warning',
-                title: '获取城市信息失败',
+                title: '获取路线失败',
                 text: res.msg
             })
-        }
-    } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
-    }
-};
-
-export const addCity = () => async (dispatch, getState) => {
-    try {
-        const cityName = getState().CitySettingReducer.cityName;
-        if (cityName === '') {
-            swal({
-                type: 'warning',
-                title: '添加失败',
-                text: '请输入城市名称！'
-            })
-        } else {
-            const userId = getState().HeaderReducer.userInfo.id;
-            const params = {
-                cityName: cityName
-            };
-            const url = apiHost + '/api/user/' + userId + '/city';
-            const res = await httpUtil.httpPost(url, params);
-
-            if (res.success) {
-                // 恢复添加前画面样子
-                dispatch({type: RouteSettingActionType.setCityFormFlag, payload: false});
-                dispatch({type: RouteSettingActionType.setCityName, payload: ''});
-                // 添加成功后，重新检索画面数据
-                dispatch(getCityList());
-            } else {
-                swal({
-                    type: 'warning',
-                    title: '添加失败',
-                    text: res.msg
-                })
-            }
         }
     } catch (err) {
         swal({

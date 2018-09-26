@@ -87,6 +87,7 @@ body {
 
 .btn:focus {
     background-color: #6E2678 !important;
+    color: white;
 }
 .btn:hover {
     background-color: #6E2678 !important;

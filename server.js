@@ -6,6 +6,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'web')));
 
-app.listen(7000, () => {
-    console.info(`server started at localhost:${7000} ` + new Date().toLocaleString());
+app.listen(9100, () => {
+    console.info(`server started at localhost:${9100} ` + new Date().toLocaleString());
 })

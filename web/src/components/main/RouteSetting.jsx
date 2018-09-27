@@ -1,11 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {RouteSettingActionType} from '../../actionTypes';
-import { Modal } from 'react-materialize';
-import {Enquiry} from '../main/index';
 
 const routeSettingAction = require('../../actions/main/RouteSettingAction');
-const enquiryAction = require('../../actions/main/EnquiryAction');
 
 class RouteSetting extends React.Component {
 
@@ -14,32 +11,70 @@ class RouteSetting extends React.Component {
     }
 
     componentDidMount() {
-        const {getAllCityList,setStartCityName} = this.props;
+        const {getAllCityList, setStartCityName} = this.props;
+        $('.modal').modal();
         getAllCityList();
         setStartCityName('暂无');
     }
 
     render() {
-        const {routeSettingReducer, setStartCityName,setEndCityName,setDistance, getRouteCityList, closeModal} = this.props;
+        const {
+            routeSettingReducer,
+            setStartCityId,
+            setStartCityName,
+            setEndCityId,
+            setEndCityName,
+            setRouteId,
+            setDistance,
+            getRouteCityList,
+            setModifyFlag,
+            closeModal,
+            modifyRoute
+        } = this.props;
 
+        // 点击左侧城市，取得路线
         const clickStartCity = (event, cityId, cityNm) => {
+            // 设定 开始城市
+            setStartCityId(cityId);
             setStartCityName(cityNm);
+            // 取得 开始城市 对应的 路线
             getRouteCityList(cityId);
         };
 
-        const editRoute = (event, cityId, cityNm, distance) => {
-            setEndCityName(cityNm);
-            setDistance(distance);
-            $('#routeModal').modal('open');
-            // getRouteCityList(cityId);
+        // 点击右侧城市，编辑路线
+        const editRoute = (event, cityId, cityNm, routeId, distance) => {
+            // 没选中 起始城市 时
+            if (routeSettingReducer.startCityName === '暂无') {
+                swal({type: 'warning', title: '请先选择起始城市！'});
+            } else {
+                // 设定 终到城市
+                setEndCityId(cityId);
+                setEndCityName(cityNm);
+
+                // 存在路线ID的，则为编辑画面
+                if (routeId !== '') {
+                    // 编辑标记
+                    setModifyFlag(true);
+                    // 设定 线路ID
+                    setRouteId(routeId);
+                    // 设定 线路公里数
+                    setDistance(distance);
+                } else {
+                    // 新建标记
+                    setModifyFlag(false);
+                    // 设定 线路公里数
+                    setDistance('');
+                }
+                $('#routeModal').modal('open');
+            }
         };
 
+        // 更新线路公里数
         const changeDistance = (event) => {
             setDistance(event.target.value);
         };
 
         return (
-
             <div>
                 {/* 标题部分 */}
                 <div className="row">
@@ -50,7 +85,7 @@ class RouteSetting extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="input-field col s12 center-align">
+                    <div className="input-field col s12 context-title center-align">
                         当前起始城市：{routeSettingReducer.startCityName}
                     </div>
                 </div>
@@ -60,18 +95,27 @@ class RouteSetting extends React.Component {
                     {/* 数据列表 左侧 */}
                     <div className="col s6" style={{paddingRight: '5px'}}>
                         <div className="col s12">
-                            <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0',paddingTop: '15px'}}>
+                            <div className="col s12 z-depth-1"
+                                 style={{paddingLeft: '0', paddingRight: '0', paddingTop: '15px'}}>
                                 {
                                     routeSettingReducer.startCityArray.map(function (item) {
                                         return (
                                             <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                                                <button className="btn route-card" style={item.city_name === routeSettingReducer.startCityName ? {backgroundColor: '#6E2678',color: 'white'} : {}}
-                                                        data-index={item.id} onClick={()=>{clickStartCity(event,item.id,item.city_name)}}>
+                                                <button className="btn route-card"
+                                                        style={item.city_name === routeSettingReducer.startCityName ? {
+                                                            backgroundColor: '#6E2678',
+                                                            color: 'white'
+                                                        } : {}}
+                                                        onClick={() => {clickStartCity(event, item.id, item.city_name)}}>
                                                     {/*<div style={(item.city_name.length > 7) ? {height: '25px',lineHeight: '15px'}*/}
                                                     {/*: {height: '10px', lineHeight: '15px'}}>*/}
-                                                        {/*{item.city_name}*/}
+                                                    {/*{item.city_name}*/}
                                                     {/*</div>*/}
-                                                    <div style={{height: '20px',lineHeight: '15px',marginTop: '5px'}}>{item.city_name}</div>
+                                                    <div style={{
+                                                        height: '20px',
+                                                        lineHeight: '15px',
+                                                        marginTop: '5px'
+                                                    }}>{item.city_name}</div>
                                                 </button>
                                             </div>
                                         )
@@ -84,15 +128,21 @@ class RouteSetting extends React.Component {
                     {/* 数据列表 右侧 */}
                     <div className="col s6" style={{paddingLeft: '5px'}}>
                         <div className="col s12">
-                            <div className="col s12 z-depth-1" style={{paddingLeft: '0', paddingRight: '0',paddingTop: '15px'}}>
+                            <div className="col s12 z-depth-1"
+                                 style={{paddingLeft: '0', paddingRight: '0', paddingTop: '15px'}}>
                                 {
                                     routeSettingReducer.endCityArray.map(function (item) {
                                         return (
                                             <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
                                                 <button className="btn route-card" style={item.route_flag ? {backgroundColor: '#6E2678',color: 'white'} : {}}
-                                                   onClick={()=>{editRoute(event,item.id,item.city_name,item.distance)}}>
-                                                    {/*<i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={openEnquiryModal}/>*/}
-                                                    <div style={{height: '20px',lineHeight: '15px',marginTop: '5px'}}>{item.city_name}</div>
+                                                        onClick={() => {
+                                                            editRoute(event, item.id, item.city_name, item.route_id, item.distance)
+                                                        }}>
+                                                    <div style={{
+                                                        height: '20px',
+                                                        lineHeight: '15px',
+                                                        marginTop: '5px'
+                                                    }}>{item.city_name}</div>
                                                     {item.route_flag && <div>{item.distance}公里</div>}
                                                 </button>
                                             </div>
@@ -110,14 +160,16 @@ class RouteSetting extends React.Component {
                         {/** Modal主体 */}
                         <div className="modal-content">
                             <div className="row">
-                                <div className="input-field col s12">
-                                   {routeSettingReducer.startCityName} - {routeSettingReducer.endCityName}
+                                <div className="input-field col s11 fz20 pink-font" style={{paddingLeft: '90px',marginTop:'40px'}}>
+                                    {routeSettingReducer.startCityName}  -  {routeSettingReducer.endCityName}
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s12">
-                                    <input id="distance" type="number" value={routeSettingReducer.distance} onChange={changeDistance}/>
-                                    <label htmlFor="distance">公里数(公里)</label>
+                                <div className="input-field col s11" style={{paddingLeft: '80px',marginTop:'20px'}}>
+                                    <div className="input-field col s12">
+                                        <input id="distance" type="number" value={routeSettingReducer.distance} onChange={changeDistance}/>
+                                        <label htmlFor="distance" className={routeSettingReducer.modifyFlag ? 'label-active':''}>公里数(公里)</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +177,7 @@ class RouteSetting extends React.Component {
                         {/** Modal固定底部：取消确定按钮 */}
                         <div className="modal-footer">
                             <button type="button" className="btn close-btn" onClick={closeModal}>取消</button>
-                            <button type="button" className="btn confirm-btn" onClick={closeModal}>确定</button>
+                            <button type="button" className="btn confirm-btn" onClick={modifyRoute}>确定</button>
                         </div>
                     </div>
                 </div>
@@ -147,26 +199,30 @@ const mapDispatchToProps = (dispatch) => ({
     getRouteCityList: (cityId) => {
         dispatch(routeSettingAction.getRouteCityList(cityId))
     },
+    setStartCityId: (cityId) => {
+        dispatch(RouteSettingActionType.setStartCityId(cityId))
+    },
     setStartCityName: (cityName) => {
         dispatch(RouteSettingActionType.setStartCityName(cityName))
+    },
+    setEndCityId: (cityId) => {
+        dispatch(RouteSettingActionType.setEndCityId(cityId))
     },
     setEndCityName: (cityName) => {
         dispatch(RouteSettingActionType.setEndCityName(cityName))
     },
+    setRouteId: (routeId) => {
+        dispatch(RouteSettingActionType.setRouteId(routeId))
+    },
     setDistance: (distance) => {
         dispatch(RouteSettingActionType.setDistance(distance))
     },
-    // openRouteModal: () => {
-    //     dispatch(enquiryAction.getCityList());
-    //     dispatch(enquiryAction.openEnquiryModal());
-    // },
-
-
-    addCity: () => {
-        dispatch(routeSettingAction.addCity())
+    setModifyFlag: (modifyFlag) => {
+        dispatch(RouteSettingActionType.setModifyFlag(modifyFlag))
     },
-
-
+    modifyRoute: () => {
+        dispatch(routeSettingAction.modifyRoute());
+    },
     closeModal: () => {
         $('#routeModal').modal('close');
     }

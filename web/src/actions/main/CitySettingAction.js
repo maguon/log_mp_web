@@ -44,6 +44,7 @@ export const addCity = () => async (dispatch, getState) => {
             const res = await httpUtil.httpPost(url, params);
 
             if (res.success) {
+                swal("添加成功", "", "success");
                 // 恢复添加前画面样子
                 dispatch({type: CitySettingActionType.setCityFormFlag, payload: false});
                 dispatch({type: CitySettingActionType.setCityName, payload: ''});

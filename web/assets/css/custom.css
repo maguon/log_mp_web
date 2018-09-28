@@ -16,10 +16,12 @@ body {
 }
 
 /** 主画面 主体部分样式 */
-.context-height {
-    height: calc(100% - 147px);
+.main-body {
+    /** header height 64px + footer height: 50px + margin-top: 2px = 116px */
+    height: calc(100% - 116px);
     overflow-y: auto;
-    margin-top: 20px;
+    margin-top: 2px;
+    padding-top: 20px;
 }
 
 /* 主画面 底部样式 (固定) */

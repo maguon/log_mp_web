@@ -63,7 +63,7 @@ class Container extends React.Component {
         }
         return (
             <Router hashType={"hashbang"}>
-                <div className="context-height">
+                <div className="main-body">
                     <ul id="slide-out" className="side-nav">
                         <li>
                             <div className="user-view blue-grey">

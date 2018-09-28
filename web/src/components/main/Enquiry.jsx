@@ -111,7 +111,7 @@ class EnquiryForm extends React.Component {
                                 </div>
                                 <div className="input-field col s2 right-align">
                                     <div className="input-field col s12">
-                                        <span className="red-font">{enquiryReducer.mileage}</span>公里
+                                        <span className="red-font fz18">{enquiryReducer.mileage}</span>公里
                                     </div>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@ class EnquiryForm extends React.Component {
                                 </div>
 
                                 <div className="col right-align" style={{width: '36%', marginTop: '12px'}}>
-                                    预计运费：<span className="red-font">{enquiryReducer.freight}</span>元
+                                    预计运费：<span className="red-font fz18">{enquiryReducer.freight}</span>元
                                 </div>
                             </div>
                         </div>

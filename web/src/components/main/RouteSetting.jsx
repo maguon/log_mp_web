@@ -85,7 +85,7 @@ class RouteSetting extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="input-field col s12 context-title center-align">
+                    <div className="input-field col s12 purple-font center-align">
                         当前起始城市：{routeSettingReducer.startCityName}
                     </div>
                 </div>

@@ -208,22 +208,6 @@ body {
     font-size: 36px;
 }
 
-.fz37 {
-    font-size: 37px;
-}
-
-.fz38 {
-    font-size: 38px;
-}
-
-.fz39 {
-    font-size: 39px;
-}
-
-.fz40 {
-    font-size: 40px;
-}
-
 /** modal 样式定义部分 start */
 .modal {
     min-width: 900px;
@@ -304,7 +288,7 @@ body {
     background-color: #724278 !important;
 }
 
-/** 设置：卡片布局时，数据列表样式 */
+/** 卡片布局时，数据列表样式(城市设置画面) */
 .card-unit {
     margin-top: 8px;
     margin-bottom: 10px;
@@ -312,17 +296,7 @@ body {
     border: 1px solid #DCAFC9;
 }
 
-/** 设置：卡片布局时，数据列表样式 */
-.route-city-header {
-    padding-left: 0;
-    padding-right: 0;
-    height: 52px;
-    background: #F2EFF5;
-    border-bottom: 1px solid #E5DFEB;
-    margin-bottom: 15px;
-}
-
-/** 设置：卡片布局时，数据列表样式 */
+/** 线路设置画面：卡片布局时，数据列表样式 */
 .route-card {
     margin-bottom: 15px;
     /*border: 1px solid #A799A8;*/

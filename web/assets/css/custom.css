@@ -15,33 +15,14 @@ body {
     font-size: 15px;
 }
 
-.custom-purple {
-    background-color: #724278 !important;
+/** 主画面 主体部分样式 */
+.context-height {
+    height: calc(100% - 147px);
+    overflow-y: auto;
+    margin-top: 20px;
 }
 
-/** 标题：画面主体部分，标题部分样式 */
-.page-title {
-    font-weight: bold;
-    font-size: 16px;
-    color: #724278 !important;
-}
-
-.context-title {
-    color: #724278 !important;
-}
-
-.pink-font {
-    color: #B6598F !important;
-}
-
-.label-active {
-    -webkit-transform: translateY(-14px) scale(0.8) !important;
-    transform: translateY(-14px) scale(0.8) !important;
-    -webkit-transform-origin: 0 0 !important;
-    transform-origin: 0 0 !important;
-}
-
-/* 固定 主画面底部样式 */
+/* 主画面 底部样式 (固定) */
 .footer {
     width: 100%;
     position: fixed;
@@ -75,7 +56,6 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
-= align-items: center;
     align-items: center;
     justify-content: center;
 }
@@ -84,10 +64,9 @@ body {
     width: 9em;
     height: 9em;
 }
-
 /** 画面加载样式 End */
 
-/** material样式 变更部分 Start */
+/** Material样式 变更部分 Start */
 .input-field {
     margin-bottom: 0;
 }
@@ -100,86 +79,35 @@ body {
     background-color: #6E2678 !important;
     color: white;
 }
+
 .btn:hover {
     background-color: #6E2678 !important;
     color: white;
 }
 
-/** material样式 变更部分 End */
+.side-nav .divider {
+    margin: 0;
+}
+/** Material样式 变更部分 End */
 
-/** 画面主体部分样式 */
-.context-height {
-    height: calc(100% - 147px);
-    /*background: #f1f5f5;*/
-    overflow-y: auto;
-    margin-top: 20px;
+/* Material补充样式 label active 状态 (手动激活) */
+.label-active {
+    -webkit-transform: translateY(-14px) scale(0.8) !important;
+    transform: translateY(-14px) scale(0.8) !important;
+    -webkit-transform-origin: 0 0 !important;
+    transform-origin: 0 0 !important;
 }
 
-/** react-select 错误信息样式 */
-.error-msg {
-    position: relative;
-    min-height: 18px;
-    display: block;
-    font-size: 12px;
-    color: #F44336;
+/** Material补充样式 左侧导航栏 自定义 顶层按钮 */
+.side-navigation {
+    padding: 0 16px !important;
 }
 
-/** react-select 错误信息样式 */
-.red-font {
-    /*color : red;*/
-    color: #F44336;
-    font-size: 18px;
-    margin: 0 5px 0 5px;
+.side-navigation i {
+    font-size: 1.6rem !important;
 }
 
-/** modal 样式定义部分 start */
-.modal {
-    min-width: 900px;
-}
-
-.modal-title {
-    height: 50px;
-    font-size: 18px;
-    line-height: 50px;
-    background-color: #724278;
-}
-
-.modal .modal-footer {
-    padding: 4px 20px;
-}
-
-.modal .modal-footer .btn {
-    margin: 6px 0 0 20px;
-}
-
-.close-btn {
-    width: 110px;
-    background-color: #9E9E9E;
-}
-
-.close-btn:hover {
-    background: #8D8D8D;
-}
-
-.confirm-btn {
-    width: 110px;
-    background-color: #724278;
-}
-
-.confirm-btn:hover {
-    background: #6E2678;
-}
-
-#enquiryModal {
-    max-height: 556px;
-}
-
-#routeModal {
-    max-height: 356px;
-}
-
-/** modal 样式定义部分 end */
-
+/** Material补充样式 自定义字体大小 */
 .fz12 {
     font-size: 12px;
 }
@@ -296,44 +224,84 @@ body {
     font-size: 40px;
 }
 
-.fz41 {
-    font-size: 41px;
+/** modal 样式定义部分 start */
+.modal {
+    min-width: 900px;
 }
 
-.fz42 {
-    font-size: 42px;
+.modal-title {
+    height: 50px;
+    font-size: 18px;
+    line-height: 50px;
+    background-color: #724278;
 }
 
-.fz43 {
-    font-size: 43px;
+.modal .modal-footer {
+    padding: 4px 20px;
 }
 
-.fz44 {
-    font-size: 44px;
+.modal .modal-footer .btn {
+    margin: 6px 0 0 20px;
 }
 
-.fz45 {
-    font-size: 45px;
+.close-btn {
+    width: 110px;
+    background-color: #9E9E9E;
 }
 
-.fz46 {
-    font-size: 46px;
+.close-btn:hover {
+    background: #8D8D8D;
 }
 
-.fz47 {
-    font-size: 47px;
+.confirm-btn {
+    width: 110px;
+    background-color: #724278;
 }
 
-.fz48 {
-    font-size: 48px;
+.confirm-btn:hover {
+    background: #6E2678;
 }
 
-.fz49 {
-    font-size: 49px;
+#enquiryModal {
+    max-height: 556px;
 }
 
-.fz50 {
-    font-size: 50px;
+#routeModal {
+    max-height: 356px;
+}
+/** modal 样式定义部分 end */
+
+/** react-select 错误信息样式 */
+.error-msg {
+    position: relative;
+    min-height: 18px;
+    display: block;
+    font-size: 12px;
+    color: #F44336;
+}
+
+/** 标题：画面主体部分，标题部分样式 */
+.page-title {
+    font-weight: bold;
+    font-size: 16px;
+    color: #724278 !important;
+}
+
+.purple-font {
+    color: #724278 !important;
+}
+
+.pink-font {
+    color: #B6598F !important;
+}
+
+.red-font {
+    color: #F44336;
+    margin: 0 5px 0 5px;
+}
+
+.custom-purple {
+    background-color: #724278 !important;
 }
 
 /** 设置：卡片布局时，数据列表样式 */
@@ -346,8 +314,8 @@ body {
 
 /** 设置：卡片布局时，数据列表样式 */
 .route-city-header {
-    padding-left:0;
-    padding-right:0;
+    padding-left: 0;
+    padding-right: 0;
     height: 52px;
     background: #F2EFF5;
     border-bottom: 1px solid #E5DFEB;
@@ -369,7 +337,13 @@ body {
     padding-right: 0;
 }
 
-/** 下面是要删除的 */
+
+
+
+
+
+
+/** 下面是临时样式 要删除的 */
 .temp {
     font-size: 15px;
     display: block;

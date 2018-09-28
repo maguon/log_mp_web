@@ -29,7 +29,7 @@ class Header extends React.Component {
         let userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
-        $("#sideNav").sideNav();
+        $("#sideNav").sideNav({closeOnClick: true});
         $('.collapsible').collapsible();
         // $('select').formSelect();
         if (userId == null || token == null) {
@@ -44,14 +44,14 @@ class Header extends React.Component {
      */
     render() {
         //
-        const {headerReducer,enquiryReducer, openEnquiryModal, logout} = this.props;
+        const { openEnquiryModal, logout} = this.props;
         return (
             <div>
                 <nav>
                     <div className="nav-wrapper z-depth-3 custom-purple">
 
                         <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo"
-                           style={{display: 'block'}}>
+                           style={{display: 'block',paddingLeft: '10px'}}>
                             <i className="mdi mdi-menu mdi-36px"/>
                         </a>
 
@@ -80,8 +80,7 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        headerReducer: state.HeaderReducer,
-        enquiryReducer: state.EnquiryReducer
+        headerReducer: state.HeaderReducer
     }
 };
 

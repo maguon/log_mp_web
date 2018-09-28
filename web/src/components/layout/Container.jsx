@@ -1,15 +1,23 @@
 import React from 'react';
-import {Panel, Setting, User, UserDetail, CitySetting, RouteSetting, TempComponent} from '../main/index';
+import {Panel, User, UserDetail, CitySetting, RouteSetting, TempComponent} from '../main/index';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 
 const routes = [
+    // 临时测试用，要删除
     {
         path: "/temp",
         exact: true,
         component: TempComponent
     },
+    // 面板
+    {
+        path: "/panel",
+        exact: true,
+        component: Panel
+    },
+    // 用户
     {
         path: "/user",
         exact: true,
@@ -20,22 +28,15 @@ const routes = [
         exact: true,
         component: UserDetail
     },
+    // 设置模块
     {
-        path: "/setting",
-        exact: true,
-        component: Setting
-    },
-    {
-        path: "/panel",
-        exact: true,
-        component: Panel
-    },
-    {
+        // 城市
         path: "/city_setting",
         exact: true,
         component: CitySetting
     },
     {
+        // 线路
         path: "/route_setting",
         exact: true,
         component: RouteSetting
@@ -104,9 +105,13 @@ class Container extends React.Component {
                                     <a className="collapsible-header"><i className="mdi mdi-lock"/>设置</a>
                                     <div className="collapsible-body">
                                         <ul>
-                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路</Link></li>
+                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link>
+                                            </li>
+                                            <li>
+                                                <div className="divider"/>
+                                            </li>
+                                            <li><Link to="/route_setting"><i
+                                                className="mdi mdi-chevron-right"/>线路</Link></li>
                                         </ul>
                                     </div>
                                 </li>

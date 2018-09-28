@@ -1,9 +1,8 @@
 import React from 'react';
-
+import {CitySettingActionType} from '../../actionTypes';
 import {connect} from 'react-redux';
 
 const citySettingAction = require('../../actions/main/CitySettingAction');
-import {CitySettingActionType} from '../../actionTypes';
 
 class CitySetting extends React.Component {
 
@@ -32,7 +31,6 @@ class CitySetting extends React.Component {
         };
 
         return (
-
             <div>
                 {/* 标题部分 */}
                 <div className="row">

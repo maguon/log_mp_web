@@ -11,6 +11,12 @@ const routes = [
         exact: true,
         component: TempComponent
     },
+    // 默认打开画面 - 暂定面板画面
+    {
+        path: "/",
+        exact: true,
+        component: Panel
+    },
     // 面板
     {
         path: "/panel",

@@ -127,8 +127,8 @@ export const modifyRoute = () => async (dispatch, getState) => {
         // 公里数
         const distance = getState().RouteSettingReducer.distance;
         // 未输入公里数时，提示失败
-        if (distance === '') {
-            // 不合理数字输入时(9.9.9)，取得的value是空，则修改为0，修改为空，画面不变化
+        if (distance === '' || distance <= 0) {
+            // 不合理(9.9.9)或小于等于0的 数字输入时，提示错误信息，并修改为0。(修改为空，数字控件不变化)
             dispatch(RouteSettingActionType.setDistance(0));
             swal({
                 type: 'warning',
@@ -167,7 +167,7 @@ export const modifyRoute = () => async (dispatch, getState) => {
             } else {
                 swal({
                     type: 'warning',
-                    title: '添加失败',
+                    title: '线路设置失败',
                     text: res.msg
                 })
             }

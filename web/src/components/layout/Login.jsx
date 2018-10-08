@@ -8,7 +8,7 @@ const loginAction = require('../../actions/layout/LoginAction');
 const validate = (values) => {
     const errors = {};
     const requiredFields = [
-        'mobile',
+        'phone',
         'password'
     ];
     requiredFields.forEach(field => {
@@ -56,7 +56,7 @@ class Login extends React.Component {
                 <div className="col s8 m4 l4 z-depth-4 card-panel">
                     <form onSubmit={handleSubmit(login)}>
                         <div className="row">
-                            <Field label="用户名" name="mobile" type="text" id="mobile" icon="mdi mdi-account prefix"
+                            <Field label="用户名" name="phone" type="text" id="phone" icon="mdi mdi-account prefix"
                                    component={renderField}/>
 
                         </div>
@@ -93,10 +93,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-
     login: (values) => {
-        //console.log(values)
-        //console.log(dispatch)
         dispatch(loginAction.login(values));
         //dispatch({type:loginActionType.loginInit,payload:values})
     }

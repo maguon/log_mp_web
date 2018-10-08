@@ -60,7 +60,6 @@ class Container extends React.Component {
 
     render() {
         const {headerReducer} = this.props;
-        console.log(headerReducer.userInfo);
         let avatarUrl = "";
         if (headerReducer.userInfo && headerReducer.userInfo.avatar_image) {
             avatarUrl = "http://" + fileHost + "/api/image/" + headerReducer.userInfo.avatar_image;
@@ -75,7 +74,7 @@ class Container extends React.Component {
                             <div className="user-view blue-grey">
                                 <a><img class="circle" src={avatarUrl}/></a>
                                 <a><span className="white-text name">Name:{headerReducer.userInfo.real_name}</span></a>
-                                <a><span className="white-text email">Phone:{headerReducer.userInfo.mobile}</span></a>
+                                <a><span className="white-text email">Phone:{headerReducer.userInfo.phone}</span></a>
                             </div>
                         </li>
                         <li>

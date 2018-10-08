@@ -11,9 +11,10 @@ class CitySetting extends React.Component {
     }
 
     componentDidMount() {
-        const {getCityList, setCityFormFlag} = this.props;
+        const {getCityList, setCityFormFlag, setCityName} = this.props;
         getCityList();
         setCityFormFlag(false);
+        setCityName('');
     }
 
     render() {

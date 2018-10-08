@@ -59,7 +59,6 @@ export const openEnquiryModal = () => async (dispatch) => {
  */
 export const calculateMileage = () => async (dispatch, getState) => {
     try {
-        // console.log('getState()', getState());
         // const enquiryFormValues = getState().form.EnquiryFormValues.values;
 
         const startCityId = getState().EnquiryReducer.startCity.value;

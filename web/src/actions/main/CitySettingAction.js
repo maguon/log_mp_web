@@ -28,7 +28,7 @@ export const getCityList = () => async (dispatch, getState) => {
 
 export const addCity = () => async (dispatch, getState) => {
     try {
-        const cityName = getState().CitySettingReducer.cityName;
+        const cityName = getState().CitySettingReducer.cityName.trim();
         if (cityName === '') {
             swal({
                 type: 'warning',

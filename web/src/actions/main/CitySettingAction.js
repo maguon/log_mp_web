@@ -11,18 +11,10 @@ export const getCityList = () => async (dispatch, getState) => {
         if (res.success) {
             dispatch({type: CitySettingActionType.getCityInfo, payload: res.result})
         } else {
-            swal({
-                type: 'warning',
-                title: '获取城市信息失败',
-                text: res.msg
-            })
+            swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };
 
@@ -30,11 +22,7 @@ export const addCity = () => async (dispatch, getState) => {
     try {
         const cityName = getState().CitySettingReducer.cityName.trim();
         if (cityName === '') {
-            swal({
-                type: 'warning',
-                title: '添加失败',
-                text: '请输入城市名称！'
-            })
+            swal('添加失败', '请输入城市名称！', 'warning');
         } else {
             const userId = getState().HeaderReducer.userInfo.id;
             const params = {
@@ -51,18 +39,10 @@ export const addCity = () => async (dispatch, getState) => {
                 // 添加成功后，重新检索画面数据
                 dispatch(getCityList());
             } else {
-                swal({
-                    type: 'warning',
-                    title: '添加失败',
-                    text: res.msg
-                })
+                swal('添加失败', res.msg, 'warning');
             }
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };

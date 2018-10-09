@@ -9,7 +9,7 @@ export const login = (params) => async () => {
         const res = await httpUtil.httpPost(apiHost + '/api/admin/do/login', params);
 
         if (res && res.code) {
-            swal({type: 'error', title: '登陆失败', text: '服务器内部错误!'})
+            swal('登陆失败', '服务器内部错误!', 'error');
         } else if (res && res.success) {
             LocalUtil.setLocalItem(SysConst.USER_ID, res.result.userId);
             LocalUtil.setLocalItem(SysConst.USER_TYPE, res.result.type);
@@ -17,9 +17,9 @@ export const login = (params) => async () => {
 
             window.location.href = '/index.html';
         } else {
-            swal({type: 'warning', title: '登陆失败', text: res.msg})
+            swal('登陆失败', res.msg, 'warning');
         }
     } catch (err) {
-        swal({type: 'error', title: '操作失败', text: err.message})
+        swal('操作失败', err.message, 'error');
     }
 };

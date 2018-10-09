@@ -45,7 +45,7 @@ class RouteSetting extends React.Component {
         const editRoute = (event, cityId, cityNm, routeId, distance) => {
             // 没选中 起始城市 时
             if (routeSettingReducer.startCityName === '暂无') {
-                swal({type: 'warning', title: '请先选择起始城市！'});
+                swal('请先选择起始城市！', '', 'warning');
             } else {
                 // 设定 终到城市
                 setEndCityId(cityId);

@@ -17,10 +17,10 @@ export const getUserDetail = (params) => async (dispatch) => {
             dispatch({type: HeaderActionType.getUserInfo, payload: res.result[0]})
         } else {
             // alert message
-            swal({type: 'warning', title: '查询失败', text: res.msg})
+            swal('查询失败', res.msg, 'warning');
         }
     } catch (err) {
-        swal({type: 'error', title: '操作失败', text: err.message})
+        swal('操作失败', err.message, 'error');
     }
 };
 

@@ -14,19 +14,11 @@ export const getCityList = () => async (dispatch) => {
         if (res.success) {
             dispatch({type: EnquiryActionType.getCityList, payload: res.result})
         } else {
-            swal({
-                type: 'warning',
-                title: '获取城市信息失败',
-                text: res.msg
-            })
+            swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
         // alert message
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };
 
@@ -66,6 +58,7 @@ export const calculateMileage = () => async (dispatch, getState) => {
 
         // 当 始发城市，终到城市 都选择的时候，调用接口
         if (startCityId !== '' && endCityId !== '') {
+            // 取得 开始城市-终到城市 里程数
             const url = apiHost + '/api/route?routeStartId=' + startCityId + '&routeEndId=' + endCityId;
             const res = await httpUtil.httpGet(url);
             if (res.success) {
@@ -84,19 +77,11 @@ export const calculateMileage = () => async (dispatch, getState) => {
                     dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(0, 2)})
                 }
             } else {
-                swal({
-                    type: 'warning',
-                    title: '',
-                    text: res.msg
-                })
+                swal('获取线路信息失败', res.msg, 'warning');
             }
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };
 

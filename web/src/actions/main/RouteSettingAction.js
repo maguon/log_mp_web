@@ -14,18 +14,10 @@ export const getAllCityList = () => async (dispatch) => {
             // 右侧 城市列表
             dispatch({type: RouteSettingActionType.getEndCityArray, payload: res.result});
         } else {
-            swal({
-                type: 'warning',
-                title: '获取城市信息失败',
-                text: res.msg
-            })
+            swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };
 
@@ -107,18 +99,10 @@ export const getRouteCityList = (cityId) => async (dispatch, getState) => {
             });
             dispatch({type: RouteSettingActionType.getEndCityArray, payload: newEndCityList});
         } else {
-            swal({
-                type: 'warning',
-                title: '获取路线失败',
-                text: res.msg
-            })
+            swal('获取路线失败', res.msg, 'warning');
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };
 
@@ -130,11 +114,7 @@ export const modifyRoute = () => async (dispatch, getState) => {
         if (distance === '' || distance <= 0) {
             // 不合理(9.9.9)或小于等于0的 数字输入时，提示错误信息，并修改为0。(修改为空，数字控件不变化)
             dispatch(RouteSettingActionType.setDistance(0));
-            swal({
-                type: 'warning',
-                title: '线路设置失败',
-                text: '请正确输入线路公里数！'
-            })
+            swal('线路设置失败', '请正确输入线路公里数！', 'warning');
         } else {
             // 追加/更新 数据
             const params = {
@@ -165,18 +145,10 @@ export const modifyRoute = () => async (dispatch, getState) => {
                 // 添加成功后，重新检索画面数据
                 dispatch(getRouteCityList(getState().RouteSettingReducer.startCityId));
             } else {
-                swal({
-                    type: 'warning',
-                    title: '线路设置失败',
-                    text: res.msg
-                })
+                swal('线路设置失败', res.msg, 'warning');
             }
         }
     } catch (err) {
-        swal({
-            type: 'error',
-            title: '操作失败',
-            text: err.message
-        })
+        swal('操作失败', err.message, 'error');
     }
 };

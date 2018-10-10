@@ -8,9 +8,9 @@ export const getCityList = () => async (dispatch, getState) => {
         const url = apiHost + '/api/city';
         const res = await httpUtil.httpGet(url);
 
-        if (res.success) {
+        if (res.success === true) {
             dispatch({type: CitySettingActionType.getCityInfo, payload: res.result})
-        } else {
+        } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
@@ -31,14 +31,14 @@ export const addCity = () => async (dispatch, getState) => {
             const url = apiHost + '/api/user/' + userId + '/city';
             const res = await httpUtil.httpPost(url, params);
 
-            if (res.success) {
+            if (res.success === true) {
                 swal("添加成功", "", "success");
                 // 恢复添加前画面样子
                 dispatch({type: CitySettingActionType.setCityFormFlag, payload: false});
                 dispatch({type: CitySettingActionType.setCityName, payload: ''});
                 // 添加成功后，重新检索画面数据
                 dispatch(getCityList());
-            } else {
+            } else if (res.success === false) {
                 swal('添加失败', res.msg, 'warning');
             }
         }

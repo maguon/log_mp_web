@@ -11,9 +11,9 @@ export const getCityList = () => async (dispatch) => {
         const url = apiHost + '/api/city';
         const res = await httpUtil.httpGet(url);
 
-        if (res.success) {
+        if (res.success === true) {
             dispatch({type: EnquiryActionType.getCityList, payload: res.result})
-        } else {
+        } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
@@ -61,7 +61,7 @@ export const calculateMileage = () => async (dispatch, getState) => {
             // 取得 开始城市-终到城市 里程数
             const url = apiHost + '/api/route?routeStartId=' + startCityId + '&routeEndId=' + endCityId;
             const res = await httpUtil.httpGet(url);
-            if (res.success) {
+            if (res.success === true) {
                 // 有数据时，更新里程，清除画面提示文字
                 if (res.result.length > 0) {
                     dispatch({type: EnquiryActionType.setErrorRouteFlg, payload: false});
@@ -76,7 +76,7 @@ export const calculateMileage = () => async (dispatch, getState) => {
                     // 预计运费
                     dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(0, 2)})
                 }
-            } else {
+            } else if (res.success === false) {
                 swal('获取线路信息失败', res.msg, 'warning');
             }
         }

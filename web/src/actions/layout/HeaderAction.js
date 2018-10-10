@@ -12,11 +12,9 @@ export const getUserDetail = (params) => async (dispatch) => {
 
         // 发送 get 请求
         const res = await httpUtil.httpGet(url);
-
-        if (res && res.success) {
+        if (res.success === true) {
             dispatch({type: HeaderActionType.getUserInfo, payload: res.result[0]})
-        } else {
-            // alert message
+        } else if (res.success === false) {
             swal('查询失败', res.msg, 'warning');
         }
     } catch (err) {

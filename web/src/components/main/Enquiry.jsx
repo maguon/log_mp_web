@@ -110,7 +110,7 @@ class EnquiryForm extends React.Component {
                                            }}/>
                                 </div>
                                 <div className="input-field col s2 right-align">
-                                    <div className="input-field col s12">
+                                    <div className="input-field col s12" style={{paddingLeft: 0, paddingRight: 0}}>
                                         <span className="red-font fz18">{enquiryReducer.mileage}</span>公里
                                     </div>
                                 </div>

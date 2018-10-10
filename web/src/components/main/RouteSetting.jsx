@@ -59,13 +59,16 @@ class RouteSetting extends React.Component {
                     setRouteId(routeId);
                     // 设定 线路公里数
                     setDistance(distance);
+                    $('#routeModal').modal('open');
+                    $("#distance-label").addClass('active');
                 } else {
                     // 新建标记
                     setModifyFlag(false);
                     // 设定 线路公里数
                     setDistance('');
+                    $('#routeModal').modal('open');
+                    $("#distance-label").removeClass('active');
                 }
-                $('#routeModal').modal('open');
             }
         };
 
@@ -168,7 +171,7 @@ class RouteSetting extends React.Component {
                                 <div className="input-field col s11" style={{paddingLeft: '80px',marginTop:'20px'}}>
                                     <div className="input-field col s12">
                                         <input id="distance" type="number" value={routeSettingReducer.distance} onChange={changeDistance}/>
-                                        <label htmlFor="distance" className={routeSettingReducer.modifyFlag ? 'label-active':''}>公里数(公里)</label>
+                                        <label id="distance-label" htmlFor="distance">公里数(公里)</label>
                                     </div>
                                 </div>
                             </div>

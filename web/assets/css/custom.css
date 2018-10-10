@@ -92,14 +92,6 @@ body {
 }
 /** Material样式 变更部分 End */
 
-/* Material补充样式 label active 状态 (手动激活) */
-.label-active {
-    -webkit-transform: translateY(-14px) scale(0.8) !important;
-    transform: translateY(-14px) scale(0.8) !important;
-    -webkit-transform-origin: 0 0 !important;
-    transform-origin: 0 0 !important;
-}
-
 /** Material补充样式 左侧导航栏 自定义 顶层按钮 */
 .side-navigation {
     padding: 0 16px !important;

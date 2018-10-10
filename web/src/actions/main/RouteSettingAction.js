@@ -110,9 +110,10 @@ export const modifyRoute = () => async (dispatch, getState) => {
         // 公里数
         const distance = getState().RouteSettingReducer.distance;
         // 未输入公里数时，提示失败
-        if (distance === '' || distance <= 0) {
+        if (distance === '' || distance <= 0 || distance >= 100000000) {
             // 不合理(9.9.9)或小于等于0的 数字输入时，提示错误信息，并修改为0。(修改为空，数字控件不变化)
             dispatch(RouteSettingActionType.setDistance(0));
+            $("#distance-label").addClass('active');
             swal('线路设置失败', '请正确输入线路公里数！', 'warning');
         } else {
             // 追加/更新 数据

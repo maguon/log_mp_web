@@ -7,13 +7,12 @@ export const getAllCityList = () => async (dispatch) => {
     try {
         const url = apiHost + '/api/city';
         const res = await httpUtil.httpGet(url);
-
-        if (res.success) {
+        if (res.success === true) {
             // 左侧 城市列表
             dispatch({type: RouteSettingActionType.getStartCityArray, payload: res.result});
             // 右侧 城市列表
             dispatch({type: RouteSettingActionType.getEndCityArray, payload: res.result});
-        } else {
+        } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
@@ -31,7 +30,7 @@ export const getRouteCityList = (cityId) => async (dispatch, getState) => {
         // 检索url
         const url = apiHost + '/api/route' + condition;
         const res = await httpUtil.httpGet(url);
-        if (res.success) {
+        if (res.success === true) {
             // 路线结果列表
             let routeList = res.result;
 
@@ -98,7 +97,7 @@ export const getRouteCityList = (cityId) => async (dispatch, getState) => {
                 newEndCityList.push(cityItem);
             });
             dispatch({type: RouteSettingActionType.getEndCityArray, payload: newEndCityList});
-        } else {
+        } else if (res.success === false) {
             swal('获取路线失败', res.msg, 'warning');
         }
     } catch (err) {
@@ -138,13 +137,13 @@ export const modifyRoute = () => async (dispatch, getState) => {
                 res = await httpUtil.httpPost(url, params);
             }
 
-            if (res.success) {
+            if (res.success === true) {
                 swal("线路设置成功", "", "success");
                 // 成功后关闭 模态
                 $('#routeModal').modal('close');
                 // 添加成功后，重新检索画面数据
                 dispatch(getRouteCityList(getState().RouteSettingReducer.startCityId));
-            } else {
+            } else if (res.success === false) {
                 swal('线路设置失败', res.msg, 'warning');
             }
         }

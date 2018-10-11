@@ -6,10 +6,16 @@ const citySettingAction = require('../../actions/main/CitySettingAction');
 
 class CitySetting extends React.Component {
 
+    /**
+     * 组件准备要挂载的最一开始，调用执行
+     */
     constructor(props) {
         super(props);
     }
 
+    /**
+     * 组件完全挂载到页面上，调用执行
+     */
     componentDidMount() {
         const {getCityList, setCityFormFlag, setCityName} = this.props;
         getCityList();
@@ -17,20 +23,30 @@ class CitySetting extends React.Component {
         setCityName('');
     }
 
+    /**
+     * 显示追加城市画面
+     */
+    showCityForm = () => {
+        this.props.setCityFormFlag(true);
+    };
+
+    /**
+     * 隐藏追加城市画面
+     */
+    hideCityForm = () => {
+        this.props.setCityFormFlag(false);
+        this.props.setCityName('');
+    };
+
+    /**
+     * 更新追加城市名称
+     */
+    changeCityName = (event) => {
+        this.props.setCityName(event.target.value);
+    };
+
     render() {
-        const {citySettingReducer, setCityFormFlag, setCityName, addCity} = this.props;
-
-        const showCityForm = () => {
-            setCityFormFlag(true);
-        };
-        const hideCityForm = () => {
-            setCityFormFlag(false);
-            setCityName('');
-        };
-        const changeCityName = (event) => {
-            setCityName(event.target.value);
-        };
-
+        const {citySettingReducer, addCity} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -47,12 +63,12 @@ class CitySetting extends React.Component {
                         <form>
                             <div className="col s12">
                                 <div className="input-field col s8">
-                                    <input id="city_name" type="text" maxLength="16" value={citySettingReducer.cityName} onChange={changeCityName}/>
+                                    <input id="city_name" type="text" maxLength="16" value={citySettingReducer.cityName} onChange={this.changeCityName}/>
                                     <label htmlFor="city_name">城市</label>
                                 </div>
 
                                 <div className="col s3 right-align">
-                                      <btn className="btn-floating waves-effect waves-light pink lighten-3" onClick={hideCityForm}>
+                                      <btn className="btn-floating waves-effect waves-light pink lighten-3" onClick={this.hideCityForm}>
                                         <i className="mdi mdi-close"/>
                                     </btn>
                                 </div>
@@ -66,7 +82,7 @@ class CitySetting extends React.Component {
                         :
                         <div className="col s12">
                             <div className="col s12 right-align">
-                                <btn className="btn-floating waves-effect waves-light custom-purple" onClick={showCityForm}>
+                                <btn className="btn-floating waves-effect waves-light custom-purple" onClick={this.showCityForm}>
                                     <i className="mdi mdi-plus"/>
                                 </btn>
                                 <div className="divider" style={{marginTop:'20px'}}/>

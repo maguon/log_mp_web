@@ -42,43 +42,20 @@ class EnquiryForm extends React.Component {
     }
 
     /**
+     * 改变估值
+     */
+    changeValuation = (event) => {
+        this.props.changeValuation(event.target.value);
+    };
+
+    /**
      * 渲染(挂载)画面。
      */
     render() {
         // pristine : true 表示表单数据为原始数据没被修改过，反之为 dirty。
         // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
         // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
-        const {enquiryReducer, setStartCity, setEndCity, setServiceMode, setCarModel, setCarFlag, setValuation, calculateMileage, calculateFreight, closeModal} = this.props;
-
-        const changeStartCity = (value) => {
-            setStartCity(value);
-            calculateMileage();
-        };
-
-        const changeEndCity = (value) => {
-            setEndCity(value);
-            calculateMileage();
-        };
-
-        const changeServiceMode = (value) => {
-            setServiceMode(value);
-            calculateFreight();
-        };
-
-        const changeCarModel = (value) => {
-            setCarModel(value);
-            calculateFreight();
-        };
-
-        const changeCarFlag = (value) => {
-            setCarFlag(value);
-            calculateFreight();
-        };
-
-        const changeValuation = (event) => {
-            setValuation(event.target.value);
-            calculateFreight();
-        };
+        const {enquiryReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
         return (
             <div>
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
@@ -148,7 +125,7 @@ class EnquiryForm extends React.Component {
                                 </div>
                                 <div className="input-field col s6">
                                     <Field type="number" label="估值" id="valuation" name="valuation"
-                                           onChange={changeValuation}
+                                           onChange={this.changeValuation}
                                            component={renderField}/>
                                 </div>
                             </div>
@@ -201,33 +178,32 @@ const mapStateToProps = (state) => {
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
  */
 const mapDispatchToProps = (dispatch) => ({
-    setStartCity: (startCity) => {
-        dispatch(EnquiryActionType.setStartCity(startCity))
-    },
-    setEndCity: (endCity) => {
-        dispatch(EnquiryActionType.setEndCity(endCity))
-    },
-    setServiceMode: (serviceMode) => {
-        dispatch(EnquiryActionType.setServiceMode(serviceMode))
-    },
-    setCarModel: (carModel) => {
-        dispatch(EnquiryActionType.setCarModel(carModel))
-    },
-    setCarFlag: (carFlag) => {
-        dispatch(EnquiryActionType.setCarFlag(carFlag))
-    },
-    setValuation: (valuation) => {
-        dispatch(EnquiryActionType.setValuation(valuation))
-    },
-
-    closeModal: () => {
-        $('#enquiryModal').modal('close');
-    },
-    calculateMileage: () => {
+    changeStartCity: (startCity) => {
+        dispatch(EnquiryActionType.setStartCity(startCity));
         dispatch(enquiryAction.calculateMileage())
     },
-    calculateFreight: () => {
+    changeEndCity: (endCity) => {
+        dispatch(EnquiryActionType.setEndCity(endCity));
+        dispatch(enquiryAction.calculateMileage())
+    },
+    changeServiceMode: (serviceMode) => {
+        dispatch(EnquiryActionType.setServiceMode(serviceMode));
         dispatch(enquiryAction.calculateFreight());
+    },
+    changeCarModel: (carModel) => {
+        dispatch(EnquiryActionType.setCarModel(carModel));
+        dispatch(enquiryAction.calculateFreight());
+    },
+    changeCarFlag: (carFlag) => {
+        dispatch(EnquiryActionType.setCarFlag(carFlag));
+        dispatch(enquiryAction.calculateFreight());
+    },
+    changeValuation: (valuation) => {
+        dispatch(EnquiryActionType.setValuation(valuation));
+        dispatch(enquiryAction.calculateFreight());
+    },
+    closeModal: () => {
+        $('#enquiryModal').modal('close');
     }
 });
 

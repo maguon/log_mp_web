@@ -6,10 +6,16 @@ const routeSettingAction = require('../../actions/main/RouteSettingAction');
 
 class RouteSetting extends React.Component {
 
+    /**
+     * 组件准备要挂载的最一开始，调用执行
+     */
     constructor(props) {
         super(props);
     }
 
+    /**
+     * 组件完全挂载到页面上，调用执行
+     */
     componentDidMount() {
         const {getAllCityList, setStartCityName} = this.props;
         $('.modal').modal();
@@ -17,66 +23,59 @@ class RouteSetting extends React.Component {
         setStartCityName('暂无');
     }
 
-    render() {
-        const {
-            routeSettingReducer,
-            setStartCityId,
-            setStartCityName,
-            setEndCityId,
-            setEndCityName,
-            setRouteId,
-            setDistance,
-            getRouteCityList,
-            setModifyFlag,
-            closeModal,
-            modifyRoute
-        } = this.props;
+    /**
+     * 点击左侧城市，取得路线
+     */
+    clickStartCity = (event, cityId, cityNm) => {
+        // 设定 开始城市
+        this.props.setStartCityId(cityId);
+        this.props.setStartCityName(cityNm);
+        // 取得 开始城市 对应的 路线
+        this.props.getRouteCityList(cityId);
+    };
 
-        // 点击左侧城市，取得路线
-        const clickStartCity = (event, cityId, cityNm) => {
-            // 设定 开始城市
-            setStartCityId(cityId);
-            setStartCityName(cityNm);
-            // 取得 开始城市 对应的 路线
-            getRouteCityList(cityId);
-        };
+    /**
+     * 点击右侧城市，编辑路线
+     */
+    editRoute = (event, cityId, cityNm, routeId, distance) => {
+        // 没选中 起始城市 时
+        if (this.props.routeSettingReducer.startCityName === '暂无') {
+            swal('请先选择起始城市！', '', 'warning');
+        } else {
+            // 设定 终到城市
+            this.props.setEndCityId(cityId);
+            this.props.setEndCityName(cityNm);
 
-        // 点击右侧城市，编辑路线
-        const editRoute = (event, cityId, cityNm, routeId, distance) => {
-            // 没选中 起始城市 时
-            if (routeSettingReducer.startCityName === '暂无') {
-                swal('请先选择起始城市！', '', 'warning');
+            // 存在路线ID的，则为编辑画面
+            if (routeId !== '') {
+                // 编辑标记
+                this.props.setModifyFlag(true);
+                // 设定 线路ID
+                this.props.setRouteId(routeId);
+                // 设定 线路公里数
+                this.props.setDistance(distance);
+                $('#routeModal').modal('open');
+                $("#distance-label").addClass('active');
             } else {
-                // 设定 终到城市
-                setEndCityId(cityId);
-                setEndCityName(cityNm);
-
-                // 存在路线ID的，则为编辑画面
-                if (routeId !== '') {
-                    // 编辑标记
-                    setModifyFlag(true);
-                    // 设定 线路ID
-                    setRouteId(routeId);
-                    // 设定 线路公里数
-                    setDistance(distance);
-                    $('#routeModal').modal('open');
-                    $("#distance-label").addClass('active');
-                } else {
-                    // 新建标记
-                    setModifyFlag(false);
-                    // 设定 线路公里数
-                    setDistance('');
-                    $('#routeModal').modal('open');
-                    $("#distance-label").removeClass('active');
-                }
+                // 新建标记
+                this.props.setModifyFlag(false);
+                // 设定 线路公里数
+                this.props.setDistance('');
+                $('#routeModal').modal('open');
+                $("#distance-label").removeClass('active');
             }
-        };
+        }
+    };
 
-        // 更新线路公里数
-        const changeDistance = (event) => {
-            setDistance(event.target.value);
-        };
+    /**
+     * 更新线路公里数
+     */
+    changeDistance = (event) => {
+        this.props.setDistance(event.target.value);
+    };
 
+    render() {
+        const {routeSettingReducer, closeModal, modifyRoute} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -109,7 +108,7 @@ class RouteSetting extends React.Component {
                                                             backgroundColor: '#6E2678',
                                                             color: 'white'
                                                         } : {}}
-                                                        onClick={() => {clickStartCity(event, item.id, item.city_name)}}>
+                                                        onClick={() => {this.clickStartCity(event, item.id, item.city_name)}}>
                                                     {/*<div style={(item.city_name.length > 7) ? {height: '25px',lineHeight: '15px'}*/}
                                                     {/*: {height: '10px', lineHeight: '15px'}}>*/}
                                                     {/*{item.city_name}*/}
@@ -122,7 +121,7 @@ class RouteSetting extends React.Component {
                                                 </button>
                                             </div>
                                         )
-                                    })
+                                    },this)
                                 }
                             </div>
                         </div>
@@ -139,7 +138,7 @@ class RouteSetting extends React.Component {
                                             <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
                                                 <button className="btn route-card" style={item.route_flag ? {backgroundColor: '#6E2678',color: 'white'} : {}}
                                                         onClick={() => {
-                                                            editRoute(event, item.id, item.city_name, item.route_id, item.distance)
+                                                            this.editRoute(event, item.id, item.city_name, item.route_id, item.distance)
                                                         }}>
                                                     <div style={{
                                                         height: '20px',
@@ -150,7 +149,7 @@ class RouteSetting extends React.Component {
                                                 </button>
                                             </div>
                                         )
-                                    })
+                                    },this)
                                 }
                             </div>
                         </div>
@@ -170,7 +169,7 @@ class RouteSetting extends React.Component {
                             <div className="row">
                                 <div className="input-field col s11" style={{paddingLeft: '80px',marginTop:'20px'}}>
                                     <div className="input-field col s12">
-                                        <input id="distance" type="number" value={routeSettingReducer.distance} onChange={changeDistance}/>
+                                        <input id="distance" type="number" value={routeSettingReducer.distance} onChange={this.changeDistance}/>
                                         <label id="distance-label" htmlFor="distance">公里数(公里)</label>
                                     </div>
                                 </div>

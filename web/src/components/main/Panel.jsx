@@ -12,10 +12,10 @@ class Panel extends React.Component {
     }
     setClickCount(){
         //const res = httpUtil.httpGet('stg.myxxjs.com:9001','/api/user')();
-        const u = "http://stg.myxxjs.com:9001/api/user";
-        httpUtil.httpGet(u,(err,res)=>{
-            console.log(err||res)
-        })
+        // const u = "http://stg.myxxjs.com:9001/api/user";
+        // httpUtil.httpGet(u,(err,res)=>{
+        //     console.log(err||res)
+        // })
         /*fetch(u, {
             method: 'GET',
             mode: 'cors',

@@ -50,8 +50,7 @@ class Header extends React.Component {
                 <nav>
                     <div className="nav-wrapper z-depth-3 custom-purple">
 
-                        <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo"
-                           style={{display: 'block',paddingLeft: '10px'}}>
+                        <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo">
                             <i className="mdi mdi-menu mdi-36px"/>
                         </a>
 

@@ -24,6 +24,11 @@ body {
     padding-top: 20px;
 }
 
+#sideNav {
+    display: block;
+    padding-left: 10px;
+}
+
 /* 主画面 底部样式 (固定) */
 .footer {
     width: 100%;

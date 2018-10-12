@@ -72,9 +72,9 @@ class Container extends React.Component {
                     <ul id="slide-out" className="side-nav">
                         <li>
                             <div className="user-view blue-grey">
-                                <a><img class="circle" src={avatarUrl}/></a>
-                                <a><span className="white-text name">Name:{headerReducer.userInfo.real_name}</span></a>
-                                <a><span className="white-text email">Phone:{headerReducer.userInfo.phone}</span></a>
+                                <img class="circle" src={avatarUrl}/>
+                                <span className="white-text name">Name:{headerReducer.userInfo.real_name}</span>
+                                <span className="white-text email">Phone:{headerReducer.userInfo.phone}</span>
                             </div>
                         </li>
                         <li>

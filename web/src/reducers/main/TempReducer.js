@@ -1,7 +1,7 @@
 import {handleActions} from 'redux-actions';
 import {EnquiryActionType} from '../../actionTypes';
 
-const ConstConfig = require('../../config/ConstConfig');
+const sysConst = require('../../util/SysConst');
 
 // 画面用初期数据
 const initialState = {
@@ -17,11 +17,11 @@ const initialState = {
     // 城市列表
     startDate: '2011-01-04',
     // 服务方式列表
-    serviceModeList: ConstConfig.SERVICE_MODE,
+    serviceModeList: sysConst.SERVICE_MODE,
     // 车型列表
-    carModelList: ConstConfig.CAR_MODEL,
+    carModelList: sysConst.CAR_MODEL,
     // 是否新车列表
-    carFlagList: ConstConfig.YES_NO,
+    carFlagList: sysConst.YES_NO,
     // 里程
     mileage: 0,
     // 预计运费

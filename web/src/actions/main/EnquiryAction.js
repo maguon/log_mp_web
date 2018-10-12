@@ -4,7 +4,7 @@ import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
 const FormatUtil = require('../../util/FormatUtil');
-const ConstConfig = require('../../config/ConstConfig');
+const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch) => {
     try {
@@ -105,14 +105,14 @@ export const calculateFreight = () => (dispatch, getState) => {
 
     if (mileage !== 0 && serviceMode !== '' && carModel !== '' && carFlag !== '' && valuation !== '') {
         // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
-        // 里程单价 --> ConstConfig.ENQUIRY_PARAMS.unitPrice
-        // 车型系数 --> ConstConfig.CAR_MODEL[x].ratio
-        // 是否新车系数 --> ConstConfig.YES_NO[x].ratio
-        // 估值比率 --> ConstConfig.ENQUIRY_PARAMS.valuationRate
-        // 服务方式费用 --> ConstConfig.SERVICE_MODE[x].fee
+        // 里程单价 --> sysConst.ENQUIRY_PARAMS.unitPrice
+        // 车型系数 --> sysConst.CAR_MODEL[x].ratio
+        // 是否新车系数 --> sysConst.YES_NO[x].ratio
+        // 估值比率 --> sysConst.ENQUIRY_PARAMS.valuationRate
+        // 服务方式费用 --> sysConst.SERVICE_MODE[x].fee
 
-        freight = mileage * ConstConfig.ENQUIRY_PARAMS.unitPrice * ConstConfig.CAR_MODEL[carModel - 1].ratio * ConstConfig.YES_NO[carFlag].ratio
-            + valuation * ConstConfig.ENQUIRY_PARAMS.valuationRate + ConstConfig.SERVICE_MODE[serviceMode - 1].fee;
+        freight = mileage * sysConst.ENQUIRY_PARAMS.unitPrice * sysConst.CAR_MODEL[carModel - 1].ratio * sysConst.YES_NO[carFlag].ratio
+            + valuation * sysConst.ENQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode - 1].fee;
     }
 
     dispatch({type: EnquiryActionType.setFreight, payload: FormatUtil.NumberFormat(freight, 2)})

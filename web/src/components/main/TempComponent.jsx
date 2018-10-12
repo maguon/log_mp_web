@@ -3,12 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {Field, reduxForm} from "redux-form";
 const citySettingAction = require('../../actions/main/CitySettingAction');
-import {ReactSelect} from "../utils";
 import { Input ,Button, Card, Row, Col } from 'react-materialize';
-const ConstConfig = require('../../config/ConstConfig');
 
+const sysConst = require('../../util/SysConst');
 const FormatUtil = require('../../util/FormatUtil');
-
 
 
 const renderField = ({
@@ -141,7 +139,7 @@ class TempComponent extends React.Component {
                     <div className="input-field col s3">
                         <input type="text" name="endDate" className="datepicker" onChange={changeStartDate}/>
                         {/*<Input s={6} label="First Name" name="tempName" validate defaultValue='Alvin' />*/}
-                        <Input name='on' type='date' options={ConstConfig.DATE_PICKER_OPTION} onChange={changeStartDate} />
+                        <Input name='on' type='date' options={sysConst.DATE_PICKER_OPTION} onChange={changeStartDate} />
                         {/*<Input name='on' label="React-date-picker" className="datepicker" type='date' id='tttDate' onChange={changeStartDate} />*/}
                         {/*<input type="text" id="createdOnStartText" className="datepicker">*/}
                         {/*<i className="mdi dataIcon mdi-table-large"></i>*/}

@@ -1,18 +1,18 @@
 import {handleActions} from 'redux-actions';
 import {EnquiryActionType} from '../../actionTypes';
 
-const ConstConfig = require('../../config/ConstConfig');
+const sysConst = require('../../util/SysConst');
 
 // 画面用初期数据
 const initialState = {
     // 城市列表
     cityList: [],
     // 服务方式列表
-    serviceModeList: ConstConfig.SERVICE_MODE,
+    serviceModeList: sysConst.SERVICE_MODE,
     // 车型列表
-    carModelList: ConstConfig.CAR_MODEL,
+    carModelList: sysConst.CAR_MODEL,
     // 是否新车列表
-    carFlagList: ConstConfig.YES_NO,
+    carFlagList: sysConst.YES_NO,
 
     // 始发城市
     startCity: {value: '', label: '始发城市'},

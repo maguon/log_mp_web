@@ -2,6 +2,8 @@ import {apiHost} from '../../config/HostConfig';
 import {CitySettingActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
+const localUtil = require('../../util/LocalUtil');
+const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch, getState) => {
     try {
@@ -24,11 +26,10 @@ export const addCity = () => async (dispatch, getState) => {
         if (cityName === '') {
             swal('添加失败', '请输入城市名称！', 'warning');
         } else {
-            const userId = getState().HeaderReducer.userInfo.id;
             const params = {
                 cityName: cityName
             };
-            const url = apiHost + '/api/user/' + userId + '/city';
+            const url = apiHost + '/api/user/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
             const res = await httpUtil.httpPost(url, params);
 
             if (res.success === true) {

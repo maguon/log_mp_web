@@ -2,6 +2,8 @@ import {apiHost} from '../../config/HostConfig';
 import {RouteSettingActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
+const localUtil = require('../../util/LocalUtil');
+const sysConst = require('../../util/SysConst');
 
 export const getAllCityList = () => async (dispatch) => {
     try {
@@ -126,7 +128,7 @@ export const modifyRoute = () => async (dispatch, getState) => {
             };
 
             // url
-            const url = apiHost + '/api/user/' + getState().HeaderReducer.userInfo.id + '/route';
+            const url = apiHost + '/api/user/' + localUtil.getLocalItem(sysConst.USER_ID) + '/route';
 
             // http response
             let res;

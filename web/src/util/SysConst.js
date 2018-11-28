@@ -77,3 +77,26 @@ export const DATE_PICKER_OPTION = {
     closeOnSelect: true, // Close upon selecting a date,
     // container: undefined, // ex. 'body' will append picker to body
 };
+
+/**
+ * 单选下拉菜单样式
+ */
+export const CUSTOM_REACT_SELECT_STYLE = {
+    control: (styles, {isFocused}) => ({
+        ...styles,
+        height: 'calc(3rem + 1px)',
+        borderRadius: '0',
+        boxShadow: '0',
+        borderTop: '0',
+        borderLeft: '0',
+        borderRight: '0',
+        background: '#FFFFFF',
+        margin: "0 0 20px 0",
+        borderColor: isFocused ? '#26a69a' : '#ACACAC',
+        ':hover': {
+            borderColor: "#26a69a"
+        }
+    }),
+    indicatorSeparator: styles => ({...styles, display: 'none'}),
+    valueContainer: styles => ({...styles, paddingLeft: '0'})
+};

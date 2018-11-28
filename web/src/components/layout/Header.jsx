@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Enquiry} from '../main/index';
+import {EnquiryModal} from '../modules/index';
 
 const localUtil = require('../../util/LocalUtil');
 const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
-const enquiryAction = require('../../actions/main/EnquiryAction');
+const enquiryModalAction = require('../../actions/modules/EnquiryModalAction');
 const sysConst = require('../../util/SysConst');
 
 /**
@@ -26,17 +26,19 @@ class Header extends React.Component {
      */
     componentDidMount() {
         const {getUserDetail} = this.props;
-        let userId = localUtil.getLocalItem(sysConst.USER_ID);
+        const userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
+        const userType = localUtil.getLocalItem(sysConst.USER_TYPE);
+        httpHeaders.set(sysConst.USER_ID, userId);
+        httpHeaders.set(sysConst.USER_TYPE, userType);
         httpHeaders.set(sysConst.AUTH_TOKEN, token);
-        $("#sideNav").sideNav({closeOnClick: true});
-        $('.collapsible').collapsible();
-        // $('select').formSelect();
-        if (userId == null || token == null) {
+        if (userId == null || userType == null || token == null) {
             window.location.href = '/login.html';
         } else {
             getUserDetail(userId);
         }
+        $("#sideNav").sideNav({closeOnClick: true});
+        $('.collapsible').collapsible();
     }
 
     /**
@@ -50,9 +52,15 @@ class Header extends React.Component {
                 <nav>
                     <div className="nav-wrapper z-depth-3 custom-purple">
 
-                        <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo">
+                        <a href="#" id="sideNav" data-activates="slide-out" className="sidenav-trigger brand-logo"
+                           style={{display: 'block',paddingLeft: '10px'}}>
                             <i className="mdi mdi-menu mdi-36px"/>
                         </a>
+
+                        {/*<span className="header-icon">*/}
+                            {/*<img src="../../../assets/images/logo_ico-32.ico" alt=""/>*/}
+                        {/*</span>*/}
+                        {/*<span className="header-font">连惠车后台管理系统</span>*/}
 
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
@@ -60,18 +68,12 @@ class Header extends React.Component {
                                     <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={openEnquiryModal}/>
                                 </a>
                             </li>
-                            <li>
-                                <a className="right-align">
-                                    <i className="mdi mdi-account mdi-36px"/>
-                                </a>
-                            </li>
-                            <li>
-                                <a><i className="mdi mdi-exit-to-app mdi-36px" onClick={logout}/></a>
-                            </li>
+                            <li><a className="right-align"><i className="mdi mdi-account mdi-36px"/></a></li>
+                            <li><a><i className="mdi mdi-exit-to-app mdi-36px" onClick={logout}/></a></li>
                         </ul>
                     </div>
                 </nav>
-                <Enquiry/>
+                <EnquiryModal/>
             </div>
         )
     }
@@ -89,8 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
     openEnquiryModal: () => {
-        dispatch(enquiryAction.getCityList());
-        dispatch(enquiryAction.openEnquiryModal());
+        dispatch(enquiryModalAction.getCityList());
+        dispatch(enquiryModalAction.initEnquiryModal());
     },
     logout: () => {
         dispatch(headerAction.logout())

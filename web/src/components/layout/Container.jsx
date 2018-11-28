@@ -1,16 +1,16 @@
 import React from 'react';
-import {Panel, User, UserDetail, CitySetting, RouteSetting, TempComponent} from '../main/index';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
+import {Panel, User, UserDetail, CitySetting, RouteSetting} from '../main/index';
 
 const routes = [
-    // 临时测试用，要删除
-    {
-        path: "/temp",
-        exact: true,
-        component: TempComponent
-    },
+    // 默认打开画面 - 主控面板
+    // {
+    //     path: "/",
+    //     exact: true,
+    //     component: MainPanel
+    // },
     // 默认打开画面 - 暂定面板画面
     {
         path: "/",
@@ -69,21 +69,13 @@ class Container extends React.Component {
         return (
             <Router hashType={"hashbang"}>
                 <div className="main-body">
-                    <ul id="slide-out" className="side-nav">
+                    <ul id="slide-out" className="side-nav height-percent100">
                         <li>
                             <div className="user-view blue-grey">
-                                <img class="circle" src={avatarUrl}/>
+                                <img className="circle" src={avatarUrl}/>
                                 <span className="white-text name">Name:{headerReducer.userInfo.real_name}</span>
                                 <span className="white-text email">Phone:{headerReducer.userInfo.phone}</span>
                             </div>
-                        </li>
-                        <li>
-                            <Link to="/temp" className="side-navigation">
-                                <i className="mdi mdi-cards-variant"/>测试组件画面
-                            </Link>
-                        </li>
-                        <li>
-                            <div className="divider"/>
                         </li>
 
                         <li>
@@ -110,18 +102,16 @@ class Container extends React.Component {
                                     <a className="collapsible-header"><i className="mdi mdi-lock"/>设置</a>
                                     <div className="collapsible-body">
                                         <ul>
-                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link>
-                                            </li>
-                                            <li>
-                                                <div className="divider"/>
-                                            </li>
-                                            <li><Link to="/route_setting"><i
-                                                className="mdi mdi-chevron-right"/>线路</Link></li>
+                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路</Link></li>
                                         </ul>
                                     </div>
                                 </li>
                             </ul>
                         </li>
+
+
                     </ul>
                     {routes.map((route, index) => (
                         // Render more <Route>s with the same paths as
@@ -146,14 +136,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-
     getUserDetail: (userId) => {
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
     logout: () => {
         dispatch(headerAction.logout())
     }
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container)

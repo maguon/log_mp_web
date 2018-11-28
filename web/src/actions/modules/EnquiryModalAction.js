@@ -1,5 +1,4 @@
 import {EnquiryModalActionType} from "../../actionTypes";
-import {reset} from 'redux-form'
 import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
@@ -10,21 +9,17 @@ export const getCityList = () => async (dispatch) => {
     try {
         const url = apiHost + '/api/city';
         const res = await httpUtil.httpGet(url);
-
         if (res.success === true) {
             dispatch({type: EnquiryModalActionType.getCityList, payload: res.result})
         } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
         }
     } catch (err) {
-        // alert message
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const openEnquiryModal = () => async (dispatch) => {
-    // // 清空画面数据
-    // dispatch(reset('EnquiryFormValues'));
+export const initEnquiryModal = () => async (dispatch) => {
     // 询价画面 初期
     // 始发城市
     dispatch({type: EnquiryModalActionType.setStartCity, payload: null});

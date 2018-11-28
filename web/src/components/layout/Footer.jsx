@@ -4,7 +4,6 @@ class Footer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {date: new Date(),message:"abc",count:0};
     }
 
     componentDidMount(){

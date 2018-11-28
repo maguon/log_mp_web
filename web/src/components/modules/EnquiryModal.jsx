@@ -37,131 +37,125 @@ class EnquiryModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        // pristine : true 表示表单数据为原始数据没被修改过，反之为 dirty。
-        // submitting : 用于表示您的表单提交状态，他只会在您的表单提交后返回一个 promise 对象时起作用。 false 表示 promise 对象为 resolved 或 rejected 状态。
-        // handleSubmit(eventOrSubmit) : Function : 提交表单的函数，如果表单需要验证，验证方法会被执行(包括同步和异步)。
         const {enquiryModalReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
         return (
             <div>
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
 
-                    <form>
+                    {/** Modal头部：Title */}
+                    <div className="modal-title center-align white-text">询&nbsp;价</div>
 
-                        {/** Modal头部：Title */}
-                        <div className="modal-title center-align white-text">询&nbsp;价</div>
+                    {/** Modal主体 */}
+                    <div className="modal-content white">
 
-                        {/** Modal主体 */}
-                        <div className="modal-content white">
-
-                            {/** 第一行 */}
-                            <div className="row margin-top20">
-                                <div className="input-field col s6">
-                                    <Select
-                                        options={enquiryModalReducer.cityList}
-                                        onChange={changeStartCity}
-                                        value={enquiryModalReducer.startCity}
-                                        isSearchable={true}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={false}
-                                    />
-                                    <label className="active">始发城市</label>
-                                </div>
-                                <div className="input-field col s4">
-                                    <Select
-                                        options={enquiryModalReducer.cityList}
-                                        onChange={changeEndCity}
-                                        value={enquiryModalReducer.endCity}
-                                        isSearchable={true}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={false}
-                                    />
-                                    <label className="active">终到城市</label>
-                                </div>
-                                <div className="input-field col s2 right-align">
-                                    <div className="input-field col s12" style={{paddingLeft: 0, paddingRight: 0}}>
-                                        <span className="red-font margin-left5 fz18">{enquiryModalReducer.mileage}</span>公里
-                                    </div>
-                                </div>
+                        {/** 第一行 */}
+                        <div className="row margin-top20">
+                            <div className="input-field col s6">
+                                <Select
+                                    options={enquiryModalReducer.cityList}
+                                    onChange={changeStartCity}
+                                    value={enquiryModalReducer.startCity}
+                                    isSearchable={true}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={false}
+                                />
+                                <label className="active">始发城市</label>
                             </div>
-
-                            {/** 第二行 */}
-                            <div className="row">
-                                <div className="input-field col s6">
-                                    <Select
-                                        options={sysConst.SERVICE_MODE}
-                                        onChange={changeServiceMode}
-                                        value={enquiryModalReducer.serviceMode}
-                                        isSearchable={false}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={false}
-                                    />
-                                    <label className="active">服务方式</label>
-                                </div>
-                                <div className="input-field col s6">
-                                    <Select
-                                        options={sysConst.CAR_MODEL}
-                                        onChange={changeCarModel}
-                                        value={enquiryModalReducer.carModel}
-                                        isSearchable={false}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={false}
-                                    />
-                                    <label className="active">车型</label>
-                                </div>
+                            <div className="input-field col s4">
+                                <Select
+                                    options={enquiryModalReducer.cityList}
+                                    onChange={changeEndCity}
+                                    value={enquiryModalReducer.endCity}
+                                    isSearchable={true}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={false}
+                                />
+                                <label className="active">终到城市</label>
                             </div>
-
-                            {/** 第三行 */}
-                            <div className="row">
-                                <div className="input-field col s6">
-                                    <Select
-                                        options={sysConst.YES_NO}
-                                        onChange={changeCarFlag}
-                                        value={enquiryModalReducer.carFlag}
-                                        isSearchable={false}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={false}
-                                    />
-                                    <label className="active">是否新车</label>
-                                </div>
-                                <div className="custom-input-field col s6">
-                                    <Input s={12} label="估值" type="number" value={enquiryModalReducer.valuation} onChange={this.changeValuation}/>
-                                </div>
-                            </div>
-
-                            {/** 最终行：预计运费 */}
-                            <div className="row input-field col s12">
-                                <div className="col left-align" style={{width: '4%'}}>
-                                    {enquiryModalReducer.errorRouteFlg &&
-                                    <div className="bold red-text">
-                                        <span className="mdi mdi-alert-circle red-text fz30"/>
-                                    </div>
-                                    }
-                                </div>
-                                <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
-                                    {enquiryModalReducer.errorRouteFlg &&
-                                    <div className="bold red-text">
-                                        当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
-                                    </div>
-                                    }
-                                </div>
-
-                                <div className="col right-align" style={{width: '36%', marginTop: '12px'}}>
-                                    预计运费：<span className="red-font margin-left5 fz18">{enquiryModalReducer.freight}</span>元
+                            <div className="input-field col s2 right-align">
+                                <div className="input-field col s12" style={{paddingLeft: 0, paddingRight: 0}}>
+                                    <span className="red-font margin-left5 fz18">{enquiryModalReducer.mileage}</span>公里
                                 </div>
                             </div>
                         </div>
 
-                        {/** Modal固定底部：取消确定按钮 */}
-                        <div className="modal-footer">
-                            <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>
+                        {/** 第二行 */}
+                        <div className="row">
+                            <div className="input-field col s6">
+                                <Select
+                                    options={sysConst.SERVICE_MODE}
+                                    onChange={changeServiceMode}
+                                    value={enquiryModalReducer.serviceMode}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={false}
+                                />
+                                <label className="active">服务方式</label>
+                            </div>
+                            <div className="input-field col s6">
+                                <Select
+                                    options={sysConst.CAR_MODEL}
+                                    onChange={changeCarModel}
+                                    value={enquiryModalReducer.carModel}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={false}
+                                />
+                                <label className="active">车型</label>
+                            </div>
                         </div>
 
-                    </form>
+                        {/** 第三行 */}
+                        <div className="row">
+                            <div className="input-field col s6">
+                                <Select
+                                    options={sysConst.YES_NO}
+                                    onChange={changeCarFlag}
+                                    value={enquiryModalReducer.carFlag}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={false}
+                                />
+                                <label className="active">是否新车</label>
+                            </div>
+                            <div className="custom-input-field col s6">
+                                <Input s={12} label="估值" type="number" value={enquiryModalReducer.valuation} onChange={this.changeValuation}/>
+                            </div>
+                        </div>
+
+                        {/** 最终行：预计运费 */}
+                        <div className="row input-field col s12">
+                            <div className="col left-align" style={{width: '4%'}}>
+                                {enquiryModalReducer.errorRouteFlg &&
+                                <div className="bold red-text">
+                                    <span className="mdi mdi-alert-circle red-text fz30"/>
+                                </div>
+                                }
+                            </div>
+                            <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
+                                {enquiryModalReducer.errorRouteFlg &&
+                                <div className="bold red-text">
+                                    当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
+                                </div>
+                                }
+                            </div>
+
+                            <div className="col right-align" style={{width: '36%', marginTop: '12px'}}>
+                                预计运费：<span className="red-font margin-left5 fz18">{enquiryModalReducer.freight}</span>元
+                            </div>
+                        </div>
+                    </div>
+
+                    {/** Modal固定底部：取消确定按钮 */}
+                    <div className="modal-footer">
+                        <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>
+                    </div>
+
                 </div>
             </div>
         );

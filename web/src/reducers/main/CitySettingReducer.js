@@ -1,10 +1,11 @@
-import { handleActions } from 'redux-actions';
+import {handleActions} from 'redux-actions';
 import {CitySettingActionType} from '../../actionTypes';
+
 const initialState = {
-    cityArray :[],
-    cityFormFlag : false,
-    cityName : ''
-}
+    cityArray: [],
+    cityFormFlag: false,
+    cityName: ''
+};
 
 export default handleActions({
     [CitySettingActionType.getCityInfo]: (state, action) => {
@@ -28,5 +29,4 @@ export default handleActions({
             cityName: action.payload
         }
     }
-} , initialState)
-
+}, initialState)

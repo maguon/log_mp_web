@@ -1,6 +1,6 @@
 import React from 'react';
-import {CitySettingActionType} from '../../actionTypes';
 import {connect} from 'react-redux';
+import {CitySettingActionType} from '../../actionTypes';
 
 const citySettingAction = require('../../actions/main/CitySettingAction');
 
@@ -17,23 +17,22 @@ class CitySetting extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
-        const {getCityList, setCityFormFlag, setCityName} = this.props;
-        getCityList();
-        setCityFormFlag(false);
-        setCityName('');
+        this.props.getCityList();
+        this.props.setCityFormFlag(false);
+        this.props.setCityName('');
     }
 
     /**
      * 显示追加城市画面
      */
-    showCityForm = () => {
+    showAddCityDiv = () => {
         this.props.setCityFormFlag(true);
     };
 
     /**
      * 隐藏追加城市画面
      */
-    hideCityForm = () => {
+    hideAddCityDiv = () => {
         this.props.setCityFormFlag(false);
         this.props.setCityName('');
     };
@@ -53,7 +52,7 @@ class CitySetting extends React.Component {
                 <div className="row">
                     <div className="input-field col s12 page-title">
                         城市设置
-                        <div className="divider" style={{marginTop:'10px'}}/>
+                        <div className="divider margin-top10"/>
                     </div>
                 </div>
 
@@ -68,7 +67,7 @@ class CitySetting extends React.Component {
                                 </div>
 
                                 <div className="col s3 right-align">
-                                      <btn className="btn-floating waves-effect waves-light pink lighten-3" onClick={this.hideCityForm}>
+                                      <btn className="btn-floating waves-effect waves-light pink lighten-3" onClick={this.hideAddCityDiv}>
                                         <i className="mdi mdi-close"/>
                                     </btn>
                                 </div>
@@ -82,32 +81,29 @@ class CitySetting extends React.Component {
                         :
                         <div className="col s12">
                             <div className="col s12 right-align">
-                                <btn className="btn-floating waves-effect waves-light custom-purple" onClick={this.showCityForm}>
+                                <btn className="btn-floating waves-effect waves-light custom-purple" onClick={this.showAddCityDiv}>
                                     <i className="mdi mdi-plus"/>
                                 </btn>
-                                <div className="divider" style={{marginTop:'20px'}}/>
+                                <div className="divider margin-top20"/>
                             </div>
                         </div>
                     }
                 </div>
 
-
                 {/* 数据列表 部分 */}
                 <div className="row">
                     <div className="col s12">
-                        {
-                            citySettingReducer.cityArray.map(function (item) {
-                                return (
-                                    <div className="col s2">
-                                        <div className="col s12 card-unit z-depth-1 center-align">
-                                            <div style={(item.city_name.length>8) ? {marginTop:'8px',marginBottom:'8px',fontSize:'12px'} : {marginTop:'8px',marginBottom:'8px'}}>
-                                                {item.id} - {item.city_name}
-                                                </div>
+                        {citySettingReducer.cityArray.map(function (item) {
+                            return (
+                                <div className="col s2">
+                                    <div className="col s12 card-unit z-depth-1 center-align">
+                                        <div className={`margin-top8 margin-bottom8 ${item.city_name.length > 8 ? "fz12" : ""}`}>
+                                            {item.id} - {item.city_name}
                                         </div>
                                     </div>
-                                )
-                            })
-                        }
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

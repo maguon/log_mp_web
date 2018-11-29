@@ -342,6 +342,10 @@ body {
     margin-top: 3px;
 }
 
+.margin-top8 {
+    margin-top: 8px !important;
+}
+
 .margin-top10 {
     margin-top: 10px !important;
 }
@@ -372,6 +376,10 @@ body {
 
 .margin-bottom0 {
     margin-bottom: 0 !important;
+}
+
+.margin-bottom8 {
+    margin-bottom: 8px !important;
 }
 
 .margin-bottom10 {

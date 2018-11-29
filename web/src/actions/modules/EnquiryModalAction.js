@@ -2,7 +2,7 @@ import {EnquiryModalActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
-const FormatUtil = require('../../util/FormatUtil');
+const formatUtil = require('../../util/FormatUtil');
 const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch) => {
@@ -37,7 +37,7 @@ export const initEnquiryModal = () => async (dispatch) => {
     dispatch({type: EnquiryModalActionType.setErrorRouteFlg, payload: false});
     dispatch({type: EnquiryModalActionType.setMileage, payload: 0});
     // 预计运费
-    dispatch({type: EnquiryModalActionType.setFreight, payload: FormatUtil.formatNumber(0, 2)})
+    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
 };
 
 /**
@@ -66,7 +66,7 @@ export const calculateMileage = () => async (dispatch, getState) => {
                     // 里程
                     dispatch({type: EnquiryModalActionType.setMileage, payload: 0});
                     // 预计运费
-                    dispatch({type: EnquiryModalActionType.setFreight, payload: FormatUtil.formatNumber(0, 2)})
+                    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
                 }
             } else if (res.success === false) {
                 swal('获取线路信息失败', res.msg, 'warning');
@@ -94,7 +94,6 @@ export const calculateFreight = () => (dispatch, getState) => {
 
     // 预计运费
     let freight = 0;
-
     if (mileage !== 0 && serviceMode !== null && carModel !== null && carFlag !== null && valuation !== '') {
         // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
         // 里程单价 --> sysConst.ENQUIRY_PARAMS.unitPrice
@@ -107,5 +106,5 @@ export const calculateFreight = () => (dispatch, getState) => {
             + valuation * sysConst.ENQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode.value - 1].fee;
     }
 
-    dispatch({type: EnquiryModalActionType.setFreight, payload: FormatUtil.formatNumber(freight, 2)})
+    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(freight, 2)})
 };

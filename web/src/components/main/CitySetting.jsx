@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Input} from 'react-materialize';
 import {CitySettingActionType} from '../../actionTypes';
 
 const citySettingAction = require('../../actions/main/CitySettingAction');
@@ -61,9 +62,8 @@ class CitySetting extends React.Component {
                     {citySettingReducer.cityFormFlag ?
                         <form>
                             <div className="col s12">
-                                <div className="input-field col s8">
-                                    <input id="city_name" type="text" maxLength="16" value={citySettingReducer.cityName} onChange={this.changeCityName}/>
-                                    <label htmlFor="city_name">城市</label>
+                                <div className="custom-input-field col s8">
+                                    <Input s={12} label="城市" maxLength="16" value={citySettingReducer.cityName} onChange={this.changeCityName}/>
                                 </div>
 
                                 <div className="col s3 right-align">

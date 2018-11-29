@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Input} from 'react-materialize';
 import {RouteSettingActionType} from '../../actionTypes';
 
 const routeSettingAction = require('../../actions/main/RouteSettingAction');
@@ -17,10 +18,9 @@ class RouteSetting extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
-        const {getAllCityList, setStartCityName} = this.props;
         $('.modal').modal();
-        getAllCityList();
-        setStartCityName('暂无');
+        this.props.getAllCityList();
+        this.props.setStartCityName('暂无');
     }
 
     /**
@@ -55,14 +55,12 @@ class RouteSetting extends React.Component {
                 // 设定 线路公里数
                 this.props.setDistance(distance);
                 $('#routeModal').modal('open');
-                $("#distance-label").addClass('active');
             } else {
                 // 新建标记
                 this.props.setModifyFlag(false);
                 // 设定 线路公里数
                 this.props.setDistance('');
                 $('#routeModal').modal('open');
-                $("#distance-label").removeClass('active');
             }
         }
     };
@@ -82,7 +80,7 @@ class RouteSetting extends React.Component {
                 <div className="row">
                     <div className="input-field col s12 page-title">
                         线路设置
-                        <div className="divider" style={{marginTop: '10px'}}/>
+                        <div className="divider margin-top10"/>
                     </div>
                 </div>
 
@@ -95,65 +93,47 @@ class RouteSetting extends React.Component {
                 {/* 数据列表 部分 */}
                 <div className="row">
                     {/* 数据列表 左侧 */}
-                    <div className="col s6" style={{paddingRight: '5px'}}>
+                    <div className="col s6 padding-right5">
                         <div className="col s12">
-                            <div className="col s12 z-depth-1"
-                                 style={{paddingLeft: '0', paddingRight: '0', paddingTop: '15px'}}>
-                                {
-                                    routeSettingReducer.startCityArray.map(function (item) {
-                                        return (
-                                            <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                                                <button className="btn route-card"
-                                                        style={item.city_name === routeSettingReducer.startCityName ? {
-                                                            backgroundColor: '#6E2678',
-                                                            color: 'white'
-                                                        } : {}}
-                                                        onClick={() => {this.clickStartCity(event, item.id, item.city_name)}}>
-                                                    {/*<div style={(item.city_name.length > 7) ? {height: '25px',lineHeight: '15px'}*/}
-                                                    {/*: {height: '10px', lineHeight: '15px'}}>*/}
-                                                    {/*{item.city_name}*/}
-                                                    {/*</div>*/}
-                                                    <div style={{
-                                                        height: '20px',
-                                                        lineHeight: '15px',
-                                                        marginTop: '5px'
-                                                    }}>{item.city_name}</div>
-                                                </button>
-                                            </div>
-                                        )
-                                    },this)
-                                }
+                            <div className="col s12 z-depth-1 padding-left0 padding-right0 padding-top15">
+                                {routeSettingReducer.startCityArray.map(function (item) {
+                                    return (
+                                        <div className="col s2 padding-left10 padding-right10">
+                                            <button className={`btn route-card ${item.city_name === routeSettingReducer.startCityName ? "custom-purple white-text" : ""}`}
+                                                    onClick={() => {
+                                                        this.clickStartCity(event, item.id, item.city_name)
+                                                    }}>
+                                                <div className="route-card-div">{item.city_name}</div>
+                                            </button>
+                                        </div>
+                                    )
+                                }, this)}
                             </div>
                         </div>
                     </div>
 
                     {/* 数据列表 右侧 */}
-                    <div className="col s6" style={{paddingLeft: '5px'}}>
+                    <div className="col s6 padding-left5">
                         <div className="col s12">
-                            <div className="col s12 z-depth-1"
-                                 style={{paddingLeft: '0', paddingRight: '0', paddingTop: '15px'}}>
-                                {
-                                    routeSettingReducer.endCityArray.map(function (item) {
-                                        return (
-                                            <div className="col s2" style={{paddingLeft: '10px', paddingRight: '10px'}}>
-                                                <button className="btn route-card" style={item.route_flag ? {backgroundColor: '#6E2678',color: 'white'} : {}}
-                                                        onClick={() => {
-                                                            this.editRoute(event, item.id, item.city_name, item.route_id, item.distance)
-                                                        }}>
-                                                    <div style={{
-                                                        height: '20px',
-                                                        lineHeight: '15px',
-                                                        marginTop: '5px'
-                                                    }}>{item.city_name}</div>
-                                                    {item.route_flag && <div>{item.distance}公里</div>}
-                                                </button>
-                                            </div>
-                                        )
-                                    },this)
-                                }
+                            <div className="col s12 z-depth-1 padding-left0 padding-right0 padding-top15">
+                                {routeSettingReducer.endCityArray.map(function (item) {
+                                    return (
+                                        <div className="col s2 padding-left10 padding-right10">
+                                            <button className={`btn route-card ${item.route_flag ? "custom-purple white-text" : ""}`}
+                                                    onClick={() => {
+                                                        this.editRoute(event, item.id, item.city_name, item.route_id, item.distance)
+                                                    }}>
+                                                <div className="route-card-div">{item.city_name}</div>
+                                                {item.route_flag && <div>{item.distance}公里</div>}
+                                            </button>
+                                        </div>
+                                    )
+                                }, this)}
                             </div>
                         </div>
                     </div>
+
+                    {/** 线路设置 Modal画面 */}
                     <div id="routeModal" className="modal modal-fixed-footer row">
 
                         {/** Modal头部：Title */}
@@ -162,15 +142,14 @@ class RouteSetting extends React.Component {
                         {/** Modal主体 */}
                         <div className="modal-content">
                             <div className="row">
-                                <div className="input-field col s11 fz20 pink-font" style={{paddingLeft: '90px',marginTop:'40px'}}>
+                                <div className="input-field col s11 fz20 pink-font padding-left90 margin-top40">
                                     {routeSettingReducer.startCityName}  -  {routeSettingReducer.endCityName}
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s11" style={{paddingLeft: '80px',marginTop:'20px'}}>
-                                    <div className="input-field col s12">
-                                        <input id="distance" type="number" value={routeSettingReducer.distance} onChange={this.changeDistance}/>
-                                        <label id="distance-label" htmlFor="distance">公里数(公里)</label>
+                                <div className="input-field col s11 padding-left80 margin-top20">
+                                    <div className="custom-input-field col s12">
+                                        <Input s={12} label="公里数(公里)" type="number" value={routeSettingReducer.distance} onChange={this.changeDistance}/>
                                     </div>
                                 </div>
                             </div>

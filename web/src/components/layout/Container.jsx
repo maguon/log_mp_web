@@ -2,7 +2,7 @@ import React from 'react';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
-import {Panel, User, UserDetail, CitySetting, RouteSetting} from '../main/index';
+import {Panel, User, UserDetail, InquiryManager, InquiryManagerDetail, CitySetting, RouteSetting} from '../main/index';
 
 const routes = [
     // 默认打开画面 - 主控面板
@@ -23,7 +23,7 @@ const routes = [
         exact: true,
         component: Panel
     },
-    // 用户
+    // 用户管理
     {
         path: "/user",
         exact: true,
@@ -33,6 +33,17 @@ const routes = [
         path: '/user/:id',
         exact: true,
         component: UserDetail
+    },
+    // 询价管理
+    {
+        path: "/inquiry",
+        exact: true,
+        component: InquiryManager
+    },
+    {
+        path: '/inquiry/:id',
+        exact: true,
+        component: InquiryManagerDetail
     },
     // 设置模块
     {
@@ -91,6 +102,24 @@ class Container extends React.Component {
                             <Link to="/user" className="side-navigation">
                                 <i className="mdi mdi-account-group"/>用户
                             </Link>
+                        </li>
+                        <li>
+                            <div className="divider"/>
+                        </li>
+
+                        <li>
+                            <ul className="collapsible collapsible-accordion">
+                                <li>
+                                    <a className="collapsible-header"><i className="mdi mdi-lock"/>询价管理</a>
+                                    <div className="collapsible-body">
+                                        <ul>
+                                            <li><Link to="/inquiry"><i className="mdi mdi-chevron-right"/>询价管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/XXXXXX"><i className="mdi mdi-chevron-right"/>XXXXXX</Link></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <div className="divider"/>

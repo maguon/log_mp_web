@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions';
+import {createAction} from 'redux-actions';
 
 export const getCityList = createAction('GET_CITY_LIST');
 export const setStartCity = createAction('SET_START_CITY');

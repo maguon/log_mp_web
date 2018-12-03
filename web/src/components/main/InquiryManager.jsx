@@ -104,7 +104,7 @@ class EnquiryManager extends React.Component {
     };
 
     render() {
-        const {inquiryManagerReducer, changeConditionServiceType, changeConditionEnquiryStatus} = this.props;
+        const {inquiryManagerReducer, changeConditionServiceType, changeConditionInquiryStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -128,10 +128,10 @@ class EnquiryManager extends React.Component {
                             <Input s={3} label="客户电话" value={inquiryManagerReducer.conditionPhone} onChange={this.changeConditionPhone}/>
 
                             {/* 查询条件：起始城市 */}
-                            <Input s={3} label="起始城市" value={inquiryManagerReducer.conditionStartCity} onChange={this.changeConditionStartCity()}/>
+                            <Input s={3} label="起始城市" value={inquiryManagerReducer.conditionStartCity} onChange={this.changeConditionStartCity}/>
 
                             {/* 查询条件：目的城市 */}
-                            <Input s={3} label="目的城市" value={inquiryManagerReducer.conditionEndCity} onChange={this.changeConditionEndCity()}/>
+                            <Input s={3} label="目的城市" value={inquiryManagerReducer.conditionEndCity} onChange={this.changeConditionEndCity}/>
                         </div>
 
                         {/* 查询条件：第二行 */}
@@ -150,16 +150,16 @@ class EnquiryManager extends React.Component {
                                 <label className="active">服务方式</label>
                             </div>
 
-                            {/* 查询条件：下单时间(始) */}
+                            {/* 查询条件：询价时间(始) */}
                             <div className="input-field col s3 custom-input-field">
-                                <Input s={12} label="下单时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                <Input s={12} label="询价时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={inquiryManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
-                            {/* 查询条件：下单时间(终) */}
+                            {/* 查询条件：询价时间(终) */}
                             <div className="input-field col s3 custom-input-field">
-                                <Input s={12} label="下单时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                <Input s={12} label="询价时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={inquiryManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
@@ -168,7 +168,7 @@ class EnquiryManager extends React.Component {
                             <div className="input-field col s3">
                                 <Select
                                     options={sysConst.INQUIRY_STATUS}
-                                    onChange={changeConditionEnquiryStatus}
+                                    onChange={changeConditionInquiryStatus}
                                     value={inquiryManagerReducer.conditionInquiryStatus}
                                     isSearchable={false}
                                     placeholder={"请选择"}
@@ -197,19 +197,22 @@ class EnquiryManager extends React.Component {
                         <table className="bordered striped">
                             <thead className="blue-grey lighten-5">
                             <tr className="grey-text text-darken-2">
-                                <th>订单编号</th>
-                                <th>购买人</th>
-                                <th className="center">绑定手机</th>
-                                <th className="center">下单时间</th>
-                                <th>应付金额(元)</th>
-                                <th className="center">付款状态</th>
-                                <th className="center">发货状态</th>
+                                <th>线路</th>
+                                <th>车辆数</th>
+                                <th className="center">服务方式</th>
+                                <th className="center">预计费用</th>
+                                <th>询价人</th>
+                                <th className="center">电话</th>
+                                <th className="center">询价时间</th>
+                                <th>协商费用</th>
+                                <th className="center">协商时间</th>
+                                <th className="center">状态</th>
                                 <th className="center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
                             {
-                                inquiryManagerReducer.orderArray.map(function (item) {
+                                inquiryManagerReducer.inquiryArray.map(function (item) {
                                     return (
                                             <tr className="grey-text text-darken-1">
                                                 <td>{item.id}</td>
@@ -220,7 +223,7 @@ class EnquiryManager extends React.Component {
                                                 <td className={`center ${item.payment_status === 0 ?"red-font":""}`}>{sysConst.PAYMENT_STATUS[item.payment_status].label}</td>
                                                 <td className="center">{sysConst.LOG_STATUS[item.log_status].label}</td>
                                                 <td className="operation center">
-                                                    <Link to={{pathname: '/order/'+ item.id}} >
+                                                    <Link to={{pathname: '/inquiry/'+ item.id}} >
                                                         <i className="mdi mdi-table-search light-blue-text"/>
                                                     </Link>
                                                 </td>
@@ -228,9 +231,9 @@ class EnquiryManager extends React.Component {
                                     )
                                 })
                             }
-                            { inquiryManagerReducer.orderArray.length === 0 &&
+                            { inquiryManagerReducer.inquiryArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="8">暂无数据</td>
+                                    <td className="no-data-tr" colSpan="11">暂无数据</td>
                                 </tr>
                             }
                             </tbody>

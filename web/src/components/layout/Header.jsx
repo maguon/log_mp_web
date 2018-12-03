@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {EnquiryModal} from '../modules/index';
+import {InquiryModal} from '../modules/index';
 
 const localUtil = require('../../util/LocalUtil');
 const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
-const enquiryModalAction = require('../../actions/modules/EnquiryModalAction');
+const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
 const sysConst = require('../../util/SysConst');
 
 /**
@@ -57,10 +57,11 @@ class Header extends React.Component {
                             <i className="mdi mdi-menu mdi-36px"/>
                         </a>
 
-                        {/*<span className="header-icon">*/}
+                        <span className="header-icon">
+                            待定图标
                             {/*<img src="../../../assets/images/logo_ico-32.ico" alt=""/>*/}
-                        {/*</span>*/}
-                        {/*<span className="header-font">连惠车后台管理系统</span>*/}
+                        </span>
+                        <span className="header-font">车辆运输微信小程序后台管理系统</span>
 
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
@@ -73,7 +74,7 @@ class Header extends React.Component {
                         </ul>
                     </div>
                 </nav>
-                <EnquiryModal/>
+                <InquiryModal/>
             </div>
         )
     }
@@ -91,8 +92,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
     openEnquiryModal: () => {
-        dispatch(enquiryModalAction.getCityList());
-        dispatch(enquiryModalAction.initEnquiryModal());
+        dispatch(inquiryModalAction.getCityList());
+        dispatch(inquiryModalAction.initInquiryModal());
     },
     logout: () => {
         dispatch(headerAction.logout())

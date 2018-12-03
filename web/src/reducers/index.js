@@ -11,7 +11,7 @@ import UserManagerDetailReducer from './main/UserManagerDetailReducer';
 import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
 
-import EnquiryModalReducer from './modules/EnquiryModalReducer';
+import InquiryModalReducer from './modules/InquiryModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -25,5 +25,5 @@ export default combineReducers({
     InquiryManagerReducer,
     InquiryManagerDetailReducer,
 
-    EnquiryModalReducer
+    InquiryModalReducer
 })

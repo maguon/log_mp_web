@@ -84,12 +84,12 @@ class InquiryManagerDetail extends React.Component {
                 {/* 标题部分 */}
                 <div className="row margin-bottom0">
                     <div className="input-field col s12">
-                        <Link to={{pathname: '/order', state: {fromDetail: true}}}>
+                        <Link to={{pathname: '/inquiry', state: {fromDetail: true}}}>
                             <a className="btn-floating btn waves-effect custom-blue waves-light fz15">
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">订单管理 - 订单详情</span>
+                        <span className="page-title margin-left30">询价管理 - 询价详情</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>

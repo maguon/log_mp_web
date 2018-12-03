@@ -9,7 +9,7 @@ body {
     position: relative;
     height: 100%;
     min-width: 1368px;
-    background: #f1f5f5;
+    /*background: #f1f5f5;*/
     overflow-x: auto;
     overflow-y: hidden;
     font-size: 15px;
@@ -178,7 +178,7 @@ body {
     background-color: #fff;
     margin: 0 auto;
     white-space: nowrap;
-    border-bottom: 1px solid #0F4F94;
+    border-bottom: 1px solid #724278;
 }
 
 .tabs .tab {
@@ -205,11 +205,11 @@ body {
 
 .tabs .tab a:hover {
     background-color: transparent;
-    color: #0F4F94;
+    color: #724278;
 }
 
 .tabs .tab a.active {
-    background-color: #0F4F94;
+    background-color: #724278;
     color: white !important;
 }
 
@@ -454,6 +454,10 @@ body {
     padding-left: 0 !important;
 }
 
+.padding-left5 {
+    padding-left: 5px !important;
+}
+
 .padding-left10 {
     padding-left: 10px !important;
 }
@@ -470,12 +474,24 @@ body {
     padding-left: 55px !important;
 }
 
+.padding-left80 {
+    padding-left: 80px !important;
+}
+
+.padding-left90 {
+    padding-left: 90px !important;
+}
+
 .padding-left150 {
     padding-left: 150px !important;
 }
 
 .padding-right0 {
     padding-right: 0 !important;
+}
+
+.padding-right5 {
+    padding-right: 5px !important;
 }
 
 .padding-right10 {
@@ -504,6 +520,10 @@ body {
 
 .padding-top10 {
     padding-top: 10px !important;
+}
+
+.padding-top15 {
+    padding-top: 15px !important;
 }
 
 .padding-top20 {
@@ -602,6 +622,11 @@ body {
 .custom-purple {
     background-color: #724278 !important;
 }
+
+/*.custom-purple {*/
+    /*background-color: #6E2678 !important;*/
+/*}*/
+
 /** 自定义-全画面颜色样式(字体颜色，背景颜色) end */
 
 
@@ -646,7 +671,7 @@ body {
 .query-btn {
     margin-left: 20px;
     margin-right: 10px;
-    background-color: #0F4F94;
+    background-color: #724278;
 }
 
 .small-btn {
@@ -671,7 +696,7 @@ body {
 
 .add-btn {
     margin-right: 10px;
-    background-color: #2F7ED2;
+    background-color: #724278;
 }
 
 .detail-btn {
@@ -738,6 +763,11 @@ body {
 /** modal 样式定义部分 start */
 .modal {
     min-width: 900px;
+    z-index: 1000 !important;
+}
+
+.modal-overlay {
+    z-index: 999 !important;
 }
 
 .modal-title {
@@ -794,6 +824,11 @@ body {
     padding-right: 0;
 }
 
+.route-card-div {
+    height: 20px;
+    line-height: 15px;
+    margin-top: 5px;
+}
 
 /** react 错误信息样式 */
 .error-msg {

@@ -2,15 +2,15 @@ import React from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Input} from 'react-materialize';
-import {EnquiryModalActionType} from "../../actionTypes";
+import {InquiryModalActionType} from "../../actionTypes";
 
-const enquiryModalAction = require('../../actions/modules/EnquiryModalAction');
+const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
 const sysConst = require('../../util/SysConst');
 
 /**
  * UI组件：询价模块。
  */
-class EnquiryModal extends React.Component {
+class InquiryModal extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -37,7 +37,7 @@ class EnquiryModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {enquiryModalReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
+        const {inquiryModalReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
         return (
             <div>
                 <div id="enquiryModal" className="modal modal-fixed-footer row">
@@ -52,9 +52,9 @@ class EnquiryModal extends React.Component {
                         <div className="row margin-top20">
                             <div className="input-field col s6">
                                 <Select
-                                    options={enquiryModalReducer.cityList}
+                                    options={inquiryModalReducer.cityList}
                                     onChange={changeStartCity}
-                                    value={enquiryModalReducer.startCity}
+                                    value={inquiryModalReducer.startCity}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -64,9 +64,9 @@ class EnquiryModal extends React.Component {
                             </div>
                             <div className="input-field col s4">
                                 <Select
-                                    options={enquiryModalReducer.cityList}
+                                    options={inquiryModalReducer.cityList}
                                     onChange={changeEndCity}
-                                    value={enquiryModalReducer.endCity}
+                                    value={inquiryModalReducer.endCity}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -76,7 +76,7 @@ class EnquiryModal extends React.Component {
                             </div>
                             <div className="input-field col s2 right-align">
                                 <div className="input-field col s12" style={{paddingLeft: 0, paddingRight: 0}}>
-                                    <span className="red-font margin-left5 fz18">{enquiryModalReducer.mileage}</span>公里
+                                    <span className="red-font margin-left5 fz18">{inquiryModalReducer.mileage}</span>公里
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@ class EnquiryModal extends React.Component {
                                 <Select
                                     options={sysConst.SERVICE_MODE}
                                     onChange={changeServiceMode}
-                                    value={enquiryModalReducer.serviceMode}
+                                    value={inquiryModalReducer.serviceMode}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -99,7 +99,7 @@ class EnquiryModal extends React.Component {
                                 <Select
                                     options={sysConst.CAR_MODEL}
                                     onChange={changeCarModel}
-                                    value={enquiryModalReducer.carModel}
+                                    value={inquiryModalReducer.carModel}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -115,7 +115,7 @@ class EnquiryModal extends React.Component {
                                 <Select
                                     options={sysConst.YES_NO}
                                     onChange={changeCarFlag}
-                                    value={enquiryModalReducer.carFlag}
+                                    value={inquiryModalReducer.carFlag}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -124,21 +124,21 @@ class EnquiryModal extends React.Component {
                                 <label className="active">是否新车</label>
                             </div>
                             <div className="custom-input-field col s6">
-                                <Input s={12} label="估值" type="number" value={enquiryModalReducer.valuation} onChange={this.changeValuation}/>
+                                <Input s={12} label="估值" type="number" value={inquiryModalReducer.valuation} onChange={this.changeValuation}/>
                             </div>
                         </div>
 
                         {/** 最终行：预计运费 */}
                         <div className="row input-field col s12">
                             <div className="col left-align" style={{width: '4%'}}>
-                                {enquiryModalReducer.errorRouteFlg &&
+                                {inquiryModalReducer.errorRouteFlg &&
                                 <div className="bold red-text">
                                     <span className="mdi mdi-alert-circle red-text fz30"/>
                                 </div>
                                 }
                             </div>
                             <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
-                                {enquiryModalReducer.errorRouteFlg &&
+                                {inquiryModalReducer.errorRouteFlg &&
                                 <div className="bold red-text">
                                     当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
                                 </div>
@@ -146,7 +146,7 @@ class EnquiryModal extends React.Component {
                             </div>
 
                             <div className="col right-align" style={{width: '36%', marginTop: '12px'}}>
-                                预计运费：<span className="red-font margin-left5 fz18">{enquiryModalReducer.freight}</span>元
+                                预计运费：<span className="red-font margin-left5 fz18">{inquiryModalReducer.freight}</span>元
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@ class EnquiryModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        enquiryModalReducer: state.EnquiryModalReducer
+        inquiryModalReducer: state.InquiryModalReducer
     }
 };
 
@@ -176,32 +176,32 @@ const mapStateToProps = (state) => {
  */
 const mapDispatchToProps = (dispatch) => ({
     changeStartCity: (value) => {
-        dispatch(EnquiryModalActionType.setStartCity(value));
-        dispatch(enquiryModalAction.calculateMileage())
+        dispatch(InquiryModalActionType.setStartCity(value));
+        dispatch(inquiryModalAction.calculateMileage())
     },
     changeEndCity: (value) => {
-        dispatch(EnquiryModalActionType.setEndCity(value));
-        dispatch(enquiryModalAction.calculateMileage())
+        dispatch(InquiryModalActionType.setEndCity(value));
+        dispatch(inquiryModalAction.calculateMileage())
     },
     changeServiceMode: (serviceMode) => {
-        dispatch(EnquiryModalActionType.setServiceMode(serviceMode));
-        dispatch(enquiryModalAction.calculateFreight());
+        dispatch(InquiryModalActionType.setServiceMode(serviceMode));
+        dispatch(inquiryModalAction.calculateFreight());
     },
     changeCarModel: (carModel) => {
-        dispatch(EnquiryModalActionType.setCarModel(carModel));
-        dispatch(enquiryModalAction.calculateFreight());
+        dispatch(InquiryModalActionType.setCarModel(carModel));
+        dispatch(inquiryModalAction.calculateFreight());
     },
     changeCarFlag: (carFlag) => {
-        dispatch(EnquiryModalActionType.setCarFlag(carFlag));
-        dispatch(enquiryModalAction.calculateFreight());
+        dispatch(InquiryModalActionType.setCarFlag(carFlag));
+        dispatch(inquiryModalAction.calculateFreight());
     },
     changeValuation: (valuation) => {
-        dispatch(EnquiryModalActionType.setValuation(valuation));
-        dispatch(enquiryModalAction.calculateFreight());
+        dispatch(InquiryModalActionType.setValuation(valuation));
+        dispatch(inquiryModalAction.calculateFreight());
     },
     closeModal: () => {
         $('#enquiryModal').modal('close');
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnquiryModal);
+export default connect(mapStateToProps, mapDispatchToProps)(InquiryModal);

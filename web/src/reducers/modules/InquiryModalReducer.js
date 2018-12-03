@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {EnquiryModalActionType} from '../../actionTypes';
+import {InquiryModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
 };
 
 export default handleActions({
-    [EnquiryModalActionType.getCityList]: (state, action) => {
+    [InquiryModalActionType.getCityList]: (state, action) => {
         let cityList = [];
         action.payload.forEach((value) => {
             cityList.push({value: value.id, label: value.city_name})
@@ -38,57 +38,55 @@ export default handleActions({
             cityList: cityList
         }
     },
-
-    [EnquiryModalActionType.setStartCity]: (state, action) => {
+    [InquiryModalActionType.setStartCity]: (state, action) => {
         return {
             ...state,
             startCity: action.payload
         }
     },
-    [EnquiryModalActionType.setEndCity]: (state, action) => {
+    [InquiryModalActionType.setEndCity]: (state, action) => {
         return {
             ...state,
             endCity: action.payload
         }
     },
-    [EnquiryModalActionType.setServiceMode]: (state, action) => {
+    [InquiryModalActionType.setServiceMode]: (state, action) => {
         return {
             ...state,
             serviceMode: action.payload
         }
     },
-    [EnquiryModalActionType.setCarModel]: (state, action) => {
+    [InquiryModalActionType.setCarModel]: (state, action) => {
         return {
             ...state,
             carModel: action.payload
         }
     },
-    [EnquiryModalActionType.setCarFlag]: (state, action) => {
+    [InquiryModalActionType.setCarFlag]: (state, action) => {
         return {
             ...state,
             carFlag: action.payload
         }
     },
-    [EnquiryModalActionType.setValuation]: (state, action) => {
+    [InquiryModalActionType.setValuation]: (state, action) => {
         return {
             ...state,
             valuation: action.payload
         }
     },
-
-    [EnquiryModalActionType.setErrorRouteFlg]: (state, action) => {
+    [InquiryModalActionType.setErrorRouteFlg]: (state, action) => {
         return {
             ...state,
             errorRouteFlg: action.payload
         }
     },
-    [EnquiryModalActionType.setMileage]: (state, action) => {
+    [InquiryModalActionType.setMileage]: (state, action) => {
         return {
             ...state,
             mileage: action.payload
         }
     },
-    [EnquiryModalActionType.setFreight]: (state, action) => {
+    [InquiryModalActionType.setFreight]: (state, action) => {
         return {
             ...state,
             freight: action.payload

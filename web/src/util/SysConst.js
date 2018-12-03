@@ -63,6 +63,25 @@ export const YES_NO = [
     }
 ];
 
+export const INQUIRY_STATUS = [
+    {
+        value: 0,
+        label: "待报价"
+    },
+    {
+        value: 1,
+        label: "已报价"
+    },
+    {
+        value: 2,
+        label: "已完成"
+    },
+    {
+        value: 3,
+        label: "已取消"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

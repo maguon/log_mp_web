@@ -1,4 +1,4 @@
-import {EnquiryModalActionType} from "../../actionTypes";
+import {InquiryModalActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
@@ -10,7 +10,7 @@ export const getCityList = () => async (dispatch) => {
         const url = apiHost + '/api/city';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: EnquiryModalActionType.getCityList, payload: res.result})
+            dispatch({type: InquiryModalActionType.getCityList, payload: res.result})
         } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
         }
@@ -19,25 +19,25 @@ export const getCityList = () => async (dispatch) => {
     }
 };
 
-export const initEnquiryModal = () => async (dispatch) => {
+export const initInquiryModal = () => async (dispatch) => {
     // 询价画面 初期
     // 始发城市
-    dispatch({type: EnquiryModalActionType.setStartCity, payload: null});
+    dispatch({type: InquiryModalActionType.setStartCity, payload: null});
     // 终到城市
-    dispatch({type: EnquiryModalActionType.setEndCity, payload: null});
+    dispatch({type: InquiryModalActionType.setEndCity, payload: null});
     // 服务方式
-    dispatch({type: EnquiryModalActionType.setServiceMode, payload: null});
+    dispatch({type: InquiryModalActionType.setServiceMode, payload: null});
     // 车型
-    dispatch({type: EnquiryModalActionType.setCarModel, payload: null});
+    dispatch({type: InquiryModalActionType.setCarModel, payload: null});
     // 是否新车
-    dispatch({type: EnquiryModalActionType.setCarFlag, payload: null});
+    dispatch({type: InquiryModalActionType.setCarFlag, payload: null});
     // 估值
-    dispatch({type: EnquiryModalActionType.setValuation, payload: ''});
+    dispatch({type: InquiryModalActionType.setValuation, payload: ''});
     // 里程
-    dispatch({type: EnquiryModalActionType.setErrorRouteFlg, payload: false});
-    dispatch({type: EnquiryModalActionType.setMileage, payload: 0});
+    dispatch({type: InquiryModalActionType.setErrorRouteFlg, payload: false});
+    dispatch({type: InquiryModalActionType.setMileage, payload: 0});
     // 预计运费
-    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
+    dispatch({type: InquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
 };
 
 /**
@@ -45,8 +45,8 @@ export const initEnquiryModal = () => async (dispatch) => {
  */
 export const calculateMileage = () => async (dispatch, getState) => {
     try {
-        const startCity = getState().EnquiryModalReducer.startCity;
-        const endCity = getState().EnquiryModalReducer.endCity;
+        const startCity = getState().InquiryModalReducer.startCity;
+        const endCity = getState().InquiryModalReducer.endCity;
 
         // 当 始发城市，终到城市 都选择的时候，调用接口
         if (startCity !== null && endCity !== null) {
@@ -56,17 +56,17 @@ export const calculateMileage = () => async (dispatch, getState) => {
             if (res.success === true) {
                 // 有数据时，更新里程，清除画面提示文字
                 if (res.result.length > 0) {
-                    dispatch({type: EnquiryModalActionType.setErrorRouteFlg, payload: false});
-                    dispatch({type: EnquiryModalActionType.setMileage, payload: res.result[0].distance});
+                    dispatch({type: InquiryModalActionType.setErrorRouteFlg, payload: false});
+                    dispatch({type: InquiryModalActionType.setMileage, payload: res.result[0].distance});
 
                     dispatch(calculateFreight())
                 } else {
                     // 无数据时，更新里程，清除画面提示文字
-                    dispatch({type: EnquiryModalActionType.setErrorRouteFlg, payload: true});
+                    dispatch({type: InquiryModalActionType.setErrorRouteFlg, payload: true});
                     // 里程
-                    dispatch({type: EnquiryModalActionType.setMileage, payload: 0});
+                    dispatch({type: InquiryModalActionType.setMileage, payload: 0});
                     // 预计运费
-                    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
+                    dispatch({type: InquiryModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)})
                 }
             } else if (res.success === false) {
                 swal('获取线路信息失败', res.msg, 'warning');
@@ -82,15 +82,15 @@ export const calculateMileage = () => async (dispatch, getState) => {
  */
 export const calculateFreight = () => (dispatch, getState) => {
     // 里程
-    const mileage = getState().EnquiryModalReducer.mileage;
+    const mileage = getState().InquiryModalReducer.mileage;
     // 服务方式
-    const serviceMode = getState().EnquiryModalReducer.serviceMode;
+    const serviceMode = getState().InquiryModalReducer.serviceMode;
     // 车型
-    const carModel = getState().EnquiryModalReducer.carModel;
+    const carModel = getState().InquiryModalReducer.carModel;
     // 是否新车
-    const carFlag = getState().EnquiryModalReducer.carFlag;
+    const carFlag = getState().InquiryModalReducer.carFlag;
     // 估值
-    const valuation = getState().EnquiryModalReducer.valuation;
+    const valuation = getState().InquiryModalReducer.valuation;
 
     // 预计运费
     let freight = 0;
@@ -106,5 +106,5 @@ export const calculateFreight = () => (dispatch, getState) => {
             + valuation * sysConst.ENQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode.value - 1].fee;
     }
 
-    dispatch({type: EnquiryModalActionType.setFreight, payload: formatUtil.formatNumber(freight, 2)})
+    dispatch({type: InquiryModalActionType.setFreight, payload: formatUtil.formatNumber(freight, 2)})
 };

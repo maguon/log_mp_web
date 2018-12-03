@@ -1,1 +1,1 @@
-export EnquiryModal from "./EnquiryModal";
+export InquiryModal from "./InquiryModal";

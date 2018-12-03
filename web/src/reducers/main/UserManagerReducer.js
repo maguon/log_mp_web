@@ -15,8 +15,8 @@ const initialState = {
     conditionWeChatNm: '',
     // 检索条件：手机
     conditionPhone: '',
-    // 检索条件：姓名
-    conditionUser: '',
+    // // 检索条件：姓名
+    // conditionUser: '',
 
     // 检索条件：认证状态
     conditionAuthStatus: null,
@@ -73,12 +73,12 @@ export default handleActions({
             conditionPhone: action.payload
         }
     },
-    [UserManagerActionType.setConditionUser]: (state, action) => {
-        return {
-            ...state,
-            conditionUser: action.payload
-        }
-    },
+    // [UserManagerActionType.setConditionUser]: (state, action) => {
+    //     return {
+    //         ...state,
+    //         conditionUser: action.payload
+    //     }
+    // },
     [UserManagerActionType.setConditionAuthStatus]: (state, action) => {
         return {
             ...state,
@@ -116,4 +116,3 @@ export default handleActions({
         }
     }
 }, initialState)
-

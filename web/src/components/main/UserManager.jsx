@@ -26,22 +26,20 @@ class UserManager extends React.Component {
             this.props.setStartNumber(0);
             this.props.setConditionNo('');
             this.props.setConditionWeChatNm('');
-            this.props.setConditionUser('');
             this.props.setConditionPhone('');
-
-            this.props.changeConditionAuthStatus(null);
             this.props.changeConditionWeStatus(null);
-
-            this.props.setConditionAuthTimeStart('');
-            this.props.setConditionAuthTimeEnd('');
+            this.props.changeConditionAuthStatus(null);
+            // this.props.setConditionUser('');
             this.props.setConditionCreatedOnStart('');
             this.props.setConditionCreatedOnEnd('');
+            this.props.setConditionAuthTimeStart('');
+            this.props.setConditionAuthTimeEnd('');
         }
         this.props.getUserList();
     }
 
     /**
-     * 更新 检索条件：编号
+     * 更新 检索条件：用户ID
      */
     changeConditionNo = (event) => {
         this.props.setConditionNo(event.target.value);
@@ -61,11 +59,25 @@ class UserManager extends React.Component {
         this.props.setConditionPhone(event.target.value);
     };
 
+    // /**
+    //  * 更新 检索条件：姓名
+    //  */
+    // changeConditionUser = (event) => {
+    //     this.props.setConditionUser(event.target.value);
+    // };
+
     /**
-     * 更新 检索条件：姓名
+     * 更新 检索条件：授权时间(始)
      */
-    changeConditionUser = (event) => {
-        this.props.setConditionUser(event.target.value);
+    changeConditionCreatedOnStart = (event, value) => {
+        this.props.setConditionCreatedOnStart(value);
+    };
+
+    /**
+     * 更新 检索条件：授权时间(始)
+     */
+    changeConditionCreatedOnEnd = (event, value) => {
+        this.props.setConditionCreatedOnEnd(value);
     };
 
     /**
@@ -83,21 +95,7 @@ class UserManager extends React.Component {
     };
 
     /**
-     * 更新 检索条件：授权时间(始)
-     */
-    changeConditionCreatedOnStart = (event, value) => {
-        this.props.setConditionCreatedOnStart(value);
-    };
-
-    /**
-     * 更新 检索条件：授权时间(始)
-     */
-    changeConditionCreatedOnEnd = (event, value) => {
-        this.props.setConditionCreatedOnEnd(value);
-    };
-
-    /**
-     * 查询绑定车辆列表
+     * 查询用户列表
      */
     queryUserList = () => {
         // 默认第一页
@@ -139,14 +137,37 @@ class UserManager extends React.Component {
 
                         {/* 查询条件：第一行 */}
                         <div>
-                            {/* 查询条件：编号 */}
-                            <Input s={3} label="编号" value={userManagerReducer.conditionNo} onChange={this.changeConditionNo}/>
+                            {/* 查询条件：用户ID */}
+                            <div className="custom-input-field col s-percent-20">
+                                <Input s={12} label="用户ID" value={userManagerReducer.conditionNo} onChange={this.changeConditionNo}/>
+                            </div>
 
-                            {/* 查询条件：微信昵称 */}
-                            <Input s={3} label="微信昵称" value={userManagerReducer.conditionWeChatNm} onChange={this.changeConditionWeChatNm}/>
+                            {/* 查询条件：昵称 */}
+                            <div className="custom-input-field col s-percent-20">
+                                <Input s={12} label="昵称" value={userManagerReducer.conditionWeChatNm} onChange={this.changeConditionWeChatNm}/>
+                            </div>
+
+                            {/* 查询条件：手机号码 */}
+                            <div className="custom-input-field col s-percent-20">
+                                <Input s={12} label="手机号码" value={userManagerReducer.conditionPhone} onChange={this.changeConditionPhone}/>
+                            </div>
+
+                            {/* 查询条件：微信状态 */}
+                            <div className="input-field col s-percent-20">
+                                <Select
+                                    options={sysConst.WE_CHAT_STATUS}
+                                    onChange={changeConditionWeStatus}
+                                    value={userManagerReducer.conditionWeStatus}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">微信状态</label>
+                            </div>
 
                             {/* 查询条件：认证状态 */}
-                            <div className="input-field col s2">
+                            <div className="input-field col s-percent-20">
                                 <Select
                                     options={sysConst.AUTH_STATUS}
                                     onChange={changeConditionAuthStatus}
@@ -158,58 +179,37 @@ class UserManager extends React.Component {
                                 />
                                 <label className="active">认证状态</label>
                             </div>
-
-                            {/* 查询条件：认证时间(始) */}
-                            <div className="input-field col s2 custom-input-field">
-                                <Input s={12} label="认证时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={userManagerReducer.conditionAuthTimeStart} onChange={this.changeConditionAuthTimeStart} />
-                                <span className="mdi data-icon mdi-table-large"/>
-                            </div>
-
-                            {/* 查询条件：认证时间(终) */}
-                            <div className="input-field col s2 custom-input-field">
-                                <Input s={12} label="认证时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={userManagerReducer.conditionAuthTimeEnd} onChange={this.changeConditionAuthTimeEnd} />
-                                <span className="mdi data-icon mdi-table-large"/>
-                            </div>
                         </div>
 
                         {/* 查询条件：第二行 */}
                         <div>
-                            {/* 查询条件：手机 */}
-                            <Input s={3} label="手机" value={userManagerReducer.conditionPhone} onChange={this.changeConditionPhone}/>
-
-                            {/* 查询条件：姓名 */}
-                            <Input s={3} label="姓名" value={userManagerReducer.conditionUser} onChange={this.changeConditionUser}/>
-
-                            {/* 查询条件：关注状态 */}
-                            <div className="input-field col s2">
-                                <Select
-                                    options={sysConst.WE_CHAT_STATUS}
-                                    onChange={changeConditionWeStatus}
-                                    value={userManagerReducer.conditionWeStatus}
-                                    isSearchable={false}
-                                    placeholder={"请选择"}
-                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                    isClearable={true}
-                                />
-                                <label className="active">关注状态</label>
-                            </div>
-
                             {/* 查询条件：授权时间(始) */}
-                            <div className="input-field col s2 custom-input-field">
+                            <div className="custom-input-field col s-percent-20">
                                 <Input s={12} label="授权时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             {/* 查询条件：授权时间(终) */}
-                            <div className="input-field col s2 custom-input-field">
+                            <div className="custom-input-field col s-percent-20">
                                 <Input s={12} label="授权时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
+                            {/* 查询条件：认证时间(始) */}
+                            <div className="custom-input-field col s-percent-20">
+                                <Input s={12} label="认证时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                       value={userManagerReducer.conditionAuthTimeStart} onChange={this.changeConditionAuthTimeStart} />
+                                <span className="mdi data-icon mdi-table-large"/>
+                            </div>
+
+                            {/* 查询条件：认证时间(终) */}
+                            <div className="custom-input-field col s-percent-20">
+                                <Input s={12} label="认证时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                       value={userManagerReducer.conditionAuthTimeEnd} onChange={this.changeConditionAuthTimeEnd} />
+                                <span className="mdi data-icon mdi-table-large"/>
+                            </div>
                         </div>
                     </div>
 
@@ -229,45 +229,41 @@ class UserManager extends React.Component {
                         <table className="bordered striped">
                             <thead className="blue-grey lighten-5">
                             <tr className="grey-text text-darken-2">
-                                <th>编号</th>
+                                <th>用户ID</th>
                                 <th>昵称</th>
-                                <th>手机</th>
-                                <th>姓名</th>
                                 <th className="center">性别</th>
-                                <th className="center">绑定车辆数</th>
+                                <th>手机</th>
                                 <th className="center">授权时间</th>
                                 <th className="center">认证时间</th>
-                                <th className="center">关注状态</th>
+                                <th className="center">最后登录时间</th>
+                                <th className="center">微信状态</th>
                                 <th className="center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {
-                                userManagerReducer.userArray.map(function (item) {
-                                    return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td>{item.id}</td>
-                                                <td>{item.wechat_name}</td>
-                                                <td>{item.phone}</td>
-                                                <td>{item.user_name}</td>
-                                                <td className="center">{(item.gender!==0 && item.gender !== 1) ? '未知' : sysConst.GENDER[item.gender].label}</td>
-                                                <td className="center">{item.num}</td>
-                                                <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                                <td className="center">{formatUtil.getDateTime(item.auth_time)}</td>
-                                                <td className="center">{sysConst.WE_CHAT_STATUS[item.wechat_status].label}</td>
-                                                <td className="operation center">
-                                                    <Link to={{pathname: '/user/'+ item.id}} >
-                                                        <i className="mdi mdi-table-search light-blue-text"/>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                    )
-                                })
-                            }
-                            { userManagerReducer.userArray.length === 0 &&
-                                <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="10">暂无数据</td>
-                                </tr>
+                            {userManagerReducer.userArray.map(function (item) {
+                                return (
+                                    <tr className="grey-text text-darken-1">
+                                        <td>{item.id}</td>
+                                        <td>{item.wechat_name}</td>
+                                        <td className="center">{(item.gender !== 0 && item.gender !== 1) ? '未知' : sysConst.GENDER[item.gender].label}</td>
+                                        <td>{item.phone}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.auth_time)}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.last_login_on)}</td>
+                                        <td className="center">{sysConst.WE_CHAT_STATUS[item.wechat_status].label}</td>
+                                        <td className="operation center">
+                                            <Link to={{pathname: '/user/' + item.id}}>
+                                                <i className="mdi mdi-table-search light-blue-text"/>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                            {userManagerReducer.userArray.length === 0 &&
+                            <tr className="grey-text text-darken-1">
+                                <td className="no-data-tr" colSpan="9">暂无数据</td>
+                            </tr>
                             }
                             </tbody>
                         </table>
@@ -310,23 +306,23 @@ const mapDispatchToProps = (dispatch) => ({
     setStartNumber: (start) => {
         dispatch(UserManagerActionType.setStartNumber(start))
     },
-    setConditionNo: (conditionNo) => {
-        dispatch(UserManagerActionType.setConditionNo(conditionNo))
+    setConditionNo: (value) => {
+        dispatch(UserManagerActionType.setConditionNo(value))
     },
-    setConditionWeChatNm: (weChatNm) => {
-        dispatch(UserManagerActionType.setConditionWeChatNm(weChatNm))
+    setConditionWeChatNm: (value) => {
+        dispatch(UserManagerActionType.setConditionWeChatNm(value))
     },
-    setConditionUser: (userNm) => {
-        dispatch(UserManagerActionType.setConditionUser(userNm))
-    },
-    setConditionPhone: (phone) => {
-        dispatch(UserManagerActionType.setConditionPhone(phone))
-    },
-    changeConditionAuthStatus: (status) => {
-        dispatch(UserManagerActionType.setConditionAuthStatus(status))
+    // setConditionUser: (userNm) => {
+    //     dispatch(UserManagerActionType.setConditionUser(userNm))
+    // },
+    setConditionPhone: (value) => {
+        dispatch(UserManagerActionType.setConditionPhone(value))
     },
     changeConditionWeStatus: (status) => {
         dispatch(UserManagerActionType.setConditionWeStatus(status))
+    },
+    changeConditionAuthStatus: (status) => {
+        dispatch(UserManagerActionType.setConditionAuthStatus(status))
     },
     setConditionAuthTimeStart: (time) => {
         dispatch(UserManagerActionType.setConditionAuthTimeStart(time))

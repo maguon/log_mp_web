@@ -82,6 +82,43 @@ export const INQUIRY_STATUS = [
     }
 ];
 
+// 性别
+export const GENDER = [
+    {
+        value: 0,
+        label: "女"
+
+    },
+    {
+        value: 1,
+        label: "男"
+    }
+];
+
+// 认证状态
+export const AUTH_STATUS = [
+    {
+        value: 0,
+        label: "未认证"
+    },
+    {
+        value: 1,
+        label: "已认证"
+    }
+];
+
+// 关注状态
+export const WE_CHAT_STATUS = [
+    {
+        value: 0,
+        label: "取消"
+    },
+    {
+        value: 1,
+        label: "关注"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

@@ -8,7 +8,7 @@ import * as UserManagerDetailActionType  from './main/UserManagerDetailActionTyp
 import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
 
-import * as EnquiryModalActionType  from './modules/EnquiryModalActionType';
+import * as InquiryModalActionType  from './modules/InquiryModalActionType';
 
 export  {
     LoginActionType,
@@ -21,5 +21,5 @@ export  {
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
 
-    EnquiryModalActionType
+    InquiryModalActionType
 }

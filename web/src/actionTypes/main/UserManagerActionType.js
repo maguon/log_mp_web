@@ -6,11 +6,11 @@ export const setDataSize = createAction('SET_DATA_SIZE');
 
 export const setConditionNo = createAction('SET_CONDITION_NO');
 export const setConditionWeChatNm = createAction('SET_CONDITION_WE_CHAT_NAME');
-export const setConditionUser = createAction('SET_CONDITION_USER');
+// export const setConditionUser = createAction('SET_CONDITION_USER');
 export const setConditionPhone = createAction('SET_CONDITION_PHONE');
-
-export const setConditionAuthStatus = createAction('SET_CONDITION_AUTH_STATUS');
 export const setConditionWeStatus = createAction('SET_CONDITION_WE_STATUS');
+export const setConditionAuthStatus = createAction('SET_CONDITION_AUTH_STATUS');
+
 export const setConditionAuthTimeStart = createAction('SET_CONDITION_AUTH_TIME_START');
 export const setConditionAuthTimeEnd = createAction('SET_CONDITION_AUTH_TIME_END');
 export const setConditionCreatedOnStart = createAction('SET_CONDITION_CREATED_ON_START');

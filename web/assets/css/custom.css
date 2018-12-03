@@ -57,7 +57,7 @@ body {
 /** 标题：画面主体部分，标题样式 */
 .page-title {
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     color: #724278 !important;
 }
 
@@ -161,7 +161,7 @@ body {
 
 /** Material switch 组件 样式 */
 .switch label input[type=checkbox]:checked + .lever {
-    background-color: #0E4E92
+    background-color: #724278
 }
 
 .switch label input[type=checkbox]:checked + .lever:after {
@@ -877,7 +877,7 @@ body {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     border-bottom: 1px solid #D4D4D4;
-    color: #0F4F94;
+    color: #724278;
     font-weight: bold;
 }
 

@@ -1,16 +1,32 @@
+const httpHeaders = require('./HttpHeaders');
 
-const httpHeaders = require( './HttpHeaders');
+export const httpAsyncFormPost = (url, formData, success, fail) => {
+    fetch('http://' + url, {
+        method :"POST",
+        body: formData
+    }).then((response) => {
+        if(response.ok){
+            return response.json();
+        }else{
+            throw new Error();
+        }
+    }).then((result) => {
+        success(result);
+    }).catch((error) => {
+        fail(error);
+    })
+};
 
-const simpleFetch = (method,url,params) =>{
+const simpleFetch = (method, url, params) => {
     $("#preload").show();
-    let options  ={
+    let options = {
         method: method,
         headers: httpHeaders.getHeaders()
     };
-    if('GET' != method){
+    if ('GET' != method) {
         options.body = JSON.stringify(params)
     }
-    return fetch('http://'+url, options).then((response) => {
+    return fetch('http://' + url, options).then((response) => {
         $("#preload").hide();
 
         // http 正常处理，则返回response，否则进入catch 处理
@@ -26,31 +42,31 @@ const simpleFetch = (method,url,params) =>{
     });
 };
 
-export const httpGet = (url)=> {
-    return simpleFetch('GET',url,{});
+export const httpGet = (url) => {
+    return simpleFetch('GET', url, {});
 };
 export const httpPost = (url, params) => {
-    return simpleFetch('POST',url,params)
+    return simpleFetch('POST', url, params)
 };
 export const httpPut = (url, params) => {
-    return simpleFetch('PUT',url,params)
+    return simpleFetch('PUT', url, params)
 };
 export const httpDelete = (url, params) => {
-    return simpleFetch('DELETE',url,params)
+    return simpleFetch('DELETE', url, params)
 };
 
-export const httpAsyncGet = (url,callback) => {
-    fetch('http://'+url, {
+export const httpAsyncGet = (url, callback) => {
+    fetch('http://' + url, {
         method: 'GET',
         headers: httpHeaders.headers
     }).then((response) => {
             let json = response.json()
             return json
         }
-    ).then((result)=>{
-        callback(null,result);
-    }).catch((error)=>{
-        callback(error,null);
+    ).then((result) => {
+        callback(null, result);
+    }).catch((error) => {
+        callback(error, null);
     })
 };
 
@@ -70,3 +86,15 @@ export const httpAsyncPost = (url, params,callback) => {
     })
 };
 
+/**
+ * 将 Obj 转化为 Url 格式的String
+ */
+export const objToUrl = (obj) => {
+    let str = "";
+    for (let i in obj) {
+        if (obj[i] !== undefined && obj[i] != null && obj[i] !== "") {
+            str = str + i + "=" + obj[i] + "&";
+        }
+    }
+    return str.substr(0, str.length - 1);
+};

@@ -224,7 +224,7 @@ class EnquiryManager extends React.Component {
                                                 <td className="center">{sysConst.LOG_STATUS[item.log_status].label}</td>
                                                 <td className="operation center">
                                                     <Link to={{pathname: '/inquiry/'+ item.id}} >
-                                                        <i className="mdi mdi-table-search light-blue-text"/>
+                                                        <i className="mdi mdi-table-search purple-font"/>
                                                     </Link>
                                                 </td>
                                             </tr>

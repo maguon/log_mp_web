@@ -1,17 +1,13 @@
 import {createAction} from 'redux-actions';
 
 export const getUserInfo = createAction('GET_USER_INFO');
-
-export const getUserCarList = createAction('GET_USER_CAR_LIST');
-
-export const setMsgConditionType = createAction('SET_MSG_CONDITION_TYPE');
-export const setMsgConditionStartDate = createAction('SET_MSG_CONDITION_START_DATE');
-export const setMsgConditionEndDate = createAction('SET_MSG_CONDITION_END_DATE');
-export const getMessageList = createAction('GET_CHECK_CAR_LIST');
-export const setMsgStartNumber = createAction('SET_MSG_START_NUMBER');
-export const setMsgDataSize = createAction('SET_MSG_DATA_SIZE');
-
-export const getOrderList = createAction('GET_ORDER_LIST');
-export const getProductList = createAction('GET_PRODUCT_LIST');
-
-export const getAddressList = createAction('GET_ADDRESS_LIST');
+export const setInquiryConditionStartCity = createAction('SET_INQUIRY_CONDITION_START_CITY');
+export const setInquiryConditionEndCity = createAction('SET_INQUIRY_CONDITION_END_CITY');
+export const setInquiryConditionServiceType = createAction('SET_INQUIRY_CONDITION_SERVICE_TYPE');
+export const setInquiryConditionStatus = createAction('SET_INQUIRY_CONDITION_STATUS');
+export const getUserInquiryList = createAction('GET_USER_INQUIRY_LIST');
+export const setInquiryStartNumber = createAction('SET_INQUIRY_START_NUMBER');
+export const setInquiryDataSize = createAction('SET_INQUIRY_DATA_SIZE');
+export const getLogInfoList = createAction('GET_LOG_INFO_LIST');
+export const getBankCardList = createAction('GET_BANK_CARD_LIST');
+export const getInvoiceList = createAction('GET_INVOICE_LIST');

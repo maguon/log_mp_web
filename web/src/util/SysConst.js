@@ -111,11 +111,11 @@ export const AUTH_STATUS = [
 export const WE_CHAT_STATUS = [
     {
         value: 0,
-        label: "取消"
+        label: "未授权"
     },
     {
         value: 1,
-        label: "关注"
+        label: "已授权"
     }
 ];
 

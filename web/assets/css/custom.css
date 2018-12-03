@@ -61,6 +61,29 @@ body {
     color: #724278 !important;
 }
 
+.detail-box-header {
+    height: 52px;
+    padding-top: 11px;
+    border-top: 1px solid #D4D4D4 !important;
+    border-bottom: 1px solid #D4D4D4 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.user-detail-header {
+    height: 122px;
+    padding-top: 18px;
+}
+
+.detail-box-header, .user-detail-header {
+    background-color: #EDEFF6;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    border-bottom: 2px solid #D9BEDD;
+    color: #724278;
+    font-weight: bold;
+}
+
 /** 画面检索部分样式 */
 .search-condition-box {
     padding-left: 5px !important;
@@ -178,7 +201,7 @@ body {
     background-color: #fff;
     margin: 0 auto;
     white-space: nowrap;
-    border-bottom: 1px solid #724278;
+    border-bottom: 1px solid #D9BEDD;
 }
 
 .tabs .tab {
@@ -340,6 +363,10 @@ body {
 
 .margin-top3 {
     margin-top: 3px;
+}
+
+.margin-top5 {
+    margin-top: 5px;
 }
 
 .margin-top8 {
@@ -562,7 +589,7 @@ body {
 
 /** 自定义-全画面布局边框样式(border) start */
 .grey-border {
-    border: 1px solid #D4D4D4;
+    border-top: 1px solid #D4D4D4;
 }
 
 .no-border-top {
@@ -591,8 +618,8 @@ body {
 }
 
 /** 自定义粗分割线(画面标题部分用) */
-.bold-divider {
-    background: #CBCBCB;
+.custom-divider {
+    background: #D9BEDD;
     height: 2px;
 }
 
@@ -612,7 +639,11 @@ body {
 }
 
 .pink-font {
-    color: #B6598F !important;
+    color: #D483B8 !important;
+}
+
+.blue-font {
+    color: #0C6CC3 !important;
 }
 
 .red-font {
@@ -862,24 +893,7 @@ body {
 }
 
 
-.detail-box-header {
-    height: 52px;
-    padding-top: 15px;
-}
 
-.order-detail-header {
-    height: 88px;
-    padding-top: 18px;
-}
-
-.detail-box-header, .order-detail-header {
-    background-color: #EDEFF6;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    border-bottom: 1px solid #D4D4D4;
-    color: #724278;
-    font-weight: bold;
-}
 
 
 .no-img-box {

@@ -7,9 +7,9 @@ const sysConst = require('../../util/SysConst');
 
 export const getUserInfo = (id) => async (dispatch) => {
     try {
-        // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/user?userId=' + id;
-
+        // 基本检索URL TODO
+        // const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/user?userId=' + id;
+        const url = apiHost + '/api/user?userId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: UserManagerDetailActionType.getUserInfo, payload: res.result});
@@ -21,23 +21,9 @@ export const getUserInfo = (id) => async (dispatch) => {
     }
 };
 
-export const getUserCarList = (userId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/userCar?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getUserCarList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取车辆列表信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
 
-export const getMessageList = (userId) => async (dispatch, getState) => {
+
+export const getUserInquiryList = (userId) => async (dispatch, getState) => {
     try {
         // 检索条件：开始位置
         const start = getState().UserManagerDetailReducer.msgStart;
@@ -77,49 +63,65 @@ export const getMessageList = (userId) => async (dispatch, getState) => {
     }
 };
 
-export const getOrderList = (userId) => async (dispatch) => {
+export const getLoginInfoList = (userId) => async (dispatch) => {
     try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/order?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getOrderList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取交易记录列表信息失败', res.msg, 'warning');
-        }
+        // // 基本检索URL
+        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        //     + '/userCar?userId=' + userId;
+        // const res = await httpUtil.httpGet(url);
+        // if (res.success === true) {
+        //     dispatch({type: UserManagerDetailActionType.getUserCarList, payload: res.result});
+        // } else if (res.success === false) {
+        //     swal('获取车辆列表信息失败', res.msg, 'warning');
+        // }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const getOrderDetail = (userId, orderId) => async (dispatch) => {
+export const getBankCardList = (userId) => async (dispatch) => {
     try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/orderItem?userId=' + userId + '&orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getProductList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取交易记录信息失败', res.msg, 'warning');
-        }
+        // // 基本检索URL
+        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        //     + '/order?userId=' + userId;
+        // const res = await httpUtil.httpGet(url);
+        // if (res.success === true) {
+        //     dispatch({type: UserManagerDetailActionType.getOrderList, payload: res.result});
+        // } else if (res.success === false) {
+        //     swal('获取交易记录列表信息失败', res.msg, 'warning');
+        // }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const getAddressList = (userId) => async (dispatch) => {
+// export const getOrderDetail = (userId, orderId) => async (dispatch) => {
+//     try {
+//         // 基本检索URL
+//         let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+//             + '/orderItem?userId=' + userId + '&orderId=' + orderId;
+//         const res = await httpUtil.httpGet(url);
+//         if (res.success === true) {
+//             dispatch({type: UserManagerDetailActionType.getProductList, payload: res.result});
+//         } else if (res.success === false) {
+//             swal('获取交易记录信息失败', res.msg, 'warning');
+//         }
+//     } catch (err) {
+//         swal('操作失败', err.message, 'error');
+//     }
+// };
+
+export const getInvoiceList = (userId) => async (dispatch) => {
     try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/userShipAddress?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getAddressList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取收货地址列表信息失败', res.msg, 'warning');
-        }
+        // // 基本检索URL
+        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        //     + '/userShipAddress?userId=' + userId;
+        // const res = await httpUtil.httpGet(url);
+        // if (res.success === true) {
+        //     dispatch({type: UserManagerDetailActionType.getAddressList, payload: res.result});
+        // } else if (res.success === false) {
+        //     swal('获取收货地址列表信息失败', res.msg, 'warning');
+        // }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

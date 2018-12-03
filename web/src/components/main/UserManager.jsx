@@ -231,7 +231,7 @@ class UserManager extends React.Component {
                             <tr className="grey-text text-darken-2">
                                 <th>用户ID</th>
                                 <th>昵称</th>
-                                <th className="center">性别</th>
+                                <th>性别</th>
                                 <th>手机</th>
                                 <th className="center">授权时间</th>
                                 <th className="center">认证时间</th>
@@ -246,7 +246,7 @@ class UserManager extends React.Component {
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
                                         <td>{item.wechat_name}</td>
-                                        <td className="center">{(item.gender !== 0 && item.gender !== 1) ? '未知' : sysConst.GENDER[item.gender].label}</td>
+                                        <td>{(item.gender !== 0 && item.gender !== 1) ? '未知' : sysConst.GENDER[item.gender].label}</td>
                                         <td>{item.phone}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className="center">{formatUtil.getDateTime(item.auth_time)}</td>
@@ -254,7 +254,7 @@ class UserManager extends React.Component {
                                         <td className="center">{sysConst.WE_CHAT_STATUS[item.wechat_status].label}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/user/' + item.id}}>
-                                                <i className="mdi mdi-table-search light-blue-text"/>
+                                                <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
                                     </tr>

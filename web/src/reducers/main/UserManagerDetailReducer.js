@@ -2,35 +2,32 @@ import {handleActions} from 'redux-actions';
 import {UserManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
-
     // 基本信息TAB：用户信息
     userInfo: [],
 
-    // 绑定车辆TAB：列表
-    userCarArray: [],
+    // 询价记录TAB： 检索条件：起始城市
+    inquiryConditionStartCity: '',
+    // 询价记录TAB： 检索条件：目的城市
+    inquiryConditionEndCity: '',
+    // 询价记录TAB： 检索条件：服务方式
+    inquiryConditionServiceType: null,
+    // 询价记录TAB： 检索条件：状态
+    inquiryConditionStatus: null,
+    // 询价记录TAB：开始位置
+    inquiryStart: 0,
+    // 询价记录TAB：每页数量
+    inquirySize: 9,
+    // 询价记录TAB：检索结果数量
+    inquiryDataSize: 0,
+    // 询价记录TAB：列表
+    inquiryArray: [],
 
-    // 消息记录TAB： 检索条件：消息类型
-    msgConditionType: null,
-    // 消息记录TAB： 检索条件：发送时间(始)
-    msgConditionStartDate: '',
-    // 消息记录TAB： 检索条件：发送时间(终)
-    msgConditionEndDate: '',
-    // 消息记录TAB：开始位置
-    msgStart: 0,
-    // 消息记录TAB：每页数量
-    msgSize: 9,
-    // 消息记录TAB：检索结果数量
-    msgDataSize: 0,
-    // 消息记录TAB：列表
-    messageArray: [],
-
-    // 交易记录TAB：订单列表
-    orderArray: [],
-    // 交易记录TAB：订单内，商品列表
-    productArray: [],
-
-    // 收货地址TAB：列表
-    addressArray: []
+    // 收发货信息TAB：列表
+    logInfoArray: [],
+    // 银行卡TAB：列表
+    bankCardArray: [],
+    // 发票信息TAB：列表
+    invoiceArray: []
 };
 
 export default handleActions({
@@ -40,68 +37,64 @@ export default handleActions({
             userInfo: action.payload
         }
     },
-
-    [UserManagerDetailActionType.getUserCarList]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryConditionStartCity]: (state, action) => {
         return {
             ...state,
-            userCarArray: action.payload
+            inquiryConditionStartCity: action.payload
         }
     },
-
-    [UserManagerDetailActionType.setMsgConditionType]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryConditionEndCity]: (state, action) => {
         return {
             ...state,
-            msgConditionType: action.payload
+            inquiryConditionEndCity: action.payload
         }
     },
-    [UserManagerDetailActionType.setMsgConditionStartDate]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryConditionServiceType]: (state, action) => {
         return {
             ...state,
-            msgConditionStartDate: action.payload
+            inquiryConditionServiceType: action.payload
         }
     },
-    [UserManagerDetailActionType.setMsgConditionEndDate]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryConditionStatus]: (state, action) => {
         return {
             ...state,
-            msgConditionEndDate: action.payload
+            inquiryConditionStatus: action.payload
         }
     },
-    [UserManagerDetailActionType.setMsgStartNumber]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryStartNumber]: (state, action) => {
         return {
             ...state,
-            msgStart: action.payload
+            inquiryStart: action.payload
         }
     },
-    [UserManagerDetailActionType.setMsgDataSize]: (state, action) => {
+    [UserManagerDetailActionType.setInquiryDataSize]: (state, action) => {
         return {
             ...state,
-            msgDataSize: action.payload
+            inquiryDataSize: action.payload
         }
     },
-    [UserManagerDetailActionType.getMessageList]: (state, action) => {
+    [UserManagerDetailActionType.getUserInquiryList]: (state, action) => {
         return {
             ...state,
-            messageArray: action.payload
+            inquiryArray: action.payload
         }
     },
-
-    [UserManagerDetailActionType.getOrderList]: (state, action) => {
+    [UserManagerDetailActionType.getLogInfoList]: (state, action) => {
         return {
             ...state,
-            orderArray: action.payload
+            logInfoArray: action.payload
         }
     },
-    [UserManagerDetailActionType.getProductList]: (state, action) => {
+    [UserManagerDetailActionType.getBankCardList]: (state, action) => {
         return {
             ...state,
-            productArray: action.payload
+            bankCardArray: action.payload
         }
     },
-
-    [UserManagerDetailActionType.getAddressList]: (state, action) => {
+    [UserManagerDetailActionType.getInvoiceList]: (state, action) => {
         return {
             ...state,
-            addressArray: action.payload
+            invoiceArray: action.payload
         }
     }
 }, initialState)

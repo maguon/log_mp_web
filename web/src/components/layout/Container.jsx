@@ -165,12 +165,13 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getUserDetail: (userId) => {
-        dispatch(headerAction.getUserDetail({userId: userId}))
-    },
-    logout: () => {
-        dispatch(headerAction.logout())
-    }
+    // getUserDetail: (userId) => {
+    //     dispatch(headerAction.getUserDetail({userId: userId}));
+    //     console.log('container get user detail')
+    // },
+    // logout: () => {
+    //     dispatch(headerAction.logout())
+    // }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Container)

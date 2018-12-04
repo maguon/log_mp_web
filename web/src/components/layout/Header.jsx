@@ -25,7 +25,6 @@ class Header extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
-        const {getUserDetail} = this.props;
         const userId = localUtil.getLocalItem(sysConst.USER_ID);
         const token = localUtil.getLocalItem(sysConst.AUTH_TOKEN);
         const userType = localUtil.getLocalItem(sysConst.USER_TYPE);
@@ -35,7 +34,7 @@ class Header extends React.Component {
         if (userId == null || userType == null || token == null) {
             window.location.href = '/login.html';
         } else {
-            getUserDetail(userId);
+            this.props.getUserDetail(userId);
         }
         $("#sideNav").sideNav({closeOnClick: true});
         $('.collapsible').collapsible();
@@ -46,7 +45,7 @@ class Header extends React.Component {
      */
     render() {
         //
-        const { openEnquiryModal, logout} = this.props;
+        const {openInquiryModal, logout} = this.props;
         return (
             <div>
                 <nav>
@@ -66,7 +65,7 @@ class Header extends React.Component {
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>
                                 <a className="right-align">
-                                    <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="enquiryModal" onClick={openEnquiryModal}/>
+                                    <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="inquiryModal" onClick={openInquiryModal}/>
                                 </a>
                             </li>
                             <li><a className="right-align"><i className="mdi mdi-account mdi-36px"/></a></li>
@@ -87,11 +86,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-
     getUserDetail: (userId) => {
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
-    openEnquiryModal: () => {
+    openInquiryModal: () => {
         dispatch(inquiryModalAction.getCityList());
         dispatch(inquiryModalAction.initInquiryModal());
     },

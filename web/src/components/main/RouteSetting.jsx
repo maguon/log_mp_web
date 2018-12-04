@@ -142,7 +142,7 @@ class RouteSetting extends React.Component {
                         {/** Modal主体 */}
                         <div className="modal-content">
                             <div className="row">
-                                <div className="input-field col s11 fz20 pink-font padding-left90 margin-top40">
+                                <div className="input-field col s11 fz20 pink-font padding-left90 margin-top30">
                                     {routeSettingReducer.startCityName}  -  {routeSettingReducer.endCityName}
                                 </div>
                             </div>

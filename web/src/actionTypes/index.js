@@ -9,6 +9,7 @@ import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
 
 import * as InquiryModalActionType  from './modules/InquiryModalActionType';
+import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 
 export  {
     LoginActionType,
@@ -21,5 +22,6 @@ export  {
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
 
-    InquiryModalActionType
+    InquiryModalActionType,
+    InquiryInfoModalActionType
 }

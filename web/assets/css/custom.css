@@ -76,7 +76,7 @@ body {
 }
 
 .detail-box-header, .user-detail-header {
-    background-color: #EDEFF6;
+    background-color: #F0EFF4;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
     border-bottom: 2px solid #D9BEDD;
@@ -247,6 +247,10 @@ body {
     bottom: 0;
     height: 0;
     will-change: left, right;
+}
+
+table.striped > tbody > tr:nth-child(odd) {
+    background-color: #F7F6F9 !important;
 }
 /** Material样式 变更部分 end */
 
@@ -588,12 +592,20 @@ body {
 
 
 /** 自定义-全画面布局边框样式(border) start */
+.detail-box {
+    border: 1px solid #D4D4D4;
+}
+
 .grey-border {
     border-top: 1px solid #D4D4D4;
 }
 
 .no-border-top {
     border-top: 0 !important;
+}
+
+.table-top-line {
+    border-top: 2px solid #D4D4D4;
 }
 
 .border-top-line {
@@ -620,6 +632,11 @@ body {
 /** 自定义粗分割线(画面标题部分用) */
 .custom-divider {
     background: #D9BEDD;
+    height: 2px;
+}
+
+.bold-divider {
+    background: #ccc;
     height: 2px;
 }
 
@@ -654,10 +671,17 @@ body {
     background-color: #724278 !important;
 }
 
+.custom-grey {
+    background-color: #F7F6F9 !important;
+}
+
+.custom-dark-grey {
+    background-color: #F0EFF4 !important;
+}
+
 /*.custom-purple {*/
     /*background-color: #6E2678 !important;*/
 /*}*/
-
 /** 自定义-全画面颜色样式(字体颜色，背景颜色) end */
 
 
@@ -822,13 +846,26 @@ body {
     white-space: pre-wrap;
 }
 
-#enquiryModal {
+#inquiryInfoModal {
+    width: 1024px;
+}
+#inquiryModal, #inquiryInfoModal {
     max-height: 556px;
 }
 
 #routeModal {
     max-height: 356px;
 }
+
+.modal-content {
+    height: calc(100% - 106px) !important;
+}
+
+
+/*#inquiryModal, #inquiryInfoModal .modal- {*/
+    /*max-height: 556px;*/
+/*}*/
+
 /** modal 样式定义部分 end */
 
 

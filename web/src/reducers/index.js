@@ -12,6 +12,7 @@ import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
 
 import InquiryModalReducer from './modules/InquiryModalReducer';
+import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -25,5 +26,6 @@ export default combineReducers({
     InquiryManagerReducer,
     InquiryManagerDetailReducer,
 
-    InquiryModalReducer
+    InquiryModalReducer,
+    InquiryInfoModalReducer
 })

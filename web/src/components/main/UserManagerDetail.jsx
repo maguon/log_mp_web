@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {UserManagerDetailActionType} from '../../actionTypes';
-// import {CarQRCodeModal, MessageInfoModal} from '../modules/index';
+import {InquiryInfoModal} from '../modules/index';
 import {fileHost} from "../../config/HostConfig";
 
 const userManagerDetailAction = require('../../actions/main/UserManagerDetailAction');
@@ -66,8 +66,10 @@ class UserManagerDetail extends React.Component {
      */
     queryUserInquiryList = () => {
         // 默认第一页
-        this.props.setInquiryStartNumber(0);
-        this.props.getUserInquiryList();
+        // this.props.setInquiryStartNumber(0);
+        // this.props.getUserInquiryList();
+
+        $('#inquiryInfoModal').modal('open');
     };
 
     /**
@@ -89,17 +91,17 @@ class UserManagerDetail extends React.Component {
     /**
      * 询价记录TAB：显示消息详细内容
      */
-    showMessageModal = (messageId) => {
-        this.props.getMessageInfo(messageId);
-        $('#messageModal').modal('open');
+    showInquiryInfoModal = (messageId) => {
+        // this.props.getMessageInfo(messageId);
+        $('#inquiryInfoModal').modal('open');
     };
 
-    /**
-     * 交易记录TAB：显示订单内 商品详细信息
-     */
-    getOrderInfo = (event , orderId) => {
-        this.props.getOrderDetail(orderId);
-    };
+    // /**
+    //  * 交易记录TAB：显示订单内 商品详细信息
+    //  */
+    // getOrderInfo = (event, orderId) => {
+    //     this.props.getOrderDetail(orderId);
+    // };
 
     // /**
     //  * 绑定车辆TAB：显示车辆二维码
@@ -146,7 +148,7 @@ class UserManagerDetail extends React.Component {
                             <div className="col s8 grey-text text-darken-1">
                                 <div className="margin-top8">
                                     {/* 用户名 */}
-                                    <span className={`fz20 ${userManagerDetailReducer.userInfo[0].auth_status === 1 ?"pink-font":""}`}>
+                                    <span className={`fz20 ${userManagerDetailReducer.userInfo[0].auth_status === 1 ? "pink-font" : ""}`}>
                                         {userManagerDetailReducer.userInfo[0].user_name}
                                     </span>
                                     <span className="margin-left20">ID：{userManagerDetailReducer.userInfo[0].id}</span>
@@ -158,7 +160,6 @@ class UserManagerDetail extends React.Component {
                                         {(userManagerDetailReducer.userInfo[0].wechat_status !== 0 && userManagerDetailReducer.userInfo[0].wechat_status !== 1)
                                             ? '未知' : sysConst.WE_CHAT_STATUS[userManagerDetailReducer.userInfo[0].wechat_status].label}
                                     </span>
-
                                 </div>
                                 <div className="margin-top15 pink-font">
                                     {/* 认证状态：已认证/未认证 */}
@@ -188,7 +189,7 @@ class UserManagerDetail extends React.Component {
                         </div>}
 
                         <ul className="tabs">
-                            <li className="tab col s3"><a className="active"  href="#tab-inquiry" onClick={this.onClickInquiryTab}>询价记录</a></li>
+                            <li className="tab col s3"><a className="active" href="#tab-inquiry" onClick={this.onClickInquiryTab}>询价记录</a></li>
                             <li className="tab col s3"><a href="#tab-log-info" onClick={getLoginInfoList}>收发货信息</a></li>
                             <li className="tab col s3"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
                             <li className="tab col s3"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
@@ -241,9 +242,9 @@ class UserManagerDetail extends React.Component {
                         </div>
 
                         {/* 询价记录：记录列表 */}
-                        <div className="row z-depth-1 detail-box margin-top10 margin-left50 margin-right50 blue-font">
+                        <div className="row z-depth-1 detail-box margin-top10 margin-left50 margin-right50">
                             <table className="fixed-table bordered">
-                                <thead className="blue-grey lighten-5">
+                                <thead className="custom-grey border-top-line">
                                 <tr className="grey-text text-darken-2">
                                     <th className="padding-left20">线路</th>
                                     <th>车辆数</th>
@@ -284,13 +285,9 @@ class UserManagerDetail extends React.Component {
                         <div className="row margin-top10 margin-left50 margin-right50">
                             <div className="right">
                                 {userManagerDetailReducer.inquiryStart > 0 && userManagerDetailReducer.inquiryDataSize > 0 &&
-                                <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.inquiryPreBtn}>
-                                    上一页
-                                </a>}
+                                <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.inquiryPreBtn}>上一页</a>}
                                 {userManagerDetailReducer.inquiryDataSize >= userManagerDetailReducer.inquirySize &&
-                                <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.inquiryNextBtn}>
-                                    下一页
-                                </a>}
+                                <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.inquiryNextBtn}>下一页</a>}
                             </div>
                         </div>
                     </div>
@@ -301,37 +298,39 @@ class UserManagerDetail extends React.Component {
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂无收发货信息
                         </div>}
-
-                        {userManagerDetailReducer.logInfoArray.map(function (item) {
-                            return (
-                                <div className="row margin-top40 margin-left50 margin-right50">
-                                    <div className="row detail-box-header margin-bottom0">
-                                        {/* 绑定车辆：车辆编号 */}
-                                        <div className="col s12">
-                                            <i className="mdi mdi-city fz20"/><span className="margin-left10">城市：XXXXX</span>
+                        <div className="row margin-top40 margin-left50 margin-right50">
+                            {userManagerDetailReducer.logInfoArray.map(function (item) {
+                                return (
+                                    <div className="row margin-bottom0">
+                                        <div className="row detail-box-header margin-bottom0">
+                                            {/* 绑定车辆：车辆编号 */}
+                                            <div className="col s12">
+                                                <i className="mdi mdi-city fz20"/><span className="margin-left10">城市：XXXXX</span>
+                                            </div>
+                                        </div>
+                                        <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
+                                            {/* 地址信息：收货人 */}
+                                            <div className="col s2">
+                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-account-outline"/>
+                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXX</span>
+                                            </div>
+                                            {/* 地址信息：收货电话 */}
+                                            <div className="col s2">
+                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-cellphone"/>
+                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
+                                            </div>
+                                            {/* 地址信息：收货地址 */}
+                                            <div className="col s8 right-align">
+                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-map-marker"/>
+                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
-                                        {/* 地址信息：收货人 */}
-                                        <div className="col s2">
-                                            <i className="mdi fz20 pink-text text-lighten-4 mdi-account-outline"/>
-                                            <span className="margin-left10 grey-text text-darken-1">XXXX XXX</span>
-                                        </div>
-                                        {/* 地址信息：收货电话 */}
-                                        <div className="col s2">
-                                            <i className="mdi fz20 pink-text text-lighten-4 mdi-cellphone"/>
-                                            <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
-                                        </div>
-                                        {/* 地址信息：收货地址 */}
-                                        <div className="col s8 right-align">
-                                            <i className="mdi fz20 pink-text text-lighten-4 mdi-map-marker"/>
-                                            <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            )
-                        }, this)}
-                        {userManagerDetailReducer.logInfoArray.length > 0 && <div className="row margin-left50 margin-right50 divider grey-border"/>}
+                                )
+                            }, this)}
+                            {userManagerDetailReducer.logInfoArray.length > 0 &&
+                            <div className="row divider grey-border"/>}
+                        </div>
                     </div>
 
                     {/* TAB 3 : 银行卡TAB */}
@@ -340,23 +339,24 @@ class UserManagerDetail extends React.Component {
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂未绑定银行卡
                         </div>}
-                        {userManagerDetailReducer.bankCardArray.length > 0 && <div className="row margin-left50 margin-right50 divider grey-border"/>}
+                        {userManagerDetailReducer.bankCardArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
                         {userManagerDetailReducer.bankCardArray.map(function (item) {
                             return (
-                                <div className="row margin-left50 margin-right50 grey-text text-darken-1">
+                                <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
                                     <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
                                         {/* 地址信息：收货人 */}
                                         <div className="col s11">
-                                            <i className="mdi fz20 pink-text text-lighten-4 mdi-account-outline"/>
+                                            <i className="mdi fz20 purple-font mdi-credit-card"/>
+                                            <span className="margin-left50">XXXX XXX</span>
                                             <span className="margin-left30">XXXX XXX</span>
-                                            <span className="margin-left30">XXXX XXX</span>
-                                            <span className="margin-left30">XXXX XXX</span>
+                                            <span className="margin-left50">XXXX XXX</span>
                                         </div>
-                                        <div className="col s1 right-align pink-font margin-top5">默认
+                                        <div className="col s1 right-align pink-font margin-top5">
+                                            默认
                                             {/*{item.status === 1 && '默认'}*/}
                                         </div>
                                     </div>
-                                    <div className="row divider grey-border"/>
+                                    <div className="row margin-bottom0 divider grey-border"/>
                                 </div>
                             )
                         })}
@@ -368,21 +368,40 @@ class UserManagerDetail extends React.Component {
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂未添加发票信息
                         </div>}
+                        {userManagerDetailReducer.invoiceArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
                         {userManagerDetailReducer.invoiceArray.map(function (item) {
                             return (
-                                <div className="row z-depth-1 detail-box margin-top20 margin-left50 margin-right50">
-                                    <div className="col s11 margin-top20 margin-bottom20 padding-left30">{item.address} {item.ship_name} {item.ship_phone}</div>
-                                    <div className="col s1 margin-top20 margin-bottom20 center orange-text text-darken-1">
-                                        {item.status === 1 && '默认'}
+                                <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
+                                    <div className="row margin-top10 padding-left10 padding-right10">
+                                        {/* 地址信息：收货人 */}
+                                        <div className="col s-percent-4 margin-top10">
+                                            <i className="mdi fz20 purple-font mdi-file-document-box"/>
+                                        </div>
+                                        <div className="col s-percent-96 no-padding margin-top5 fz14 grey-text">
+                                            <div className="col s12 margin-top10">
+                                                <div className="col s10 fz18 purple-font">企业地址：XXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX</div>
+                                                <div className="col s2 right-align fz15 pink-font">默认</div>
+                                            </div>
+                                            <div className="col s12 margin-top15">
+                                                <div className="col s4">企业税号：XXX xxxxxxxx</div>
+                                                <div className="col s8 right-align">
+                                                    <span>开户银行：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
+                                                    <span className="margin-left30">银行账户：XXXXXXXXXXXXXXXXXXXXXXXX</span>
+                                                </div>
+                                            </div>
+                                            <div className="col s12 margin-top10">
+                                                <div className="col s9">企业地址：XXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX</div>
+                                                <div className="col s3 right-align">企业电话：XXXXXXXXXXXXXXX</div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div className="row margin-bottom0 divider grey-border"/>
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-
-                {/*<CarQRCodeModal/>*/}
-                {/*<MessageInfoModal/>*/}
+                <InquiryInfoModal/>
             </div>
         )
     }
@@ -421,9 +440,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // getMessageInfo: (messageId) => {
     //     dispatch(messageDetailAction.getMessageInfo(messageId))
     // },
-
-
-
 
 
     // TAB2：收发货信息

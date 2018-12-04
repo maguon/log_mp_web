@@ -224,10 +224,8 @@ class UserManager extends React.Component {
                 {/* 下部分：检索结果显示区域 */}
                 <div className="row">
                     <div className="col s12">
-
-                        <div className="divider custom-divider"/>
                         <table className="bordered striped">
-                            <thead className="blue-grey lighten-5">
+                            <thead className="custom-dark-grey table-top-line">
                             <tr className="grey-text text-darken-2">
                                 <th>用户ID</th>
                                 <th>昵称</th>

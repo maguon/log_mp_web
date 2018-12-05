@@ -16,7 +16,7 @@ class InvoiceManagerDetail extends React.Component {
      */
     componentDidMount() {
         // 取得订单信息
-        // this.props.getOrderInfo();
+        // this.props.getInvoiceInfo();
         // 初始化TAB
         $('ul.tabs').tabs();
     }
@@ -82,11 +82,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // getOrderInfo: () => {
-    //     dispatch(orderDetailAction.getOrderInfo(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getOrderDetail(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getPaymentInfo(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getLogInfo(ownProps.match.params.id));
+    // getInvoiceInfo: () => {
+    //     dispatch(orderDetailAction.getInvoiceInfo(ownProps.match.params.id));
     // }
 });
 

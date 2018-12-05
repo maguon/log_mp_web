@@ -70,12 +70,12 @@ body {
     padding-right: 10px !important;
 }
 
-.user-detail-header {
+.user-detail-header, .inquiry-detail-header {
     height: 122px;
     padding-top: 18px;
 }
 
-.detail-box-header, .user-detail-header {
+.detail-box-header, .user-detail-header, .inquiry-detail-header {
     background-color: #F0EFF4;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -469,6 +469,10 @@ table.striped > tbody > tr:nth-child(odd) {
     margin-right: 20px !important;
 }
 
+.margin-right30 {
+    margin-right: 30px !important;
+}
+
 .margin-right50 {
     margin-right: 50px !important;
 }
@@ -499,6 +503,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .padding-left30 {
     padding-left: 30px !important;
+}
+
+.padding-left50 {
+    padding-left: 50px !important;
 }
 
 .padding-left55 {
@@ -692,6 +700,7 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .confirm-btn {
     width: 110px;
+    padding: 0 10px !important;
     background-color: #724278;
 }
 
@@ -706,6 +715,19 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .close-btn:hover {
     background: #8D8D8D;
+}
+
+.cancel-btn {
+    width: 110px;
+    padding: 0 10px !important;
+    color: #C54C88;
+    background-color: white;
+    border: 1px solid #C54C88;
+}
+
+.cancel-btn:hover {
+    background-color: #efefef !important;
+    color: #C54C88;
 }
 
 .orange-btn {

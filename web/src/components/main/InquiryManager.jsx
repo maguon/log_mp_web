@@ -9,7 +9,7 @@ const inquiryManagerAction = require('../../actions/main/InquiryManagerAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
-class EnquiryManager extends React.Component {
+class InquiryManager extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -192,10 +192,8 @@ class EnquiryManager extends React.Component {
                 {/* 下部分：检索结果显示区域 */}
                 <div className="row">
                     <div className="col s12">
-
-                        <div className="divider custom-divider"/>
                         <table className="bordered striped">
-                            <thead className="blue-grey lighten-5">
+                            <thead className="custom-dark-grey table-top-line">
                             <tr className="grey-text text-darken-2">
                                 <th>线路</th>
                                 <th>车辆数</th>
@@ -211,26 +209,24 @@ class EnquiryManager extends React.Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {
-                                inquiryManagerReducer.inquiryArray.map(function (item) {
-                                    return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td>{item.id}</td>
-                                                <td>{item.user_name}</td>
-                                                <td className="center">{item.phone}</td>
-                                                <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                                <td>{formatUtil.formatNumber(item.total_price + item.total_freight,2)}</td>
-                                                <td className={`center ${item.payment_status === 0 ?"red-font":""}`}>{sysConst.PAYMENT_STATUS[item.payment_status].label}</td>
-                                                <td className="center">{sysConst.LOG_STATUS[item.log_status].label}</td>
-                                                <td className="operation center">
-                                                    <Link to={{pathname: '/inquiry/'+ item.id}} >
-                                                        <i className="mdi mdi-table-search purple-font"/>
-                                                    </Link>
-                                                </td>
-                                            </tr>
-                                    )
-                                })
-                            }
+                            {inquiryManagerReducer.inquiryArray.map(function (item) {
+                                return (
+                                    <tr className="grey-text text-darken-1">
+                                        <td>{item.id}</td>
+                                        <td>{item.user_name}</td>
+                                        <td className="center">{item.phone}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                        <td>{formatUtil.formatNumber(item.total_price + item.total_freight, 2)}</td>
+                                        <td className={`center ${item.payment_status === 0 ? "red-font" : ""}`}>{sysConst.PAYMENT_STATUS[item.payment_status].label}</td>
+                                        <td className="center">{sysConst.LOG_STATUS[item.log_status].label}</td>
+                                        <td className="operation center">
+                                            <Link to={{pathname: '/inquiry/' + item.id}}>
+                                                <i className="mdi mdi-table-search purple-font"/>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                             { inquiryManagerReducer.inquiryArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
                                     <td className="no-data-tr" colSpan="11">暂无数据</td>
@@ -303,4 +299,4 @@ const mapDispatchToProps = (dispatch) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnquiryManager)
+export default connect(mapStateToProps, mapDispatchToProps)(InquiryManager)

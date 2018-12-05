@@ -134,7 +134,7 @@ class UserManagerDetail extends React.Component {
                 <div className="row">
                     {/* TAB 头部 */}
                     <div className="col s12">
-                        {/* 订单详情：基本信息 */}
+                        {/* 用户详情：基本信息 */}
                         {userManagerDetailReducer.userInfo.length > 0 &&
                         <div className="user-detail-header">
                             {/* 左侧：图标 */}

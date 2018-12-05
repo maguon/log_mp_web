@@ -3,7 +3,7 @@ export const USER_TYPE ='user-type';
 export const USER_STATUS='user-status';
 export const AUTH_TOKEN ='auth-token';
 
-export const ENQUIRY_PARAMS = {
+export const INQUIRY_PARAMS = {
     label: "估值计算用参数",
     unitPrice: 1.2,
     valuationRate: 0.05

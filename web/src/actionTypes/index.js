@@ -7,6 +7,8 @@ import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
 import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
+import * as InvoiceManagerActionType  from './main/InvoiceManagerActionType';
+import * as InvoiceManagerDetailActionType  from './main/InvoiceManagerDetailActionType';
 
 import * as InquiryModalActionType  from './modules/InquiryModalActionType';
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
@@ -21,6 +23,8 @@ export  {
     UserManagerDetailActionType,
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
+    InvoiceManagerActionType,
+    InvoiceManagerDetailActionType,
 
     InquiryModalActionType,
     InquiryInfoModalActionType

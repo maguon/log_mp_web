@@ -2,7 +2,7 @@ import React from 'react';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
-import {Panel, UserManager, UserManagerDetail, InquiryManager, InquiryManagerDetail, CitySetting, RouteSetting} from '../main/index';
+import {Panel, UserManager, UserManagerDetail, InquiryManager, InquiryManagerDetail, InvoiceManager, InvoiceManagerDetail, CitySetting, RouteSetting} from '../main/index';
 
 const routes = [
     // 默认打开画面 - 主控面板
@@ -44,6 +44,17 @@ const routes = [
         path: '/inquiry/:id',
         exact: true,
         component: InquiryManagerDetail
+    },
+    // 发票管理
+    {
+        path: "/invoice",
+        exact: true,
+        component: InvoiceManager
+    },
+    {
+        path: '/invoice/:id',
+        exact: true,
+        component: InvoiceManagerDetail
     },
     // 设置模块
     {
@@ -99,10 +110,20 @@ class Container extends React.Component {
                         </li>
 
                         <li>
-                            <Link to="/user" className="side-navigation">
-                                <i className="mdi mdi-account-group"/>用户管理
-                            </Link>
+                            <ul className="collapsible collapsible-accordion">
+                                <li>
+                                    <a className="collapsible-header"><i className="mdi mdi-account-group"/>用户信息</a>
+                                    <div className="collapsible-body">
+                                        <ul>
+                                            <li><Link to="/user"><i className="mdi mdi-chevron-right"/>用户管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>发票管理</Link></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
+
                         <li>
                             <div className="divider"/>
                         </li>

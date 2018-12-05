@@ -95,234 +95,162 @@ class InquiryManagerDetail extends React.Component {
                 </div>
 
                 <div className="row">
-                    {/* TAB 头部 */}
+                    {/* 头部 */}
                     <div className="col s12">
-                        {/* 订单详情：基本信息 */}
-                        {inquiryManagerDetailReducer.orderInfo.length > 0 &&
-                        <div className="order-detail-header">
-                            {/* 基本信息：订单编号 */}
-                            <div className="col s6">订单编号：{inquiryManagerDetailReducer.orderInfo[0].id}</div>
-                            {/* 基本信息：下单时间 */}
-                            <div className="col s-percent-40 right-align">
-                                <span className="grey-text fz14">下单时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.orderInfo[0].created_on)}</span>
+                        {/* 询价详情：基本信息 */}
+                        <div className="inquiry-detail-header">
+                            {/* 左侧：图标 */}
+                            <div className="col s8 margin-top5 grey-text text-darken-1">
+                                <div>
+                                    <span className="fz20 purple-font">大连</span>
+                                    <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
+                                    <span className="fz20 purple-font">沈阳</span>
+                                    <span className="margin-left30">送到指定地点</span>
+                                </div>
+
+                                <div className="margin-top15">
+                                    <i className="mdi mdi-account fz20 pink-font"/>
+                                    <span className="margin-left10">王大治 ( ID：XXXXX )</span>
+
+                                    <i className="mdi mdi-cellphone margin-left30 fz20 pink-font"/>
+                                    <span className="margin-left10">999 9999 9999</span>
+                                </div>
+
                             </div>
 
-                            {/* 基本信息：支付/发货/取消 状态 */}
-                            <div className="col s-percent-10 right-align">
-                                {inquiryManagerDetailReducer.orderInfo[0].status === 1
-                                    ?
-                                    <span>{sysConst.CANCEL_STATUS[inquiryManagerDetailReducer.orderInfo[0].status].label}</span>
-                                    :
-                                    <span>{sysConst.PAYMENT_STATUS[inquiryManagerDetailReducer.orderInfo[0].payment_status].label}/{sysConst.LOG_STATUS[inquiryManagerDetailReducer.orderInfo[0].log_status].label}</span>
-                                }
+                            <div className="col s4 margin-top10 right-align grey-text text-darken-1">
+                                <div className="margin-top3">询价时间：XXXXX XXXXXX</div>
+                                <div className="margin-top15 pink-font">待报价XXXXX XXXXXX</div>
                             </div>
-
-                            {/* 基本信息：订单描述 */}
-                            <div className="col s6 grey-text fz14 margin-top10 context-ellipsis">{inquiryManagerDetailReducer.orderInfo[0].remark}</div>
-                            {/* 基本信息：用户 电话 微信昵称 */}
-                            <div className="col s6 margin-top10 right-align">
-                                <span><i className="mdi mdi-account margin-right10 fz20"/>{inquiryManagerDetailReducer.orderInfo[0].user_name}</span>
-                                <span className="margin-left50"><i className="mdi mdi-cellphone margin-right10 fz20"/>{inquiryManagerDetailReducer.orderInfo[0].phone}</span>
-                                <span className="margin-left50"><i className="mdi mdi-wechat margin-right10 fz20"/>{inquiryManagerDetailReducer.orderInfo[0].wechat_name}</span>
-                            </div>
-                        </div>}
-
-                        {/* 订单详情：订单信息/售后信息 TAB菜单 */}
-                        <ul className="tabs">
-                            <li className="tab col s6"><a href="#tab-base" className="active" onClick={this.showOrderInfoTab}>订单信息</a></li>
-                            <li className="tab col s6"><a href="#tab-after-sale" onClick={this.showFeedBackTab}>售后信息</a></li>
-                        </ul>
+                        </div>
                     </div>
 
-                    {/* TAB 1 : 订单信息TAB */}
-                    <div id="tab-base" className="col s12">
-                        {/* 订单信息：明细 */}
-                        {inquiryManagerDetailReducer.orderInfo.length > 0 &&
-                        <div>
-                            {/* 购买信息 */}
-                            <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
-                                <div className="row detail-box-header margin-bottom0">
-                                    购买信息
-                                </div>
+                    {/* 主体 */}
+                    <div className="col s12 margin-top40 padding-left50 padding-right50">
 
-                                <div className="col s12 grey-text">
-                                    {inquiryManagerDetailReducer.productArray.length === 0 &&
-                                    <div className="row center grey-text margin-top20 fz15">
-                                        该订单暂无商品记录
-                                    </div>}
-                                    {inquiryManagerDetailReducer.productArray.map(function (item) {
-                                        return (
-                                            <div className="col s12 border-bottom-line padding-top20 padding-bottom20">
-                                                <div className="col no-padding s-percent-10">
-                                                    {(item.imag == null || item.imag === '')
-                                                        ? <div className="no-img-box"/>
-                                                        : <img className="img-size-100" src={"http://" + fileHost + "/api/image/" + item.imag}/>
-                                                    }
-                                                </div>
-                                                <div className="col s-percent-90 margin-top10 padding-right0">
-                                                    <div className="col s6 grey-text text-darken-1">{item.product_name}</div>
-                                                    <div className="col s6 right-align">x <span className="fz16">{item.prod_count}</span></div>
-                                                    <div className="col s12 margin-top10">{item.remark}</div>
-                                                    <div className="col s6 margin-top10">
-                                                        单价：¥ <span className="fz16">{formatUtil.formatNumber(item.unit_price, 2)}</span>
-                                                    </div>
-                                                    <div className="col s6 margin-top10 right-align">
-                                                        总价：¥ <span className="fz16">{formatUtil.formatNumber(item.total_price, 2)}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )
-                                    },this)}
+                        <div className="row margin-bottom10 right-align">
+                            <button type="button" className="btn cancel-btn">取消询价</button>
+                            <button type="button" className="btn confirm-btn margin-left20">重新报价</button>
+                            <button type="button" className="btn orange-btn margin-left20">生成订单</button>
+                        </div>
 
-                                    <div className="col s12 padding-top20 padding-bottom20">
-                                        <div className="col s8 no-padding context-ellipsis">
-                                            收货地址：{inquiryManagerDetailReducer.orderInfo[0].recv_address} {inquiryManagerDetailReducer.orderInfo[0].recv_name} {inquiryManagerDetailReducer.orderInfo[0].recv_phone}
-                                        </div>
-                                        <div className="col s4 right-align">
-                                            ( 运费：¥ {formatUtil.formatNumber(inquiryManagerDetailReducer.orderInfo[0].total_freight, 2)} )
-                                            <span className="margin-left30">合计：¥ </span>
-                                            <span className="fz16 red-font bold-font">
-                                            {formatUtil.formatNumber(inquiryManagerDetailReducer.orderInfo[0].total_price + inquiryManagerDetailReducer.orderInfo[0].total_freight, 2)}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                {/* 已取消的订单 显示：取消时间 */}
-                                {inquiryManagerDetailReducer.orderInfo[0].status === 1 &&
-                                <div className="col s12 padding-top20 padding-bottom20 box-top-line">
-                                    <div className="col s12 grey-text right-align padding-right20">
-                                        取消时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.orderInfo[0].updated_on)}
-                                    </div>
-                                </div>
-                                }
-                            </div>
-
-                            {/* 支付信息 */}
-                            {inquiryManagerDetailReducer.orderInfo[0].status === 0 && inquiryManagerDetailReducer.orderInfo[0].payment_status === 1 && inquiryManagerDetailReducer.paymentInfo.length > 0 &&
-                            <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
-                                <div className="row detail-box-header margin-bottom0">
-                                    支付信息
-                                </div>
-
-                                {/* 支付信息 */}
-                                {inquiryManagerDetailReducer.paymentInfo.map(function (item) {
+                        <div className="row margin-bottom10 margin-left5 pink-font bold-font">
+                            运送车辆：{formatUtil.formatNumber(99999)}
+                        </div>
+                        <div className="row detail-box">
+                            <table className="bordered">
+                                <thead className="custom-grey border-top-line">
+                                <tr className="grey-text text-darken-2">
+                                    <th className="padding-left10">车型</th>
+                                    <th className="center">是否新车</th>
+                                    <th className="right-align">估值单价 ( 元 )</th>
+                                    <th className="right-align">预计运费单价 ( 元 )</th>
+                                    <th className="right-align">数量</th>
+                                    <th className="right-align">估值总额 ( 元 )</th>
+                                    <th className="right-align padding-right10">预计费用</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {inquiryManagerDetailReducer.inquiryCarArray.map(function (item) {
                                     return (
-                                        <div className="col s12 padding-top20 padding-bottom20 grey-text border-bottom-line">
-                                            <div className={`col s2 bold-font ${item.type === 0 ?"red-font":"blue-font"}`}>
-                                                {sysConst.PAYMENT_TYPE[item.type].label}
-                                            </div>
-                                            <div className="col s6">金额：¥ <span className="red-font bold-font fz16">{formatUtil.formatNumber(item.total_fee, 2)}</span></div>
-                                            <div className="col s4 fz14 right-align padding-right20">
-                                                支付时间：{formatUtil.getDateTime(item.created_on)}
-                                            </div>
-                                        </div>
+                                        <tr className="grey-text text-darken-1">
+                                            <td className="padding-left20">{item.id}</td>
+                                            <td>{sysConst.INQUIRY_STATUS[item.type - 1].label}</td>
+                                            <td className="message-td context-ellipsis">{item.content}</td>
+                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                            <td className="operation center">
+                                                <i className="mdi mdi-table-search pink-font pointer" onClick={() => {
+                                                    this.showMessageModal(item.id)
+                                                }}/>
+                                            </td>
+                                        </tr>
                                     )
-                                },this)}
-                            </div>}
+                                }, this)}
+                                {inquiryManagerDetailReducer.inquiryCarArray.length === 0 &&
+                                <tr className="grey-text text-darken-1">
+                                    <td className="no-data-tr" colSpan="7">暂无数据</td>
+                                </tr>}
+                                </tbody>
+                            </table>
+                        </div>
 
-                            {/* 发货信息 */}
-                            {inquiryManagerDetailReducer.orderInfo[0].status === 0 && inquiryManagerDetailReducer.logInfo.length > 0 &&
-                            <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
-                                <div className="row detail-box-header margin-bottom0">
-                                    发货信息
+                        <div className="row margin-bottom10 grey-text text-darken-2 bold-font">
+                            <div className="col s8">
+                                <span className="fz14">估值总额：</span><span className="fz16">{formatUtil.formatNumber(99999)}</span>
+                            </div>
+                            <div className="col s4 right-align">
+                                <span className="fz14">预计总运费：</span><span className="fz16">{formatUtil.formatNumber(99999,2)}</span>
+                            </div>
+                        </div>
+                        <div className="row divider bold-divider"/>
+
+                        {/** 已取消状态显示：取消时间 */}
+                        <div className="row margin-top20 grey-text text-darken-2">
+                            <div className="col s12 right-align">取消时间：XXXXXX XXXXXX</div>
+                        </div>
+
+                        {/** 已报价状态显示：报价信息 */}
+                        <div className="row detail-box margin-top40 grey-text text-darken-2">
+                            {/** 已完成状态显示：订单信息 */}
+                            <div className="bold-font">
+                                <div className="col s12 no-padding custom-grey">
+                                    <div className="col s6 margin-top10 margin-bottom10">
+                                        生成订单编号：XXXXXXXXX
+                                    </div>
+                                    <div className="col s6 margin-top10 right-align">
+                                        生成订单时间：XXXXXXX XXXX
+                                    </div>
                                 </div>
-
-                                {/* 发货信息 */}
-                                <div className="col s12 padding20 grey-text text-darken-2">
-                                    {/* 支付信息 */}
-                                    {inquiryManagerDetailReducer.logInfo.map(function (item) {
-                                        return (
-                                            <div className="col s12 margin-top10 detail-box custom-grey">
-
-                                                <div className="col s6 margin-top20 fz14 grey-text">发货编号：{item.id}</div>
-                                                <div className="col s6 margin-top20 fz14 grey-text right-align">
-                                                    操作时间：{formatUtil.getDateTime(item.updated_on)}
-                                                </div>
-
-                                                <div className="col s8 margin-top10 margin-bottom10 grey-text fz14">收货地址：{item.recv_address}</div>
-                                                <div className="col s4 margin-top10 margin-bottom10 right-align">
-                                                    收货人：{item.recv_name} ({item.recv_phone})
-                                                </div>
-
-                                                {item.status === 1 && <div>
-                                                    {/* 分割线 */}
-                                                    <div className="col s12 dotted-line"/>
-
-                                                    <div className="col s4 margin-top10 margin-bottom10">快递公司：{item.company_name}</div>
-                                                    <div className="col s4 margin-top10 margin-bottom10">快递编号：{item.log_num}</div>
-                                                    <div className="col s4 margin-top10 margin-bottom10 right-align">
-                                                        快递费用：¥ {formatUtil.formatNumber(item.freight, 2)}
-                                                    </div>
-                                                </div>}
-                                            </div>
-                                        )
-                                    },this)}
-                                </div>
-                            </div>}
-                        </div>}
-                    </div>
-
-                    {/* TAB 2 : 售后信息TAB */}
-                    <div id="tab-after-sale" className="col s12">
-                        {/* 售后信息 */}
-                        {inquiryManagerDetailReducer.feedBackInfo.length === 0 &&
-                        <div className="row center grey-text margin-top40 fz18">
-                            暂无售后信息
-                        </div>}
-
-                        {inquiryManagerDetailReducer.feedBackInfo.length > 0 &&
-                        <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
-                            {/* 售后编号 处理状态 */}
-                            <div className="row detail-box-header margin-bottom0">
-                                <div className="col s6 no-padding">售后编号：{inquiryManagerDetailReducer.feedBackInfo[0].id}</div>
-                                <div className="col s6 no-padding right-align">{sysConst.FEED_BACK_STATUS[inquiryManagerDetailReducer.feedBackInfo[0].status].label}</div>
+                                <div className="col s12 no-padding divider"/>
                             </div>
 
-                            {/* 用户申请 */}
-                            <div className="col s12 padding-top20 padding-bottom10 grey-text">
-                                <div className="col s6 blue-font bold-font">用户申请</div>
-                                <div className="col s6 fz14 right-align">申请时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.feedBackInfo[0].created_on)}</div>
+
+                            <div className="col s6 margin-top10 margin-bottom10 bold-font">
+                                协商运费：<span className="fz16 pink-font">{formatUtil.formatNumber(99999,2)}</span> 元
+                            </div>
+                            <div className="col s6 margin-top10 right-align bold-font">
+                                协商时间：XXXXXXX XXXX
                             </div>
 
-                            <div className="col s12 padding-left20 padding-right20"><div className="col s12 blue-divider"/></div>
+                            <div className="col s12 no-padding divider"/>
 
-                            <div className="col s12 padding-top20 padding-bottom20">
-                                <div className="col s-percent-8 grey-text text-darken-2">申请原因：</div>
-                                <div className="col s-percent-92 padding-left0 grey-text">{inquiryManagerDetailReducer.feedBackInfo[0].apply_reason}</div>
+                            <div className="col s-percent-8 padding-right0 margin-top10 bold-font">
+                                协商描述：
+                            </div>
+                            <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
+                                报价描述：报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
+                            </div>
+                        </div>
+
+
+                        {/** 已取消状态显示：取消时间 / 取消原因 */}
+                        <div className="row detail-box margin-top40 grey-text text-darken-2">
+                            <div className="bold-font">
+                                <div className="col s12 padding-top10 padding-bottom10 right-align custom-grey">取消时间：XXXXXX XXXXXX</div>
+                                <div className="col s12 no-padding divider"/>
                             </div>
 
-                            <div className="col s12 padding-left20 padding-right20"><div className="col s12 divider"/></div>
+                            <div className="col s12 no-padding divider"/>
 
-                            {/* 售后处理 */}
-                            <div className="col s12 padding-top20 padding-bottom10">
-                                <div className="col s6 blue-font bold-font">售后处理</div>
-                                <div className="col s6 fz14 right-align">
-                                    {inquiryManagerDetailReducer.feedBackInfo[0].status === 1 && <span>处理时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.feedBackInfo[0].updated_on)}</span>}
-                                </div>
+                            <div className="col s-percent-8 padding-right0 margin-top10 bold-font">
+                                取消原因：
                             </div>
-
-                            <div className="col s12 padding-left20 padding-right20 padding-bottom10"><div className="col s12 blue-divider"/></div>
-
-                            <div className="col s12">
-                                <Input s={12} label="处理描述" className="right-align" value={inquiryManagerDetailReducer.processRemark} onChange={this.changeProcessRemark}/>
-                                <Input s={12} label="处理方法" className="right-align" value={inquiryManagerDetailReducer.processMethod} onChange={this.changeProcessMethod}/>
+                            <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
+                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
+                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
+                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
+                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
                             </div>
-
-                            <div className="col s12 right-align padding-bottom20 padding-right20">
-                                <button type="button" className="btn confirm-btn" onClick={() => {updateFeedBack(inquiryManagerDetailReducer.feedBackInfo[0].id)}}>修改</button>
-                            </div>
-                        </div>}
-
-                        {/* 退款 补发 按钮 */}
-                        {/*{inquiryManagerDetailReducer.feedBackInfo.length > 0 &&*/}
-                        {/*<div>*/}
-                            {/*<div className="col s12 right-align padding-right70">*/}
-                                {/*<button type="button" className="btn confirm-btn" onClick={this.showRefundModal}>退款</button>*/}
-                                {/*<button type="button" className="btn confirm-btn margin-left20" onClick={this.showReSendModal}>补发</button>*/}
-                            {/*</div>*/}
-                            {/*<RefundModal/>*/}
-                            {/*<ReSendModal/>*/}
-                        {/*</div>}*/}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,19 @@ import React from 'react';
 import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
-import {Panel, UserManager, UserManagerDetail, InquiryManager, InquiryManagerDetail, InvoiceManager, InvoiceManagerDetail, CitySetting, RouteSetting} from '../main/index';
+import {
+    Panel,
+    UserManager,
+    UserManagerDetail,
+    InquiryManager,
+    InquiryManagerDetail,
+    InvoiceManager,
+    InvoiceManagerDetail,
+    CitySetting,
+    RouteSetting,
+    SupplierSetting,
+    SupplierSettingDetail
+} from '../main/index';
 
 const routes = [
     // 默认打开画面 - 主控面板
@@ -68,7 +80,19 @@ const routes = [
         path: "/route_setting",
         exact: true,
         component: RouteSetting
-    }
+    },
+    {
+        // 供应商
+        path: "/supplier_setting",
+        exact: true,
+        component: SupplierSetting
+    },
+    {
+        // 供应商详情
+        path: '/supplier_setting/:id',
+        exact: true,
+        component: SupplierSettingDetail
+    },
 ];
 
 class Container extends React.Component {
@@ -155,6 +179,8 @@ class Container extends React.Component {
                                             <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市设置</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路设置</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/supplier_setting"><i className="mdi mdi-chevron-right"/>供应商设置</Link></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -188,7 +214,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     // getUserDetail: (userId) => {
     //     dispatch(headerAction.getUserDetail({userId: userId}));
-    //     console.log('container get user detail')
     // },
     // logout: () => {
     //     dispatch(headerAction.logout())

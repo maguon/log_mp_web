@@ -8,3 +8,5 @@ export InvoiceManagerDetail from "./InvoiceManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";
+export SupplierSetting from "./SupplierSetting";
+export SupplierSettingDetail from "./SupplierSettingDetail";

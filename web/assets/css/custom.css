@@ -252,6 +252,27 @@ body {
 table.striped > tbody > tr:nth-child(odd) {
     background-color: #F7F6F9 !important;
 }
+
+[type="checkbox"].filled-in:checked + label:after {
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D483B8;
+    background-color: #D483B8;
+    z-index: 0;
+}
+
+[type="checkbox"].filled-in.tabbed:focus + label:after {
+    border-radius: 2px;
+    border-color: #5a5a5a;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+[type="checkbox"].filled-in.tabbed:checked:focus + label:after {
+    border-radius: 2px;
+    background-color: #D483B8;
+    border-color: #D483B8;
+}
 /** Material样式 变更部分 end */
 
 
@@ -577,6 +598,10 @@ table.striped > tbody > tr:nth-child(odd) {
     padding-bottom: 10px !important;
 }
 
+.padding-bottom15 {
+    padding-bottom: 15px !important;
+}
+
 .padding-bottom20 {
     padding-bottom: 20px !important;
 }
@@ -714,7 +739,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .close-btn:hover {
-    background: #8D8D8D;
+    background: #8D8D8D !important;
 }
 
 .cancel-btn {
@@ -757,8 +782,8 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .small-icon {
-    font-size: 24px !important;
-    line-height: 24px !important;
+    font-size: 20px !important;
+    line-height: 20px !important;
 }
 
 .tiny-btn {
@@ -773,7 +798,11 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .add-btn {
     margin-right: 10px;
-    background-color: #724278;
+    background-color: #D483B8;
+}
+
+.add-btn:hover {
+    background-color: #c578a9 !important;
 }
 
 .detail-btn {
@@ -875,7 +904,11 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 556px;
 }
 
-#routeModal {
+#newSupplierModal {
+    max-height: 456px;
+}
+
+#routeModal, #newSupplierContactModal, #newSupplierBankModal {
     max-height: 356px;
 }
 

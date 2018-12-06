@@ -119,6 +119,22 @@ export const WE_CHAT_STATUS = [
     }
 ];
 
+// 运输方式
+export const TRANSPORT_MODE = [
+    {
+        value: 1,
+        label: "公路"
+    },
+    {
+        value: 2,
+        label: "海运"
+    },
+    {
+        value: 3,
+        label: "公路/海运"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

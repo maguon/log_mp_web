@@ -7,7 +7,7 @@ const sysConst = require('../../util/SysConst');
 
 export const getAllCityList = () => async (dispatch) => {
     try {
-        const url = apiHost + '/api/city';
+        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             // 左侧 城市列表

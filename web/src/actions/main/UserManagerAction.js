@@ -14,48 +14,43 @@ export const getUserList = () => async (dispatch, getState) => {
 
         // 检索条件：用户ID
         const conditionNo = getState().UserManagerReducer.conditionNo.trim();
-        // 检索条件：微信昵称
+        // 检索条件：昵称
         const conditionWeChatNm = getState().UserManagerReducer.conditionWeChatNm.trim();
-        // // 检索条件：姓名
-        // const conditionUser = getState().UserManagerReducer.conditionUser.trim();
-        // 检索条件：手机
+        // 检索条件：手机号码
         const conditionPhone = getState().UserManagerReducer.conditionPhone.trim();
-        // 检索条件：认证状态
-        const conditionAuthStatus = getState().UserManagerReducer.conditionAuthStatus;
         // 检索条件：微信状态
         const conditionWeStatus = getState().UserManagerReducer.conditionWeStatus;
+        // 检索条件：认证状态
+        const conditionAuthStatus = getState().UserManagerReducer.conditionAuthStatus;
 
-        // 检索条件：认证时间
-        const conditionAuthTimeStart = getState().UserManagerReducer.conditionAuthTimeStart;
-        const conditionAuthTimeEnd = getState().UserManagerReducer.conditionAuthTimeEnd;
         // 检索条件：授权时间
         const conditionCreatedOnStart = getState().UserManagerReducer.conditionCreatedOnStart;
         const conditionCreatedOnEnd = getState().UserManagerReducer.conditionCreatedOnEnd;
+        // 检索条件：认证时间
+        const conditionAuthTimeStart = getState().UserManagerReducer.conditionAuthTimeStart;
+        const conditionAuthTimeEnd = getState().UserManagerReducer.conditionAuthTimeEnd;
 
         // 基本检索URL
-        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-        //     + '/user?start=' + start + '&size=' + size;
-        let url = apiHost + '/api'
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
             + '/user?start=' + start + '&size=' + size;
-
         // 检索条件
         let conditionsObj = {
             // 检索条件：编号
             userId: conditionNo,
             // 检索条件：微信昵称
-            wechatAccount: conditionWeChatNm,
+            wechatName: conditionWeChatNm,
             // 检索条件：手机
             phone: conditionPhone,
             // 检索条件：认证状态
             authStatus: conditionAuthStatus === null ? '' : conditionAuthStatus.value,
             // 检索条件：关注状态
             wechatStatus: conditionWeStatus === null ? '' : conditionWeStatus.value,
-            // 检索条件：认证时间
-            authStartTime: conditionAuthTimeStart,
-            authEndTime: conditionAuthTimeEnd,
             // 检索条件：授权时间
             createdOnStart: conditionCreatedOnStart,
-            createdOnEnd: conditionCreatedOnEnd
+            createdOnEnd: conditionCreatedOnEnd,
+            // 检索条件：认证时间
+            authStartTime: conditionAuthTimeStart,
+            authEndTime: conditionAuthTimeEnd
         };
         let conditions = httpUtil.objToUrl(conditionsObj);
         // 检索URL

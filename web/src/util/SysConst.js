@@ -135,6 +135,18 @@ export const TRANSPORT_MODE = [
     }
 ];
 
+// 物流状态
+export const LOG_STATUS = [
+    {
+        value: 0,
+        label: "未送达"
+    },
+    {
+        value: 1,
+        label: "已送达"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

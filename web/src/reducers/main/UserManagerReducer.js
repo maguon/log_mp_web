@@ -9,19 +9,16 @@ const initialState = {
     // 检索结果数量
     dataSize: 0,
 
-    // 检索条件：编号
+    // 检索条件：用户ID
     conditionNo: '',
-    // 检索条件：微信昵称
+    // 检索条件：昵称
     conditionWeChatNm: '',
-    // 检索条件：手机
+    // 检索条件：手机号码
     conditionPhone: '',
-    // // 检索条件：姓名
-    // conditionUser: '',
-
+    // 检索条件：微信状态
+    conditionWeStatus: null,
     // 检索条件：认证状态
     conditionAuthStatus: null,
-    // 检索条件：关注状态
-    conditionWeStatus: null,
 
     // 检索条件：认证时间(始)
     conditionAuthTimeStart: '',
@@ -73,22 +70,16 @@ export default handleActions({
             conditionPhone: action.payload
         }
     },
-    // [UserManagerActionType.setConditionUser]: (state, action) => {
-    //     return {
-    //         ...state,
-    //         conditionUser: action.payload
-    //     }
-    // },
-    [UserManagerActionType.setConditionAuthStatus]: (state, action) => {
-        return {
-            ...state,
-            conditionAuthStatus: action.payload
-        }
-    },
     [UserManagerActionType.setConditionWeStatus]: (state, action) => {
         return {
             ...state,
             conditionWeStatus: action.payload
+        }
+    },
+    [UserManagerActionType.setConditionAuthStatus]: (state, action) => {
+        return {
+            ...state,
+            conditionAuthStatus: action.payload
         }
     },
     [UserManagerActionType.setConditionAuthTimeStart]: (state, action) => {

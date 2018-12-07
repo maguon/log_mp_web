@@ -5,11 +5,9 @@ import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {UserManagerDetailActionType} from '../../actionTypes';
 import {InquiryInfoModal} from '../modules/index';
-import {fileHost} from "../../config/HostConfig";
 
 const userManagerDetailAction = require('../../actions/main/UserManagerDetailAction');
-// const carQRCodeModalAction = require('../../actions/modules/CarQRCodeModalAction');
-// const messageDetailAction = require('../../actions/main/MessageDetailAction');
+const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
@@ -28,8 +26,9 @@ class UserManagerDetail extends React.Component {
     componentDidMount() {
         // 取得用户信息
         this.props.getUserInfo();
+        // 取得TAB1 询价记录列表
+        this.onClickInquiryTab();
         $('ul.tabs').tabs();
-        $('.collapsible').collapsible();
     }
 
     /**
@@ -66,10 +65,8 @@ class UserManagerDetail extends React.Component {
      */
     queryUserInquiryList = () => {
         // 默认第一页
-        // this.props.setInquiryStartNumber(0);
-        // this.props.getUserInquiryList();
-
-        $('#inquiryInfoModal').modal('open');
+        this.props.setInquiryStartNumber(0);
+        this.props.getUserInquiryList();
     };
 
     /**
@@ -89,33 +86,15 @@ class UserManagerDetail extends React.Component {
     };
 
     /**
-     * 询价记录TAB：显示消息详细内容
+     * 询价记录TAB：显示询价信息详细内容
      */
-    showInquiryInfoModal = (messageId) => {
-        // this.props.getMessageInfo(messageId);
+    showInquiryInfoModal = (inquiryId) => {
+        this.props.initInquiryInfoModalData(inquiryId);
         $('#inquiryInfoModal').modal('open');
     };
 
-    // /**
-    //  * 交易记录TAB：显示订单内 商品详细信息
-    //  */
-    // getOrderInfo = (event, orderId) => {
-    //     this.props.getOrderDetail(orderId);
-    // };
-
-    // /**
-    //  * 绑定车辆TAB：显示车辆二维码
-    //  */
-    // showCarQRCode = (event, carId, plateNum) => {
-    //     this.props.setUserId(this.props.match.params.id);
-    //     this.props.setCarNo(carId);
-    //     this.props.setPlateNum(plateNum);
-    //     this.props.getQRCode();
-    //     $('#carQRCodeModal').modal('open');
-    // };
-
     render() {
-        const {userManagerDetailReducer, changeInquiryConditionServiceType, changeInquiryConditionStatus, getLoginInfoList, getBankCardList, getInvoiceList} = this.props;
+        const {userManagerDetailReducer, changeInquiryConditionServiceType, changeInquiryConditionStatus, getLogInfoList, getBankCardList, getInvoiceList} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -190,7 +169,7 @@ class UserManagerDetail extends React.Component {
 
                         <ul className="tabs">
                             <li className="tab col s3"><a className="active" href="#tab-inquiry" onClick={this.onClickInquiryTab}>询价记录</a></li>
-                            <li className="tab col s3"><a href="#tab-log-info" onClick={getLoginInfoList}>收发货信息</a></li>
+                            <li className="tab col s3"><a href="#tab-log-info" onClick={getLogInfoList}>收发货信息</a></li>
                             <li className="tab col s3"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
                             <li className="tab col s3"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                         </ul>
@@ -242,7 +221,7 @@ class UserManagerDetail extends React.Component {
                         </div>
 
                         {/* 询价记录：记录列表 */}
-                        <div className="row z-depth-1 detail-box margin-top10 margin-left50 margin-right50">
+                        <div className="row margin-top10 margin-left50 margin-right50">
                             <table className="fixed-table bordered">
                                 <thead className="custom-grey border-top-line">
                                 <tr className="grey-text text-darken-2">
@@ -259,15 +238,15 @@ class UserManagerDetail extends React.Component {
                                 {userManagerDetailReducer.inquiryArray.map(function (item) {
                                     return (
                                         <tr className="grey-text text-darken-1">
-                                            <td className="padding-left20">{item.id}</td>
-                                            <td>{sysConst.INQUIRY_STATUS[item.type - 1].label}</td>
-                                            <td className="message-td context-ellipsis">{item.content}</td>
+                                            <td className="padding-left20">{item.route_start} - {item.route_end}</td>
+                                            <td>{formatUtil.formatNumber(item.car_num)}</td>
+                                            <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
                                             <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                            <td className="center">{sysConst.INQUIRY_STATUS[item.status].label}</td>
                                             <td className="operation center">
-                                                <i className="mdi mdi-table-search pink-font pointer" onClick={() => {
-                                                    this.showMessageModal(item.id)
+                                                <i className="mdi mdi-table-search purple-font pointer" onClick={() => {
+                                                    this.showInquiryInfoModal(item.id)
                                                 }}/>
                                             </td>
                                         </tr>
@@ -279,10 +258,11 @@ class UserManagerDetail extends React.Component {
                                 </tr>}
                                 </tbody>
                             </table>
+                            <InquiryInfoModal/>
                         </div>
 
                         {/* 上下页按钮 */}
-                        <div className="row margin-top10 margin-left50 margin-right50">
+                        <div className="row margin-top10 margin-bottom0 margin-left50 margin-right50">
                             <div className="right">
                                 {userManagerDetailReducer.inquiryStart > 0 && userManagerDetailReducer.inquiryDataSize > 0 &&
                                 <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.inquiryPreBtn}>上一页</a>}
@@ -303,26 +283,26 @@ class UserManagerDetail extends React.Component {
                                 return (
                                     <div className="row margin-bottom0">
                                         <div className="row detail-box-header margin-bottom0">
-                                            {/* 绑定车辆：车辆编号 */}
+                                            {/* 地址信息：名称 */}
                                             <div className="col s12">
-                                                <i className="mdi mdi-city fz20"/><span className="margin-left10">城市：XXXXX</span>
+                                                <i className="mdi mdi-city fz20"/><span className="margin-left10">{item.city}</span>
                                             </div>
                                         </div>
                                         <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
                                             {/* 地址信息：收货人 */}
                                             <div className="col s2">
                                                 <i className="mdi fz20 pink-text text-lighten-4 mdi-account-outline"/>
-                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXX</span>
+                                                <span className="margin-left10 grey-text text-darken-1">{item.name}</span>
                                             </div>
                                             {/* 地址信息：收货电话 */}
                                             <div className="col s2">
                                                 <i className="mdi fz20 pink-text text-lighten-4 mdi-cellphone"/>
-                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
+                                                <span className="margin-left10 grey-text text-darken-1">{item.phone}</span>
                                             </div>
                                             {/* 地址信息：收货地址 */}
                                             <div className="col s8 right-align">
                                                 <i className="mdi fz20 pink-text text-lighten-4 mdi-map-marker"/>
-                                                <span className="margin-left10 grey-text text-darken-1">XXXX XXXX - XXX</span>
+                                                <span className="margin-left10 grey-text text-darken-1">{item.address}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -344,16 +324,14 @@ class UserManagerDetail extends React.Component {
                             return (
                                 <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
                                     <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
-                                        {/* 地址信息：收货人 */}
                                         <div className="col s11">
-                                            <i className="mdi fz20 purple-font mdi-credit-card"/>
-                                            <span className="margin-left50">XXXX XXX</span>
-                                            <span className="margin-left30">XXXX XXX</span>
-                                            <span className="margin-left50">XXXX XXX</span>
+                                            <i className={`mdi mdi-credit-card fz20 ${item.status === 1 ? "purple-font" : "grey-text"}`}/>
+                                            <span className="margin-left50">{item.bank}</span>
+                                            <span className="margin-left30">{item.bank_code}</span>
+                                            <span className="margin-left50">{item.account_name}</span>
                                         </div>
                                         <div className="col s1 right-align pink-font margin-top5">
-                                            默认
-                                            {/*{item.status === 1 && '默认'}*/}
+                                            {item.status === 1 && '默认'}
                                         </div>
                                     </div>
                                     <div className="row margin-bottom0 divider grey-border"/>
@@ -375,23 +353,23 @@ class UserManagerDetail extends React.Component {
                                     <div className="row margin-top10 padding-left10 padding-right10">
                                         {/* 地址信息：收货人 */}
                                         <div className="col s-percent-4 margin-top10">
-                                            <i className="mdi fz20 purple-font mdi-file-document-box"/>
+                                            <i className={`mdi mdi-file-document-box fz20 ${item.status === 1 ? "purple-font" : "grey-text"}`}/>
                                         </div>
                                         <div className="col s-percent-96 no-padding margin-top5 fz14 grey-text">
                                             <div className="col s12 margin-top10">
-                                                <div className="col s10 fz18 purple-font">企业地址：XXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX</div>
-                                                <div className="col s2 right-align fz15 pink-font">默认</div>
+                                                <div className="col s10 fz18 purple-font">{item.company_name}</div>
+                                                <div className="col s2 right-align fz15 pink-font">{item.status === 1 && '默认'}</div>
                                             </div>
                                             <div className="col s12 margin-top15">
-                                                <div className="col s4">企业税号：XXX xxxxxxxx</div>
+                                                <div className="col s4">企业税号：{item.tax_number}</div>
                                                 <div className="col s8 right-align">
-                                                    <span>开户银行：XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</span>
-                                                    <span className="margin-left30">银行账户：XXXXXXXXXXXXXXXXXXXXXXXX</span>
+                                                    <span>开户银行：{item.bank}</span>
+                                                    <span className="margin-left30">银行账户：{item.bank_code}</span>
                                                 </div>
                                             </div>
                                             <div className="col s12 margin-top10">
-                                                <div className="col s9">企业地址：XXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX XXXXXXXXXXXXXXX</div>
-                                                <div className="col s3 right-align">企业电话：XXXXXXXXXXXXXXX</div>
+                                                <div className="col s9">企业地址：{item.company_address}</div>
+                                                <div className="col s3 right-align">企业电话：{item.company_phone}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -401,7 +379,6 @@ class UserManagerDetail extends React.Component {
                         })}
                     </div>
                 </div>
-                <InquiryInfoModal/>
             </div>
         )
     }
@@ -437,28 +414,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getUserInquiryList: () => {
         dispatch(userManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
     },
-    // getMessageInfo: (messageId) => {
-    //     dispatch(messageDetailAction.getMessageInfo(messageId))
-    // },
-
-
-    // TAB2：收发货信息
-    getLoginInfoList: () => {
-        dispatch(userManagerDetailAction.getLoginInfoList(ownProps.match.params.id))
+    initInquiryInfoModalData: (inquiryId) => {
+        dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId,ownProps.match.params.id));
+        dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId,ownProps.match.params.id));
     },
-    // // TAB2：车辆二维码 Modal
-    // setUserId: (value) => {
-    //     dispatch(CarQRCodeModalActionType.setUserId(value))
-    // },
-    // setCarNo: (value) => {
-    //     dispatch(CarQRCodeModalActionType.setCarNo(value))
-    // },
-    // setPlateNum: (value) => {
-    //     dispatch(CarQRCodeModalActionType.setPlateNum(value))
-    // },
-    // getQRCode: () => {
-    //     dispatch(carQRCodeModalAction.getQRCode())
-    // },
+    // TAB2：收发货信息
+    getLogInfoList: () => {
+        dispatch(userManagerDetailAction.getLogInfoList(ownProps.match.params.id))
+    },
     // TAB3：银行卡
     getBankCardList: () => {
         dispatch(userManagerDetailAction.getBankCardList(ownProps.match.params.id))

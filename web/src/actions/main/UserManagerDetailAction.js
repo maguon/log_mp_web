@@ -7,9 +7,8 @@ const sysConst = require('../../util/SysConst');
 
 export const getUserInfo = (id) => async (dispatch) => {
     try {
-        // 基本检索URL TODO
-        // const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/user?userId=' + id;
-        const url = apiHost + '/api/user?userId=' + id;
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/user?userId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: UserManagerDetailActionType.getUserInfo, payload: res.result});
@@ -21,59 +20,63 @@ export const getUserInfo = (id) => async (dispatch) => {
     }
 };
 
-
-
 export const getUserInquiryList = (userId) => async (dispatch, getState) => {
     try {
         // 检索条件：开始位置
-        const start = getState().UserManagerDetailReducer.msgStart;
+        const start = getState().UserManagerDetailReducer.inquiryStart;
         // 检索条件：每页数量
-        const size = getState().UserManagerDetailReducer.msgSize;
+        const size = getState().UserManagerDetailReducer.inquirySize;
 
-        // 检索条件：消息类型
-        const conditionMsgType = getState().UserManagerDetailReducer.msgConditionType;
-        // 检索条件：发送时间
-        const conditionStartDate = getState().UserManagerDetailReducer.msgConditionStartDate;
-        const conditionEndDate = getState().UserManagerDetailReducer.msgConditionEndDate;
+        // 检索条件：起始城市
+        const inquiryConditionStartCity = getState().UserManagerDetailReducer.inquiryConditionStartCity.trim();
+        // 检索条件：目的城市
+        const inquiryConditionEndCity = getState().UserManagerDetailReducer.inquiryConditionEndCity.trim();
+        // 检索条件：服务方式
+        const inquiryConditionServiceType = getState().UserManagerDetailReducer.inquiryConditionServiceType;
+        // 检索条件：状态
+        const inquiryConditionStatus = getState().UserManagerDetailReducer.inquiryConditionStatus;
 
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/getMessage?start=' + start + '&size=' + size + '&userId=' + userId;
+            + '/queryInquiry?start=' + start + '&size=' + size + '&userId=' + userId;
 
         // 检索条件
         let conditionsObj = {
-            // 检索条件：消息类型
-            type: conditionMsgType === null ? '' : conditionMsgType.value,
-            // 检索条件：发送时间
-            createdStartOn: conditionStartDate,
-            createdEndOn: conditionEndDate
+            // 检索条件：起始城市
+            routeStart: inquiryConditionStartCity,
+            // 检索条件：目的城市
+            routeEnd: inquiryConditionEndCity,
+            // 检索条件：服务方式
+            serviceType: inquiryConditionServiceType === null ? '' : inquiryConditionServiceType.value,
+            // 检索条件：状态
+            status: inquiryConditionStatus === null ? '' : inquiryConditionStatus.value
         };
         let conditions = httpUtil.objToUrl(conditionsObj);
         // 检索URL
         url = conditions.length > 0 ? url + "&" + conditions : url;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.setMsgDataSize, payload: res.result.length});
-            dispatch({type: UserManagerDetailActionType.getMessageList, payload: res.result.slice(0, size - 1)});
+            dispatch({type: UserManagerDetailActionType.setInquiryDataSize, payload: res.result.length});
+            dispatch({type: UserManagerDetailActionType.getUserInquiryList, payload: res.result.slice(0, size - 1)});
         } else if (res.success === false) {
-            swal('获取消息列表信息失败', res.msg, 'warning');
+            swal('获取询价记录列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const getLoginInfoList = (userId) => async (dispatch) => {
+export const getLogInfoList = (userId) => async (dispatch) => {
     try {
-        // // 基本检索URL
-        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-        //     + '/userCar?userId=' + userId;
-        // const res = await httpUtil.httpGet(url);
-        // if (res.success === true) {
-        //     dispatch({type: UserManagerDetailActionType.getUserCarList, payload: res.result});
-        // } else if (res.success === false) {
-        //     swal('获取车辆列表信息失败', res.msg, 'warning');
-        // }
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            + '/address?userId=' + userId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: UserManagerDetailActionType.getLogInfoList, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取收发货信息失败', res.msg, 'warning');
+        }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
@@ -81,47 +84,31 @@ export const getLoginInfoList = (userId) => async (dispatch) => {
 
 export const getBankCardList = (userId) => async (dispatch) => {
     try {
-        // // 基本检索URL
-        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-        //     + '/order?userId=' + userId;
-        // const res = await httpUtil.httpGet(url);
-        // if (res.success === true) {
-        //     dispatch({type: UserManagerDetailActionType.getOrderList, payload: res.result});
-        // } else if (res.success === false) {
-        //     swal('获取交易记录列表信息失败', res.msg, 'warning');
-        // }
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            + '/inquiryBank?userId=' + userId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: UserManagerDetailActionType.getBankCardList, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取银行卡信息失败', res.msg, 'warning');
+        }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-// export const getOrderDetail = (userId, orderId) => async (dispatch) => {
-//     try {
-//         // 基本检索URL
-//         let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-//             + '/orderItem?userId=' + userId + '&orderId=' + orderId;
-//         const res = await httpUtil.httpGet(url);
-//         if (res.success === true) {
-//             dispatch({type: UserManagerDetailActionType.getProductList, payload: res.result});
-//         } else if (res.success === false) {
-//             swal('获取交易记录信息失败', res.msg, 'warning');
-//         }
-//     } catch (err) {
-//         swal('操作失败', err.message, 'error');
-//     }
-// };
-
 export const getInvoiceList = (userId) => async (dispatch) => {
     try {
-        // // 基本检索URL
-        // let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-        //     + '/userShipAddress?userId=' + userId;
-        // const res = await httpUtil.httpGet(url);
-        // if (res.success === true) {
-        //     dispatch({type: UserManagerDetailActionType.getAddressList, payload: res.result});
-        // } else if (res.success === false) {
-        //     swal('获取收货地址列表信息失败', res.msg, 'warning');
-        // }
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            + '/inquiryInvoice?userId=' + userId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: UserManagerDetailActionType.getInvoiceList, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取发票信息失败', res.msg, 'warning');
+        }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

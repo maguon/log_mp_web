@@ -29,7 +29,6 @@ class UserManager extends React.Component {
             this.props.setConditionPhone('');
             this.props.changeConditionWeStatus(null);
             this.props.changeConditionAuthStatus(null);
-            // this.props.setConditionUser('');
             this.props.setConditionCreatedOnStart('');
             this.props.setConditionCreatedOnEnd('');
             this.props.setConditionAuthTimeStart('');
@@ -46,25 +45,18 @@ class UserManager extends React.Component {
     };
 
     /**
-     * 更新 检索条件：微信昵称
+     * 更新 检索条件：昵称
      */
     changeConditionWeChatNm = (event) => {
         this.props.setConditionWeChatNm(event.target.value);
     };
 
     /**
-     * 更新 检索条件：手机
+     * 更新 检索条件：手机号码
      */
     changeConditionPhone = (event) => {
         this.props.setConditionPhone(event.target.value);
     };
-
-    // /**
-    //  * 更新 检索条件：姓名
-    //  */
-    // changeConditionUser = (event) => {
-    //     this.props.setConditionUser(event.target.value);
-    // };
 
     /**
      * 更新 检索条件：授权时间(始)
@@ -310,9 +302,6 @@ const mapDispatchToProps = (dispatch) => ({
     setConditionWeChatNm: (value) => {
         dispatch(UserManagerActionType.setConditionWeChatNm(value))
     },
-    // setConditionUser: (userNm) => {
-    //     dispatch(UserManagerActionType.setConditionUser(userNm))
-    // },
     setConditionPhone: (value) => {
         dispatch(UserManagerActionType.setConditionPhone(value))
     },

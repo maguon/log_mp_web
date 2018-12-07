@@ -28,7 +28,7 @@ export const addCity = () => async (dispatch, getState) => {
             const params = {
                 cityName: cityName
             };
-            const url = apiHost + '/api/user/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
+            const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
             const res = await httpUtil.httpPost(url, params);
 
             if (res.success === true) {

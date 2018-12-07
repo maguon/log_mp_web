@@ -12,40 +12,46 @@ export const getInquiryList = () => async (dispatch, getState) => {
         // 检索条件：每页数量
         const size = getState().InquiryManagerReducer.size;
 
-        // 检索条件：订单编号
-        const conditionNo = getState().InquiryManagerReducer.conditionNo.trim();
-        // 检索条件：购买人
+        // 检索条件：客户ID
         const conditionUser = getState().InquiryManagerReducer.conditionUser.trim();
-        // 检索条件：手机
+        // 检索条件：客户电话
         const conditionPhone = getState().InquiryManagerReducer.conditionPhone.trim();
+        // 检索条件：起始城市
+        const conditionStartCity = getState().InquiryManagerReducer.conditionStartCity.trim();
+        // 检索条件：目的城市
+        const conditionEndCity = getState().InquiryManagerReducer.conditionEndCity.trim();
 
-        // 检索条件：下单时间
+        // 检索条件：服务方式
+        const conditionServiceType = getState().InquiryManagerReducer.conditionServiceType;
+        // 检索条件：询价时间
         const conditionCreatedOnStart = getState().InquiryManagerReducer.conditionCreatedOnStart;
         const conditionCreatedOnEnd = getState().InquiryManagerReducer.conditionCreatedOnEnd;
-        // 检索条件：付款状态
-        const conditionPaymentStatus = getState().InquiryManagerReducer.conditionPaymentStatus;
-        // 检索条件：发货状态
-        const conditionLogStatus = getState().InquiryManagerReducer.conditionLogStatus;
+        // 检索条件：状态
+        const conditionInquiryStatus = getState().InquiryManagerReducer.conditionInquiryStatus;
 
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/order?start=' + start + '&size=' + size;
+            + '/queryInquiry?start=' + start + '&size=' + size;
 
         // 检索条件
         let conditionsObj = {
-            // 检索条件：订单编号
-            orderId: conditionNo,
-            // 检索条件：购买人
-            userName: conditionUser,
-            // 检索条件：手机
+            // 检索条件：客户ID
+            userId: conditionUser,
+            // 检索条件：客户电话
             phone: conditionPhone,
-            // 检索条件：绑定时间
-            createdOnStart: conditionCreatedOnStart,
-            createdOnEnd: conditionCreatedOnEnd,
-            // 检索条件：付款状态
-            paymentStatus: conditionPaymentStatus === null ? '' : conditionPaymentStatus.value,
-            // 检索条件：发货状态
-            logStatus: conditionLogStatus === null ? '' : conditionLogStatus.value,
+            // 检索条件：起始城市
+            routeStart: conditionStartCity,
+            // 检索条件：目的城市
+            routeEnd: conditionEndCity,
+
+            // 检索条件：服务方式
+            serviceType: conditionServiceType === null ? '' : conditionServiceType.value,
+            // 检索条件：询价时间
+            inquiryTimeStart: conditionCreatedOnStart,
+            inquiryTimeEnd: conditionCreatedOnEnd,
+
+            // 检索条件：状态
+            status: conditionInquiryStatus === null ? '' : conditionInquiryStatus.value,
         };
         let conditions = httpUtil.objToUrl(conditionsObj);
         // 检索URL

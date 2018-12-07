@@ -212,13 +212,16 @@ class InquiryManager extends React.Component {
                             {inquiryManagerReducer.inquiryArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
-                                        <td>{item.id}</td>
-                                        <td>{item.user_name}</td>
+                                        <td>{item.route_start} - {item.route_end}</td>
+                                        <td>{formatUtil.formatNumber(item.car_num)}</td>
+                                        <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
+                                        <td className="center">{formatUtil.formatNumber(item.fee,2)}</td>
+                                        <td>{item.inquiry_name}</td>
                                         <td className="center">{item.phone}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                        <td>{formatUtil.formatNumber(item.total_price + item.total_freight, 2)}</td>
-                                        <td className={`center ${item.payment_status === 0 ? "red-font" : ""}`}>{sysConst.PAYMENT_STATUS[item.payment_status].label}</td>
-                                        <td className="center">{sysConst.LOG_STATUS[item.log_status].label}</td>
+                                        <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.inquiry_time)}</td>
+                                        <td className="center">{(item.status !== 0 && item.status !== 1 && item.status !== 2 && item.status !== 3) ? '未知' : sysConst.INQUIRY_STATUS[item.status].label}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/inquiry/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
@@ -268,7 +271,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
     getInquiryList: () => {
-        // dispatch(inquiryManagerAction.getInquiryList())
+        dispatch(inquiryManagerAction.getInquiryList())
     },
     setStartNumber: (start) => {
         dispatch(InquiryManagerActionType.setStartNumber(start))

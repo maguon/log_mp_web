@@ -30,7 +30,7 @@ class SupplierSettingDetail extends React.Component {
     }
 
     /**
-     * 显示 新建/编辑 供应商信息
+     * 显示 编辑 供应商信息
      */
     showNewSupplierModal = (logCompanyId) => {
         this.props.initNewSupplierModalData(logCompanyId);
@@ -41,18 +41,8 @@ class SupplierSettingDetail extends React.Component {
      * 显示 新建 联系方式
      */
     showNewSupplierContactModal = () => {
-        console.log('showNewSupplierContactModal');
-
         this.props.initNewSupplierContactModalData();
         $('#newSupplierContactModal').modal('open');
-    };
-
-    /**
-     * 删除 联系方式
-     */
-    deleteContact = (contactId) => {
-        console.log('deleteContact inner')
-        this.props.deleteSupplierContact(contactId);
     };
 
     /**
@@ -64,10 +54,16 @@ class SupplierSettingDetail extends React.Component {
     };
 
     /**
+     * 删除 联系方式
+     */
+    deleteContact = (contactId) => {
+        this.props.deleteSupplierContact(contactId);
+    };
+
+    /**
      * 删除 银行账号
      */
-    deleteBank = (contactId) => {
-        console.log('deleteBank inner')
+    deleteBank = (bankId) => {
         this.props.deleteSupplierBank(bankId);
     };
 
@@ -138,6 +134,28 @@ class SupplierSettingDetail extends React.Component {
                     <NewSupplierContactModal/>
                 </div>
 
+                {/* 主体: 银行账号 列表 */}
+                <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1 grey-text">
+                    <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
+                        <div className="col s9 fz16 bold-font">银行账号</div>
+                        <div className="col s3 fz16 pink-font right-align">
+                            <span className="pointer" onClick={this.showNewSupplierBankModal}>+ 增加银行账号</span>
+                        </div>
+                    </div>
+                    {supplierSettingDetailReducer.bankArray.map(function (item) {
+                        return (
+                            <div className="col s12 padding-top10 padding-bottom10 border-bottom-line">
+                                <div className="col s5"><i className="mdi mdi-credit-card fz24 pink-font"/><span className="margin-left50">{item.bank_code}</span></div>
+                                <div className="col s4 margin-top10">{item.bank}</div>
+                                <div className="col s2 margin-top10">{item.account_name}</div>
+                                <div className="col s1 right-align">
+                                    <a onClick={() => (this.deleteBank(item.id))}><i className="mdi mdi-close-circle pointer pink-font fz24"/></a>
+                                </div>
+                            </div>
+                        )
+                    }, this)}
+                    <NewSupplierBankModal/>
+                </div>
             </div>
         )
     }
@@ -166,11 +184,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(newSupplierModalAction.getSupplierInfo(supplierId));
     },
     initNewSupplierContactModalData: () => {
+        dispatch(NewSupplierContactModalActionType.setSupplierId(ownProps.match.params.id));
         dispatch(NewSupplierContactModalActionType.setName(''));
         dispatch(NewSupplierContactModalActionType.setPosition(''));
         dispatch(NewSupplierContactModalActionType.setPhone(''));
     },
     initNewSupplierBankModalData: () => {
+        dispatch(NewSupplierContactModalActionType.setSupplierId(ownProps.match.params.id));
         dispatch(NewSupplierBankModalActionType.setBankCode(''));
         dispatch(NewSupplierBankModalActionType.setBank(''));
         dispatch(NewSupplierBankModalActionType.setAccountName(''));

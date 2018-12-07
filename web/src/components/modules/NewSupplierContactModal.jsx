@@ -57,7 +57,7 @@ class NewSupplierContactModal extends React.Component {
                 <div className="modal-content white grey-text text-darken-2">
                     <div className="row margin-top40">
                         <Input s={4} label="联系人" maxLength="20" value={newSupplierContactModalReducer.name} onChange={this.changeName}/>
-                        <Input s={4} label="职务" maxLength="20" value={newSupplierContactModalReducer.position} onChange={this.changePosition}/>
+                        <Input s={4} label="职务" maxLength="100" value={newSupplierContactModalReducer.position} onChange={this.changePosition}/>
                         <Input s={4} label="电话" maxLength="20" value={newSupplierContactModalReducer.phone} onChange={this.changePhone}/>
                     </div>
                 </div>

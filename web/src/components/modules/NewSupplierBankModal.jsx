@@ -5,7 +5,7 @@ import {NewSupplierBankModalActionType} from "../../actionTypes";
 
 const newSupplierBankModalAction = require('../../actions/modules/NewSupplierBankModalAction');
 
-class NewSupplierModal extends React.Component {
+class NewSupplierBankModal extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -56,8 +56,8 @@ class NewSupplierModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
                     <div className="row margin-top40">
-                        <Input s={4} label="账号" maxLength="20" value={newSupplierBankModalReducer.bankCode} onChange={this.changeBankCode}/>
-                        <Input s={4} label="银行" maxLength="20" value={newSupplierBankModalReducer.bank} onChange={this.changeBank}/>
+                        <Input s={4} label="账号" maxLength="50" value={newSupplierBankModalReducer.bankCode} onChange={this.changeBankCode}/>
+                        <Input s={4} label="银行" maxLength="100" value={newSupplierBankModalReducer.bank} onChange={this.changeBank}/>
                         <Input s={4} label="姓名" maxLength="20" value={newSupplierBankModalReducer.accountName} onChange={this.changeAccountName}/>
                     </div>
                 </div>
@@ -98,8 +98,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(newSupplierBankModalAction.saveSupplierBank())
     },
     closeModal: () => {
-        $('#newSupplierModal').modal('close');
+        $('#newSupplierBankModal').modal('close');
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewSupplierModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NewSupplierBankModal);

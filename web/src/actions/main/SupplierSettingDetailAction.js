@@ -76,7 +76,7 @@ export const deleteSupplierBank = (supplierId, bankId) => async (dispatch) => {
             + '/supplier/' + supplierId + '/bank/' + bankId;
         const res = await httpUtil.httpDelete(url);
         if (res.success === true) {
-            dispatch(getSupplierContactList(supplierId));
+            dispatch(getSupplierBankList(supplierId));
         } else if (res.success === false) {
             swal('删除供应商银行账号失败', res.msg, 'warning');
         }

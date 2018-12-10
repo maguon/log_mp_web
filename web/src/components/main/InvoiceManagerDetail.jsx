@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 
+const invoiceManagerDetailAction = require('../../actions/main/InvoiceManagerDetailAction');
+
 class InvoiceManagerDetail extends React.Component {
 
     /**
@@ -16,19 +18,17 @@ class InvoiceManagerDetail extends React.Component {
      */
     componentDidMount() {
         // 取得订单信息
-        // this.props.getInvoiceInfo();
-        // 初始化TAB
-        $('ul.tabs').tabs();
+        this.props.getInvoiceInfo();
     }
 
     render() {
-        const {inquiryManagerDetailReducer, updateFeedBack} = this.props;
+        const {inquiryManagerDetailReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
                 <div className="row margin-bottom0">
                     <div className="input-field col s12">
-                        <Link to={{pathname: '/inquiry', state: {fromDetail: true}}}>
+                        <Link to={{pathname: '/invoice', state: {fromDetail: true}}}>
                             <a className="btn-floating btn waves-effect custom-blue waves-light fz15">
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
@@ -39,37 +39,37 @@ class InvoiceManagerDetail extends React.Component {
                 </div>
 
                 {/* 主体 */}
+                {inquiryManagerDetailReducer.invoiceInfo.length > 0 &&
                 <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1 grey-text">
                     <div className="col s12 padding-top20 padding-bottom20 custom-grey purple-font border-bottom-line">
-                        <div className="col s12 margin-top5">编号：XXXXXX</div>
-                        <div className="col s6 fz16 bold-font margin-top10">公司名称名称名称名称名称</div>
-                        <div className="col s6 fz16 bold-font margin-top10 right-align">税号：XXXXXXXX XXXXXX</div>
+                        <div className="col s12 margin-top5">编号：{inquiryManagerDetailReducer.invoiceInfo[0].id}</div>
+                        <div className="col s6 fz16 bold-font margin-top10">{inquiryManagerDetailReducer.invoiceInfo[0].company_name}</div>
+                        <div className="col s6 fz16 bold-font margin-top10 right-align">税号：{inquiryManagerDetailReducer.invoiceInfo[0].tax_number}</div>
                     </div>
 
                     <div className="col s12 margin-top5 padding-top20 padding-bottom20">
-                        <div className="col s6">开户银行：XXXXXXXX XXXXXXXX</div>
-                        <div className="col s6 right-align">银行账户：XXXXXXXX XXXXXX</div>
+                        <div className="col s6">开户银行：{inquiryManagerDetailReducer.invoiceInfo[0].bank}</div>
+                        <div className="col s6 right-align">银行账户：{inquiryManagerDetailReducer.invoiceInfo[0].bank_code}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 dotted-line"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20">
-                        <div className="col s12">电话号码：XXXXXXXX XXXXXXXX</div>
+                        <div className="col s12">电话号码：{inquiryManagerDetailReducer.invoiceInfo[0].company_phone}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 dotted-line"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20">
-                        <div className="col s12">单位地址：XXXXXXXX XXXXXXXX</div>
+                        <div className="col s12">单位地址：{inquiryManagerDetailReducer.invoiceInfo[0].company_address}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 divider"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20 right-align">
-                        <div className="col s12">所属用户：XXXXXXXX</div>
+                        <div className="col s12">所属用户：{inquiryManagerDetailReducer.invoiceInfo[0].user_name}</div>
                     </div>
-
-                </div>
+                </div>}
             </div>
         )
     }
@@ -82,9 +82,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // getInvoiceInfo: () => {
-    //     dispatch(orderDetailAction.getInvoiceInfo(ownProps.match.params.id));
-    // }
+    getInvoiceInfo: () => {
+        dispatch(invoiceManagerDetailAction.getInvoiceInfo(ownProps.match.params.id));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InvoiceManagerDetail)

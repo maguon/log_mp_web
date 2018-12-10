@@ -1,4 +1,3 @@
 import {createAction} from 'redux-actions';
 
-export const getInquiryInfo = createAction('GET_INQUIRY_INFO');
-export const getInquiryCarList = createAction('GET_INQUIRY_CAR_LIST');
+export const getInvoiceInfo = createAction('GET_INVOICE_INFO');

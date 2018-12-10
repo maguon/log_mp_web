@@ -1,24 +1,16 @@
 import {handleActions} from 'redux-actions';
-import {InquiryManagerDetailActionType} from '../../actionTypes';
+import {InvoiceManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
-    // 询价信息
-    inquiryInfo: [],
-    // 询价车辆列表
-    inquiryCarArray: [],
+    // 发票信息
+    invoiceInfo: []
 };
 
 export default handleActions({
-    [InquiryManagerDetailActionType.getInquiryInfo]: (state, action) => {
+    [InvoiceManagerDetailActionType.getInvoiceInfo]: (state, action) => {
         return {
             ...state,
-            inquiryInfo: action.payload
-        }
-    },
-    [InquiryManagerDetailActionType.getInquiryCarList]: (state, action) => {
-        return {
-            ...state,
-            inquiryCarArray: action.payload
+            invoiceInfo: action.payload
         }
     }
 }, initialState)

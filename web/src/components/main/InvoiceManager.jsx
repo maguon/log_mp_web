@@ -5,8 +5,6 @@ import {Input} from 'react-materialize';
 import {InvoiceManagerActionType} from '../../actionTypes';
 
 const invoiceManagerAction = require('../../actions/main/InvoiceManagerAction');
-const sysConst = require('../../util/SysConst');
-const formatUtil = require('../../util/FormatUtil');
 
 class InvoiceManager extends React.Component {
 
@@ -139,12 +137,12 @@ class InvoiceManager extends React.Component {
                                 return (
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
-                                        <td>{item.user_name}</td>
-                                        <td>{item.user_name}</td>
-                                        <td>{item.user_name}</td>
+                                        <td>{item.company_name}</td>
+                                        <td>{item.tax_number}</td>
+                                        <td>{item.company_phone}</td>
                                         <td>{item.user_name}</td>
                                         <td className="operation center">
-                                            <Link to={{pathname: '/inquiry/' + item.id}}>
+                                            <Link to={{pathname: '/invoice/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
@@ -192,7 +190,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
     getInvoiceList: () => {
-        // dispatch(invoiceManagerAction.getInvoiceList())
+        dispatch(invoiceManagerAction.getInvoiceList())
     },
     setStartNumber: (start) => {
         dispatch(InvoiceManagerActionType.setStartNumber(start))

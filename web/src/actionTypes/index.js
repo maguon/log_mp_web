@@ -17,6 +17,8 @@ import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionTy
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
 import * as NewSupplierBankModalActionType  from './modules/NewSupplierBankModalActionType';
 import * as NewSupplierContactModalActionType  from './modules/NewSupplierContactModalActionType';
+import * as NewOfferModalActionType  from './modules/NewOfferModalActionType';
+import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActionType';
 
 export  {
     LoginActionType,
@@ -37,5 +39,7 @@ export  {
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
     NewSupplierBankModalActionType,
-    NewSupplierContactModalActionType
+    NewSupplierContactModalActionType,
+    NewOfferModalActionType,
+    CancelInquiryModalActionType
 }

@@ -1,14 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {Input} from 'react-materialize';
-// import {OrderDetailActionType, RefundModalActionType, ReSendModalActionType} from '../../actionTypes';
-// import {RefundModal,ReSendModal} from '../modules/index';
-import {fileHost} from "../../config/HostConfig";
+import {NewOfferModalActionType, CancelInquiryModalActionType} from '../../actionTypes';
+import {NewOfferModal, CancelInquiryModal} from '../modules/index';
 
-// const orderDetailAction = require('../../actions/main/OrderDetailAction');
-// const refundModalAction = require('../../actions/modules/RefundModalAction');
-// const reSendModalAction = require('../../actions/modules/ReSendModalAction');
+const inquiryManagerDetailAction = require('../../actions/main/InquiryManagerDetailAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
@@ -26,59 +22,51 @@ class InquiryManagerDetail extends React.Component {
      */
     componentDidMount() {
         // 取得订单信息
-        // this.props.getOrderInfo();
-        // 初始化TAB
-        $('ul.tabs').tabs();
+        this.props.getInquiryInfo();
     }
 
     /**
-     * 订单信息TAB：点击事件
+     * 报价按钮 点击事件
      */
-    showOrderInfoTab = () => {
-        // 取得售后详情信息
-        this.props.getOrderInfo();
+    showNewOfferModal = () => {
+        let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
+        let freight = this.props.inquiryManagerDetailReducer.totalFreight;
+        this.props.initNewOfferModalData(userId, freight, '', '');
+        $('#newOfferModal').modal('open');
     };
 
     /**
-     * 售后信息TAB：点击事件
+     * 重新报价按钮 点击事件
      */
-    showFeedBackTab = () => {
-        // 取得售后详情信息
-        this.props.getFeedBackInfo();
+    showOfferModal = () => {
+        let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
+        let freight = this.props.inquiryManagerDetailReducer.totalFreight;
+        let feePrice = this.props.inquiryManagerDetailReducer.inquiryInfo[0].fee_price;
+        let remark = this.props.inquiryManagerDetailReducer.inquiryInfo[0].mark;
+        this.props.initNewOfferModalData(userId, freight, feePrice, remark);
+        $('#newOfferModal').modal('open');
     };
 
     /**
-     * 售后信息TAB：更新 处理描述
+     * 取消报价按钮 点击事件
      */
-    changeProcessRemark = (event) => {
-        this.props.setProcessRemark(event.target.value);
+    showCancelInquiryModal = () => {
+        let freight = this.props.inquiryManagerDetailReducer.totalFreight;
+        let feePrice = this.props.inquiryManagerDetailReducer.inquiryInfo[0].fee_price;
+        this.props.initCancelInquiryModalData(feePrice, freight);
+        $('#cancelInquiryModal').modal('open');
     };
 
     /**
-     * 售后信息TAB：更新 处理方法
+     * 生成订单 点击事件
      */
-    changeProcessMethod = (event) => {
-        this.props.setProcessMethod(event.target.value);
+    generateOrder = () => {
+        let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
+        this.props.generateOrder(userId);
     };
-
-    // /**
-    //  * 售后信息TAB：显示 退款 模态画面
-    //  */
-    // showRefundModal = () => {
-    //     $('#refundModal').modal('open');
-    //     this.props.initRefundModalData(this.props.inquiryManagerDetailReducer.feedBackInfo);
-    // };
-    //
-    // /**
-    //  * 售后信息TAB：补发按钮 点击事件
-    //  */
-    // showReSendModal = () => {
-    //     $('#reSendModal').modal('open');
-    //     this.props.initReSendModalData();
-    // };
 
     render() {
-        const {inquiryManagerDetailReducer, updateFeedBack} = this.props;
+        const {inquiryManagerDetailReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -98,44 +86,57 @@ class InquiryManagerDetail extends React.Component {
                     {/* 头部 */}
                     <div className="col s12">
                         {/* 询价详情：基本信息 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 &&
                         <div className="inquiry-detail-header">
                             {/* 左侧：图标 */}
                             <div className="col s8 margin-top5 grey-text text-darken-1">
                                 <div>
-                                    <span className="fz20 purple-font">大连</span>
+                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].route_start}</span>
                                     <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
-                                    <span className="fz20 purple-font">沈阳</span>
-                                    <span className="margin-left30">送到指定地点</span>
+                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].route_end}</span>
+                                    <span className="margin-left30">
+                                        {(inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 1 && inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 2)
+                                        ? '未知' : sysConst.SERVICE_MODE[inquiryManagerDetailReducer.inquiryInfo[0].service_type - 1].label}
+                                    </span>
                                 </div>
 
                                 <div className="margin-top15">
                                     <i className="mdi mdi-account fz20 pink-font"/>
-                                    <span className="margin-left10">王大治 ( ID：XXXXX )</span>
+                                    <span className="margin-left10">{inquiryManagerDetailReducer.inquiryInfo[0].user_name} ( ID：{inquiryManagerDetailReducer.inquiryInfo[0].user_id} )</span>
 
                                     <i className="mdi mdi-cellphone margin-left30 fz20 pink-font"/>
-                                    <span className="margin-left10">999 9999 9999</span>
+                                    <span className="margin-left10">{inquiryManagerDetailReducer.inquiryInfo[0].phone}</span>
                                 </div>
-
                             </div>
 
                             <div className="col s4 margin-top10 right-align grey-text text-darken-1">
-                                <div className="margin-top3">询价时间：XXXXX XXXXXX</div>
-                                <div className="margin-top15 pink-font">待报价XXXXX XXXXXX</div>
+                                <div className="margin-top3">询价时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].created_on)}</div>
+                                <div className="margin-top15 pink-font">{sysConst.INQUIRY_STATUS[inquiryManagerDetailReducer.inquiryInfo[0].status].label}</div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
 
                     {/* 主体 */}
                     <div className="col s12 margin-top40 padding-left50 padding-right50">
 
+                        {/** 待报价状态显示：报价按钮 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 0 &&
                         <div className="row margin-bottom10 right-align">
-                            <button type="button" className="btn cancel-btn">取消询价</button>
-                            <button type="button" className="btn confirm-btn margin-left20">重新报价</button>
-                            <button type="button" className="btn orange-btn margin-left20">生成订单</button>
-                        </div>
+                            <button type="button" className="btn confirm-btn" onClick={this.showNewOfferModal}>报价</button>
+                        </div>}
+
+                        {/** 已报价状态显示：取消询价/重新报价/生成订单 按钮 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 1 &&
+                        <div className="row margin-bottom10 right-align">
+                            <button type="button" className="btn cancel-btn" onClick={this.showCancelInquiryModal}>取消询价</button>
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={this.showOfferModal}>重新报价</button>
+                            <button type="button" className="btn orange-btn margin-left20" onClick={this.generateOrder}>生成订单</button>
+                        </div>}
+                        <NewOfferModal/>
+                        <CancelInquiryModal/>
 
                         <div className="row margin-bottom10 margin-left5 pink-font bold-font">
-                            运送车辆：{formatUtil.formatNumber(99999)}
+                            运送车辆：{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryCarArray.length)}
                         </div>
                         <div className="row detail-box">
                             <table className="bordered">
@@ -154,17 +155,16 @@ class InquiryManagerDetail extends React.Component {
                                 {inquiryManagerDetailReducer.inquiryCarArray.map(function (item) {
                                     return (
                                         <tr className="grey-text text-darken-1">
-                                            <td className="padding-left20">{item.id}</td>
-                                            <td>{sysConst.INQUIRY_STATUS[item.type - 1].label}</td>
-                                            <td className="message-td context-ellipsis">{item.content}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="operation center">
-                                                <i className="mdi mdi-table-search pink-font pointer" onClick={() => {
-                                                    this.showMessageModal(item.id)
-                                                }}/>
+                                            <td className="padding-left10">
+                                                {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
+                                                    ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
                                             </td>
+                                            <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.plan_solo,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.fee_solo,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
                                         </tr>
                                     )
                                 }, this)}
@@ -178,79 +178,75 @@ class InquiryManagerDetail extends React.Component {
 
                         <div className="row margin-bottom10 grey-text text-darken-2 bold-font">
                             <div className="col s8">
-                                <span className="fz14">估值总额：</span><span className="fz16">{formatUtil.formatNumber(99999)}</span>
+                                <span className="fz14">估值总额：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalValuation)}</span>
                             </div>
                             <div className="col s4 right-align">
-                                <span className="fz14">预计总运费：</span><span className="fz16">{formatUtil.formatNumber(99999,2)}</span>
+                                <span className="fz14">预计总运费：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalFreight,2)}</span>
                             </div>
                         </div>
                         <div className="row divider bold-divider"/>
 
                         {/** 已取消状态显示：取消时间 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time == null &&
                         <div className="row margin-top20 grey-text text-darken-2">
-                            <div className="col s12 right-align">取消时间：XXXXXX XXXXXX</div>
-                        </div>
+                            <div className="col s12 right-align">取消时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].cancel_time)}</div>
+                        </div>}
 
-                        {/** 已报价状态显示：报价信息 */}
+                        {/** 已报价/已完成状态(status:1,2,3)显示：报价信息 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
+                        (inquiryManagerDetailReducer.inquiryInfo[0].status === 1 || inquiryManagerDetailReducer.inquiryInfo[0].status === 2 || inquiryManagerDetailReducer.inquiryInfo[0].status === 3) &&
                         <div className="row detail-box margin-top40 grey-text text-darken-2">
-                            {/** 已完成状态显示：订单信息 */}
+                            {/** 已完成状态(status:2)显示：订单信息 */}
+                            {inquiryManagerDetailReducer.orderInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 2 &&
                             <div className="bold-font">
                                 <div className="col s12 no-padding custom-grey">
                                     <div className="col s6 margin-top10 margin-bottom10">
-                                        生成订单编号：XXXXXXXXX
+                                        生成订单编号：{inquiryManagerDetailReducer.orderInfo[0].id}
                                     </div>
                                     <div className="col s6 margin-top10 right-align">
-                                        生成订单时间：XXXXXXX XXXX
+                                        生成订单时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.orderInfo[0].created_on)}
                                     </div>
                                 </div>
                                 <div className="col s12 no-padding divider"/>
-                            </div>
+                            </div>}
 
+                            {inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
+                            <div>
+                                <div className="col s6 margin-top10 margin-bottom10 bold-font">
+                                    协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].fee_price,2)}</span> 元
+                                </div>
+                                <div className="col s6 margin-top10 right-align bold-font">
+                                    协商时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time)}
+                                </div>
 
-                            <div className="col s6 margin-top10 margin-bottom10 bold-font">
-                                协商运费：<span className="fz16 pink-font">{formatUtil.formatNumber(99999,2)}</span> 元
-                            </div>
-                            <div className="col s6 margin-top10 right-align bold-font">
-                                协商时间：XXXXXXX XXXX
-                            </div>
+                                <div className="col s12 no-padding divider"/>
 
-                            <div className="col s12 no-padding divider"/>
-
-                            <div className="col s-percent-8 padding-right0 margin-top10 bold-font">
-                                协商描述：
-                            </div>
-                            <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
-                                报价描述：报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                                报价描述 报价描述 报价描述 报价描述 报价描述 报价描述 报价描述
-                            </div>
-                        </div>
-
+                                <div className="col s-percent-8 padding-right0 margin-top10 margin-bottom10 bold-font">
+                                    协商描述：
+                                </div>
+                                <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
+                                    {inquiryManagerDetailReducer.inquiryInfo[0].mark}
+                                </div>
+                            </div>}
+                        </div>}
 
                         {/** 已取消状态显示：取消时间 / 取消原因 */}
+                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
                         <div className="row detail-box margin-top40 grey-text text-darken-2">
                             <div className="bold-font">
-                                <div className="col s12 padding-top10 padding-bottom10 right-align custom-grey">取消时间：XXXXXX XXXXXX</div>
+                                <div className="col s12 padding-top10 padding-bottom10 right-align custom-grey">取消时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].cancel_time)}</div>
                                 <div className="col s12 no-padding divider"/>
                             </div>
 
                             <div className="col s12 no-padding divider"/>
 
-                            <div className="col s-percent-8 padding-right0 margin-top10 bold-font">
+                            <div className="col s-percent-8 padding-right0 margin-top10 margin-bottom10 bold-font">
                                 取消原因：
                             </div>
                             <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
-                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
-                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
-                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
-                                取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因取消原因
+                                {inquiryManagerDetailReducer.inquiryInfo[0].mark_reason}
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>
@@ -265,34 +261,28 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // getOrderInfo: () => {
-    //     dispatch(orderDetailAction.getOrderInfo(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getOrderDetail(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getPaymentInfo(ownProps.match.params.id));
-    //     dispatch(orderDetailAction.getLogInfo(ownProps.match.params.id));
-    // },
-    // getFeedBackInfo: () => {
-    //     dispatch(orderDetailAction.getFeedBackInfo(ownProps.match.params.id))
-    // },
-    // setProcessRemark: (value) => {
-    //     dispatch(OrderDetailActionType.setProcessRemark(value))
-    // },
-    // setProcessMethod: (value) => {
-    //     dispatch(OrderDetailActionType.setProcessMethod(value))
-    // },
-    // initRefundModalData: (feedBackInfo) => {
-    //     dispatch(refundModalAction.getOrderInfo(ownProps.match.params.id));
-    //     dispatch(RefundModalActionType.setPaymentId(feedBackInfo[0].id));
-    //     dispatch(RefundModalActionType.setRefundMoney(''));
-    //     dispatch(RefundModalActionType.setRemark(''));
-    // },
-    // initReSendModalData: () => {
-    //     dispatch(ReSendModalActionType.setOrderId(ownProps.match.params.id));
-    //     dispatch(reSendModalAction.getOrderInfo(ownProps.match.params.id));
-    // },
-    // updateFeedBack: (feedBackId) => {
-    //     dispatch(orderDetailAction.updateFeedBack(feedBackId, ownProps.match.params.id))
-    // }
+    getInquiryInfo: () => {
+        dispatch(inquiryManagerDetailAction.getInquiryInfo(ownProps.match.params.id));
+        dispatch(inquiryManagerDetailAction.getInquiryCarList(ownProps.match.params.id));
+    },
+    initNewOfferModalData: (userId, freight, feePrice, remark) => {
+        dispatch(NewOfferModalActionType.setInquiryId(ownProps.match.params.id));
+        dispatch(NewOfferModalActionType.setUserId(userId));
+        dispatch(NewOfferModalActionType.setFreight(freight));
+        dispatch(NewOfferModalActionType.setFeePrice(feePrice));
+        dispatch(NewOfferModalActionType.setRemark(remark));
+        // material textarea 自动适配 高度，否则显示不全
+        $('.no-border-bottom').trigger('autoresize');
+    },
+    initCancelInquiryModalData: (feePrice, freight) => {
+        dispatch(CancelInquiryModalActionType.setInquiryId(ownProps.match.params.id));
+        dispatch(CancelInquiryModalActionType.setFreight(freight));
+        dispatch(CancelInquiryModalActionType.setFeePrice(feePrice));
+        dispatch(CancelInquiryModalActionType.setRemark(''));
+    },
+    generateOrder: (userId) => {
+        dispatch(inquiryManagerDetailAction.generateOrder(ownProps.match.params.id, userId));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InquiryManagerDetail)

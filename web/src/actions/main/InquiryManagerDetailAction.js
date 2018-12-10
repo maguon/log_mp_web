@@ -1,122 +1,94 @@
+import {InquiryManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
-import {OrderDetailActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-export const getOrderInfo = (id) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/order?orderId=' + id;
-
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderDetailActionType.getOrderInfo, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取订单信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const getOrderDetail = (orderId) => async (dispatch) => {
+export const getInquiryInfo = (inquiryId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/orderItem?orderId=' + orderId;
+            + '/queryInquiry?inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: OrderDetailActionType.getProductList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取订单购买信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const getPaymentInfo = (orderId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/payment?orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderDetailActionType.getPaymentInfo, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取支付信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const getLogInfo = (orderId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/log?orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderDetailActionType.getLogInfo, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取发货信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const getFeedBackInfo = (orderId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-            + '/orderFeedback?orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderDetailActionType.getFeedBackInfo, payload: res.result});
-            if (res.result.length > 0) {
-                let process_remark = res.result[0].process_remark == null ? '' : res.result[0].process_remark;
-                let process_method = res.result[0].process_method == null ? '' : res.result[0].process_method;
-                dispatch({type: OrderDetailActionType.setProcessRemark, payload: process_remark});
-                dispatch({type: OrderDetailActionType.setProcessMethod, payload: process_method});
+            dispatch({type: InquiryManagerDetailActionType.getInquiryInfo, payload: res.result});
+            // 若 有数据，并且该询价状态 为2：已完成 ，则查询订单信息
+            if (res.result.length > 0 && res.result[0].status === sysConst.INQUIRY_STATUS[2].value) {
+                // 订单信息
+                dispatch(getOrderInfo(inquiryId));
             }
         } else if (res.success === false) {
-            swal('获取售后详情信息失败', res.msg, 'warning');
+            swal('获取询价详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const updateFeedBack = (feedBackId, orderId) => async (dispatch, getState) => {
+export const getInquiryCarList = (inquiryId) => async (dispatch) => {
     try {
-        // 处理描述
-        const processRemark = getState().OrderDetailReducer.processRemark;
-        // 处理方法
-        const processMethod = getState().OrderDetailReducer.processMethod;
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            + '/inquiryCar?type=0&inquiryId=' + inquiryId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: InquiryManagerDetailActionType.getInquiryCarList, payload: res.result});
+            // 估值总额
+            let totalValuation = 0;
+            // 预计总运费
+            let totalFreight = 0;
+            res.result.forEach((item) => {
+                totalValuation = totalValuation + item.plan;
+                totalFreight = totalFreight + item.fee;
+            });
+            dispatch({type: InquiryManagerDetailActionType.setTotalValuation, payload: totalValuation});
+            dispatch({type: InquiryManagerDetailActionType.setTotalFreight, payload: totalFreight});
+        } else if (res.success === false) {
+            swal('获取询价车辆详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
 
-        if (processRemark == null || processRemark === '' || processMethod == null || processMethod === '') {
-            swal('修改失败', '请输入完整的售后处理信息！', 'warning');
-        } else {
-            const params = {
-                processRemark: processRemark,
-                processMethod: processMethod
-            };
+export const getOrderInfo = (inquiryId) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            + '/order?inquiryId=' + inquiryId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: InquiryManagerDetailActionType.getOrderInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取订单详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+export const generateOrder = (inquiryId, userId) => async (dispatch) => {
+    swal({
+        title: "",
+        text: "确定将该询价生成订单？",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
             const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
-                + '/order/' + orderId  + '/orderFeedback/' + feedBackId  + '/orderFeedbackPayment';
-            const res = await httpUtil.httpPut(url, params);
+                + '/user/' + userId  + '/inquiry/' + inquiryId + '/order';
+            const res = await httpUtil.httpPost(url, {});
             if (res.success === true) {
                 swal("修改成功", "", "success");
-                dispatch(getFeedBackInfo(orderId));
+                dispatch(getInquiryInfo(inquiryId));
+                dispatch(getInquiryCarList(inquiryId));
             } else if (res.success === false) {
                 swal('修改失败', res.msg, 'warning');
             }
         }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
+    });
 };

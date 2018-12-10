@@ -149,32 +149,30 @@ class InquiryInfoModal extends React.Component {
                                     <table className="bordered">
                                         <thead className="custom-grey border-top-line">
                                         <tr className="grey-text text-darken-2">
-                                            <th className="padding-left10">车型</th>
+                                            <th className="padding-left10">VIN</th>
+                                            <th className="center">车型</th>
                                             <th className="center">是否新车</th>
-                                            <th className="right-align">估值单价 ( 元 )</th>
-                                            <th className="right-align">预计运费单价 ( 元 )</th>
-                                            <th className="right-align">数量</th>
-                                            <th className="right-align">估值总额 ( 元 )</th>
-                                            <th className="right-align padding-right10">预计费用</th>
+                                            <th className="right-align">估值 ( 元 )</th>
+                                            <th className="right-align">预计费用 ( 元 )</th>
+                                            <th className="right-align padding-right10">实际费用 ( 元 )</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {inquiryInfoModalReducer.orderCarArray.map(function (item) {
                                             return (
                                                 <tr className="grey-text text-darken-1">
-                                                    <td className="padding-left10">{sysConst.CAR_MODEL[item.model_id - 1].label}</td>
+                                                    <td className="padding-left10">{item.vin}</td>
+                                                    <td className="center">{sysConst.CAR_MODEL[item.model_id - 1].label}</td>
                                                     <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.plan_solo,2)}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.fee_solo,2)}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
+                                                    <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_fee,2)}</td>
                                                 </tr>
                                             )
                                         }, this)}
                                         {inquiryInfoModalReducer.orderCarArray.length === 0 &&
                                         <tr className="grey-text white text-darken-1">
-                                            <td className="no-data-tr" colSpan="7">暂无数据</td>
+                                            <td className="no-data-tr" colSpan="6">暂无数据</td>
                                         </tr>}
                                         </tbody>
                                     </table>
@@ -185,7 +183,7 @@ class InquiryInfoModal extends React.Component {
                                         支付运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.orderInfo[0].fee_price,2)}</span> 元
                                     </div>
                                     <div className="col s6 right-align">
-                                        实收运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.orderInfo[0].fee_price,2)}</span> 元
+                                        实收运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.totalActFreight,2)}</span> 元
                                     </div>
                                 </div>
                                 <div className="row divider bold-divider"/>
@@ -199,7 +197,7 @@ class InquiryInfoModal extends React.Component {
                                 <div className="row divider margin-bottom10 bold-divider"/>
 
                                 <div className="row margin-bottom10 grey-text">
-                                    <div className="col s12 margin-top3">发货地址：{inquiryInfoModalReducer.orderInfo[0].recv_address}</div>
+                                    <div className="col s12 margin-top3">发货地址：{inquiryInfoModalReducer.orderInfo[0].send_address}</div>
                                     <div className="col s12 margin-top8">收货地址：{inquiryInfoModalReducer.orderInfo[0].recv_address}</div>
                                 </div>
                                 <div className="row divider margin-bottom10 bold-divider"/>

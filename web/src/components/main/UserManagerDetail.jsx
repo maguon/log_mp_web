@@ -3,7 +3,7 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {UserManagerDetailActionType} from '../../actionTypes';
+import {UserManagerDetailActionType, InquiryInfoModalActionType} from '../../actionTypes';
 import {InquiryInfoModal} from '../modules/index';
 
 const userManagerDetailAction = require('../../actions/main/UserManagerDetailAction');
@@ -415,6 +415,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(userManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
     },
     initInquiryInfoModalData: (inquiryId) => {
+        dispatch(InquiryInfoModalActionType.setShowOrderInfoFlag(false));
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId,ownProps.match.params.id));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId,ownProps.match.params.id));
     },

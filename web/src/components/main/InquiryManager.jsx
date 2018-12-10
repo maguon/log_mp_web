@@ -221,7 +221,9 @@ class InquiryManager extends React.Component {
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
                                         <td className="center">{formatUtil.getDateTime(item.inquiry_time)}</td>
-                                        <td className="center">{(item.status !== 0 && item.status !== 1 && item.status !== 2 && item.status !== 3) ? '未知' : sysConst.INQUIRY_STATUS[item.status].label}</td>
+                                        <td className={`center ${item.status === 0 ? "pink-font" : ""}`}>
+                                            {(item.status !== 0 && item.status !== 1 && item.status !== 2 && item.status !== 3) ? '未知' : sysConst.INQUIRY_STATUS[item.status].label}
+                                        </td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/inquiry/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>

@@ -20,6 +20,8 @@ import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
 import NewSupplierBankModalReducer from './modules/NewSupplierBankModalReducer';
 import NewSupplierContactModalReducer from './modules/NewSupplierContactModalReducer';
+import NewOfferModalReducer from './modules/NewOfferModalReducer';
+import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -41,5 +43,7 @@ export default combineReducers({
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
     NewSupplierBankModalReducer,
-    NewSupplierContactModalReducer
+    NewSupplierContactModalReducer,
+    NewOfferModalReducer,
+    CancelInquiryModalReducer
 })

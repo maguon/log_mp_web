@@ -17,6 +17,8 @@ const initialState = {
     orderInfo: [],
     // 订单车辆列表
     orderCarArray: [],
+    // 实际运费
+    totalActFreight: 0
 };
 
 export default handleActions({
@@ -60,6 +62,12 @@ export default handleActions({
         return {
             ...state,
             orderCarArray: action.payload
+        }
+    },
+    [InquiryInfoModalActionType.setTotalActFreight]: (state, action) => {
+        return {
+            ...state,
+            totalActFreight: action.payload
         }
     }
 }, initialState)

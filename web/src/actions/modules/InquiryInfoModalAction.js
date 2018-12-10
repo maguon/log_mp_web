@@ -78,16 +78,12 @@ export const getOrderCarList = (inquiryId, userId) => async (dispatch) => {
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: InquiryInfoModalActionType.getOrderCarList, payload: res.result});
-            // // 估值总额
-            // let totalValuation = 0;
-            // // 预计总运费
-            // let totalFreight = 0;
-            // res.result.forEach((item) => {
-            //     totalValuation = totalValuation + item.plan;
-            //     totalFreight = totalFreight + item.fee;
-            // });
-            // dispatch({type: InquiryInfoModalActionType.setTotalValuation, payload: totalValuation});
-            // dispatch({type: InquiryInfoModalActionType.setTotalFreight, payload: totalFreight});
+            // 实际运费
+            let totalActFreight = 0;
+            res.result.forEach((item) => {
+                totalActFreight = totalActFreight + item.act_fee;
+            });
+            dispatch({type: InquiryInfoModalActionType.setTotalActFreight, payload: totalActFreight});
         } else if (res.success === false) {
             swal('获取订单车辆详细信息失败', res.msg, 'warning');
         }

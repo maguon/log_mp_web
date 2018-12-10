@@ -3,11 +3,12 @@ import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
 const formatUtil = require('../../util/FormatUtil');
+const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch) => {
     try {
-        const url = apiHost + '/api/city';
+        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: InquiryModalActionType.getCityList, payload: res.result})

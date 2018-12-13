@@ -17,7 +17,7 @@ export const saveSupplierContact = () => async (dispatch, getState) => {
         const phone = getState().NewSupplierContactModalReducer.phone.trim();
 
         if (name === '' || position === '' || phone === '') {
-            swal('保存失败', '请输入完整的银行账号信息！', 'warning');
+            swal('保存失败', '请输入完整的联系人信息！', 'warning');
         } else {
             const params = {
                 name: name,

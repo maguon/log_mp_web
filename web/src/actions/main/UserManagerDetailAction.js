@@ -28,9 +28,9 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
         const size = getState().UserManagerDetailReducer.inquirySize;
 
         // 检索条件：起始城市
-        const inquiryConditionStartCity = getState().UserManagerDetailReducer.inquiryConditionStartCity.trim();
+        const inquiryConditionStartCity = getState().UserManagerDetailReducer.inquiryConditionStartCity;
         // 检索条件：目的城市
-        const inquiryConditionEndCity = getState().UserManagerDetailReducer.inquiryConditionEndCity.trim();
+        const inquiryConditionEndCity = getState().UserManagerDetailReducer.inquiryConditionEndCity;
         // 检索条件：服务方式
         const inquiryConditionServiceType = getState().UserManagerDetailReducer.inquiryConditionServiceType;
         // 检索条件：状态
@@ -43,9 +43,9 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
         // 检索条件
         let conditionsObj = {
             // 检索条件：起始城市
-            routeStart: inquiryConditionStartCity,
+            routeStart: inquiryConditionStartCity === null ? '' : inquiryConditionStartCity.value,
             // 检索条件：目的城市
-            routeEnd: inquiryConditionEndCity,
+            routeEnd: inquiryConditionEndCity === null ? '' : inquiryConditionEndCity.value,
             // 检索条件：服务方式
             serviceType: inquiryConditionServiceType === null ? '' : inquiryConditionServiceType.value,
             // 检索条件：状态

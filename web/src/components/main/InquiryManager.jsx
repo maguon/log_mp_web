@@ -6,6 +6,7 @@ import {Input} from 'react-materialize';
 import {InquiryManagerActionType} from '../../actionTypes';
 
 const inquiryManagerAction = require('../../actions/main/InquiryManagerAction');
+const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
@@ -26,8 +27,8 @@ class InquiryManager extends React.Component {
             this.props.setStartNumber(0);
             this.props.setConditionUser('');
             this.props.setConditionPhone('');
-            this.props.setConditionStartCity('');
-            this.props.setConditionEndCity('');
+            this.props.changeConditionStartCity(null);
+            this.props.changeConditionEndCity(null);
             this.props.changeConditionServiceType(null);
             this.props.setConditionCreatedOnStart('');
             this.props.setConditionCreatedOnEnd('');
@@ -48,20 +49,6 @@ class InquiryManager extends React.Component {
      */
     changeConditionPhone = (event) => {
         this.props.setConditionPhone(event.target.value);
-    };
-
-    /**
-     * 更新 检索条件：起始城市
-     */
-    changeConditionStartCity = (event) => {
-        this.props.setConditionStartCity(event.target.value);
-    };
-
-    /**
-     * 更新 检索条件：目的城市
-     */
-    changeConditionEndCity = (event) => {
-        this.props.setConditionEndCity(event.target.value);
     };
 
     /**
@@ -104,7 +91,7 @@ class InquiryManager extends React.Component {
     };
 
     render() {
-        const {inquiryManagerReducer, changeConditionServiceType, changeConditionInquiryStatus} = this.props;
+        const {inquiryManagerReducer, commonReducer, changeConditionStartCity, changeConditionEndCity, changeConditionServiceType, changeConditionInquiryStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -128,10 +115,32 @@ class InquiryManager extends React.Component {
                             <Input s={3} label="客户电话" value={inquiryManagerReducer.conditionPhone} onChange={this.changeConditionPhone}/>
 
                             {/* 查询条件：起始城市 */}
-                            <Input s={3} label="起始城市" value={inquiryManagerReducer.conditionStartCity} onChange={this.changeConditionStartCity}/>
+                            <div className="input-field col s3">
+                                <Select
+                                    options={commonReducer.cityList}
+                                    onChange={changeConditionStartCity}
+                                    value={inquiryManagerReducer.conditionStartCity}
+                                    isSearchable={true}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">起始城市</label>
+                            </div>
 
                             {/* 查询条件：目的城市 */}
-                            <Input s={3} label="目的城市" value={inquiryManagerReducer.conditionEndCity} onChange={this.changeConditionEndCity}/>
+                            <div className="input-field col s3">
+                                <Select
+                                    options={commonReducer.cityList}
+                                    onChange={changeConditionEndCity}
+                                    value={inquiryManagerReducer.conditionEndCity}
+                                    isSearchable={true}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">目的城市</label>
+                            </div>
                         </div>
 
                         {/* 查询条件：第二行 */}
@@ -267,12 +276,14 @@ const mapStateToProps = (state, ownProps) => {
     }
     return {
         inquiryManagerReducer: state.InquiryManagerReducer,
+        commonReducer: state.CommonReducer,
         fromDetail: fromDetail
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     getInquiryList: () => {
+        dispatch(commonAction.getCityList());
         dispatch(inquiryManagerAction.getInquiryList())
     },
     setStartNumber: (start) => {
@@ -284,10 +295,10 @@ const mapDispatchToProps = (dispatch) => ({
     setConditionPhone: (value) => {
         dispatch(InquiryManagerActionType.setConditionPhone(value))
     },
-    setConditionStartCity: (value) => {
+    changeConditionStartCity: (value) => {
         dispatch(InquiryManagerActionType.setConditionStartCity(value))
     },
-    setConditionEndCity: (value) => {
+    changeConditionEndCity: (value) => {
         dispatch(InquiryManagerActionType.setConditionEndCity(value))
     },
     changeConditionServiceType: (value) => {

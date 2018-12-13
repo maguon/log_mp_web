@@ -17,9 +17,9 @@ export const getInquiryList = () => async (dispatch, getState) => {
         // 检索条件：客户电话
         const conditionPhone = getState().InquiryManagerReducer.conditionPhone.trim();
         // 检索条件：起始城市
-        const conditionStartCity = getState().InquiryManagerReducer.conditionStartCity.trim();
+        const conditionStartCity = getState().InquiryManagerReducer.conditionStartCity;
         // 检索条件：目的城市
-        const conditionEndCity = getState().InquiryManagerReducer.conditionEndCity.trim();
+        const conditionEndCity = getState().InquiryManagerReducer.conditionEndCity;
 
         // 检索条件：服务方式
         const conditionServiceType = getState().InquiryManagerReducer.conditionServiceType;
@@ -40,9 +40,9 @@ export const getInquiryList = () => async (dispatch, getState) => {
             // 检索条件：客户电话
             phone: conditionPhone,
             // 检索条件：起始城市
-            routeStart: conditionStartCity,
+            routeStart: conditionStartCity === null ? '' : conditionStartCity.value,
             // 检索条件：目的城市
-            routeEnd: conditionEndCity,
+            routeEnd: conditionEndCity === null ? '' : conditionEndCity.value,
 
             // 检索条件：服务方式
             serviceType: conditionServiceType === null ? '' : conditionServiceType.value,

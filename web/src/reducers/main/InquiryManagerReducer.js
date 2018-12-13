@@ -14,9 +14,9 @@ const initialState = {
     // 检索条件：客户电话
     conditionPhone: '',
     // 检索条件：起始城市
-    conditionStartCity: '',
+    conditionStartCity: null,
     // 检索条件：目的城市
-    conditionEndCity: '',
+    conditionEndCity: null,
 
     // 检索条件：服务方式
     conditionServiceType: null,

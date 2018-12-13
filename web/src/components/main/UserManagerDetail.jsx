@@ -8,6 +8,7 @@ import {InquiryInfoModal} from '../modules/index';
 
 const userManagerDetailAction = require('../../actions/main/UserManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
+const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
@@ -38,26 +39,12 @@ class UserManagerDetail extends React.Component {
         // 默认第一页
         this.props.setInquiryStartNumber(0);
         // 清空检索条件
-        this.props.setInquiryConditionStartCity('');
-        this.props.setInquiryConditionEndCity('');
+        this.props.changeInquiryConditionStartCity(null);
+        this.props.changeInquiryConditionEndCity(null);
         this.props.changeInquiryConditionServiceType(null);
         this.props.changeInquiryConditionStatus(null);
         // 检索消息记录列表
         this.props.getUserInquiryList();
-    };
-
-    /**
-     * 询价记录TAB：更新 检索条件：起始城市
-     */
-    changeInquiryConditionStartCity = (event, value) => {
-        this.props.setInquiryConditionStartCity(value);
-    };
-
-    /**
-     * 询价记录TAB：更新 检索条件：目的城市
-     */
-    changeInquiryConditionEndCity = (event, value) => {
-        this.props.setInquiryConditionEndCity(value);
     };
 
     /**
@@ -94,7 +81,13 @@ class UserManagerDetail extends React.Component {
     };
 
     render() {
-        const {userManagerDetailReducer, changeInquiryConditionServiceType, changeInquiryConditionStatus, getLogInfoList, getBankCardList, getInvoiceList} = this.props;
+        const {
+            userManagerDetailReducer,
+            commonReducer,
+            changeInquiryConditionStartCity, changeInquiryConditionEndCity,
+            changeInquiryConditionServiceType, changeInquiryConditionStatus,
+            getLogInfoList, getBankCardList, getInvoiceList
+        } = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -180,9 +173,33 @@ class UserManagerDetail extends React.Component {
                         {/* 询价记录：检索条件 */}
                         <div className="row z-depth-1 detail-box margin-top20 margin-left50 margin-right50">
                             <div className="col s11 search-condition-box margin-top20">
-                                <Input s={3} label="起始城市" value={userManagerDetailReducer.inquiryConditionStartCity} onChange={this.changeInquiryConditionStartCity}/>
+                                {/* 查询条件：起始城市 */}
+                                <div className="input-field col s3">
+                                    <Select
+                                        options={commonReducer.cityList}
+                                        onChange={changeInquiryConditionStartCity}
+                                        value={userManagerDetailReducer.inquiryConditionStartCity}
+                                        isSearchable={true}
+                                        placeholder={"请选择"}
+                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                        isClearable={true}
+                                    />
+                                    <label className="active">起始城市</label>
+                                </div>
 
-                                <Input s={3} label="目的城市" value={userManagerDetailReducer.inquiryConditionEndCity} onChange={this.changeInquiryConditionEndCity}/>
+                                {/* 查询条件：目的城市 */}
+                                <div className="input-field col s3">
+                                    <Select
+                                        options={commonReducer.cityList}
+                                        onChange={changeInquiryConditionEndCity}
+                                        value={userManagerDetailReducer.inquiryConditionEndCity}
+                                        isSearchable={true}
+                                        placeholder={"请选择"}
+                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                        isClearable={true}
+                                    />
+                                    <label className="active">目的城市</label>
+                                </div>
 
                                 {/* 查询条件：服务方式 */}
                                 <div className="input-field col s3">
@@ -386,23 +403,25 @@ class UserManagerDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userManagerDetailReducer: state.UserManagerDetailReducer
+        userManagerDetailReducer: state.UserManagerDetailReducer,
+        commonReducer: state.CommonReducer
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     // 基本信息
     getUserInfo: () => {
+        dispatch(commonAction.getCityList());
         dispatch(userManagerDetailAction.getUserInfo(ownProps.match.params.id))
     },
     // TAB1：询价记录
     setInquiryStartNumber: (start) => {
         dispatch(UserManagerDetailActionType.setInquiryStartNumber(start))
     },
-    setInquiryConditionStartCity: (value) => {
+    changeInquiryConditionStartCity: (value) => {
         dispatch(UserManagerDetailActionType.setInquiryConditionStartCity(value))
     },
-    setInquiryConditionEndCity: (value) => {
+    changeInquiryConditionEndCity: (value) => {
         dispatch(UserManagerDetailActionType.setInquiryConditionEndCity(value))
     },
     changeInquiryConditionServiceType: (value) => {

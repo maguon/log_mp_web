@@ -6,9 +6,9 @@ const initialState = {
     userInfo: [],
 
     // 询价记录TAB： 检索条件：起始城市
-    inquiryConditionStartCity: '',
+    inquiryConditionStartCity: null,
     // 询价记录TAB： 检索条件：目的城市
-    inquiryConditionEndCity: '',
+    inquiryConditionEndCity: null,
     // 询价记录TAB： 检索条件：服务方式
     inquiryConditionServiceType: null,
     // 询价记录TAB： 检索条件：状态

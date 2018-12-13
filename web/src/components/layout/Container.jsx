@@ -13,7 +13,9 @@ import {
     CitySetting,
     RouteSetting,
     SupplierSetting,
-    SupplierSettingDetail
+    SupplierSettingDetail,
+    LogSiteSetting,
+    LogSiteSettingDetail
 } from '../main/index';
 
 const routes = [
@@ -88,10 +90,22 @@ const routes = [
         component: SupplierSetting
     },
     {
-        // 供应商详情
+        // 供应商 - 详情
         path: '/supplier_setting/:id',
         exact: true,
         component: SupplierSettingDetail
+    },
+    {
+        // 收发货地点
+        path: "/log_site_setting",
+        exact: true,
+        component: LogSiteSetting
+    },
+    {
+        // 收发货地点 - 详情
+        path: '/log_site_setting/:id',
+        exact: true,
+        component: LogSiteSettingDetail
     },
 ];
 
@@ -176,11 +190,13 @@ class Container extends React.Component {
                                     <a className="collapsible-header"><i className="mdi mdi-lock"/>系统设置</a>
                                     <div className="collapsible-body">
                                         <ul>
-                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市设置</Link></li>
+                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路设置</Link></li>
+                                            <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/supplier_setting"><i className="mdi mdi-chevron-right"/>供应商设置</Link></li>
+                                            <li><Link to="/supplier_setting"><i className="mdi mdi-chevron-right"/>供应商</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/log_site_setting"><i className="mdi mdi-chevron-right"/>收发货地点</Link></li>
                                         </ul>
                                     </div>
                                 </li>

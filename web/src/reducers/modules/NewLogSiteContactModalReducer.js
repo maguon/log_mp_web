@@ -1,10 +1,10 @@
 import {handleActions} from 'redux-actions';
-import {NewSupplierContactModalActionType} from '../../actionTypes';
+import {NewLogSiteContactModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 供应商ID
-    supplierId: '',
+    // 收发货地点ID
+    logSiteId: '',
     // 姓名
     name: '',
     // 职务
@@ -14,25 +14,25 @@ const initialState = {
 };
 
 export default handleActions({
-    [NewSupplierContactModalActionType.setSupplierId]: (state, action) => {
+    [NewLogSiteContactModalActionType.setLogSiteId]: (state, action) => {
         return {
             ...state,
-            supplierId: action.payload
+            logSiteId: action.payload
         }
     },
-    [NewSupplierContactModalActionType.setName]: (state, action) => {
+    [NewLogSiteContactModalActionType.setName]: (state, action) => {
         return {
             ...state,
             name: action.payload
         }
     },
-    [NewSupplierContactModalActionType.setPosition]: (state, action) => {
+    [NewLogSiteContactModalActionType.setPosition]: (state, action) => {
         return {
             ...state,
             position: action.payload
         }
     },
-    [NewSupplierContactModalActionType.setPhone]: (state, action) => {
+    [NewLogSiteContactModalActionType.setPhone]: (state, action) => {
         return {
             ...state,
             phone: action.payload

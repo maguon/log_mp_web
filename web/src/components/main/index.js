@@ -10,3 +10,5 @@ export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";
 export SupplierSetting from "./SupplierSetting";
 export SupplierSettingDetail from "./SupplierSettingDetail";
+export LogSiteSetting from "./LogSiteSetting";
+export LogSiteSettingDetail from "./LogSiteSettingDetail";

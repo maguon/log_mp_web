@@ -328,6 +328,10 @@ table.striped > tbody > tr:nth-child(odd) {
     width: 46%;
 }
 
+.s-percent-80 {
+    width: 80%;
+}
+
 .s-percent-82 {
     width: 82%;
 }
@@ -486,6 +490,10 @@ table.striped > tbody > tr:nth-child(odd) {
     margin-left: 30px !important;
 }
 
+.margin-left40 {
+    margin-left: 40px !important;
+}
+
 .margin-left50 {
     margin-left: 50px !important;
 }
@@ -508,6 +516,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .margin-right30 {
     margin-right: 30px !important;
+}
+
+.margin-right40 {
+    margin-right: 40px !important;
 }
 
 .margin-right50 {
@@ -638,8 +650,44 @@ table.striped > tbody > tr:nth-child(odd) {
     position: relative;
 }
 
+.position-absolute {
+    position: absolute;
+}
+
+.middle-btn {
+    top: 15%;
+    right: 20px;
+    z-index : 0 !important;
+}
+
 .min-height50 {
     min-height: 50px;
+}
+
+.height150 {
+    height: 160px;
+}
+
+#log-site-map {
+    height: 410px;
+}
+
+#new-log-site-map {
+    height: 510px;
+}
+
+.map-info {
+    position: absolute;
+    z-index: 999;
+    padding: .75rem 1.25rem;
+    top: 1rem;
+    margin-left: 1rem;
+    background-color: white;
+    width: auto;
+    min-width: 12rem;
+    border-width: 0;
+    border-radius: .25rem;
+    box-shadow: 0 2px 6px 0 rgba(114, 124, 245, .5);
 }
 /** 自定义-全画面布局位置样式(调整布局用 margin padding) end */
 
@@ -722,6 +770,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .custom-purple {
     background-color: #724278 !important;
+}
+
+.custom-pink {
+    background-color: #D483B8 !important;
 }
 
 .custom-grey {
@@ -917,9 +969,9 @@ table.striped > tbody > tr:nth-child(odd) {
     white-space: pre-wrap;
 }
 
-#inquiryInfoModal {
+#inquiryInfoModal, #newLogSiteModal {
     width: 1024px;
-    max-height: 606px;
+    max-height: 616px;
 }
 
 .inquiryInfoModal {
@@ -935,7 +987,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 456px;
 }
 
-#routeModal, #newSupplierContactModal, #newSupplierBankModal {
+#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal {
     max-height: 356px;
 }
 
@@ -1083,10 +1135,6 @@ img.responsive-img {
 .qr-link {
     cursor: pointer;
     color: #3370B2;
-}
-
-#map-container {
-    height: 280px;
 }
 
 .main-panel-icon {

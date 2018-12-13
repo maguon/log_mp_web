@@ -5,6 +5,7 @@ import {InquiryModal} from '../modules/index';
 const localUtil = require('../../util/LocalUtil');
 const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
+const commonAction = require('../../actions/main/CommonAction');
 const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
 const sysConst = require('../../util/SysConst');
 
@@ -90,7 +91,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
     openInquiryModal: () => {
-        dispatch(inquiryModalAction.getCityList());
+        dispatch(commonAction.getCityList());
         dispatch(inquiryModalAction.initInquiryModal());
     },
     logout: () => {

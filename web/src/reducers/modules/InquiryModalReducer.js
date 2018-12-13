@@ -3,9 +3,6 @@ import {InquiryModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 城市列表
-    cityList: [],
-
     // 始发城市
     startCity: null,
     // 终到城市
@@ -28,16 +25,6 @@ const initialState = {
 };
 
 export default handleActions({
-    [InquiryModalActionType.getCityList]: (state, action) => {
-        let cityList = [];
-        action.payload.forEach((value) => {
-            cityList.push({value: value.id, label: value.city_name})
-        });
-        return {
-            ...state,
-            cityList: cityList
-        }
-    },
     [InquiryModalActionType.setStartCity]: (state, action) => {
         return {
             ...state,

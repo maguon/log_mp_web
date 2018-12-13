@@ -37,7 +37,7 @@ class InquiryModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {inquiryModalReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
+        const {inquiryModalReducer, commonReducer, changeStartCity, changeEndCity, changeServiceMode, changeCarModel, changeCarFlag, closeModal} = this.props;
         return (
             <div id="inquiryModal" className="modal modal-fixed-footer row">
 
@@ -51,7 +51,7 @@ class InquiryModal extends React.Component {
                     <div className="row margin-top20">
                         <div className="input-field col s6">
                             <Select
-                                options={inquiryModalReducer.cityList}
+                                options={commonReducer.cityList}
                                 onChange={changeStartCity}
                                 value={inquiryModalReducer.startCity}
                                 isSearchable={true}
@@ -63,7 +63,7 @@ class InquiryModal extends React.Component {
                         </div>
                         <div className="input-field col s4">
                             <Select
-                                options={inquiryModalReducer.cityList}
+                                options={commonReducer.cityList}
                                 onChange={changeEndCity}
                                 value={inquiryModalReducer.endCity}
                                 isSearchable={true}
@@ -164,7 +164,8 @@ class InquiryModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        inquiryModalReducer: state.InquiryModalReducer
+        inquiryModalReducer: state.InquiryModalReducer,
+        commonReducer: state.CommonReducer
     }
 };
 

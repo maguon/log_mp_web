@@ -81,7 +81,10 @@ class InquiryInfoModal extends React.Component {
                             {inquiryInfoModalReducer.inquiryCarArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
-                                        <td className="padding-left10">{sysConst.CAR_MODEL[item.model_id - 1].label}</td>
+                                        <td className="padding-left10">
+                                            {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
+                                                ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
+                                        </td>
                                         <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.plan_solo,2)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.fee_solo,2)}</td>
@@ -162,7 +165,10 @@ class InquiryInfoModal extends React.Component {
                                             return (
                                                 <tr className="grey-text text-darken-1">
                                                     <td className="padding-left10">{item.vin}</td>
-                                                    <td className="center">{sysConst.CAR_MODEL[item.model_id - 1].label}</td>
+                                                    <td className="center">
+                                                        {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
+                                                            ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
+                                                    </td>
                                                     <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>

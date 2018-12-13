@@ -118,7 +118,7 @@ class LogSiteSetting extends React.Component {
                                     <div className="col s12 padding-top10 padding-bottom10 fz14 purple-font">
                                         <div className="col s12 margin-top5 padding-right0">
                                             <div className="col s-percent-20 no-padding">所属城市：</div>
-                                            <div className="col s-percent-80 no-padding bold-font">{item.city}</div>
+                                            <div className="col s-percent-80 no-padding bold-font">{item.city_name}</div>
 
                                         </div>
                                         <div className="col s12 margin-top10 padding-right0">

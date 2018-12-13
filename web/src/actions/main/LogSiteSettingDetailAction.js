@@ -15,7 +15,7 @@ export const getLogSiteInfo = (id) => async (dispatch) => {
             if (res.result.length > 0) {
                 // 组装react-select 需要的类型
                 let selectedCity = {
-                    value: res.result[0].city,
+                    value: res.result[0].city_id,
                     label: res.result[0].city_name
                 };
 
@@ -60,6 +60,7 @@ export const addAutoCompleteListener = () => async (dispatch) => {
         let autocomplete = new AMap.Autocomplete(autoOptions);
         // 控件追加监听
         AMap.event.addListener(autocomplete, "select", function(e){
+            dispatch({type: LogSiteSettingDetailActionType.setLogSiteAddress, payload: e.poi.name});
             if (e.poi.location.lng !== undefined && e.poi.location.lat !== undefined) {
                 // 设定经纬度内容
                 dispatch({type: LogSiteSettingDetailActionType.setLogSiteLon, payload: e.poi.location.lng});
@@ -127,7 +128,7 @@ export const saveLogSiteInfo = () => async (dispatch, getState) => {
         // 纬度
         const logSiteLat = getState().LogSiteSettingDetailReducer.logSiteLat;
 
-        if (logSiteName === '' || logSiteCity == null || logSiteAddress === '' || logSiteRemark === '' || logSiteLon === '' || logSiteLat === '') {
+        if (logSiteName === '' || logSiteCity == null || logSiteAddress === '' || logSiteLon === '' || logSiteLat === '') {
             swal('保存失败', '请输入完整的收发货地点信息！', 'warning');
         } else {
             const params = {

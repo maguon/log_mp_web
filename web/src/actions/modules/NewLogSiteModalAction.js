@@ -16,6 +16,7 @@ export const addAutoCompleteListener = () => async (dispatch) => {
         };
         let autocomplete = new AMap.Autocomplete(autoOptions);
         AMap.event.addListener(autocomplete, "select", function(e){
+            dispatch({type: NewLogSiteModalActionType.setLogSiteAddress, payload: e.poi.name});
             if (e.poi.location.lng !== undefined && e.poi.location.lat !== undefined) {
                 // 设定经纬度内容
                 dispatch({type: NewLogSiteModalActionType.setLogSiteLon, payload: e.poi.location.lng,});
@@ -92,7 +93,7 @@ export const saveLogSiteInfo = () => async (dispatch, getState) => {
         // 纬度
         const logSiteLat = getState().NewLogSiteModalReducer.logSiteLat;
 
-        if (logSiteName === '' || logSiteCity == null || logSiteAddress === '' || logSiteRemark === '' || logSiteLon === '' || logSiteLat === '') {
+        if (logSiteName === '' || logSiteCity == null || logSiteAddress === '' || logSiteLon === '' || logSiteLat === '') {
             swal('保存失败', '请输入完整的收发货地点信息！', 'warning');
         } else {
             const params = {

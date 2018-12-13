@@ -51,7 +51,7 @@ class SupplierSettingDetail extends React.Component {
     /**
      * 显示 新建 联系方式
      */
-    showNewSupplierContactModal = () => {
+    showNewLogSiteContactModal = () => {
         this.props.initNewLogSiteContactModalData();
         $('#newLogSiteContactModal').modal('open');
     };
@@ -131,7 +131,7 @@ class SupplierSettingDetail extends React.Component {
                     <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
                         <div className="col s9 fz16 bold-font">联系方式</div>
                         <div className="col s3 fz16 pink-font right-align">
-                            <span className="pointer" onClick={this.showNewSupplierContactModal}>+ 增加联系方式</span>
+                            <span className="pointer" onClick={this.showNewLogSiteContactModal}>+ 增加联系方式</span>
                         </div>
                     </div>
                     {logSiteSettingDetailReducer.logSiteContactArray.map(function (item) {

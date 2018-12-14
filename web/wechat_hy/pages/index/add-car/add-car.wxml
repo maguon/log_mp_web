@@ -1,0 +1,62 @@
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>{{beginCity}}</view>
+<image class='head-staycar' src='../../../images/transport.png'></image>
+<view class='head-city'>{{endCity}}</view>
+</view>
+<view class='dis-line'></view>
+
+<!-- 车型 ---------------------------------------------------------------------- -->
+  <view  class="weui-cell_access" hover-class="weui-cell_active">
+  <picker bindchange="bindModels" value="{{car_index}}" range="{{carList}}">
+      <view class='content'>
+          <view class='weui-cell__bd' >选择车型</view>
+          <view class="weui-cell__bd01">{{carList[car_index]}} </view>
+          <image class='arrow' src='../../../images/arrow.png'></image>
+      </view>
+     </picker>
+     <view class='dis-line'></view>
+ </view>
+<!-- 车辆估值 ---------------------------------------------------------------------- -->
+  <view class='valuation' >
+  <view class='valuation-item'>
+  <view class='valuation-text'>车辆估值(元)</view>
+  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  </view>
+
+  <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
+  <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
+  <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
+   <view class="right-text">新车</view>
+  </view>
+
+  </view>
+   <view class='dis-line'></view>
+<!-- 预计单价 ---------------------------------------------------------------------- -->
+
+<view class='count'>
+<view class='left'>
+      <view class='left-icon'>预计单价:{{price}}元</view>
+    </view> 
+<view class='right'>
+  <view class="stepper">  
+    <text class="{{minusStatus}}" bindtap="bindMinus">-</text>  
+    <input type="number" bindinput="bindManual" value="{{num}}" />  
+    <text class="normal" bindtap="bindPlus">+</text>  
+ </view> 
+ </view>
+</view>
+ <view class='dis-line'></view>
+<!-- 预计运费 ---------------------------------------------------------------------- -->
+<view class='dis-sum'>
+<view class='sum-text'>预计运费</view>
+<view class='stay-expect'>
+<view class='stay-num'>{{sumPrice}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='sum-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+    <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
+

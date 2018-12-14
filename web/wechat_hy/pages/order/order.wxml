@@ -1,0 +1,37 @@
+<view class='head' >
+  <view bindtap='selectButton' data-index='{{index}}' class='items' wx:for='{{orderState}}' wx:key='u' >
+   <view hidden='{{!item.status}}'  class='item' style="opacity:{{item.number}}">
+    <image class='item-img' src='{{item.url}}'></image>
+    <view  class='item-point'></view>
+    <view class='item-text'>{{item.name}}</view>
+     <view class='divline'></view>
+   </view>
+
+    <view hidden='{{item.status}}'  class='item' style="opacity:{{item.number}}">
+    <image class='item-img' src='{{item.url}}'></image>
+    <view hidden='{{item.hidden}}' class='item-point'></view>
+    <view class='item-text'>{{item.name}}</view>
+   </view> 
+ </view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+<view bindtap='bindDetail' class='content' hover-class="active">
+<view class='city'>
+<image class='city-img' src='../../images/car_04.png'></image>
+<view class='city-text'>大连</view>
+<image class='city-arrow' src='../../images/arrow_02.png'></image>
+<view class='city-text'>沈阳</view>
+<image class='arrow'src='../../images/arrow.png'></image>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='stay-detail'>
+<view class='stay-car'>运送车辆:3</view>
+<view class='stay-expect'>
+<view class='stay-text'>预计费用:</view>
+<view class='stay-num'>1700.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='line'></view>
+</view>
+

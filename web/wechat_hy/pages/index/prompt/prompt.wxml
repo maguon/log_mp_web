@@ -1,0 +1,11 @@
+ <view class="icon-box">
+   <icon class='icon' type="warn" size="100"></icon>
+      <view class="title">暂无直达线路</view>
+        <view class="desc">您可修改线路，或致电客服协商出理想运输路线</view>
+   
+<!-- 按键 ---------------------------------------------------------------------- -->
+      <button bindtap="bindCustomer" class="area" hover-class="weui-cell_active">
+       <image class='customer' src='../../../images/customer.png'></image>
+       <text class='text'>联系客服</text>
+       </button>
+ </view>

@@ -31,7 +31,7 @@ export const getUserList = () => async (dispatch, getState) => {
         const conditionAuthTimeEnd = getState().UserManagerReducer.conditionAuthTimeEnd;
 
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/user?start=' + start + '&size=' + size;
         // 检索条件
         let conditionsObj = {

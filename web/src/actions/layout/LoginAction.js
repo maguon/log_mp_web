@@ -9,9 +9,9 @@ export const login = (params) => async () => {
         const res = await httpUtil.httpPost(apiHost + '/api/admin/do/login', params);
 
         if (res.success === true) {
-            LocalUtil.setLocalItem(SysConst.USER_ID, res.result.userId);
-            LocalUtil.setLocalItem(SysConst.USER_TYPE, res.result.type);
-            LocalUtil.setLocalItem(SysConst.AUTH_TOKEN, res.result.accessToken);
+            LocalUtil.setSessionItem(SysConst.USER_ID, res.result.userId);
+            LocalUtil.setSessionItem(SysConst.USER_TYPE, res.result.type);
+            LocalUtil.setSessionItem(SysConst.AUTH_TOKEN, res.result.accessToken);
 
             window.location.href = '/index.html';
         } else if (res.success === false) {

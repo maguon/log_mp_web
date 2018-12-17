@@ -30,7 +30,7 @@ export const getInquiryList = () => async (dispatch, getState) => {
         const conditionInquiryStatus = getState().InquiryManagerReducer.conditionInquiryStatus;
 
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/queryInquiry?start=' + start + '&size=' + size;
 
         // 检索条件

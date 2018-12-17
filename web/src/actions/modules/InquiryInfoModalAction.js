@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getInquiryInfo = (inquiryId, userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/queryInquiry?inquiryId=' + inquiryId + '&userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -31,7 +31,7 @@ export const getInquiryInfo = (inquiryId, userId) => async (dispatch) => {
 export const getInquiryCarList = (inquiryId, userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryCar?type=0&inquiryId=' + inquiryId + '&userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -57,7 +57,7 @@ export const getInquiryCarList = (inquiryId, userId) => async (dispatch) => {
 export const getOrderInfo = (inquiryId, userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/order?inquiryId=' + inquiryId + '&userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -73,7 +73,7 @@ export const getOrderInfo = (inquiryId, userId) => async (dispatch) => {
 export const getOrderCarList = (inquiryId, userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryCar?type=1&inquiryId=' + inquiryId + '&userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {

@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getInvoiceInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryInvoice?inquiryInvoiceId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {

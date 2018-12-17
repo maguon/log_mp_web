@@ -25,7 +25,7 @@ export const saveSupplierContact = () => async (dispatch, getState) => {
                 phone: phone
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                 + '/supplier/' + supplierId + '/contact';
             let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {

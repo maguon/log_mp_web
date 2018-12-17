@@ -25,7 +25,7 @@ export const saveSupplierBank = () => async (dispatch, getState) => {
                 accountName: accountName
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                 + '/supplier/' + supplierId + '/bank';
             let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {

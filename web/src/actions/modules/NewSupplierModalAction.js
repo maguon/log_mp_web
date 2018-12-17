@@ -46,7 +46,7 @@ export const saveSupplier = () => async (dispatch, getState) => {
             };
 
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/supplier';
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/supplier';
             let res = null;
             // 编辑时
             if (pageType === 'edit') {
@@ -77,7 +77,7 @@ export const saveSupplier = () => async (dispatch, getState) => {
 export const getSupplierInfo = (supplierId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/supplier?supplierId=' + supplierId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {

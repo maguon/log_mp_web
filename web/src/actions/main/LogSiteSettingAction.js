@@ -13,7 +13,7 @@ export const getLogSiteSettingList = () => async (dispatch, getState) => {
         const conditionLogSiteCity = getState().LogSiteSettingReducer.conditionLogSiteCity;
 
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/address?1=1';
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/address?1=1';
 
         // 检索条件
         let conditionsObj = {

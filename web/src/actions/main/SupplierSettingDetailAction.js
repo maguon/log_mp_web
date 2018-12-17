@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getSupplierInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/supplier?supplierId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -24,7 +24,7 @@ export const getSupplierInfo = (id) => async (dispatch) => {
 export const getSupplierContactList = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/supplier/' + id + '/contact';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -50,7 +50,7 @@ export const deleteSupplierContact = (supplierId, contactId) => async (dispatch)
         }).then(async function (isConfirm) {
             if (isConfirm && isConfirm.value === true) {
                 // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                     + '/supplier/' + supplierId + '/contact/' + contactId;
                 const res = await httpUtil.httpDelete(url);
                 if (res.success === true) {
@@ -68,7 +68,7 @@ export const deleteSupplierContact = (supplierId, contactId) => async (dispatch)
 export const getSupplierBankList = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/supplier/' + id + '/bank';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -94,7 +94,7 @@ export const deleteSupplierBank = (supplierId, bankId) => async (dispatch) => {
         }).then(async function (isConfirm) {
             if (isConfirm && isConfirm.value === true) {
                 // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                     + '/supplier/' + supplierId + '/bank/' + bankId;
                 const res = await httpUtil.httpDelete(url);
                 if (res.success === true) {

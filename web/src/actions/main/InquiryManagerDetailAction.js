@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getInquiryInfo = (inquiryId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/queryInquiry?inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -29,7 +29,7 @@ export const getInquiryInfo = (inquiryId) => async (dispatch) => {
 export const getInquiryCarList = (inquiryId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryCar?type=0&inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -55,7 +55,7 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
 export const getOrderInfo = (inquiryId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/order?inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -79,7 +79,7 @@ export const generateOrder = (inquiryId, userId) => async (dispatch) => {
         cancelButtonText: '取消'
     }).then(async function (isConfirm) {
         if (isConfirm && isConfirm.value === true) {
-            const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                 + '/user/' + userId  + '/inquiry/' + inquiryId + '/order';
             const res = await httpUtil.httpPost(url, {});
             if (res.success === true) {

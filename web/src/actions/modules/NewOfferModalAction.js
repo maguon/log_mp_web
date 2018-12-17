@@ -24,7 +24,7 @@ export const saveOffer = () => async (dispatch, getState) => {
                 mark: remark
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                 + '/user/' + userId + '/inquiry/' + inquiryId + '/feePrice';
             let res = await httpUtil.httpPut(url, params);
             if (res.success === true) {

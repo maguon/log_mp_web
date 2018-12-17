@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getLogSiteInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/address?addressId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -140,7 +140,7 @@ export const saveLogSiteInfo = () => async (dispatch, getState) => {
                 lat: logSiteLat
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                 + '/address/' + logSiteId + '/addressByAdmin';
             let res = await httpUtil.httpPut(url, params);
             if (res.success === true) {
@@ -159,7 +159,7 @@ export const saveLogSiteInfo = () => async (dispatch, getState) => {
 export const getLogSiteContactList = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/addressContact?addressId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -185,7 +185,7 @@ export const deleteLogSiteContact = (logSiteId, contactId) => async (dispatch) =
         }).then(async function (isConfirm) {
             if (isConfirm && isConfirm.value === true) {
                 // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
                     // + '/supplier/' + logSiteId
                     + '/addressContact/' + contactId;
                 const res = await httpUtil.httpDelete(url);

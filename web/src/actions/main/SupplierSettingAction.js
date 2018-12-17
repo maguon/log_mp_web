@@ -15,7 +15,7 @@ export const getSupplierSettingList = () => async (dispatch, getState) => {
         const conditionTransportMode = getState().SupplierSettingReducer.conditionTransportMode;
 
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/supplier?start=0';
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/supplier?start=0';
 
         // 检索条件
         let conditionsObj = {

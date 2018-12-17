@@ -7,7 +7,7 @@ const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch) => {
     try {
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/city';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: CommonActionType.getCityList, payload: res.result})

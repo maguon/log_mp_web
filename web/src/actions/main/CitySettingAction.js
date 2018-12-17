@@ -7,7 +7,7 @@ const sysConst = require('../../util/SysConst');
 
 export const getCityList = () => async (dispatch) => {
     try {
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/city';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: CitySettingActionType.getCityInfo, payload: res.result})
@@ -28,7 +28,7 @@ export const addCity = () => async (dispatch, getState) => {
             const params = {
                 cityName: cityName
             };
-            const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/city';
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/city';
             const res = await httpUtil.httpPost(url, params);
 
             if (res.success === true) {

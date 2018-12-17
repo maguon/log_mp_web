@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getUserInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID) + '/user?userId=' + id;
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/user?userId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: UserManagerDetailActionType.getUserInfo, payload: res.result});
@@ -37,7 +37,7 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
         const inquiryConditionStatus = getState().UserManagerDetailReducer.inquiryConditionStatus;
 
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/queryInquiry?start=' + start + '&size=' + size + '&userId=' + userId;
 
         // 检索条件
@@ -69,7 +69,7 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
 export const getLogInfoList = (userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/address?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -85,7 +85,7 @@ export const getLogInfoList = (userId) => async (dispatch) => {
 export const getBankCardList = (userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryBank?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
@@ -101,7 +101,7 @@ export const getBankCardList = (userId) => async (dispatch) => {
 export const getInvoiceList = (userId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getLocalItem(sysConst.USER_ID)
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/inquiryInvoice?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {

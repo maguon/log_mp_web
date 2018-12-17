@@ -1,0 +1,17 @@
+<view class='logo-content'>
+ <image  hidden='{{avhidden}}' class='logo' src='../../../images/head.png'></image>
+  <image hidden='{{!avhidden}}' class='logo' src='{{avatar}}'></image>
+<view hidden='{{!hidden}}' class="weui-cells__tips">{{wechat_name}}</view>
+<view hidden='{{hidden}}' class="weui-cells__tips">用户昵称</view>
+</view>
+ 
+ <view class='bind'>
+ <input bindinput="checkPhone" type='number' class='number' placeholder='请输入手机号码'></input>
+ <view hidden="{{gainFlag}}" bindtap='gain'  class='text'>{{key}}</view>
+  <view hidden="{{!gainFlag}}" class='text text01'>{{key}}</view>
+ </view>
+  <input bindinput='code' type='number' class='qrcode' placeholder='请输入验证码'></input>
+
+   <view class='btn'>
+    <button disabled="{{bntFlag}}"   bindtap="bindTap" class="btn-area" hover-class="weui-cell_active">确定</button>
+    </view>

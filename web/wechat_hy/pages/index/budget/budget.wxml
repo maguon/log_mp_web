@@ -1,0 +1,66 @@
+
+<view class='container'>
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>{{beginCity}}</view>
+<image class='head-staycar' src='../../../images/transport.png'></image>
+<view class='head-city'>{{endCity}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way'>
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>{{array[index-1]}}</view>
+</view>
+<view class='dis-line'></view>
+<!-- 内容 ---------------------------------------------------------------------- -->
+<view class='dis-content' hover-class="active" wx:for="{{carList}}" wx:key="u" bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}' >
+
+<view class='city'>
+<image class='city-img' src='../../../images/car_02.png'></image>
+<view class='city-text'>{{carModel[item.model_id-1]}}</view>
+<image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
+<image class='arrow'src='../../../images/arrow.png'></image>
+<view class='stay-expect stay-text'>{{item.plan}} 元</view>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>数量:{{item.car_num}}</view>
+<view class='stay-expect'>
+<view class='stay-text'>预计费用:</view>
+<view class='stay-num'>{{item.fee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-sum'>
+<view class='sum-text'>预计总运费</view>
+<view class='stay-expect'>
+<view class='stay-num'>{{sumFee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='sum-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-prompt'>
+<view class='prompt-text'>此费用为预计运送费用，多辆运送可有相应的优惠。实际运送费用会在您提交订单后，客服与您联系协商后得出。</view></view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-add'>
+<button bindtap='addCar' class='add-button'>
+<view class='add-text'>增加车型</view>
+</button>
+</view>
+</view>
+
+<!--  ---------------------------------------------------------------------- -->
+    <button   bindtap="bindInquiry" class="btn-area" hover-class="weui-cell_active">客服协商</button>
+
+       <button bindtap="Inquiry" class="btn-area area" hover-class="weui-cell_active">继续询价</button>
+
+

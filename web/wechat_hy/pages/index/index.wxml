@@ -1,0 +1,68 @@
+<!--index.wxml-->
+<view  class="weui-cells_after-title">
+<!-- 始发城市 ---------------------------------------------------------------------- -->
+ <loading hidden="{{!loadingHidden}}">加载中</loading>
+ <view bindtap='bindBeginCity' class="weui-cell_access" hover-class="weui-cell_active">
+      <view class='content'>
+         <image class='left-img' src='../../images/location_01.png'></image>
+          <view hidden='{{beginCity_hidden}}' class="weui-cell__bd">始发城市</view>
+             <view hidden='{{!beginCity_hidden}}' class="weui-cell__bd01">{{beginCity}}</view>
+          <image class='arrow' src='../../images/arrow.png'></image>
+      </view>
+ </view>
+<!-- 目的城市 ---------------------------------------------------------------------- -->
+ <view bindtap='bindEndCity' class="weui-cell_access" hover-class="weui-cell_active">
+      <view class='content'>
+         <image class='left-img' src='../../images/location.png'></image>
+          <view hidden='{{endCity_hidden}}' class="weui-cell__bd">目的城市</view>
+          <view hidden='{{!endCity_hidden}}' class="weui-cell__bd01">{{endCity}}</view>
+          <image class='arrow' src='../../images/arrow.png'></image>
+      </view>
+ </view>
+
+<!-- 服务方式 ---------------------------------------------------------------------- -->
+  <view  class="weui-cell_access" hover-class="weui-cell_active">
+   <picker bindchange="bindService" value="{{index}}" range="{{array}}">
+      <view class='content'>
+         <image class='left-img' src='../../images/car_03.png'></image>  
+          <view hidden='{{service_hidden}}' class="weui-cell__bd">服务方式</view>
+             <view hidden='{{!service_hidden}}' class="weui-cell__bd01">{{array[index]}}</view>  
+           <image class='arrow' src='../../images/arrow.png'></image>
+      </view>
+    </picker>
+ </view>
+<!-- 车型 ---------------------------------------------------------------------- -->
+  <view  class="weui-cell_access" hover-class="weui-cell_active">
+  <picker bindchange="bindModels" value="{{car_index}}" range="{{carList}}">
+      <view class='content'>
+         <image class='left-img' src='../../images/car_about.png'></image>
+          <view hidden='{{models_hidden}}' class="weui-cell__bd">车型</view>
+          <view hidden='{{!models_hidden}}'class="weui-cell__bd01">{{carList[car_index]}} </view>
+          <image class='arrow' src='../../images/arrow.png'></image>
+      </view>
+     </picker>
+ </view>
+<!-- 车辆估值 ---------------------------------------------------------------------- -->
+  <view class='valuation' >
+  <view class='valuation-item'>
+  <view class='valuation-text'>车辆估值(元)</view>
+  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  </view>
+
+  <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
+  <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
+  <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
+   <view class="right-text">新车</view>
+  </view>
+ 
+  </view>
+
+</view>
+<!-- 按键 ---------------------------------------------------------------------- -->
+    <button   bindtap="bindInquiry" class="btn-area" hover-class="weui-cell_active">询价</button>
+
+       <button bindtap="bindCustomer" class="btn-area area" hover-class="weui-cell_active">
+       <image class='customer' src='../../images/customer.png'></image>
+       <text>联系客服</text>
+       </button>
+

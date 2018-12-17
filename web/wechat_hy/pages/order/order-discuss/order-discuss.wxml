@@ -1,0 +1,74 @@
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>大连</view>
+<image class='head-staycar' src='../../../images/transport.png'></image>
+<view class='head-city'>沈阳</view>
+<image class='head-customer' src='../../../images/customer.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way'>
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>送到当地自提</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-content' hover-class="active">
+<view class='city'>
+<image class='city-img' src='../../../images/car_02.png'></image>
+<view class='city-text'>标准轿车</view>
+<image class='city-arrow' src='../../../images/new.png'></image>
+<image class='arrow'src='../../../images/arrow.png'></image>
+<view class='stay-expect stay-text'>240000 元</view>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>数量:1</view>
+<view class='stay-expect'>
+<view class='stay-text'>预计费用:</view>
+<view class='stay-num'>1700.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-sum'>
+<view class='sum-text'>预计总运费</view>
+<view class='stay-expect'>
+<view class='stay-num'>3400.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='sum-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-prompt'>
+<view class='prompt-text'>此费用为预计运送费用，多辆运送可有相应的优惠。实际运送费用会在您提交订单后，客服与您联系协商后得出。</view></view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-add'>
+<button class='add-button'>
+<view class='add-text'>增加车型</view>
+</button>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-orderid'>
+<view class='orderid'>
+<view class='orderid-text'>订单编号：344334555553</view>
+<button class='orderid-button'>
+<view class='button-text'>复制</view>
+</button>
+</view>
+<view class='create-time'>创建时间：2018-08-26 11:20:31</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-cancel' hover-class="cancel_btn">
+<view class='cancel' >取消订单</view>
+</view>

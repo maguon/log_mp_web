@@ -26,8 +26,8 @@ export const getUserDetail = (params) => async (dispatch) => {
 // };
 
 export const logout = () => {
-    localUtil.removeLocalItem(SysConst.USER_ID);
-    localUtil.removeLocalItem(SysConst.USER_TYPE);
-    localUtil.removeLocalItem(SysConst.AUTH_TOKEN);
+    localUtil.removeSessionStore(SysConst.USER_ID);
+    localUtil.removeSessionStore(SysConst.USER_TYPE);
+    localUtil.removeSessionStore(SysConst.AUTH_TOKEN);
     window.location.href = '/login.html';
 };

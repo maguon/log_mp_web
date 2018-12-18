@@ -12,12 +12,12 @@ export const INQUIRY_PARAMS = {
 export const SERVICE_MODE = [
     {
         value: 1,
-        label: "送货上门",
+        label: "上门服务",
         fee: 500
     },
     {
         value: 2,
-        label: "用户自提",
+        label: "当地自提",
         fee: 0
     }
 ];

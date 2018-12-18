@@ -4,6 +4,8 @@ import * as LoginActionType  from './layout/LoginActionType';
 import * as CommonActionType  from './main/CommonActionType';
 import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
+import * as OrderManagerActionType  from './main/OrderManagerActionType';
+import * as OrderManagerDetailActionType  from './main/OrderManagerDetailActionType';
 import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
 import * as InvoiceManagerActionType  from './main/InvoiceManagerActionType';
@@ -23,6 +25,7 @@ import * as NewSupplierContactModalActionType  from './modules/NewSupplierContac
 import * as NewLogSiteModalActionType  from './modules/NewLogSiteModalActionType';
 import * as NewLogSiteContactModalActionType  from './modules/NewLogSiteContactModalActionType';
 import * as NewOfferModalActionType  from './modules/NewOfferModalActionType';
+import * as NewOrderModalActionType  from './modules/NewOrderModalActionType';
 import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActionType';
 
 export  {
@@ -32,6 +35,8 @@ export  {
     CommonActionType,
     UserManagerActionType,
     UserManagerDetailActionType,
+    OrderManagerActionType,
+    OrderManagerDetailActionType,
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
     InvoiceManagerActionType,
@@ -51,5 +56,6 @@ export  {
     NewLogSiteModalActionType,
     NewLogSiteContactModalActionType,
     NewOfferModalActionType,
+    NewOrderModalActionType,
     CancelInquiryModalActionType
 }

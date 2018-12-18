@@ -7,6 +7,8 @@ import LoginReducer from './layout/LoginReducer';
 import CommonReducer from './main/CommonReducer';
 import UserManagerReducer from './main/UserManagerReducer';
 import UserManagerDetailReducer from './main/UserManagerDetailReducer';
+import OrderManagerReducer from './main/OrderManagerReducer';
+import OrderManagerDetailReducer from './main/OrderManagerDetailReducer';
 import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
 import InvoiceManagerReducer from './main/InvoiceManagerReducer';
@@ -26,6 +28,7 @@ import NewSupplierContactModalReducer from './modules/NewSupplierContactModalRed
 import NewLogSiteModalReducer from './modules/NewLogSiteModalReducer';
 import NewLogSiteContactModalReducer from './modules/NewLogSiteContactModalReducer';
 import NewOfferModalReducer from './modules/NewOfferModalReducer';
+import NewOrderModalReducer from './modules/NewOrderModalReducer';
 import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
 
 export default combineReducers({
@@ -36,6 +39,8 @@ export default combineReducers({
     CommonReducer,
     UserManagerReducer,
     UserManagerDetailReducer,
+    OrderManagerReducer,
+    OrderManagerDetailReducer,
     InquiryManagerReducer,
     InquiryManagerDetailReducer,
     InvoiceManagerReducer,
@@ -55,5 +60,6 @@ export default combineReducers({
     NewLogSiteModalReducer,
     NewLogSiteContactModalReducer,
     NewOfferModalReducer,
+    NewOrderModalReducer,
     CancelInquiryModalReducer
 })

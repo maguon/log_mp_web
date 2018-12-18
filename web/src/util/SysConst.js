@@ -63,6 +63,7 @@ export const YES_NO = [
     }
 ];
 
+// 询价状态
 export const INQUIRY_STATUS = [
     {
         value: 0,
@@ -135,6 +136,18 @@ export const TRANSPORT_MODE = [
     }
 ];
 
+// 订单类型
+export const ORDER_TYPE = [
+    {
+        value: 0,
+        label: "内部订单"
+    },
+    {
+        value: 1,
+        label: "外部订单"
+    }
+];
+
 // 物流状态
 export const LOG_STATUS = [
     {
@@ -144,6 +157,50 @@ export const LOG_STATUS = [
     {
         value: 1,
         label: "已送达"
+    }
+];
+
+// 支付状态
+export const PAYMENT_STATUS = [
+    {
+        value: 0,
+        label: "未支付"
+    },
+    {
+        value: 1,
+        label: "已支付"
+    }
+];
+
+// 订单状态
+export const ORDER_STATUS = [
+    {
+        value: 0,
+        label: "待完善信息"
+    },
+    {
+        value: 1,
+        label: "待完善价格"
+    },
+    {
+        value: 2,
+        label: "未生成需求"
+    },
+    {
+        value: 3,
+        label: "待安排车辆"
+    },
+    {
+        value: 4,
+        label: "执行中"
+    },
+    {
+        value: 5,
+        label: "已完成"
+    },
+    {
+        value: 6,
+        label: "已取消"
     }
 ];
 
@@ -181,6 +238,33 @@ export const CUSTOM_REACT_SELECT_STYLE = {
             borderColor: "#26a69a"
         }
     }),
+    // 下拉菜单和输入框距离
+    menu: styles => ({ ...styles, marginTop:'1px'}),
+    indicatorSeparator: styles => ({...styles, display: 'none'}),
+    valueContainer: styles => ({...styles, paddingLeft: '0'})
+};
+
+
+export const CUSTOM_REACT_SELECT_STYLE_FOR_MODAL = {
+    control: (styles, {isFocused}) => ({
+        ...styles,
+        height: 'calc(3rem + 1px)',
+        borderRadius: '0',
+        boxShadow: '0',
+        borderTop: '0',
+        borderLeft: '0',
+        borderRight: '0',
+        background: '#FFFFFF',
+        margin: "0 0 20px 0",
+        borderColor: isFocused ? '#26a69a' : '#ACACAC',
+        ':hover': {
+            borderColor: "#26a69a"
+        }
+    }),
+    // 下拉菜单和输入框距离
+    menu: styles => ({ ...styles, marginTop:'1px'}),
+    // 下拉菜单最大高度
+    menuList: styles => ({ ...styles, maxHeight: '120px' }),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     valueContainer: styles => ({...styles, paddingLeft: '0'})
 };

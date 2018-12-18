@@ -6,6 +6,8 @@ import {
     Panel,
     UserManager,
     UserManagerDetail,
+    OrderManager,
+    OrderManagerDetail,
     InquiryManager,
     InquiryManagerDetail,
     InvoiceManager,
@@ -37,8 +39,10 @@ const routes = [
         exact: true,
         component: Panel
     },
-    // 用户管理
+
+    // 用户信息
     {
+        // 用户管理
         path: "/user",
         exact: true,
         component: UserManager
@@ -48,19 +52,8 @@ const routes = [
         exact: true,
         component: UserManagerDetail
     },
-    // 询价管理
     {
-        path: "/inquiry",
-        exact: true,
-        component: InquiryManager
-    },
-    {
-        path: '/inquiry/:id',
-        exact: true,
-        component: InquiryManagerDetail
-    },
-    // 发票管理
-    {
+        // 发票管理
         path: "/invoice",
         exact: true,
         component: InvoiceManager
@@ -70,6 +63,33 @@ const routes = [
         exact: true,
         component: InvoiceManagerDetail
     },
+
+    // 订单信息
+    {
+        // 询价管理
+        path: "/inquiry",
+        exact: true,
+        component: InquiryManager
+    },
+    {
+        // 询价管理
+        path: '/inquiry/:id',
+        exact: true,
+        component: InquiryManagerDetail
+    },
+    {
+        // 订单管理
+        path: "/order",
+        exact: true,
+        component: OrderManager
+    },
+    {
+        // 询价管理
+        path: '/order/:id',
+        exact: true,
+        component: OrderManagerDetail
+    },
+
     // 设置模块
     {
         // 城市
@@ -169,12 +189,12 @@ class Container extends React.Component {
                         <li>
                             <ul className="collapsible collapsible-accordion">
                                 <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-lock"/>询价管理</a>
+                                    <a className="collapsible-header"><i className="mdi mdi-cart-outline"/>订单信息</a>
                                     <div className="collapsible-body">
                                         <ul>
                                             <li><Link to="/inquiry"><i className="mdi mdi-chevron-right"/>询价管理</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/XXXXXX"><i className="mdi mdi-chevron-right"/>XXXXXX</Link></li>
+                                            <li><Link to="/order"><i className="mdi mdi-chevron-right"/>订单管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -187,7 +207,7 @@ class Container extends React.Component {
                         <li>
                             <ul className="collapsible collapsible-accordion">
                                 <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-lock"/>系统设置</a>
+                                    <a className="collapsible-header"><i className="mdi mdi-settings-outline"/>系统设置</a>
                                     <div className="collapsible-body">
                                         <ul>
                                             <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link></li>

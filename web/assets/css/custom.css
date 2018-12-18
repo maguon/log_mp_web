@@ -987,8 +987,8 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 456px;
 }
 
-#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal {
-    max-height: 356px;
+#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal, #newOrderModal {
+    max-height: 360px;
 }
 
 .modal-content {

@@ -128,7 +128,7 @@ export const saveLogSiteInfo = () => async (dispatch, getState) => {
         // 纬度
         const logSiteLat = getState().LogSiteSettingDetailReducer.logSiteLat;
 
-        if (logSiteName === '' || logSiteCity == null || logSiteAddress === '' || logSiteLon === '' || logSiteLat === '') {
+        if (logSiteName === '' || logSiteCity == null || logSiteCity.value === undefined || logSiteAddress === '' || logSiteLon === '' || logSiteLat === '') {
             swal('保存失败', '请输入完整的收发货地点信息！', 'warning');
         } else {
             const params = {

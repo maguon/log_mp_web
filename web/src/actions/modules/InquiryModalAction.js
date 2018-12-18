@@ -35,7 +35,7 @@ export const calculateMileage = () => async (dispatch, getState) => {
         const endCity = getState().InquiryModalReducer.endCity;
 
         // 当 始发城市，终到城市 都选择的时候，调用接口
-        if (startCity !== null && endCity !== null) {
+        if (startCity !== null && startCity.value !== undefined && endCity !== null && endCity.value !== undefined) {
             // 取得 开始城市-终到城市 里程数
             const url = apiHost + '/api/route?routeStartId=' + startCity.value + '&routeEndId=' + endCity.value;
             const res = await httpUtil.httpGet(url);
@@ -80,7 +80,9 @@ export const calculateFreight = () => (dispatch, getState) => {
 
     // 预计运费
     let freight = 0;
-    if (mileage !== 0 && serviceMode !== null && carModel !== null && carFlag !== null && valuation !== '') {
+    if (mileage !== 0 && serviceMode !== null && serviceMode.value !== undefined
+        && carModel !== null && carModel.value !== undefined
+        && carFlag !== null && carFlag.value !== undefined && valuation !== '') {
         // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
         // 里程单价 --> sysConst.INQUIRY_PARAMS.unitPrice
         // 车型系数 --> sysConst.CAR_MODEL[x].ratio

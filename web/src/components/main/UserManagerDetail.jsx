@@ -433,6 +433,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(userManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
     },
     initInquiryInfoModalData: (inquiryId) => {
+        dispatch(InquiryInfoModalActionType.setPrePage('user'));
         dispatch(InquiryInfoModalActionType.setShowOrderInfoFlag(false));
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId,ownProps.match.params.id));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId,ownProps.match.params.id));

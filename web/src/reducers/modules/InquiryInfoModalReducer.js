@@ -3,6 +3,9 @@ import {InquiryInfoModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
+    // 前画面区分
+    prePage: '',
+
     // 询价信息
     inquiryInfo: [],
     // 询价车辆列表
@@ -22,6 +25,12 @@ const initialState = {
 };
 
 export default handleActions({
+    [InquiryInfoModalActionType.setPrePage]: (state, action) => {
+        return {
+            ...state,
+            prePage: action.payload
+        }
+    },
     [InquiryInfoModalActionType.getInquiryInfo]: (state, action) => {
         return {
             ...state,

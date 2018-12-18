@@ -40,31 +40,37 @@ class InquiryInfoModal extends React.Component {
             <div id="inquiryInfoModal" className="modal modal-fixed-footer row">
 
                 {/** Modal头部：Title */}
-                <div className="modal-title center-align white-text">询价信息</div>
+                <div className="modal-title center-align white-text">询价详情</div>
 
                 {/** Modal主体 */}
                 <div className="modal-content white">
 
-                    {/** 第一行 */}
+                    {/** 头部 */}
                     {inquiryInfoModalReducer.inquiryInfo.length > 0 &&
-                    <div className="row detail-box custom-grey grey-text">
-                        <div className="col s6 margin-top20">
-                            <span className="fz20 pink-font">{inquiryInfoModalReducer.inquiryInfo[0].route_start} -> {inquiryInfoModalReducer.inquiryInfo[0].route_end}</span>
-                            <span className="margin-left10">
-                                ( {(inquiryInfoModalReducer.inquiryInfo[0].service_type !== 1 && inquiryInfoModalReducer.inquiryInfo[0].service_type !== 2)
-                                ? '未知' : sysConst.SERVICE_MODE[inquiryInfoModalReducer.inquiryInfo[0].service_type - 1].label} )
-                            </span>
+                    <div className="row detail-box custom-grey grey-text text-darken-2">
+                        <div className="col s6 margin-top10 margin-bottom10">
+                            <div className="fz14 pink-font">询价编号：{inquiryInfoModalReducer.inquiryInfo[0].id}</div>
+                            <div className="fz20 purple-font margin-top5">
+                                {inquiryInfoModalReducer.inquiryInfo[0].route_start}
+                                <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
+                                {inquiryInfoModalReducer.inquiryInfo[0].route_end}
+                                <span className="margin-left30 fz15 grey-text text-darken-2">
+                                    ( {(inquiryInfoModalReducer.inquiryInfo[0].service_type !== 1 && inquiryInfoModalReducer.inquiryInfo[0].service_type !== 2)
+                                        ? '未知' : sysConst.SERVICE_MODE[inquiryInfoModalReducer.inquiryInfo[0].service_type - 1].label} )
+                                </span>
+                            </div>
                         </div>
-                        <div className="col s6 margin-top10 margin-bottom10 right-align">
+                        <div className="col s6 margin-top10 right-align">
                             <div className="margin-top3">询价时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].created_on)}</div>
-                            <div className="pink-font margin-top10">{sysConst.INQUIRY_STATUS[inquiryInfoModalReducer.inquiryInfo[0].status].label}</div>
+                            {inquiryInfoModalReducer.prePage === 'user' &&
+                            <div className="pink-font margin-top10">{sysConst.INQUIRY_STATUS[inquiryInfoModalReducer.inquiryInfo[0].status].label}</div>}
                         </div>
                     </div>}
 
-                    <div className="row margin-bottom10 margin-left5 grey-text text-darken-2">
-                        运送车辆：{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryCarArray.length)}
+                    <div className="row margin-bottom10 margin-left5 fz16 pink-font">
+                        协商车辆数：{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryCarArray.length)}
                     </div>
-                    <div className="row detail-box">
+                    <div className="row">
                         <table className="bordered">
                             <thead className="custom-grey border-top-line">
                             <tr className="grey-text text-darken-2">
@@ -112,14 +118,38 @@ class InquiryInfoModal extends React.Component {
                     </div>
                     <div className="row divider bold-divider"/>
 
-                    {/** 已取消状态显示：取消时间 */}
-                    {inquiryInfoModalReducer.inquiryInfo.length > 0 && inquiryInfoModalReducer.inquiryInfo[0].status === 3 &&
+                    {/** 订单管理详情画面进入 */}
+                    {inquiryInfoModalReducer.inquiryInfo.length > 0 && inquiryInfoModalReducer.prePage === 'order' &&
+                    <div className="row detail-box margin-top40 grey-text text-darken-2">
+
+                        <div className="col s12 no-padding custom-grey">
+                            <div className="col s6 margin-top10 margin-bottom10">
+                                协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].fee_price,2)}</span> 元
+                            </div>
+                            <div className="col s6 margin-top10 right-align">
+                                协商时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].inquiry_time)}
+                            </div>
+                        </div>
+
+                        <div className="col s12 no-padding divider"/>
+
+                        <div className="col s-percent-10 margin-top10 margin-bottom10 padding-right0">
+                            协商描述：
+                        </div>
+                        <div className="col s-percent-90 margin-top10 margin-bottom10 padding-left0">
+                            {inquiryInfoModalReducer.inquiryInfo[0].mark}
+                        </div>
+                    </div>}
+
+                    {/** 用户管理详情画面进入 已取消状态显示：取消时间 */}
+                    {inquiryInfoModalReducer.inquiryInfo.length > 0 && inquiryInfoModalReducer.prePage === 'user' && inquiryInfoModalReducer.inquiryInfo[0].status === 3 &&
                     <div className="row margin-top20 grey-text text-darken-2">
                         <div className="col s12 right-align">取消时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].cancel_time)}</div>
                     </div>}
 
-                    {/** 已报价/已完成状态(status:1,2)显示：报价信息 */}
-                    {inquiryInfoModalReducer.inquiryInfo.length > 0 && (inquiryInfoModalReducer.inquiryInfo[0].status === 1 || inquiryInfoModalReducer.inquiryInfo[0].status === 2) &&
+                    {/** 用户管理详情画面进入 已报价/已完成状态(status:1,2)显示：报价信息 */}
+                    {inquiryInfoModalReducer.inquiryInfo.length > 0 && inquiryInfoModalReducer.prePage === 'user'
+                        && (inquiryInfoModalReducer.inquiryInfo[0].status === 1 || inquiryInfoModalReducer.inquiryInfo[0].status === 2) &&
                     <div className="row detail-box margin-top40 grey-text text-darken-2">
 
                         {/** 已完成状态(status:2)显示：订单信息 */}
@@ -142,7 +172,7 @@ class InquiryInfoModal extends React.Component {
                             {inquiryInfoModalReducer.showOrderInfoFlag &&
                             <div className="col s12 custom-dark-grey border-bottom-line">
                                 <div className="row margin-top15 margin-bottom10">
-                                    <div className="col s6 purple-font">运送车辆：{formatUtil.formatNumber(inquiryInfoModalReducer.orderCarArray.length)}</div>
+                                    <div className="col s6 pink-font">协商车辆数：{formatUtil.formatNumber(inquiryInfoModalReducer.orderCarArray.length)}</div>
                                     <div className="col s6 pink-font right-align">
                                         {(inquiryInfoModalReducer.orderInfo[0].log_status !== 0 && inquiryInfoModalReducer.orderInfo[0].log_status !== 1)
                                             ? '未知' : sysConst.LOG_STATUS[inquiryInfoModalReducer.orderInfo[0].log_status].label}

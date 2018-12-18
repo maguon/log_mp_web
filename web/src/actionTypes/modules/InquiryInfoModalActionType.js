@@ -1,5 +1,6 @@
 import {createAction} from 'redux-actions';
 
+export const setPrePage = createAction('SET_PRE_PAGE');
 export const getInquiryInfo = createAction('GET_INQUIRY_INFO');
 export const getInquiryCarList = createAction('GET_INQUIRY_CAR_LIST');
 export const setTotalValuation = createAction('SET_TOTAL_VALUATION');

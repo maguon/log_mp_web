@@ -2,7 +2,6 @@ import React from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {Input} from 'react-materialize';
 import {UserManagerDetailActionType, InquiryInfoModalActionType} from '../../actionTypes';
 import {InquiryInfoModal} from '../modules/index';
 

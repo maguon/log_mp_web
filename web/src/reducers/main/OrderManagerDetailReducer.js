@@ -1,9 +1,9 @@
 import {handleActions} from 'redux-actions';
-import {UserManagerDetailActionType} from '../../actionTypes';
+import {OrderManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
-    // 基本信息TAB：用户信息
-    userInfo: [],
+    // 基本信息TAB：订单信息
+    orderInfo: [],
 
     // 询价记录TAB： 检索条件：起始城市
     inquiryConditionStartCity: null,
@@ -31,67 +31,72 @@ const initialState = {
 };
 
 export default handleActions({
-    [UserManagerDetailActionType.getUserInfo]: (state, action) => {
+    [OrderManagerDetailActionType.getOrderInfo]: (state, action) => {
         return {
             ...state,
-            userInfo: action.payload
+            orderInfo: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryConditionStartCity]: (state, action) => {
+
+
+
+
+
+    [OrderManagerDetailActionType.setInquiryConditionStartCity]: (state, action) => {
         return {
             ...state,
             inquiryConditionStartCity: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryConditionEndCity]: (state, action) => {
+    [OrderManagerDetailActionType.setInquiryConditionEndCity]: (state, action) => {
         return {
             ...state,
             inquiryConditionEndCity: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryConditionServiceType]: (state, action) => {
+    [OrderManagerDetailActionType.setInquiryConditionServiceType]: (state, action) => {
         return {
             ...state,
             inquiryConditionServiceType: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryConditionStatus]: (state, action) => {
+    [OrderManagerDetailActionType.setInquiryConditionStatus]: (state, action) => {
         return {
             ...state,
             inquiryConditionStatus: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryStartNumber]: (state, action) => {
+    [OrderManagerDetailActionType.setInquiryStartNumber]: (state, action) => {
         return {
             ...state,
             inquiryStart: action.payload
         }
     },
-    [UserManagerDetailActionType.setInquiryDataSize]: (state, action) => {
+    [OrderManagerDetailActionType.setInquiryDataSize]: (state, action) => {
         return {
             ...state,
             inquiryDataSize: action.payload
         }
     },
-    [UserManagerDetailActionType.getUserInquiryList]: (state, action) => {
+    [OrderManagerDetailActionType.getUserInquiryList]: (state, action) => {
         return {
             ...state,
             inquiryArray: action.payload
         }
     },
-    [UserManagerDetailActionType.getLogInfoList]: (state, action) => {
+    [OrderManagerDetailActionType.getLogInfoList]: (state, action) => {
         return {
             ...state,
             logInfoArray: action.payload
         }
     },
-    [UserManagerDetailActionType.getBankCardList]: (state, action) => {
+    [OrderManagerDetailActionType.getBankCardList]: (state, action) => {
         return {
             ...state,
             bankCardArray: action.payload
         }
     },
-    [UserManagerDetailActionType.getInvoiceList]: (state, action) => {
+    [OrderManagerDetailActionType.getInvoiceList]: (state, action) => {
         return {
             ...state,
             invoiceArray: action.payload

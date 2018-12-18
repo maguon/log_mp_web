@@ -1,19 +1,20 @@
 import {apiHost} from '../../config/HostConfig';
-import {UserManagerDetailActionType} from '../../actionTypes';
+import {OrderManagerDetailActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-export const getUserInfo = (id) => async (dispatch) => {
+export const getOrderInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
-        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/user?userId=' + id;
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/order?orderId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getUserInfo, payload: res.result});
+            dispatch({type: OrderManagerDetailActionType.getOrderInfo, payload: res.result});
         } else if (res.success === false) {
-            swal('获取用户信息失败', res.msg, 'warning');
+            swal('获取订单信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
@@ -56,8 +57,8 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
         url = conditions.length > 0 ? url + "&" + conditions : url;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.setInquiryDataSize, payload: res.result.length});
-            dispatch({type: UserManagerDetailActionType.getUserInquiryList, payload: res.result.slice(0, size - 1)});
+            dispatch({type: OrderManagerDetailActionType.setInquiryDataSize, payload: res.result.length});
+            dispatch({type: OrderManagerDetailActionType.getUserInquiryList, payload: res.result.slice(0, size - 1)});
         } else if (res.success === false) {
             swal('获取询价记录列表失败', res.msg, 'warning');
         }
@@ -73,7 +74,7 @@ export const getLogInfoList = (userId) => async (dispatch) => {
             + '/address?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getLogInfoList, payload: res.result});
+            dispatch({type: OrderManagerDetailActionType.getLogInfoList, payload: res.result});
         } else if (res.success === false) {
             swal('获取收发货信息失败', res.msg, 'warning');
         }
@@ -89,7 +90,7 @@ export const getBankCardList = (userId) => async (dispatch) => {
             + '/inquiryBank?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getBankCardList, payload: res.result});
+            dispatch({type: OrderManagerDetailActionType.getBankCardList, payload: res.result});
         } else if (res.success === false) {
             swal('获取银行卡信息失败', res.msg, 'warning');
         }
@@ -105,7 +106,7 @@ export const getInvoiceList = (userId) => async (dispatch) => {
             + '/inquiryInvoice?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: UserManagerDetailActionType.getInvoiceList, payload: res.result});
+            dispatch({type: OrderManagerDetailActionType.getInvoiceList, payload: res.result});
         } else if (res.success === false) {
             swal('获取发票信息失败', res.msg, 'warning');
         }

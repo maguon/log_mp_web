@@ -3,16 +3,16 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {UserManagerDetailActionType, InquiryInfoModalActionType} from '../../actionTypes';
+import {OrderManagerDetailActionType, InquiryInfoModalActionType} from '../../actionTypes';
 import {InquiryInfoModal} from '../modules/index';
 
-const userManagerDetailAction = require('../../actions/main/UserManagerDetailAction');
+const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 
-class UserManagerDetail extends React.Component {
+class OrderManagerDetail extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -26,16 +26,16 @@ class UserManagerDetail extends React.Component {
      */
     componentDidMount() {
         // 取得用户信息
-        this.props.getUserInfo();
+        this.props.getOrderInfo();
         // 取得TAB1 询价记录列表
-        this.onClickInquiryTab();
+        this.onClickOrderTab();
         $('ul.tabs').tabs();
     }
 
     /**
-     * 询价记录TAB：点击事件
+     * 订单信息TAB：点击事件
      */
-    onClickInquiryTab = () => {
+    onClickOrderTab = () => {
         // 默认第一页
         this.props.setInquiryStartNumber(0);
         // 清空检索条件
@@ -60,7 +60,7 @@ class UserManagerDetail extends React.Component {
      * 询价记录TAB：上一页
      */
     inquiryPreBtn = () => {
-        this.props.setInquiryStartNumber(this.props.userManagerDetailReducer.inquiryStart - (this.props.userManagerDetailReducer.inquirySize - 1));
+        this.props.setInquiryStartNumber(this.props.orderManagerDetailReducer.inquiryStart - (this.props.orderManagerDetailReducer.inquirySize - 1));
         this.props.getUserInquiryList();
     };
 
@@ -68,21 +68,21 @@ class UserManagerDetail extends React.Component {
      * 询价记录TAB：下一页
      */
     inquiryNextBtn = () => {
-        this.props.setInquiryStartNumber(this.props.userManagerDetailReducer.inquiryStart + (this.props.userManagerDetailReducer.inquirySize - 1));
+        this.props.setInquiryStartNumber(this.props.orderManagerDetailReducer.inquiryStart + (this.props.orderManagerDetailReducer.inquirySize - 1));
         this.props.getUserInquiryList();
     };
 
     /**
      * 询价记录TAB：显示询价信息详细内容
      */
-    showInquiryInfoModal = (inquiryId) => {
-        this.props.initInquiryInfoModalData(inquiryId);
+    showInquiryInfoModal = () => {
+        this.props.initInquiryInfoModalData(this.props.orderManagerDetailReducer.orderInfo[0].inquiry_id,this.props.orderManagerDetailReducer.orderInfo[0].user_id);
         $('#inquiryInfoModal').modal('open');
     };
 
     render() {
         const {
-            userManagerDetailReducer,
+            orderManagerDetailReducer,
             commonReducer,
             changeInquiryConditionStartCity, changeInquiryConditionEndCity,
             changeInquiryConditionServiceType, changeInquiryConditionStatus,
@@ -98,7 +98,7 @@ class UserManagerDetail extends React.Component {
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">用户管理 - 用户详情</span>
+                        <span className="page-title margin-left30">订单管理 - 订单详情</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -107,69 +107,65 @@ class UserManagerDetail extends React.Component {
                     {/* TAB 头部 */}
                     <div className="col s12">
                         {/* 用户详情：基本信息 */}
-                        {userManagerDetailReducer.userInfo.length > 0 &&
-                        <div className="user-detail-header">
-                            {/* 左侧：图标 */}
-                            <div className="col s1 margin-top10 center grey-text text-darken-1">
-                                <div className="main-panel-icon grey lighten-1 vc-center">
-                                    <i className="mdi mdi-account"/>
-                                </div>
-                            </div>
-
-                            {/* 中间：基本信息 */}
-                            <div className="col s8 grey-text text-darken-1">
-                                <div className="margin-top8">
-                                    {/* 用户名 */}
-                                    <span className={`fz20 ${userManagerDetailReducer.userInfo[0].auth_status === 1 ? "pink-font" : ""}`}>
-                                        {userManagerDetailReducer.userInfo[0].user_name}
-                                    </span>
-                                    <span className="margin-left20">ID：{userManagerDetailReducer.userInfo[0].id}</span>
-                                    {userManagerDetailReducer.userInfo[0].gender === sysConst.GENDER[0].value ?
-                                        <i className="mdi margin-left30 fz20 mdi-gender-female pink-font"/> :
-                                        <i className="mdi margin-left30 fz20 mdi-gender-male blue-font"/>}
-                                    {/* 授权状态：已授权/未授权 */}
+                        {orderManagerDetailReducer.orderInfo.length > 0 &&
+                        <div className="order-detail-header">
+                            {/* 左侧：基本信息 */}
+                            <div className="col s7 grey-text text-darken-1">
+                                <div className="margin-top5">
+                                    <span className="fz20 purple-font">{orderManagerDetailReducer.orderInfo[0].start_city}</span>
+                                    <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
+                                    <span className="fz20 purple-font">{orderManagerDetailReducer.orderInfo[0].end_city}</span>
                                     <span className="margin-left30">
-                                        {(userManagerDetailReducer.userInfo[0].wechat_status !== 0 && userManagerDetailReducer.userInfo[0].wechat_status !== 1)
-                                            ? '未知' : sysConst.WE_CHAT_STATUS[userManagerDetailReducer.userInfo[0].wechat_status].label}
+                                        {(orderManagerDetailReducer.orderInfo[0].service_type !== 1 && orderManagerDetailReducer.orderInfo[0].service_type !== 2)
+                                            ? '未知' : sysConst.SERVICE_MODE[orderManagerDetailReducer.orderInfo[0].service_type - 1].label}
                                     </span>
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === 1 &&
+                                    <button type="button" className="margin-left30 btn purple-btn btn-height24 fz14" onClick={this.showInquiryInfoModal}>询价信息</button>}
                                 </div>
-                                <div className="margin-top15 pink-font">
-                                    {/* 认证状态：已认证/未认证 */}
-                                    {(userManagerDetailReducer.userInfo[0].auth_status !== 0 && userManagerDetailReducer.userInfo[0].auth_status !== 1)
-                                        ? '未知' : sysConst.AUTH_STATUS[userManagerDetailReducer.userInfo[0].auth_status].label}
-                                    {/* 用户电话：已认证时，显示 */}
-                                    {userManagerDetailReducer.userInfo[0].auth_status === 1 &&
-                                    <span>
-                                        <i className="mdi mdi-cellphone margin-left30 fz20"/>
-                                        <span className="fz16 margin-left10 grey-text text-darken-1">{userManagerDetailReducer.userInfo[0].phone}</span>
-                                    </span>}
+
+                                <div className="margin-top15">
+                                    <span className="purple-font">
+                                        {(orderManagerDetailReducer.orderInfo[0].created_type !== 0 && orderManagerDetailReducer.orderInfo[0].created_type !== 1)
+                                        ? '未知' : sysConst.ORDER_TYPE[orderManagerDetailReducer.orderInfo[0].created_type].label}
+                                    </span>
+
+                                    <i className="margin-left30 fz20 pink-font mdi mdi-account"/>
+                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].user_name} ( ID：{orderManagerDetailReducer.orderInfo[0].user_id} )</span>
+
+                                    <i className="margin-left30 fz20 pink-font mdi mdi-cellphone"/>
+                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].phone}</span>
                                 </div>
                             </div>
 
-                            {/* 右侧：授权时间/认证时间/最后登录时间 */}
-                            {userManagerDetailReducer.userInfo[0].auth_status === 0 &&
-                            <div className="col s3 grey-text text-darken-1 right-align">
-                                <div className="margin-top10">授权时间：{formatUtil.getDateTime(userManagerDetailReducer.userInfo[0].created_on)}</div>
-                                <div className="margin-top15">最后登录时间：{formatUtil.getDateTime(userManagerDetailReducer.userInfo[0].last_login_on)}</div>
-                            </div>}
-                            {userManagerDetailReducer.userInfo[0].auth_status === 1 &&
-                            <div className="col s3 grey-text text-darken-1 right-align">
-                                <div>授权时间：{formatUtil.getDateTime(userManagerDetailReducer.userInfo[0].created_on)}</div>
-                                <div className="margin-top10">认证时间：{formatUtil.getDateTime(userManagerDetailReducer.userInfo[0].auth_time)}</div>
-                                <div className="margin-top10">最后登录时间：{formatUtil.getDateTime(userManagerDetailReducer.userInfo[0].last_login_on)}</div>
-                            </div>}
+                            <div className="col s5 grey-text text-darken-1 right-align">
+                                <div>订单编号：{orderManagerDetailReducer.orderInfo[0].id}</div>
+                                <div className="margin-top10">
+                                    <span>创建时间：{formatUtil.getDateTime(orderManagerDetailReducer.orderInfo[0].created_on)}</span>
+                                    <span className="margin-left30">创建人：{orderManagerDetailReducer.orderInfo[0].created_user}</span>
+                                </div>
+                                <div className="margin-top10 pink-font">
+                                    {(orderManagerDetailReducer.orderInfo[0].status !== 0
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 1
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 2
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 3
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 4
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 5
+                                        && orderManagerDetailReducer.orderInfo[0].status !== 6)
+                                        ? '未知' : sysConst.ORDER_STATUS[orderManagerDetailReducer.orderInfo[0].status].label}
+                                </div>
+                            </div>
                         </div>}
-
+                        <InquiryInfoModal/>
                         <ul className="tabs">
-                            <li className="tab col s3"><a className="active" href="#tab-inquiry" onClick={this.onClickInquiryTab}>询价记录</a></li>
+                            <li className="tab col s3"><a className="active" href="#tab-order" onClick={this.onClickOrderTab}>订单信息</a></li>
                             <li className="tab col s3"><a href="#tab-log-info" onClick={getLogInfoList}>收发货信息</a></li>
                             <li className="tab col s3"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
                             <li className="tab col s3"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                         </ul>
                     </div>
 
-                    {/* TAB 1 : 询价记录TAB */}
-                    <div id="tab-inquiry" className="col s12">
+                    {/* TAB 1 : 订单信息TAB */}
+                    <div id="tab-order" className="col s12">
                         {/* 询价记录：检索条件 */}
                         <div className="row z-depth-1 detail-box margin-top20 margin-left50 margin-right50">
                             <div className="col s11 search-condition-box margin-top20">
@@ -178,7 +174,7 @@ class UserManagerDetail extends React.Component {
                                     <Select
                                         options={commonReducer.cityList}
                                         onChange={changeInquiryConditionStartCity}
-                                        value={userManagerDetailReducer.inquiryConditionStartCity}
+                                        value={orderManagerDetailReducer.inquiryConditionStartCity}
                                         isSearchable={true}
                                         placeholder={"请选择"}
                                         styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -192,7 +188,7 @@ class UserManagerDetail extends React.Component {
                                     <Select
                                         options={commonReducer.cityList}
                                         onChange={changeInquiryConditionEndCity}
-                                        value={userManagerDetailReducer.inquiryConditionEndCity}
+                                        value={orderManagerDetailReducer.inquiryConditionEndCity}
                                         isSearchable={true}
                                         placeholder={"请选择"}
                                         styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -206,7 +202,7 @@ class UserManagerDetail extends React.Component {
                                     <Select
                                         options={sysConst.SERVICE_MODE}
                                         onChange={changeInquiryConditionServiceType}
-                                        value={userManagerDetailReducer.inquiryConditionServiceType}
+                                        value={orderManagerDetailReducer.inquiryConditionServiceType}
                                         isSearchable={false}
                                         placeholder={"请选择"}
                                         styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -220,7 +216,7 @@ class UserManagerDetail extends React.Component {
                                     <Select
                                         options={sysConst.INQUIRY_STATUS}
                                         onChange={changeInquiryConditionStatus}
-                                        value={userManagerDetailReducer.inquiryConditionStatus}
+                                        value={orderManagerDetailReducer.inquiryConditionStatus}
                                         isSearchable={false}
                                         placeholder={"请选择"}
                                         styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -252,7 +248,7 @@ class UserManagerDetail extends React.Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {userManagerDetailReducer.inquiryArray.map(function (item) {
+                                {orderManagerDetailReducer.inquiryArray.map(function (item) {
                                     return (
                                         <tr className="grey-text text-darken-1">
                                             <td className="padding-left20">{item.route_start} - {item.route_end}</td>
@@ -269,21 +265,20 @@ class UserManagerDetail extends React.Component {
                                         </tr>
                                     )
                                 }, this)}
-                                {userManagerDetailReducer.inquiryArray.length === 0 &&
+                                {orderManagerDetailReducer.inquiryArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
                                     <td className="no-data-tr" colSpan="7">暂无数据</td>
                                 </tr>}
                                 </tbody>
                             </table>
-                            <InquiryInfoModal/>
                         </div>
 
                         {/* 上下页按钮 */}
                         <div className="row margin-top10 margin-bottom0 margin-left50 margin-right50">
                             <div className="right">
-                                {userManagerDetailReducer.inquiryStart > 0 && userManagerDetailReducer.inquiryDataSize > 0 &&
+                                {orderManagerDetailReducer.inquiryStart > 0 && orderManagerDetailReducer.inquiryDataSize > 0 &&
                                 <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.inquiryPreBtn}>上一页</a>}
-                                {userManagerDetailReducer.inquiryDataSize >= userManagerDetailReducer.inquirySize &&
+                                {orderManagerDetailReducer.inquiryDataSize >= orderManagerDetailReducer.inquirySize &&
                                 <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.inquiryNextBtn}>下一页</a>}
                             </div>
                         </div>
@@ -291,12 +286,12 @@ class UserManagerDetail extends React.Component {
 
                     {/* TAB 2 : 收发货信息TAB */}
                     <div id="tab-log-info" className="col s12">
-                        {userManagerDetailReducer.logInfoArray.length === 0 &&
+                        {orderManagerDetailReducer.logInfoArray.length === 0 &&
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂无收发货信息
                         </div>}
                         <div className="row margin-top40 margin-left50 margin-right50">
-                            {userManagerDetailReducer.logInfoArray.map(function (item) {
+                            {orderManagerDetailReducer.logInfoArray.map(function (item) {
                                 return (
                                     <div className="row margin-bottom0">
                                         <div className="row detail-box-header margin-bottom0">
@@ -325,19 +320,19 @@ class UserManagerDetail extends React.Component {
                                     </div>
                                 )
                             }, this)}
-                            {userManagerDetailReducer.logInfoArray.length > 0 &&
+                            {orderManagerDetailReducer.logInfoArray.length > 0 &&
                             <div className="row divider grey-border"/>}
                         </div>
                     </div>
 
                     {/* TAB 3 : 银行卡TAB */}
                     <div id="tab-bank-card" className="col s12">
-                        {userManagerDetailReducer.bankCardArray.length === 0 &&
+                        {orderManagerDetailReducer.bankCardArray.length === 0 &&
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂未绑定银行卡
                         </div>}
-                        {userManagerDetailReducer.bankCardArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
-                        {userManagerDetailReducer.bankCardArray.map(function (item) {
+                        {orderManagerDetailReducer.bankCardArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
+                        {orderManagerDetailReducer.bankCardArray.map(function (item) {
                             return (
                                 <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
                                     <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
@@ -359,12 +354,12 @@ class UserManagerDetail extends React.Component {
 
                     {/* TAB 4 : 发票信息TAB */}
                     <div id="tab-invoice" className="col s12">
-                        {userManagerDetailReducer.invoiceArray.length === 0 &&
+                        {orderManagerDetailReducer.invoiceArray.length === 0 &&
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂未添加发票信息
                         </div>}
-                        {userManagerDetailReducer.invoiceArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
-                        {userManagerDetailReducer.invoiceArray.map(function (item) {
+                        {orderManagerDetailReducer.invoiceArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
+                        {orderManagerDetailReducer.invoiceArray.map(function (item) {
                             return (
                                 <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
                                     <div className="row margin-top10 padding-left10 padding-right10">
@@ -403,53 +398,53 @@ class UserManagerDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        userManagerDetailReducer: state.UserManagerDetailReducer,
+        orderManagerDetailReducer: state.OrderManagerDetailReducer,
         commonReducer: state.CommonReducer
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     // 基本信息
-    getUserInfo: () => {
+    getOrderInfo: () => {
         dispatch(commonAction.getCityList());
-        dispatch(userManagerDetailAction.getUserInfo(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id))
     },
     // TAB1：询价记录
     setInquiryStartNumber: (start) => {
-        dispatch(UserManagerDetailActionType.setInquiryStartNumber(start))
+        dispatch(OrderManagerDetailActionType.setInquiryStartNumber(start))
     },
     changeInquiryConditionStartCity: (value) => {
-        dispatch(UserManagerDetailActionType.setInquiryConditionStartCity(value))
+        dispatch(OrderManagerDetailActionType.setInquiryConditionStartCity(value))
     },
     changeInquiryConditionEndCity: (value) => {
-        dispatch(UserManagerDetailActionType.setInquiryConditionEndCity(value))
+        dispatch(OrderManagerDetailActionType.setInquiryConditionEndCity(value))
     },
     changeInquiryConditionServiceType: (value) => {
-        dispatch(UserManagerDetailActionType.setInquiryConditionServiceType(value))
+        dispatch(OrderManagerDetailActionType.setInquiryConditionServiceType(value))
     },
     changeInquiryConditionStatus: (value) => {
-        dispatch(UserManagerDetailActionType.setInquiryConditionStatus(value))
+        dispatch(OrderManagerDetailActionType.setInquiryConditionStatus(value))
     },
     getUserInquiryList: () => {
-        dispatch(userManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
     },
-    initInquiryInfoModalData: (inquiryId) => {
-        dispatch(InquiryInfoModalActionType.setShowOrderInfoFlag(false));
-        dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId,ownProps.match.params.id));
-        dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId,ownProps.match.params.id));
+    initInquiryInfoModalData: (inquiryId, userId) => {
+        dispatch(InquiryInfoModalActionType.setPrePage('order'));
+        dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId, userId));
+        dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId, userId));
     },
     // TAB2：收发货信息
     getLogInfoList: () => {
-        dispatch(userManagerDetailAction.getLogInfoList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getLogInfoList(ownProps.match.params.id))
     },
     // TAB3：银行卡
     getBankCardList: () => {
-        dispatch(userManagerDetailAction.getBankCardList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getBankCardList(ownProps.match.params.id))
     },
     // TAB4：发票信息
     getInvoiceList: () => {
-        dispatch(userManagerDetailAction.getInvoiceList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserManagerDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(OrderManagerDetail)

@@ -42,6 +42,15 @@ body {
 .height-percent100 {
     height: 100%;
 }
+
+.width-200 {
+    width: 200px !important;
+}
+
+.width-300 {
+    width: 300px !important;
+}
+
 /** 主画面 头部(header)样式 end */
 
 

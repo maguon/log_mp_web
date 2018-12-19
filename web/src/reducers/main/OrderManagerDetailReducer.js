@@ -4,7 +4,8 @@ import {OrderManagerDetailActionType} from '../../actionTypes';
 const initialState = {
     // 订单信息TAB：订单信息
     orderInfo: [],
-
+    // 订单信息TAB：订单备注
+    orderRemark: '',
 
 
     // 收发货信息TAB：列表
@@ -22,7 +23,12 @@ export default handleActions({
             orderInfo: action.payload
         }
     },
-
+    [OrderManagerDetailActionType.setOrderRemark]: (state, action) => {
+        return {
+            ...state,
+            orderRemark: action.payload
+        }
+    },
 
 
 

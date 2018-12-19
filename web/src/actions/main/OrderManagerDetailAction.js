@@ -1,5 +1,6 @@
 import {apiHost} from '../../config/HostConfig';
-import {OrderManagerDetailActionType} from '../../actionTypes';
+import {CitySettingActionType, OrderManagerDetailActionType} from '../../actionTypes';
+import {getCityList} from "./CitySettingAction";
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
@@ -13,6 +14,9 @@ export const getOrderInfo = (id) => async (dispatch) => {
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: OrderManagerDetailActionType.getOrderInfo, payload: res.result});
+            if (res.result.length > 0) {
+                dispatch({type: OrderManagerDetailActionType.setOrderRemark, payload: res.result[0].admin_mark});
+            }
         } else if (res.success === false) {
             swal('获取订单信息失败', res.msg, 'warning');
         }
@@ -21,7 +25,26 @@ export const getOrderInfo = (id) => async (dispatch) => {
     }
 };
 
+export const saveOrderRemark = (id) => async (dispatch, getState) => {
+    try {
+        const orderRemark = getState().OrderManagerDetailReducer.orderRemark;
 
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/order/' + id + '/adminMark';
+        const params = {
+            adminMark: orderRemark
+        };
+        const res = await httpUtil.httpPut(url, params);
+        if (res.success === true) {
+            swal("保存成功", "", "success");
+        } else if (res.success === false) {
+            swal('保存失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
 
 
 

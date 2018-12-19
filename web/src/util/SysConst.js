@@ -195,12 +195,12 @@ export const ORDER_STATUS = [
         label: "执行中"
     },
     {
-        value: 5,
-        label: "已完成"
+        value: 8,
+        label: "已取消"
     },
     {
-        value: 6,
-        label: "已取消"
+        value: 9,
+        label: "已完成"
     }
 ];
 

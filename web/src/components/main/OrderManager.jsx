@@ -10,6 +10,7 @@ const commonAction = require('../../actions/main/CommonAction');
 const orderManagerAction = require('../../actions/main/OrderManagerAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 class OrderManager extends React.Component {
 
@@ -186,12 +187,13 @@ class OrderManager extends React.Component {
                                 />
                                 <label className="active">订单类型</label>
                             </div>
-                            <div className="custom-input-field col s2">
+                            <div className="input-field col s2 custom-input-field">
                                 <Input s={12} label="创建时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={orderManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
-                            <div className="custom-input-field col s2">
+
+                            <div className="input-field col s2 custom-input-field">
                                 <Input s={12} label="创建时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={orderManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
@@ -277,19 +279,16 @@ class OrderManager extends React.Component {
                                         <td>{item.id}</td>
                                         <td>{item.start_city} - {item.end_city}</td>
                                         <td>{item.count}</td>
-                                        <td>{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
+                                        <td>{commonUtil.getJsonValue(sysConst.SERVICE_MODE, item.service_type)}</td>
                                         <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
                                         <td>{item.user_name}</td>
                                         <td>{item.phone}</td>
-                                        <td className="center">{(item.created_type !== 0 && item.created_type !== 1) ? '未知' : sysConst.ORDER_TYPE[item.created_type].label}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, item.created_type)}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className="center">
-                                            {(item.payment_status !== 0 && item.payment_status !== 1) ? '未知' : sysConst.PAYMENT_STATUS[item.payment_status].label} / {(item.log_status !== 0 && item.log_status !== 1) ? '未知' : sysConst.LOG_STATUS[item.log_status].label}
+                                            {commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.LOG_STATUS, item.log_status)}
                                         </td>
-                                        <td className="center">
-                                            {(item.status !== 0 && item.status !== 1 && item.status !== 2 && item.status !== 3 && item.status !== 4 && item.status !== 5 && item.status !== 6)
-                                            ? '未知' : sysConst.ORDER_STATUS[item.status].label}
-                                        </td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_STATUS, item.status)}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/order/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>

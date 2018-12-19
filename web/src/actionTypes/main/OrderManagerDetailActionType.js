@@ -4,6 +4,10 @@ export const getOrderInfo = createAction('GET_ORDER_INFO');
 
 
 
+
+
+
+
 export const setInquiryConditionStartCity = createAction('SET_INQUIRY_CONDITION_START_CITY');
 export const setInquiryConditionEndCity = createAction('SET_INQUIRY_CONDITION_END_CITY');
 export const setInquiryConditionServiceType = createAction('SET_INQUIRY_CONDITION_SERVICE_TYPE');

@@ -254,7 +254,7 @@ class UserManagerDetail extends React.Component {
                                 {userManagerDetailReducer.inquiryArray.map(function (item) {
                                     return (
                                         <tr className="grey-text text-darken-1">
-                                            <td className="padding-left20">{item.route_start} - {item.route_end}</td>
+                                            <td className="padding-left20">{item.start_city} - {item.end_city}</td>
                                             <td>{formatUtil.formatNumber(item.car_num)}</td>
                                             <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
                                             <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
@@ -437,6 +437,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(InquiryInfoModalActionType.setShowOrderInfoFlag(false));
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId,ownProps.match.params.id));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId,ownProps.match.params.id));
+        dispatch(inquiryInfoModalAction.getOrderInfo(inquiryId,ownProps.match.params.id));
     },
     // TAB2：收发货信息
     getLogInfoList: () => {

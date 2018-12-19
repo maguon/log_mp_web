@@ -17,11 +17,7 @@ const initialState = {
     // 是否显示订单详情
     showOrderInfoFlag: false,
     // 订单信息
-    orderInfo: [],
-    // 订单车辆列表
-    orderCarArray: [],
-    // 实际运费
-    totalActFreight: 0
+    orderInfo: []
 };
 
 export default handleActions({
@@ -65,18 +61,6 @@ export default handleActions({
         return {
             ...state,
             orderInfo: action.payload
-        }
-    },
-    [InquiryInfoModalActionType.getOrderCarList]: (state, action) => {
-        return {
-            ...state,
-            orderCarArray: action.payload
-        }
-    },
-    [InquiryInfoModalActionType.setTotalActFreight]: (state, action) => {
-        return {
-            ...state,
-            totalActFreight: action.payload
         }
     }
 }, initialState)

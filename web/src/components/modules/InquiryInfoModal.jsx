@@ -35,7 +35,7 @@ class InquiryInfoModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {inquiryInfoModalReducer, closeModal} = this.props;
+        const {inquiryInfoModalReducer, commonReducer, closeModal} = this.props;
         return (
             <div id="inquiryInfoModal" className="modal modal-fixed-footer row">
 
@@ -51,9 +51,9 @@ class InquiryInfoModal extends React.Component {
                         <div className="col s6 margin-top10 margin-bottom10">
                             <div className="fz14 pink-font">询价编号：{inquiryInfoModalReducer.inquiryInfo[0].id}</div>
                             <div className="fz20 purple-font margin-top5">
-                                {inquiryInfoModalReducer.inquiryInfo[0].route_start}
+                                {inquiryInfoModalReducer.inquiryInfo[0].start_city}
                                 <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
-                                {inquiryInfoModalReducer.inquiryInfo[0].route_end}
+                                {inquiryInfoModalReducer.inquiryInfo[0].end_city}
                                 <span className="margin-left30 fz15 grey-text text-darken-2">
                                     ( {(inquiryInfoModalReducer.inquiryInfo[0].service_type !== 1 && inquiryInfoModalReducer.inquiryInfo[0].service_type !== 2)
                                         ? '未知' : sysConst.SERVICE_MODE[inquiryInfoModalReducer.inquiryInfo[0].service_type - 1].label} )
@@ -172,7 +172,7 @@ class InquiryInfoModal extends React.Component {
                             {inquiryInfoModalReducer.showOrderInfoFlag &&
                             <div className="col s12 custom-dark-grey border-bottom-line">
                                 <div className="row margin-top15 margin-bottom10">
-                                    <div className="col s6 pink-font">协商车辆数：{formatUtil.formatNumber(inquiryInfoModalReducer.orderCarArray.length)}</div>
+                                    <div className="col s6 pink-font">运送车辆：{formatUtil.formatNumber(commonReducer.orderCarArray.length)}</div>
                                     <div className="col s6 pink-font right-align">
                                         {(inquiryInfoModalReducer.orderInfo[0].log_status !== 0 && inquiryInfoModalReducer.orderInfo[0].log_status !== 1)
                                             ? '未知' : sysConst.LOG_STATUS[inquiryInfoModalReducer.orderInfo[0].log_status].label}
@@ -191,7 +191,7 @@ class InquiryInfoModal extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {inquiryInfoModalReducer.orderCarArray.map(function (item) {
+                                        {commonReducer.orderCarArray.map(function (item) {
                                             return (
                                                 <tr className="grey-text text-darken-1">
                                                     <td className="padding-left10">{item.vin}</td>
@@ -199,14 +199,14 @@ class InquiryInfoModal extends React.Component {
                                                         {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
                                                             ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
                                                     </td>
-                                                    <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
+                                                    <td className="center">{(item.old_car !== 0 && item.old_car !== 1) ? '未知' : sysConst.YES_NO[item.old_car].label}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
                                                     <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_fee,2)}</td>
                                                 </tr>
                                             )
                                         }, this)}
-                                        {inquiryInfoModalReducer.orderCarArray.length === 0 &&
+                                        {commonReducer.orderCarArray.length === 0 &&
                                         <tr className="grey-text white text-darken-1">
                                             <td className="no-data-tr" colSpan="6">暂无数据</td>
                                         </tr>}
@@ -219,7 +219,7 @@ class InquiryInfoModal extends React.Component {
                                         支付运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.orderInfo[0].fee_price,2)}</span> 元
                                     </div>
                                     <div className="col s6 right-align">
-                                        实收运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.totalActFreight,2)}</span> 元
+                                        实收运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
                                     </div>
                                 </div>
                                 <div className="row divider bold-divider"/>
@@ -276,7 +276,8 @@ class InquiryInfoModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        inquiryInfoModalReducer: state.InquiryInfoModalReducer
+        inquiryInfoModalReducer: state.InquiryInfoModalReducer,
+        commonReducer: state.CommonReducer
     }
 };
 

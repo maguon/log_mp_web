@@ -27,53 +27,11 @@ class OrderManagerDetail extends React.Component {
     componentDidMount() {
         // 取得用户信息
         this.props.getOrderInfo();
-        // 取得TAB1 询价记录列表
-        this.onClickOrderTab();
         $('ul.tabs').tabs();
     }
 
     /**
-     * 订单信息TAB：点击事件
-     */
-    onClickOrderTab = () => {
-        // 默认第一页
-        this.props.setInquiryStartNumber(0);
-        // 清空检索条件
-        this.props.changeInquiryConditionStartCity(null);
-        this.props.changeInquiryConditionEndCity(null);
-        this.props.changeInquiryConditionServiceType(null);
-        this.props.changeInquiryConditionStatus(null);
-        // 检索消息记录列表
-        this.props.getUserInquiryList();
-    };
-
-    /**
-     * 询价记录TAB：查询用户询价记录列表
-     */
-    queryUserInquiryList = () => {
-        // 默认第一页
-        this.props.setInquiryStartNumber(0);
-        this.props.getUserInquiryList();
-    };
-
-    /**
-     * 询价记录TAB：上一页
-     */
-    inquiryPreBtn = () => {
-        this.props.setInquiryStartNumber(this.props.orderManagerDetailReducer.inquiryStart - (this.props.orderManagerDetailReducer.inquirySize - 1));
-        this.props.getUserInquiryList();
-    };
-
-    /**
-     * 询价记录TAB：下一页
-     */
-    inquiryNextBtn = () => {
-        this.props.setInquiryStartNumber(this.props.orderManagerDetailReducer.inquiryStart + (this.props.orderManagerDetailReducer.inquirySize - 1));
-        this.props.getUserInquiryList();
-    };
-
-    /**
-     * 询价记录TAB：显示询价信息详细内容
+     * 显示询价信息详细内容
      */
     showInquiryInfoModal = () => {
         this.props.initInquiryInfoModalData(this.props.orderManagerDetailReducer.orderInfo[0].inquiry_id,this.props.orderManagerDetailReducer.orderInfo[0].user_id);
@@ -82,8 +40,8 @@ class OrderManagerDetail extends React.Component {
 
     render() {
         const {
-            orderManagerDetailReducer,
-            commonReducer,
+            orderManagerDetailReducer,commonReducer,getOrderInfo,
+
             changeInquiryConditionStartCity, changeInquiryConditionEndCity,
             changeInquiryConditionServiceType, changeInquiryConditionStatus,
             getLogInfoList, getBankCardList, getInvoiceList
@@ -157,132 +115,130 @@ class OrderManagerDetail extends React.Component {
                         </div>}
                         <InquiryInfoModal/>
                         <ul className="tabs">
-                            <li className="tab col s3"><a className="active" href="#tab-order" onClick={this.onClickOrderTab}>订单信息</a></li>
-                            <li className="tab col s3"><a href="#tab-log-info" onClick={getLogInfoList}>收发货信息</a></li>
-                            <li className="tab col s3"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
-                            <li className="tab col s3"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
+                            <li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getLogInfoList}>收发货信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getInvoiceList}>操作记录</a></li>
                         </ul>
                     </div>
 
                     {/* TAB 1 : 订单信息TAB */}
                     <div id="tab-order" className="col s12">
-                        {/* 询价记录：检索条件 */}
-                        <div className="row z-depth-1 detail-box margin-top20 margin-left50 margin-right50">
-                            <div className="col s11 search-condition-box margin-top20">
-                                {/* 查询条件：起始城市 */}
-                                <div className="input-field col s3">
-                                    <Select
-                                        options={commonReducer.cityList}
-                                        onChange={changeInquiryConditionStartCity}
-                                        value={orderManagerDetailReducer.inquiryConditionStartCity}
-                                        isSearchable={true}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={true}
-                                    />
-                                    <label className="active">起始城市</label>
-                                </div>
+                        {/* 运送车辆 */}
+                        <div className="row margin-top40 margin-left50 margin-right50">
+                            <div className="col s12 pink-font">
+                                <i className="mdi mdi-car fz20"/>
+                                <span className="margin-left10 fz16">运送车辆</span>
+                            </div>
+                            <div className="col s12"><div className="col s12 margin-top5 divider"/></div>
 
-                                {/* 查询条件：目的城市 */}
-                                <div className="input-field col s3">
-                                    <Select
-                                        options={commonReducer.cityList}
-                                        onChange={changeInquiryConditionEndCity}
-                                        value={orderManagerDetailReducer.inquiryConditionEndCity}
-                                        isSearchable={true}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={true}
-                                    />
-                                    <label className="active">目的城市</label>
-                                </div>
 
-                                {/* 查询条件：服务方式 */}
-                                <div className="input-field col s3">
-                                    <Select
-                                        options={sysConst.SERVICE_MODE}
-                                        onChange={changeInquiryConditionServiceType}
-                                        value={orderManagerDetailReducer.inquiryConditionServiceType}
-                                        isSearchable={false}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={true}
-                                    />
-                                    <label className="active">服务方式</label>
-                                </div>
 
-                                {/* 查询条件：状态 */}
-                                <div className="input-field col s3">
-                                    <Select
-                                        options={sysConst.INQUIRY_STATUS}
-                                        onChange={changeInquiryConditionStatus}
-                                        value={orderManagerDetailReducer.inquiryConditionStatus}
-                                        isSearchable={false}
-                                        placeholder={"请选择"}
-                                        styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                        isClearable={true}
-                                    />
-                                    <label className="active">状态</label>
+
+                            <div className="col s12">
+                                <table className="bordered">
+                                    <thead className="custom-grey border-top-line">
+                                    <tr className="grey-text text-darken-2">
+                                        <th className="padding-left10">VIN</th>
+                                        <th className="center">车型</th>
+                                        <th className="center">是否新车</th>
+                                        <th className="right-align">估值 ( 元 )</th>
+                                        <th className="right-align">预计费用 ( 元 )</th>
+                                        <th className="right-align padding-right10">实际费用 ( 元 )</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {commonReducer.orderCarArray.map(function (item) {
+                                        return (
+                                            <tr className="grey-text text-darken-1">
+                                                <td className="padding-left10">{item.vin}</td>
+                                                <td className="center">
+                                                    {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
+                                                        ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
+                                                </td>
+                                                <td className="center">{(item.old_car !== 0 && item.old_car !== 1) ? '未知' : sysConst.YES_NO[item.old_car].label}</td>
+                                                <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
+                                                <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
+                                                <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_fee,2)}</td>
+                                            </tr>
+                                        )
+                                    }, this)}
+                                    {commonReducer.orderCarArray.length === 0 &&
+                                    <tr className="grey-text white text-darken-1">
+                                        <td className="no-data-tr" colSpan="6">暂无数据</td>
+                                    </tr>}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div className="col s12 margin-bottom10 grey-text text-darken-2">
+                                <div className="col s6">
+                                    估值总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalValuation,2)}</span> 元
+                                </div>
+                                <div className="col s6 right-align">
+                                    总运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
                                 </div>
                             </div>
-                            {/* 查询按钮 */}
-                            <div className="col s1">
-                                <a className="btn-floating btn-large waves-light waves-effect btn margin-top20 query-btn" onClick={this.queryUserInquiryList}>
-                                    <i className="mdi mdi-magnify"/>
-                                </a>
-                            </div>
+                            <div className="col s12 divider bold-divider"/>
+
+
+
+
                         </div>
 
-                        {/* 询价记录：记录列表 */}
-                        <div className="row margin-top10 margin-left50 margin-right50">
-                            <table className="fixed-table bordered">
-                                <thead className="custom-grey border-top-line">
-                                <tr className="grey-text text-darken-2">
-                                    <th className="padding-left20">线路</th>
-                                    <th>车辆数</th>
-                                    <th className="center">服务方式</th>
-                                    <th className="right-align">预计费用</th>
-                                    <th className="center">询价时间</th>
-                                    <th className="center">状态</th>
-                                    <th className="center">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {orderManagerDetailReducer.inquiryArray.map(function (item) {
-                                    return (
-                                        <tr className="grey-text text-darken-1">
-                                            <td className="padding-left20">{item.route_start} - {item.route_end}</td>
-                                            <td>{formatUtil.formatNumber(item.car_num)}</td>
-                                            <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
-                                            <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                            <td className="center">{sysConst.INQUIRY_STATUS[item.status].label}</td>
-                                            <td className="operation center">
-                                                <i className="mdi mdi-table-search purple-font pointer" onClick={() => {
-                                                    this.showInquiryInfoModal(item.id)
-                                                }}/>
-                                            </td>
-                                        </tr>
-                                    )
-                                }, this)}
-                                {orderManagerDetailReducer.inquiryArray.length === 0 &&
-                                <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="7">暂无数据</td>
-                                </tr>}
-                                </tbody>
-                            </table>
+                        {/* 收发货信息 */}
+                        <div className="row margin-top40 margin-left50 margin-right50">
+                            <div className="col s12 pink-font">
+                                <i className="mdi mdi-truck fz20"/>
+                                <span className="margin-left10 fz16">收发货信息</span>
+                            </div>
+                            <div className="col s12"><div className="col s12 margin-top5 divider"/></div>
                         </div>
 
-                        {/* 上下页按钮 */}
-                        <div className="row margin-top10 margin-bottom0 margin-left50 margin-right50">
-                            <div className="right">
-                                {orderManagerDetailReducer.inquiryStart > 0 && orderManagerDetailReducer.inquiryDataSize > 0 &&
-                                <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.inquiryPreBtn}>上一页</a>}
-                                {orderManagerDetailReducer.inquiryDataSize >= orderManagerDetailReducer.inquirySize &&
-                                <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.inquiryNextBtn}>下一页</a>}
+                        {/* 客户备注 */}
+                        <div className="row margin-top40 margin-left50 margin-right50">
+                            <div className="col s12 pink-font">
+                                <i className="mdi mdi-square-edit-outline fz20"/>
+                                <span className="margin-left10 fz16">客户备注</span>
                             </div>
+                            <div className="col s12"><div className="col s12 margin-top5 divider"/></div>
+                        </div>
+
+                        {/* 客服备注 */}
+                        <div className="row margin-top40 margin-left50 margin-right50">
+                            <div className="col s12 pink-font">
+                                <i className="mdi mdi-square-edit-outline fz20"/>
+                                <span className="margin-left10 fz16">客服备注</span>
+                            </div>
+                            <div className="col s12"><div className="col s12 margin-top5 divider"/></div>
+                        </div>
+
+                        <div className="row margin-top40 margin-left50 margin-right50 position-relative">
+                            <Input s={12} label="创建时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                   value={orderManagerDetailReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
+                            <span className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font"/>
                         </div>
                     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     {/* TAB 2 : 收发货信息TAB */}
                     <div id="tab-log-info" className="col s12">
@@ -404,35 +360,22 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // 基本信息
-    getOrderInfo: () => {
-        dispatch(commonAction.getCityList());
-        dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id))
-    },
-    // TAB1：询价记录
-    setInquiryStartNumber: (start) => {
-        dispatch(OrderManagerDetailActionType.setInquiryStartNumber(start))
-    },
-    changeInquiryConditionStartCity: (value) => {
-        dispatch(OrderManagerDetailActionType.setInquiryConditionStartCity(value))
-    },
-    changeInquiryConditionEndCity: (value) => {
-        dispatch(OrderManagerDetailActionType.setInquiryConditionEndCity(value))
-    },
-    changeInquiryConditionServiceType: (value) => {
-        dispatch(OrderManagerDetailActionType.setInquiryConditionServiceType(value))
-    },
-    changeInquiryConditionStatus: (value) => {
-        dispatch(OrderManagerDetailActionType.setInquiryConditionStatus(value))
-    },
-    getUserInquiryList: () => {
-        dispatch(orderManagerDetailAction.getUserInquiryList(ownProps.match.params.id))
-    },
+    // 询价信息 模态
     initInquiryInfoModalData: (inquiryId, userId) => {
         dispatch(InquiryInfoModalActionType.setPrePage('order'));
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId, userId));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId, userId));
     },
+
+    // TAB1：订单信息
+    getOrderInfo: () => {
+        dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
+        dispatch(commonAction.getOrderCarList(ownProps.match.params.id));
+    },
+
+
+
+
     // TAB2：收发货信息
     getLogInfoList: () => {
         dispatch(orderManagerDetailAction.getLogInfoList(ownProps.match.params.id))

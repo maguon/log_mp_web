@@ -70,12 +70,12 @@ body {
     padding-right: 10px !important;
 }
 
-.user-detail-header, .inquiry-detail-header {
+.user-detail-header, .inquiry-detail-header, .order-detail-header {
     height: 122px;
     padding-top: 18px;
 }
 
-.detail-box-header, .user-detail-header, .inquiry-detail-header {
+.detail-box-header, .user-detail-header, .inquiry-detail-header, .order-detail-header {
     background-color: #F0EFF4;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -842,10 +842,32 @@ table.striped > tbody > tr:nth-child(odd) {
     color: white;
 }
 
+.purple-btn {
+    padding: 0 10px !important;
+    color: #724278;
+    background-color: white;
+    border: 1px solid #724278;
+}
+
+.purple-btn:hover {
+    background-color: #efefef !important;
+    color: #724278;
+}
+
+.purple-btn:focus {
+    background-color: #efefef !important;
+    color: #724278;
+}
+
 .query-btn {
     margin-left: 20px;
     margin-right: 10px;
     background-color: #724278;
+}
+
+.btn-height24 {
+    line-height: 24px !important;
+    height: 24px !important;
 }
 
 .small-btn {
@@ -882,6 +904,13 @@ table.striped > tbody > tr:nth-child(odd) {
     line-height: 32px;
     font-size: 12px;
     padding: 0 18px;
+}
+
+/** 确认图标 样式 */
+.confirm-icon {
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
 }
 
 /** 日期控件 图标 样式 */

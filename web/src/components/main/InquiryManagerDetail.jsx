@@ -91,9 +91,9 @@ class InquiryManagerDetail extends React.Component {
                             {/* 左侧：图标 */}
                             <div className="col s8 margin-top5 grey-text text-darken-1">
                                 <div>
-                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].route_start}</span>
+                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].start_city}</span>
                                     <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
-                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].route_end}</span>
+                                    <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].end_city}</span>
                                     <span className="margin-left30">
                                         {(inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 1 && inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 2)
                                         ? '未知' : sysConst.SERVICE_MODE[inquiryManagerDetailReducer.inquiryInfo[0].service_type - 1].label}

@@ -196,13 +196,13 @@ class InquiryInfoModal extends React.Component {
                                                 <tr className="grey-text text-darken-1">
                                                     <td className="padding-left10">{item.vin}</td>
                                                     <td className="center">
-                                                        {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
-                                                            ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
+                                                        {(item.model_type !== 1 && item.model_type !== 2 && item.model_type !== 3 && item.model_type !== 4 && item.model_type !== 5)
+                                                            ? '未知' : sysConst.CAR_MODEL[item.model_type - 1].label}
                                                     </td>
                                                     <td className="center">{(item.old_car !== 0 && item.old_car !== 1) ? '未知' : sysConst.YES_NO[item.old_car].label}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
-                                                    <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_fee,2)}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.ora_price,2)}</td>
+                                                    <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_price,2)}</td>
                                                 </tr>
                                             )
                                         }, this)}

@@ -176,28 +176,28 @@ class UserManager extends React.Component {
                         {/* 查询条件：第二行 */}
                         <div>
                             {/* 查询条件：授权时间(始) */}
-                            <div className="custom-input-field col s-percent-20">
+                            <div className="input-field col s-percent-20 custom-input-field">
                                 <Input s={12} label="授权时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             {/* 查询条件：授权时间(终) */}
-                            <div className="custom-input-field col s-percent-20">
+                            <div className="input-field col s-percent-20 custom-input-field">
                                 <Input s={12} label="授权时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             {/* 查询条件：认证时间(始) */}
-                            <div className="custom-input-field col s-percent-20">
+                            <div className="input-field col s-percent-20 custom-input-field">
                                 <Input s={12} label="认证时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionAuthTimeStart} onChange={this.changeConditionAuthTimeStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             {/* 查询条件：认证时间(终) */}
-                            <div className="custom-input-field col s-percent-20">
+                            <div className="input-field col s-percent-20 custom-input-field">
                                 <Input s={12} label="认证时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={userManagerReducer.conditionAuthTimeEnd} onChange={this.changeConditionAuthTimeEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>

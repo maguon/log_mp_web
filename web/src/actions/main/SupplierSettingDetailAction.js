@@ -40,8 +40,8 @@ export const getSupplierContactList = (id) => async (dispatch) => {
 export const deleteSupplierContact = (supplierId, contactId) => async (dispatch) => {
     try {
         swal({
-            title: "",
-            text: "确定删除该联系人？",
+            title: "确定删除该联系人？",
+            text: "",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#724278',
@@ -84,8 +84,8 @@ export const getSupplierBankList = (id) => async (dispatch) => {
 export const deleteSupplierBank = (supplierId, bankId) => async (dispatch) => {
     try {
         swal({
-            title: "",
-            text: "确定删除该银行账号？",
+            title: "确定删除该银行账号？",
+            text: "",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#724278',

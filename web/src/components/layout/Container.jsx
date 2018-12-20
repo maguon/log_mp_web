@@ -53,7 +53,7 @@ const routes = [
         component: UserManagerDetail
     },
     {
-        // 发票管理
+        // 用户发票信息管理
         path: "/invoice",
         exact: true,
         component: InvoiceManager
@@ -175,7 +175,7 @@ class Container extends React.Component {
                                         <ul>
                                             <li><Link to="/user"><i className="mdi mdi-chevron-right"/>用户管理</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>发票管理</Link></li>
+                                            <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>用户发票信息管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>

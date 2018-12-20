@@ -175,8 +175,8 @@ export const getLogSiteContactList = (id) => async (dispatch) => {
 export const deleteLogSiteContact = (logSiteId, contactId) => async (dispatch) => {
     try {
         swal({
-            title: "",
-            text: "确定删除该联系方式？",
+            title: "确定删除该联系方式？",
+            text: "",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: '#724278',

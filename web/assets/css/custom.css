@@ -43,6 +43,10 @@ body {
     height: 100%;
 }
 
+.width-auto {
+    width: auto !important;
+}
+
 .width-200 {
     width: 200px !important;
 }
@@ -281,6 +285,18 @@ table.striped > tbody > tr:nth-child(odd) {
     border-radius: 2px;
     background-color: #D483B8;
     border-color: #D483B8;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after {
+    border: 2px solid #D483B8;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
+    background-color: #D483B8;
+}
+
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after {
+    border: 2px solid #D483B8;
 }
 /** Material样式 变更部分 end */
 
@@ -533,6 +549,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .margin-right50 {
     margin-right: 50px !important;
+}
+
+.margin-right60 {
+    margin-right: 60px !important;
 }
 
 .margin-right150 {
@@ -1018,14 +1038,15 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #inquiryModal{
-    max-height: 556px;
+    max-height: 570px;
 }
 
 #newSupplierModal, #newOfferModal, #cancelInquiryModal {
     max-height: 456px;
 }
 
-#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal, #newOrderModal {
+#routeModal, #newSupplierContactModal, #newSupplierBankModal,
+#newLogSiteContactModal, #newOrderModal, #cancelOrderModal, #editUserAddressModal {
     max-height: 360px;
 }
 

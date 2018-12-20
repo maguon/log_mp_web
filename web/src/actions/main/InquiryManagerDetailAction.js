@@ -70,8 +70,8 @@ export const getOrderInfo = (inquiryId) => async (dispatch) => {
 
 export const generateOrder = (inquiryId, userId) => async (dispatch) => {
     swal({
-        title: "",
-        text: "确定将该询价生成订单？",
+        title: "确定将该询价生成订单？",
+        text: "",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: '#724278',

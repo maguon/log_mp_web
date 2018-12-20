@@ -27,6 +27,8 @@ import * as NewLogSiteContactModalActionType  from './modules/NewLogSiteContactM
 import * as NewOfferModalActionType  from './modules/NewOfferModalActionType';
 import * as NewOrderModalActionType  from './modules/NewOrderModalActionType';
 import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActionType';
+import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionType';
+import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
 
 export  {
     LoginActionType,
@@ -57,5 +59,7 @@ export  {
     NewLogSiteContactModalActionType,
     NewOfferModalActionType,
     NewOrderModalActionType,
-    CancelInquiryModalActionType
+    CancelInquiryModalActionType,
+    CancelOrderModalActionType,
+    EditUserAddressModalActionType
 }

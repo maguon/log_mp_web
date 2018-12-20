@@ -30,6 +30,8 @@ import NewLogSiteContactModalReducer from './modules/NewLogSiteContactModalReduc
 import NewOfferModalReducer from './modules/NewOfferModalReducer';
 import NewOrderModalReducer from './modules/NewOrderModalReducer';
 import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
+import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
+import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -61,5 +63,7 @@ export default combineReducers({
     NewLogSiteContactModalReducer,
     NewOfferModalReducer,
     NewOrderModalReducer,
-    CancelInquiryModalReducer
+    CancelInquiryModalReducer,
+    CancelOrderModalReducer,
+    EditUserAddressModalReducer
 })

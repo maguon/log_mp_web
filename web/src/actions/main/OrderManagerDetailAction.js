@@ -1,7 +1,8 @@
 import {apiHost} from '../../config/HostConfig';
-import {CitySettingActionType, OrderManagerDetailActionType} from '../../actionTypes';
-import {getCityList} from "./CitySettingAction";
+import {OrderManagerDetailActionType} from '../../actionTypes';
+import {getInquiryCarList, getInquiryInfo} from "./InquiryManagerDetailAction";
 
+const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -46,103 +47,59 @@ export const saveOrderRemark = (id) => async (dispatch, getState) => {
     }
 };
 
+export const changeOrderStatus = (orderId, status) => async (dispatch) => {
+    let tipsTitle;
+    let tipsText = '';
+    switch (status) {
+        // 更改为 待完善信息 状态
+        case sysConst.ORDER_STATUS[0].value:
+            tipsTitle = '确定要回到待完善信息？';
+            break;
 
+        // 更改为 待完善价格 状态
+        case sysConst.ORDER_STATUS[1].value:
+            tipsTitle = '确定要重新完善价格？';
+            break;
 
+        // 更改为 未生成需求 状态
+        case sysConst.ORDER_STATUS[2].value:
+            tipsTitle = '确定要完善价格？';
+            break;
 
-
-
-
-
-export const getUserInquiryList = (userId) => async (dispatch, getState) => {
-    try {
-        // 检索条件：开始位置
-        const start = getState().UserManagerDetailReducer.inquiryStart;
-        // 检索条件：每页数量
-        const size = getState().UserManagerDetailReducer.inquirySize;
-
-        // 检索条件：起始城市
-        const inquiryConditionStartCity = getState().UserManagerDetailReducer.inquiryConditionStartCity;
-        // 检索条件：目的城市
-        const inquiryConditionEndCity = getState().UserManagerDetailReducer.inquiryConditionEndCity;
-        // 检索条件：服务方式
-        const inquiryConditionServiceType = getState().UserManagerDetailReducer.inquiryConditionServiceType;
-        // 检索条件：状态
-        const inquiryConditionStatus = getState().UserManagerDetailReducer.inquiryConditionStatus;
-
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/queryInquiry?start=' + start + '&size=' + size + '&userId=' + userId;
-
-        // 检索条件
-        let conditionsObj = {
-            // 检索条件：起始城市
-            routeStart: inquiryConditionStartCity === null ? '' : inquiryConditionStartCity.value,
-            // 检索条件：目的城市
-            routeEnd: inquiryConditionEndCity === null ? '' : inquiryConditionEndCity.value,
-            // 检索条件：服务方式
-            serviceType: inquiryConditionServiceType === null ? '' : inquiryConditionServiceType.value,
-            // 检索条件：状态
-            status: inquiryConditionStatus === null ? '' : inquiryConditionStatus.value
-        };
-        let conditions = httpUtil.objToUrl(conditionsObj);
-        // 检索URL
-        url = conditions.length > 0 ? url + "&" + conditions : url;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderManagerDetailActionType.setInquiryDataSize, payload: res.result.length});
-            dispatch({type: OrderManagerDetailActionType.getUserInquiryList, payload: res.result.slice(0, size - 1)});
-        } else if (res.success === false) {
-            swal('获取询价记录列表失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
+        // 更改为 待安排车辆 状态
+        case sysConst.ORDER_STATUS[3].value:
+            tipsTitle = '确定要生成运输需求？';
+            tipsText = '运输需求生成后，订单将进入待安排车辆状态，车辆信息将不可再修改！';
+            break;
+        default:
+            tipsText = '';
     }
+
+    swal({
+        title: tipsTitle,
+        text: tipsText,
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/order/' + orderId  + '/status/' + status;
+            const res = await httpUtil.httpPut(url, {});
+            if (res.success === true) {
+                swal("修改成功", "", "success");
+                dispatch(getOrderInfo(orderId));
+                dispatch(commonAction.getOrderCarList(orderId));
+            } else if (res.success === false) {
+                swal('修改失败', res.msg, 'warning');
+            }
+        }
+    });
 };
 
-export const getLogInfoList = (userId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/address?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderManagerDetailActionType.getLogInfoList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取收发货信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
 
-export const getBankCardList = (userId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryBank?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderManagerDetailActionType.getBankCardList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取银行卡信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
 
-export const getInvoiceList = (userId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryInvoice?userId=' + userId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: OrderManagerDetailActionType.getInvoiceList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取发票信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
+
+

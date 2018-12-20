@@ -139,11 +139,11 @@ export const TRANSPORT_MODE = [
 // 订单类型
 export const ORDER_TYPE = [
     {
-        value: 0,
+        value: 1,
         label: "内部订单"
     },
     {
-        value: 1,
+        value: 2,
         label: "外部订单"
     }
 ];

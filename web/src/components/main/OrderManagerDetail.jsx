@@ -3,14 +3,18 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {OrderManagerDetailActionType, InquiryInfoModalActionType, OrderManagerActionType} from '../../actionTypes';
-import {InquiryInfoModal} from '../modules/index';
+import {
+    OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,
+    CancelOrderModalActionType
+} from '../../actionTypes';
+import {InquiryInfoModal, EditUserAddressModal, CancelOrderModal} from '../modules/index';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 class OrderManagerDetail extends React.Component {
 
@@ -47,9 +51,20 @@ class OrderManagerDetail extends React.Component {
         console.log('premium',$('#' + actFee).text());
     };
 
+    /**
+     * 更新 订单状态
+     */
+    changeOrderStatus = (status) => {
+        this.props.changeOrderStatus(status);
+    };
 
-
-
+    /**
+     * 显示 更新 收发货信息
+     */
+    showEditUserAddressModal = (pageType) => {
+        this.props.initEditUserAddressModalData(pageType, this.props.orderManagerDetailReducer.orderInfo[0]);
+        $('#editUserAddressModal').modal('open');
+    };
 
     /**
      * 更新 订单备注
@@ -58,14 +73,20 @@ class OrderManagerDetail extends React.Component {
         this.props.setOrderRemark(event.target.value);
     };
 
+    /**
+     * 取消订单按钮 点击事件
+     */
+    showCancelOrderModal = () => {
+        this.props.initCancelOrderModalData();
+        $('#cancelOrderModal').modal('open');
+    };
+
     render() {
         const {
-            orderManagerDetailReducer, commonReducer, getOrderInfo,
-
+            orderManagerDetailReducer, commonReducer,
+            getOrderInfo, getPaymentInfo, getLogInfo, getInvoiceList, getOperationList,
             changeInquiryConditionStartCity, changeInquiryConditionEndCity,
             changeInquiryConditionServiceType, changeInquiryConditionStatus,
-            getLogInfoList, getBankCardList, getInvoiceList,
-
             saveOrderRemark
         } = this.props;
         return (
@@ -100,21 +121,17 @@ class OrderManagerDetail extends React.Component {
                                     <span className="fz20 purple-font">{orderManagerDetailReducer.orderInfo[0].end_city}</span>
                                     {/* 服务类型 */}
                                     <span className="margin-left30">
-                                        {(orderManagerDetailReducer.orderInfo[0].service_type !== 1 && orderManagerDetailReducer.orderInfo[0].service_type !== 2)
-                                            ? '未知' : sysConst.SERVICE_MODE[orderManagerDetailReducer.orderInfo[0].service_type - 1].label}
+                                        {commonUtil.getJsonValue(sysConst.SERVICE_MODE, orderManagerDetailReducer.orderInfo[0].service_type)}
                                     </span>
                                     {/* 询价信息 按钮 */}
-                                    {orderManagerDetailReducer.orderInfo[0].created_type === 1 &&
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
                                     <button type="button" className="margin-left30 btn purple-btn btn-height24 fz14" onClick={this.showInquiryInfoModal}>询价信息</button>}
                                 </div>
 
                                 {/* 第二行 */}
                                 <div className="margin-top15">
                                     {/* 订单类型 */}
-                                    <span className="purple-font">
-                                        {(orderManagerDetailReducer.orderInfo[0].created_type !== 0 && orderManagerDetailReducer.orderInfo[0].created_type !== 1)
-                                        ? '未知' : sysConst.ORDER_TYPE[orderManagerDetailReducer.orderInfo[0].created_type].label}
-                                    </span>
+                                    <span className="purple-font">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, orderManagerDetailReducer.orderInfo[0].created_type)}</span>
                                     {/* 用户 */}
                                     <i className="margin-left30 fz20 pink-font mdi mdi-account"/>
                                     <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].user_name} ( ID：{orderManagerDetailReducer.orderInfo[0].user_id} )</span>
@@ -129,166 +146,221 @@ class OrderManagerDetail extends React.Component {
                                 <div>订单编号：{orderManagerDetailReducer.orderInfo[0].id}</div>
                                 <div className="margin-top10">
                                     <span>创建时间：{formatUtil.getDateTime(orderManagerDetailReducer.orderInfo[0].created_on)}</span>
-                                    <span className="margin-left30">创建人：{orderManagerDetailReducer.orderInfo[0].created_user}</span>
+                                    <span className="margin-left30">创建人：{orderManagerDetailReducer.orderInfo[0].admin_name}</span>
                                 </div>
                                 <div className="margin-top10 pink-font">
-                                    {(orderManagerDetailReducer.orderInfo[0].status !== 0
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 1
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 2
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 3
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 4
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 5
-                                        && orderManagerDetailReducer.orderInfo[0].status !== 6)
-                                        ? '未知' : sysConst.ORDER_STATUS[orderManagerDetailReducer.orderInfo[0].status].label}
+                                    {commonUtil.getJsonValue(sysConst.ORDER_STATUS, orderManagerDetailReducer.orderInfo[0].status)}
                                 </div>
                             </div>
                         </div>}
                         <InquiryInfoModal/>
                         <ul className="tabs">
                             <li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getLogInfoList}>收发货信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-bank-card" onClick={getBankCardList}>银行卡</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getLogInfo}>运输信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getInvoiceList}>操作记录</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>
                         </ul>
                     </div>
 
                     {/* TAB 1 : 订单信息TAB */}
                     <div id="tab-order" className="col s12">
-                        {/* 运送车辆 */}
-                        <div className="row margin-top40 margin-left50 margin-right50">
-                            <div className="col s12 pink-font">
-                                <i className="mdi mdi-car fz20"/>
-                                <span className="margin-left10 fz16">运送车辆</span>
+                        {/** 存在订单数据时，显示下面具体内容 */}
+                        {orderManagerDetailReducer.orderInfo.length > 0 &&
+                        <div>
+                            {/** 回到待完善信息/完善价格 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
+                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                                <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[0].value)}}>回到待完善信息</button>
+                                <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[2].value)}}>完善价格</button>
+                            </div>}
+
+                            {/** 生成运输需求/重新完善价格 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
+                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                                <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value)}}>生成运输需求</button>
+                                <button type="button" className="btn confirm-btn width-auto margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[1].value)}}>重新完善价格</button>
+                            </div>}
+
+                            {/* 运送车辆 */}
+                            <div className={`row margin-left50 margin-right50 ${(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value
+                                || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value) ? "" : "margin-top40"}`}>
+                                <div className="col s12 pink-font">
+                                    <i className="mdi mdi-car fz20"/>
+                                    <span className="margin-left10 fz16">运送车辆</span>
+                                    {commonReducer.orderCarArray.length > 0 &&
+                                    <span className="fz16">： {formatUtil.formatNumber(commonReducer.orderCarArray.length)}</span>}
+                                </div>
+
+                                {/* 运送车辆 列表 */}
                                 {commonReducer.orderCarArray.length > 0 &&
-                                <span className="fz16">： {formatUtil.formatNumber(commonReducer.orderCarArray.length)}</span>}
+                                <div className="col s12 margin-top5">
+                                    <table className="detail-box bordered">
+                                        <thead className="custom-grey border-top-line">
+                                        <tr className="grey-text text-darken-2">
+                                            <th className="padding-left10">VIN</th>
+                                            <th className="center">车型</th>
+                                            <th className="center">是否新车</th>
+                                            <th className="right-align">估值 ( 元 )</th>
+                                            <th className="right-align padding-right50 width-300">实际费用 ( 元 )</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {commonReducer.orderCarArray.map(function (item, key) {
+                                            return (
+                                                <tr className="grey-text text-darken-1">
+                                                    <td className="padding-left10">{item.vin}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
+                                                    <td className="right-align padding-right10 width-300">
+                                                        {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
+                                                        <div>
+                                                            <input id={`index${key}`} defaultValue={item.act_price} className="margin-bottom0 width-200 right-align"/>
+                                                            <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer" onClick={()=> {this.saveOrderItemInfo(`index${key}`,`index${key}`)}}/>
+                                                        </div>}
+                                                        {orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[1].value &&
+                                                        <span className="margin-right50">{formatUtil.formatNumber(item.act_price, 2)}</span>}
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }, this)}
+                                        </tbody>
+                                    </table>
+                                </div>}
+
+                                {/* 运送车辆 总计 */}
+                                {commonReducer.orderCarArray.length > 0 &&
+                                <div className="col s12 margin-top20 grey-text text-darken-2">
+                                    <div className="col s6">
+                                        估值总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalValuation,2)}</span> 元
+                                    </div>
+                                    <div className="col s6 right-align">
+                                        总运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
+                                    </div>
+                                </div>}
+
+                                {/* 分割线 */}
+                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
+
+                                {/* 无 运送车辆 时，提示文字 */}
+                                {commonReducer.orderCarArray.length === 0 &&
+                                <div className="col s12 margin-top10 grey-text text-lighten-1">等待用户完善车辆信息</div>}
                             </div>
 
-                            {/* 运送车辆 列表 */}
-                            {commonReducer.orderCarArray.length > 0 &&
-                            <div className="col s12 margin-top5">
-                                <table className="detail-box bordered">
-                                    <thead className="custom-grey border-top-line">
-                                    <tr className="grey-text text-darken-2">
-                                        <th className="padding-left10">VIN</th>
-                                        <th className="center">车型</th>
-                                        <th className="center">是否新车</th>
-                                        <th className="right-align">估值 ( 元 )</th>
-                                        <th className="right-align padding-right50 width-300">实际费用 ( 元 )</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {commonReducer.orderCarArray.map(function (item, key) {
-                                        return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td className="padding-left10">{item.vin}</td>
-                                                <td className="center">
-                                                    {(item.model_type !== 1 && item.model_type !== 2 && item.model_type !== 3 && item.model_type !== 4 && item.model_type !== 5)
-                                                        ? '未知' : sysConst.CAR_MODEL[item.model_type - 1].label}
-                                                </td>
-                                                <td className="center">{(item.old_car !== 0 && item.old_car !== 1) ? '未知' : sysConst.YES_NO[item.old_car].label}</td>
-                                                <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                <td className="right-align padding-right10 width-300">
-                                                    <input id={`index${key}`} defaultValue={item.act_price} className="margin-bottom0 width-200 right-align"/>
-                                                    <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer" onClick={()=> {this.saveOrderItemInfo(`index${key}`,`index${key}`)}}/>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }, this)}
-                                    </tbody>
-                                </table>
-                            </div>}
-
-                            {/* 运送车辆 总计 */}
-                            {commonReducer.orderCarArray.length > 0 &&
-                            <div className="col s12 margin-top20 grey-text text-darken-2">
-                                <div className="col s6">
-                                    估值总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalValuation,2)}</span> 元
+                            {/* 收发货信息 */}
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s12 pink-font">
+                                    <i className="mdi mdi-truck fz20"/>
+                                    <span className="margin-left10 fz16">收发货信息</span>
                                 </div>
-                                <div className="col s6 right-align">
-                                    总运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
-                                </div>
-                            </div>}
+                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                            {/* 分割线 */}
-                            <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
+                                {/* 发货信息 详情 */}
+                                {orderManagerDetailReducer.orderInfo[0].send_name !== null && orderManagerDetailReducer.orderInfo[0].send_name !== '' &&
+                                <div>
+                                    <div className="col s3 margin-top10">
+                                        <i className="mdi mdi-account-outline fz20 pink-font"/>
+                                        <span className="margin-left10">发货人：{orderManagerDetailReducer.orderInfo[0].send_name} {orderManagerDetailReducer.orderInfo[0].send_phone}</span>
+                                    </div>
 
-                            {/* 无 运送车辆 时，提示文字 */}
-                            {commonReducer.orderCarArray.length === 0 &&
-                            <div className="col s12 margin-top10 grey-text text-lighten-1">等待用户完善车辆信息</div>}
-                        </div>
+                                    <div className="col s8 margin-top10">
+                                        <i className="mdi mdi-map-marker-outline fz20 pink-font"/>
+                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].send_address}</span>
+                                    </div>
+                                    {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value ||
+                                        orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value ||
+                                        orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value) &&
+                                    <div className="col s1 margin-top10 right-align pink-font"><i className="mdi mdi-pencil fz20 pointer" onClick={() => {this.showEditUserAddressModal('send')}}/></div>}
 
-                        {/* 收发货信息 */}
-                        <div className="row margin-top40 margin-left50 margin-right50">
-                            <div className="col s12 pink-font">
-                                <i className="mdi mdi-truck fz20"/>
-                                <span className="margin-left10 fz16">收发货信息</span>
+                                    <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
+                                </div>}
+
+                                {/* 收货信息 详情 */}
+                                {orderManagerDetailReducer.orderInfo[0].recv_name !== null && orderManagerDetailReducer.orderInfo[0].recv_name !== '' &&
+                                <div>
+                                    <div className="col s3 margin-top10">
+                                        <i className="mdi mdi-account-outline fz20 orange-text text-lighten-3"/>
+                                        <span className="margin-left10">收货人：{orderManagerDetailReducer.orderInfo[0].recv_name} {orderManagerDetailReducer.orderInfo[0].recv_phone}</span>
+                                    </div>
+                                    <div className="col s8 margin-top10">
+                                        <i className="mdi mdi-map-marker-outline fz20 orange-text text-lighten-3"/>
+                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].recv_address}</span>
+                                    </div>
+                                    {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value ||
+                                        orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value ||
+                                        orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value) &&
+                                    <div className="col s1 margin-top10 right-align pink-font"><i className="mdi mdi-pencil fz20 pointer" onClick={() => {this.showEditUserAddressModal('receive')}}/></div>}
+
+                                    <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
+                                    <EditUserAddressModal/>
+                                </div>}
                             </div>
-                            <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                            {/* 发货信息 详情 */}
-                            {orderManagerDetailReducer.orderInfo.length > 0 &&
-                                orderManagerDetailReducer.orderInfo[0].send_name !== null && orderManagerDetailReducer.orderInfo[0].send_name !== '' &&
-                            <div>
-                                <div className="col s11 margin-top10">
-                                    <i className="mdi mdi-account-outline fz20 pink-font"/>
-                                    <span className="margin-left10">发货人：{orderManagerDetailReducer.orderInfo[0].send_name} {orderManagerDetailReducer.orderInfo[0].send_phone}</span>
-                                    <i className="mdi mdi-map-marker-outline fz20 pink-font margin-left50"/>
-                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].send_address}</span>
+                            {/* 客户备注 */}
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s12 pink-font">
+                                    <i className="mdi mdi-square-edit-outline fz20"/>
+                                    <span className="margin-left10 fz16">客户备注</span>
                                 </div>
-                                <div className="col s1 margin-top10 right-align pink-font"><i className="mdi mdi-pencil fz20 pointer"/></div>
+                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
+                                {/* 收货信息 详情 */}
+                                {orderManagerDetailReducer.orderInfo[0].mark !== null && orderManagerDetailReducer.orderInfo[0].mark !== '' &&
+                                <div>
+                                    <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].mark}</div>
+                                    <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
+                                </div>}
+                            </div>
+
+                            {/* 客服备注 */}
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s12 pink-font">
+                                    <i className="mdi mdi-square-edit-outline fz20"/>
+                                    <span className="margin-left10 fz16">客服备注</span>
+                                </div>
+                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
+                                {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
+                                {orderManagerDetailReducer.orderInfo.length > 0
+                                && orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
+                                (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
+                                    orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
+                                <div>
+                                    <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].admin_mark}</div>
+                                    <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
+                                </div>}
+                            </div>
+
+                            {/* 客服备注 已取消/已完成 以外状态时，可以编辑 */}
+                            {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
+                                orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
+                            <div className="row margin-top40 margin-left50 margin-right50 position-relative">
+                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>
+                            </div>}
+
+                            {/** 取消订单 按钮 */}
+                            {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value
+                                || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[3].value) &&
+                            <div className="row margin-right60 right-align">
+                                <CancelOrderModal/>
+                                <button type="button" className="btn cancel-btn" onClick={this.showCancelOrderModal}>取消订单</button>
+                            </div>}
+
+                            {/* 取消原因 已取消 状态时，显示详情 */}
+                            {orderManagerDetailReducer.orderInfo.length > 0
+                            && orderManagerDetailReducer.orderInfo[0].cancel_reason !== null && orderManagerDetailReducer.orderInfo[0].cancel_reason !== '' &&
+                            orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value &&
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s12 pink-font">
+                                    <i className="mdi mdi-square-edit-outline fz20"/>
+                                    <span className="margin-left10 fz16">取消原因</span>
+                                </div>
+                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
+                                <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].cancel_reason}</div>
                                 <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
                             </div>}
-
-                            {/* 收货信息 详情 */}
-                            {orderManagerDetailReducer.orderInfo.length > 0 &&
-                            orderManagerDetailReducer.orderInfo[0].recv_name !== null && orderManagerDetailReducer.orderInfo[0].recv_name !== '' &&
-                            <div>
-                                <div className="col s3 margin-top10">
-                                    <i className="mdi mdi-account-outline fz20 orange-text text-lighten-3"/>
-                                    <span className="margin-left10">收货人：{orderManagerDetailReducer.orderInfo[0].recv_name} {orderManagerDetailReducer.orderInfo[0].recv_phone}</span>
-                                </div>
-                                <div className="col s8 margin-top10">
-                                    <i className="mdi mdi-map-marker-outline fz20 orange-text text-lighten-3"/>
-                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].recv_address}</span>
-                                </div>
-                                <div className="col s1 margin-top10 right-align pink-font"><i className="mdi mdi-pencil fz20 pointer"/></div>
-
-                                <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
-                            </div>}
-                        </div>
-
-                        {/* 客户备注 */}
-                        <div className="row margin-top40 margin-left50 margin-right50">
-                            <div className="col s12 pink-font">
-                                <i className="mdi mdi-square-edit-outline fz20"/>
-                                <span className="margin-left10 fz16">客户备注</span>
-                            </div>
-                            <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
-
-                            {/* 收货信息 详情 */}
-                            {orderManagerDetailReducer.orderInfo.length > 0 &&
-                            orderManagerDetailReducer.orderInfo[0].mark !== null && orderManagerDetailReducer.orderInfo[0].mark !== '' &&
-                            <div>
-                                <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].mark}</div>
-                                <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
-                            </div>}
-                        </div>
-
-                        {/* 客服备注 */}
-                        <div className="row margin-top40 margin-left50 margin-right50">
-                            <div className="col s12 pink-font">
-                                <i className="mdi mdi-square-edit-outline fz20"/>
-                                <span className="margin-left10 fz16">客服备注</span>
-                            </div>
-                            <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
-                        </div>
-
-                        <div className="row margin-top40 margin-left50 margin-right50 position-relative">
-                            <Input s={12} label="备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
-                            <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>
-                        </div>
+                        </div>}
                     </div>
 
 
@@ -297,21 +369,8 @@ class OrderManagerDetail extends React.Component {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    {/* TAB 2 : 收发货信息TAB */}
-                    <div id="tab-log-info" className="col s12">
+                    {/* TAB 2 : 支付信息TAB */}
+                    <div id="tab-payment-info" className="col s12">
                         {orderManagerDetailReducer.logInfoArray.length === 0 &&
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂无收发货信息
@@ -351,8 +410,8 @@ class OrderManagerDetail extends React.Component {
                         </div>
                     </div>
 
-                    {/* TAB 3 : 银行卡TAB */}
-                    <div id="tab-bank-card" className="col s12">
+                    {/* TAB 3 : 运输信息TAB */}
+                    <div id="tab-log-info" className="col s12">
                         {orderManagerDetailReducer.bankCardArray.length === 0 &&
                         <div className="row center grey-text margin-top40 fz18">
                             该用户暂未绑定银行卡
@@ -436,11 +495,26 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId, userId));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId, userId));
     },
-
     // TAB1：订单信息
     getOrderInfo: () => {
         dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
         dispatch(commonAction.getOrderCarList(ownProps.match.params.id));
+    },
+    changeOrderStatus: (value) => {
+        dispatch(orderManagerDetailAction.changeOrderStatus(ownProps.match.params.id, value))
+    },
+    initEditUserAddressModalData: (pageType, orderInfo) => {
+        dispatch(EditUserAddressModalActionType.setOrderId(ownProps.match.params.id));
+        dispatch(EditUserAddressModalActionType.setPageType(pageType));
+        if (pageType === 'send') {
+            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.send_name));
+            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.send_phone));
+            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.send_address));
+        } else {
+            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.recv_name));
+            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.recv_phone));
+            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.recv_address));
+        }
     },
     setOrderRemark: (value) => {
         dispatch(OrderManagerDetailActionType.setOrderRemark(value))
@@ -448,18 +522,24 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     saveOrderRemark: (value) => {
         dispatch(orderManagerDetailAction.saveOrderRemark(ownProps.match.params.id))
     },
-
-
-    // TAB2：收发货信息
-    getLogInfoList: () => {
-        dispatch(orderManagerDetailAction.getLogInfoList(ownProps.match.params.id))
+    initCancelOrderModalData: () => {
+        dispatch(CancelOrderModalActionType.setOrderId(ownProps.match.params.id));
+        dispatch(CancelOrderModalActionType.setRemark(''));
     },
-    // TAB3：银行卡
-    getBankCardList: () => {
+    // TAB2：支付信息
+    getPaymentInfo: () => {
+        dispatch(orderManagerDetailAction.getPaymentInfo(ownProps.match.params.id))
+    },
+    // TAB3：运输信息
+    getLogInfo: () => {
         dispatch(orderManagerDetailAction.getBankCardList(ownProps.match.params.id))
     },
     // TAB4：发票信息
     getInvoiceList: () => {
+        dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
+    },
+    // TAB5：操作记录
+    getOperationList: () => {
         dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
     }
 });

@@ -77,13 +77,15 @@ export const calculateFreight = () => (dispatch, getState) => {
     const carFlag = getState().InquiryModalReducer.carFlag;
     // 估值
     const valuation = getState().InquiryModalReducer.valuation;
+    // 是否购买保险
+    const insuranceFlag = getState().InquiryModalReducer.insuranceFlag;
 
     // 预计运费
     let freight = 0;
     if (mileage !== 0 && serviceMode !== null && serviceMode.value !== undefined
         && carModel !== null && carModel.value !== undefined
         && carFlag !== null && carFlag.value !== undefined && valuation !== '') {
-        // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
+        // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 是否购买保险*估值*估值比率  + 服务方式费用
         // 里程单价 --> sysConst.INQUIRY_PARAMS.unitPrice
         // 车型系数 --> sysConst.CAR_MODEL[x].ratio
         // 是否新车系数 --> sysConst.YES_NO[x].ratio
@@ -91,7 +93,7 @@ export const calculateFreight = () => (dispatch, getState) => {
         // 服务方式费用 --> sysConst.SERVICE_MODE[x].fee
 
         freight = mileage * sysConst.INQUIRY_PARAMS.unitPrice * sysConst.CAR_MODEL[carModel.value - 1].ratio * sysConst.YES_NO[carFlag.value].ratio
-            + valuation * sysConst.INQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode.value - 1].fee;
+            + insuranceFlag * valuation * sysConst.INQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode.value - 1].fee;
     }
 
     dispatch({type: InquiryModalActionType.setFreight, payload: formatUtil.formatNumber(freight, 2)})

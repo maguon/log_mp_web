@@ -15,6 +15,8 @@ const initialState = {
     carFlag: null,
     // 估值
     valuation: '',
+    // 是否购买保险
+    insuranceFlag: '1',
 
     // 错误路线标记
     errorRouteFlg: false,
@@ -59,6 +61,12 @@ export default handleActions({
         return {
             ...state,
             valuation: action.payload
+        }
+    },
+    [InquiryModalActionType.setInsuranceFlag]: (state, action) => {
+        return {
+            ...state,
+            insuranceFlag: action.payload
         }
     },
     [InquiryModalActionType.setErrorRouteFlg]: (state, action) => {

@@ -34,6 +34,13 @@ class InquiryModal extends React.Component {
     };
 
     /**
+     * 改变是否保险
+     */
+    changeInsuranceFlag = (event) => {
+        this.props.changeInsuranceFlag(event.target.value);
+    };
+
+    /**
      * 渲染(挂载)画面。
      */
     render() {
@@ -127,27 +134,31 @@ class InquiryModal extends React.Component {
                         </div>
                     </div>
 
-                    {/** 最终行：预计运费 */}
-                    <div className="row input-field col s12">
-                        <div className="col left-align" style={{width: '4%'}}>
-                            {inquiryModalReducer.errorRouteFlg &&
-                            <div className="bold red-text">
-                                <span className="mdi mdi-alert-circle red-text fz30"/>
-                            </div>
-                            }
-                        </div>
-                        <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
-                            {inquiryModalReducer.errorRouteFlg &&
-                            <div className="bold red-text">
-                                当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
-                            </div>
-                            }
+                    {/** 第四行：是否保险，预计运费 */}
+                    <div className="row">
+                        <div className="col s6">
+                            <span className="grey-text">是否购买保险：</span>
+                            <input type="radio" id="no"  value="0" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='0'} onChange={this.changeInsuranceFlag}/>
+                            <label htmlFor="no">否</label>
+                            <input type="radio" id="yes" value="1" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='1'} onChange={this.changeInsuranceFlag}/>
+                            <label htmlFor="yes" className="margin-left10">是</label>
                         </div>
 
-                        <div className="col right-align" style={{width: '36%', marginTop: '12px'}}>
+                        <div className="col s6 right-align">
                             预计运费：<span className="red-font margin-left5 fz18">{inquiryModalReducer.freight}</span>元
                         </div>
                     </div>
+
+                    {/** 最终行：预计运费 */}
+                    {inquiryModalReducer.errorRouteFlg &&
+                    <div className="row margin-bottom0 bold red-text">
+                        <div className="col left-align s-percent-4">
+                            <span className="mdi mdi-alert-circle red-text fz30"/>
+                        </div>
+                        <div className="col left-align s-percent-96 margin-top10">
+                            当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
+                        </div>
+                    </div> }
                 </div>
 
                 {/** Modal固定底部：取消确定按钮 */}
@@ -195,6 +206,10 @@ const mapDispatchToProps = (dispatch) => ({
     },
     changeValuation: (valuation) => {
         dispatch(InquiryModalActionType.setValuation(valuation));
+        dispatch(inquiryModalAction.calculateFreight());
+    },
+    changeInsuranceFlag: (value) => {
+        dispatch(InquiryModalActionType.setInsuranceFlag(value));
         dispatch(inquiryModalAction.calculateFreight());
     },
     closeModal: () => {

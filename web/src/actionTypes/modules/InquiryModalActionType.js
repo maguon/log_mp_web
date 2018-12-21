@@ -10,3 +10,4 @@ export const setInsuranceFlag = createAction('SET_INSURANCE_FLAG');
 export const setErrorRouteFlg = createAction('SET_ERROR_ROUTE_FLAG');
 export const setMileage = createAction('SET_MILEAGE');
 export const setFreight = createAction('SET_FREIGHT');
+export const setInsuranceFee = createAction('SET_INSURANCE_FEE');

@@ -6,6 +6,7 @@ import {InquiryModalActionType} from "../../actionTypes";
 
 const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
 const sysConst = require('../../util/SysConst');
+const formatUtil = require('../../util/FormatUtil');
 
 /**
  * UI组件：询价模块。
@@ -134,22 +135,34 @@ class InquiryModal extends React.Component {
                         </div>
                     </div>
 
-                    {/** 第四行：是否保险，预计运费 */}
+                    {/** 第四行：是否保险，预计保费 */}
                     <div className="row">
                         <div className="col s6">
                             <span className="grey-text">是否购买保险：</span>
-                            <input type="radio" id="no"  value="0" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='0'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="no">否</label>
                             <input type="radio" id="yes" value="1" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='1'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="yes" className="margin-left10">是</label>
+                            <label htmlFor="yes">是</label>
+                            <input type="radio" id="no"  value="0" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='0'} onChange={this.changeInsuranceFlag}/>
+                            <label htmlFor="no" className="margin-left10">否</label>
                         </div>
 
                         <div className="col s6 right-align">
-                            预计运费：<span className="red-font margin-left5 fz18">{inquiryModalReducer.freight}</span>元
+                            预计保费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.insuranceFee, 2)}</span>元
+                        </div>
+                    </div>
+                    <div className="row col s12"><div className="col s12 dotted-line"/></div>
+
+                    {/** 第五行：预计运费，预计总费用 */}
+                    <div className="row">
+                        <div className="col s6">
+                            预计运费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight, 2)}</span>元
+                        </div>
+
+                        <div className="col s6 right-align">
+                            预计总费用：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight + inquiryModalReducer.insuranceFee, 2)}</span>元
                         </div>
                     </div>
 
-                    {/** 最终行：预计运费 */}
+                    {/** 最终行：提示信息 */}
                     {inquiryModalReducer.errorRouteFlg &&
                     <div className="row margin-bottom0 bold red-text">
                         <div className="col left-align s-percent-4">
@@ -184,30 +197,37 @@ const mapStateToProps = (state) => {
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
  */
 const mapDispatchToProps = (dispatch) => ({
+    // 始发城市
     changeStartCity: (value) => {
         dispatch(InquiryModalActionType.setStartCity(value));
         dispatch(inquiryModalAction.calculateMileage())
     },
+    // 目的城市
     changeEndCity: (value) => {
         dispatch(InquiryModalActionType.setEndCity(value));
         dispatch(inquiryModalAction.calculateMileage())
     },
+    // 服务方式
     changeServiceMode: (serviceMode) => {
         dispatch(InquiryModalActionType.setServiceMode(serviceMode));
         dispatch(inquiryModalAction.calculateFreight());
     },
+    // 车型
     changeCarModel: (carModel) => {
         dispatch(InquiryModalActionType.setCarModel(carModel));
         dispatch(inquiryModalAction.calculateFreight());
     },
+    // 是否新车
     changeCarFlag: (carFlag) => {
         dispatch(InquiryModalActionType.setCarFlag(carFlag));
         dispatch(inquiryModalAction.calculateFreight());
     },
+    // 估值
     changeValuation: (valuation) => {
         dispatch(InquiryModalActionType.setValuation(valuation));
         dispatch(inquiryModalAction.calculateFreight());
     },
+    // 是否保险
     changeInsuranceFlag: (value) => {
         dispatch(InquiryModalActionType.setInsuranceFlag(value));
         dispatch(inquiryModalAction.calculateFreight());

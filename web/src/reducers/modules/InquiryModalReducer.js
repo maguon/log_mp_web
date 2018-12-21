@@ -23,7 +23,9 @@ const initialState = {
     // 里程
     mileage: 0,
     // 预计运费
-    freight: 0
+    freight: 0,
+    // 预计保费
+    insuranceFee: 0
 };
 
 export default handleActions({
@@ -85,6 +87,12 @@ export default handleActions({
         return {
             ...state,
             freight: action.payload
+        }
+    },
+    [InquiryModalActionType.setInsuranceFee]: (state, action) => {
+        return {
+            ...state,
+            insuranceFee: action.payload
         }
     }
 }, initialState)

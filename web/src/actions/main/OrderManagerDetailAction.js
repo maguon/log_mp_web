@@ -1,6 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
 import {OrderManagerDetailActionType} from '../../actionTypes';
-import {getInquiryCarList, getInquiryInfo} from "./InquiryManagerDetailAction";
 
 const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');

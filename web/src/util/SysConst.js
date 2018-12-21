@@ -184,7 +184,7 @@ export const ORDER_STATUS = [
     },
     {
         value: 2,
-        label: "未生成需求"
+        label: "待生成需求"
     },
     {
         value: 3,

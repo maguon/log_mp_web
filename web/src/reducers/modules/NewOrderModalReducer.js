@@ -8,7 +8,9 @@ const initialState = {
     // 目的城市
     endCity: '',
     // 服务方式
-    serviceType: ''
+    serviceType: '',
+    // 错误路线标记
+    errorRouteFlg: false
 };
 
 export default handleActions({
@@ -28,6 +30,12 @@ export default handleActions({
         return {
             ...state,
             serviceType: action.payload
+        }
+    },
+    [NewOrderModalActionType.setErrorRouteFlg]: (state, action) => {
+        return {
+            ...state,
+            errorRouteFlg: action.payload
         }
     }
 }, initialState)

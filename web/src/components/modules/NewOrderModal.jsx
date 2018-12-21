@@ -76,12 +76,23 @@ class NewOrderModal extends React.Component {
                             <label className="active">服务方式</label>
                         </div>
                     </div>
+
+                    {/** 最终行：预计运费 */}
+                    {newOrderModalReducer.errorRouteFlg &&
+                    <div className="row margin-bottom0 bold red-text">
+                        <div className="col left-align s-percent-4">
+                            <span className="mdi mdi-alert-circle red-text fz30"/>
+                        </div>
+                        <div className="col left-align s-percent-96 margin-top10">
+                            当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
+                        </div>
+                    </div> }
                 </div>
 
                 {/** Modal固定底部：取消/确定按钮 */}
                 <div className="modal-footer">
                     <button type="button" className="btn close-btn" onClick={closeModal}>取消</button>
-                    <button type="button" className="btn confirm-btn margin-left20" onClick={saveOrder}>确定</button>
+                    <button type="button" className={`btn confirm-btn margin-left20 ${newOrderModalReducer.errorRouteFlg ? "disabled" : ""}`} onClick={saveOrder}>确定</button>
                 </div>
             </div>
         );
@@ -103,10 +114,12 @@ const mapStateToProps = (state) => {
  */
 const mapDispatchToProps = (dispatch) => ({
     changeStartCity: (value) => {
-        dispatch(NewOrderModalActionType.setStartCity(value))
+        dispatch(NewOrderModalActionType.setStartCity(value));
+        dispatch(newOrderModalAction.calculateMileage());
     },
     changeEndCity: (value) => {
-        dispatch(NewOrderModalActionType.setEndCity(value))
+        dispatch(NewOrderModalActionType.setEndCity(value));
+        dispatch(newOrderModalAction.calculateMileage());
     },
     changeServiceType: (value) => {
         dispatch(NewOrderModalActionType.setServiceType(value))

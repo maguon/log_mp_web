@@ -132,12 +132,15 @@ class OrderManagerDetail extends React.Component {
                                 <div className="margin-top15">
                                     {/* 订单类型 */}
                                     <span className="purple-font">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, orderManagerDetailReducer.orderInfo[0].created_type)}</span>
-                                    {/* 用户 */}
-                                    <i className="margin-left30 fz20 pink-font mdi mdi-account"/>
-                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].user_name} ( ID：{orderManagerDetailReducer.orderInfo[0].user_id} )</span>
-                                    {/* 电话 */}
-                                    <i className="margin-left30 fz20 pink-font mdi mdi-cellphone"/>
-                                    <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].phone}</span>
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                                    <span>
+                                        {/* 用户 */}
+                                        <i className="margin-left30 fz20 pink-font mdi mdi-account"/>
+                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].user_name} ( ID：{orderManagerDetailReducer.orderInfo[0].user_id} )</span>
+                                        {/* 电话 */}
+                                        <i className="margin-left30 fz20 pink-font mdi mdi-cellphone"/>
+                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].phone}</span>
+                                    </span>}
                                 </div>
                             </div>
 
@@ -168,15 +171,15 @@ class OrderManagerDetail extends React.Component {
                         {/** 存在订单数据时，显示下面具体内容 */}
                         {orderManagerDetailReducer.orderInfo.length > 0 &&
                         <div>
-                            {/** 回到待完善信息/完善价格 按钮 */}
-                            {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
+                            {/** 外部订单：回到待完善信息/完善价格 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
                                 <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[0].value)}}>回到待完善信息</button>
                                 <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[2].value)}}>完善价格</button>
                             </div>}
 
-                            {/** 生成运输需求/重新完善价格 按钮 */}
-                            {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
+                            {/** 外部订单：生成运输需求/重新完善价格 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
                                 <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value)}}>生成运输需求</button>
                                 <button type="button" className="btn confirm-btn width-auto margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[1].value)}}>重新完善价格</button>

@@ -14,19 +14,20 @@ export const getOrderList = () => async (dispatch, getState) => {
 
         // 检索条件：编号
         const conditionNo = getState().OrderManagerReducer.conditionNo.trim();
-        // 检索条件：下单人
+        // 检索条件：订单类型
+        const conditionOrderType = getState().OrderManagerReducer.conditionOrderType;
+        // 检索条件：下单账号
         const conditionOrderUser = getState().OrderManagerReducer.conditionOrderUser.trim();
-        // 检索条件：电话
-        const conditionPhone = getState().OrderManagerReducer.conditionPhone.trim();
+        // 检索条件：创建人
+        const conditionCreateUser = getState().OrderManagerReducer.conditionCreateUser.trim();
+        // 检索条件：服务方式
+        const conditionServiceType = getState().OrderManagerReducer.conditionServiceType;
+        // 检索条件：订单状态
+        const conditionOrderStatus = getState().OrderManagerReducer.conditionOrderStatus;
         // 检索条件：起始城市
         const conditionStartCity = getState().OrderManagerReducer.conditionStartCity;
         // 检索条件：目的城市
         const conditionEndCity = getState().OrderManagerReducer.conditionEndCity;
-        // 检索条件：服务方式
-        const conditionServiceType = getState().OrderManagerReducer.conditionServiceType;
-
-        // 检索条件：订单类型
-        const conditionOrderType = getState().OrderManagerReducer.conditionOrderType;
         // 检索条件：创建时间
         const conditionCreatedOnStart = getState().OrderManagerReducer.conditionCreatedOnStart;
         const conditionCreatedOnEnd = getState().OrderManagerReducer.conditionCreatedOnEnd;
@@ -34,8 +35,6 @@ export const getOrderList = () => async (dispatch, getState) => {
         const conditionLogStatus = getState().OrderManagerReducer.conditionLogStatus;
         // 检索条件：支付状态
         const conditionPaymentStatus = getState().OrderManagerReducer.conditionPaymentStatus;
-        // 检索条件：订单状态
-        const conditionOrderStatus = getState().OrderManagerReducer.conditionOrderStatus;
 
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
@@ -44,18 +43,20 @@ export const getOrderList = () => async (dispatch, getState) => {
         let conditionsObj = {
             // 检索条件：编号
             orderId: conditionNo,
-            // 检索条件：下单人
-            userName: conditionOrderUser,
-            // 检索条件：手机
-            phone: conditionPhone,
+            // 检索条件：创建类型
+            createdType: conditionOrderType === null ? '' : conditionOrderType.value,
+            // 检索条件：下单账号
+            phone: conditionOrderUser,
+            // 检索条件：创建人
+            realName: conditionCreateUser,
+            // 检索条件：服务方式
+            serviceType: conditionServiceType === null ? '' : conditionServiceType.value,
+            // 检索条件：订单状态
+            status: conditionOrderStatus === null ? '' : conditionOrderStatus.value,
             // 检索条件：起始城市
             startCityId: conditionStartCity === null ? '' : conditionStartCity.value,
             // 检索条件：目的城市
             endCityId: conditionEndCity === null ? '' : conditionEndCity.value,
-            // 检索条件：服务方式
-            serviceType: conditionServiceType === null ? '' : conditionServiceType.value,
-            // 检索条件：订单类型
-            createdType: conditionOrderType === null ? '' : conditionOrderType.value,
             // 检索条件：创建时间
             createdOnStart: conditionCreatedOnStart,
             createdOnEnd: conditionCreatedOnEnd,
@@ -63,8 +64,6 @@ export const getOrderList = () => async (dispatch, getState) => {
             logStatus: conditionLogStatus === null ? '' : conditionLogStatus.value,
             // 检索条件：支付状态
             paymentStatus: conditionPaymentStatus === null ? '' : conditionPaymentStatus.value,
-            // 检索条件：订单状态
-            status: conditionOrderStatus === null ? '' : conditionOrderStatus.value,
         };
         let conditions = httpUtil.objToUrl(conditionsObj);
         // 检索URL

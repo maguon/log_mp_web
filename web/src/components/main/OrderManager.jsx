@@ -29,7 +29,7 @@ class OrderManager extends React.Component {
             this.props.setStartNumber(0);
             this.props.setConditionNo('');
             this.props.setConditionOrderUser('');
-            this.props.setConditionPhone('');
+            this.props.setConditionCreateUser('');
             this.props.changeConditionStartCity(null);
             this.props.changeConditionEndCity(null);
             this.props.changeConditionServiceType(null);
@@ -60,8 +60,8 @@ class OrderManager extends React.Component {
     /**
      * 更新 检索条件：电话
      */
-    changeConditionPhone = (event) => {
-        this.props.setConditionPhone(event.target.value);
+    changeConditionCreateUser = (event) => {
+        this.props.setConditionCreateUser(event.target.value);
     };
 
     /**
@@ -133,8 +133,48 @@ class OrderManager extends React.Component {
                         {/* 查询条件：第一行 */}
                         <div>
                             <Input s={2} label="编号" value={orderManagerReducer.conditionNo} onChange={this.changeConditionNo}/>
-                            <Input s={2} label="下单人" value={orderManagerReducer.conditionOrderUser} onChange={this.changeConditionOrderUser}/>
-                            <Input s={2} label="电话" value={orderManagerReducer.conditionPhone} onChange={this.changeConditionPhone}/>
+                            <div className="input-field col s2">
+                                <Select
+                                    options={sysConst.ORDER_TYPE}
+                                    onChange={changeConditionOrderType}
+                                    value={orderManagerReducer.conditionOrderType}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">创建类型</label>
+                            </div>
+                            <Input s={2} label="下单账号" value={orderManagerReducer.conditionOrderUser} onChange={this.changeConditionOrderUser}/>
+                            <Input s={2} label="创建人" value={orderManagerReducer.conditionCreateUser} onChange={this.changeConditionCreateUser}/>
+                            <div className="input-field col s2">
+                                <Select
+                                    options={sysConst.SERVICE_MODE}
+                                    onChange={changeConditionServiceType}
+                                    value={orderManagerReducer.conditionServiceType}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">服务方式</label>
+                            </div>
+                            <div className="input-field col s2">
+                                <Select
+                                    options={sysConst.ORDER_STATUS}
+                                    onChange={changeConditionOrderStatus}
+                                    value={orderManagerReducer.conditionOrderStatus}
+                                    isSearchable={false}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">订单状态</label>
+                            </div>
+                        </div>
+
+                        {/* 查询条件：第二行 */}
+                        <div>
                             <div className="input-field col s2">
                                 <Select
                                     options={commonReducer.cityList}
@@ -158,34 +198,6 @@ class OrderManager extends React.Component {
                                     isClearable={true}
                                 />
                                 <label className="active">目的城市</label>
-                            </div>
-                            <div className="input-field col s2">
-                                <Select
-                                    options={sysConst.SERVICE_MODE}
-                                    onChange={changeConditionServiceType}
-                                    value={orderManagerReducer.conditionServiceType}
-                                    isSearchable={false}
-                                    placeholder={"请选择"}
-                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                    isClearable={true}
-                                />
-                                <label className="active">服务方式</label>
-                            </div>
-                        </div>
-
-                        {/* 查询条件：第二行 */}
-                        <div>
-                            <div className="input-field col s2">
-                                <Select
-                                    options={sysConst.ORDER_TYPE}
-                                    onChange={changeConditionOrderType}
-                                    value={orderManagerReducer.conditionOrderType}
-                                    isSearchable={false}
-                                    placeholder={"请选择"}
-                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                    isClearable={true}
-                                />
-                                <label className="active">订单类型</label>
                             </div>
                             <div className="input-field col s2 custom-input-field">
                                 <Input s={12} label="创建时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
@@ -222,18 +234,6 @@ class OrderManager extends React.Component {
                                 />
                                 <label className="active">支付状态</label>
                             </div>
-                            <div className="input-field col s2">
-                                <Select
-                                    options={sysConst.ORDER_STATUS}
-                                    onChange={changeConditionOrderStatus}
-                                    value={orderManagerReducer.conditionOrderStatus}
-                                    isSearchable={false}
-                                    placeholder={"请选择"}
-                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                    isClearable={true}
-                                />
-                                <label className="active">订单状态</label>
-                            </div>
                         </div>
                     </div>
 
@@ -263,9 +263,9 @@ class OrderManager extends React.Component {
                                 <th>车辆数</th>
                                 <th>服务方式</th>
                                 <th>支付费用</th>
-                                <th>下单人</th>
-                                <th>电话</th>
-                                <th className="center">订单类型</th>
+                                <th className="center">创建类型</th>
+                                <th>下单账号</th>
+                                <th>创建人</th>
                                 <th className="center">创建时间</th>
                                 <th className="center">支付 / 物流</th>
                                 <th className="center">状态</th>
@@ -281,13 +281,11 @@ class OrderManager extends React.Component {
                                         <td>{item.count}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.SERVICE_MODE, item.service_type)}</td>
                                         <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
-                                        <td>{item.user_name}</td>
-                                        <td>{item.phone}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, item.created_type)}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.user_name}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                        <td className="center">
-                                            {commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.LOG_STATUS, item.log_status)}
-                                        </td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.LOG_STATUS, item.log_status)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_STATUS, item.status)}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/order/' + item.id}}>
@@ -351,8 +349,8 @@ const mapDispatchToProps = (dispatch) => ({
     setConditionOrderUser: (value) => {
         dispatch(OrderManagerActionType.setConditionOrderUser(value))
     },
-    setConditionPhone: (value) => {
-        dispatch(OrderManagerActionType.setConditionPhone(value))
+    setConditionCreateUser: (value) => {
+        dispatch(OrderManagerActionType.setConditionCreateUser(value))
     },
     changeConditionStartCity: (value) => {
         dispatch(OrderManagerActionType.setConditionStartCity(value))

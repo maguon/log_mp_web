@@ -13,8 +13,8 @@ const initialState = {
     conditionNo: '',
     // 检索条件：下单人
     conditionOrderUser: '',
-    // 检索条件：电话
-    conditionPhone: '',
+    // 检索条件：创建人
+    conditionCreateUser: '',
     // 检索条件：起始城市
     conditionStartCity: null,
     // 检索条件：目的城市
@@ -70,10 +70,10 @@ export default handleActions({
             conditionOrderUser: action.payload
         }
     },
-    [OrderManagerActionType.setConditionPhone]: (state, action) => {
+    [OrderManagerActionType.setConditionCreateUser]: (state, action) => {
         return {
             ...state,
-            conditionPhone: action.payload
+            conditionCreateUser: action.payload
         }
     },
     [OrderManagerActionType.setConditionStartCity]: (state, action) => {

@@ -27,6 +27,8 @@ Page({
     sumPrice: 0, 
     num: 1,
     checked:0,
+    insurance:1,
+    name:'',
   },
 
   /**
@@ -35,14 +37,18 @@ Page({
   onLoad: function (e) {
     var inquiryId = e.inquiryId;
     var userId = app.globalData.userId;
+
+    this.setData({
+      name:e.name,
+    })
    //请求询价id相关数据
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId+ "/queryInquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
       this.setData({
-        beginCity: res.data.result[0].route_start,
-        endCity: res.data.result[0].route_end,
+        beginCity: res.data.result[0].start_city,
+        endCity: res.data.result[0].end_city,
         distance: res.data.result[0].distance,
-        service_type: res.data.result[0].service_type,
+        service_type: res.data.result[0].service_type-1,
         inquiryId: inquiryId,
       })
     })
@@ -108,6 +114,20 @@ Page({
     }
     this.onShow();
   },
+  insuranceChange: function () {
+    if (this.data.insurance == 1) {
+      this.setData({
+        insurance: 0,
+        valuationRate:0,
+      })
+    } else {
+      this.setData({
+        insurance: 1,
+        valuationRate:0.05,
+      })
+    }
+    this.onShow();
+  },
   /**
    *  点击减号 
    */
@@ -163,6 +183,22 @@ Page({
    * 点击确定
    */
   bindAdd:function(){
+    if(this.data.car_index == ''){
+      wx.showModal({
+        content: '请选择车型',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+    } 
+    if(this.data.valuation == ''){
+      wx.showModal({
+        content: '请输入车辆估值',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+    }
     var userId = app.globalData.userId;
     var params = {
       inquiryId:this.data.inquiryId,
@@ -172,13 +208,22 @@ Page({
       plan: this.data.valuation,
       fee:this.data.sumPrice,
       carNum: this.data.num,
+      safePrice: this.data.valuation * this.data.valuationRate,
+      safeStatus: this.data.insurance,
     }
     //发送服务器
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiryCar", params, (err, res) => {
+      if(this.data.name == "budget"){
       wx.redirectTo({
         url: '/pages/index/budget/budget?inquiryId=' + this.data.inquiryId,
       })
+      }else{
+        wx.redirectTo({
+          url: '/pages/order/order-discuss/order-discuss?id=' + this.data.inquiryId,
+        })
+      }
     })
+    
 
   },
 

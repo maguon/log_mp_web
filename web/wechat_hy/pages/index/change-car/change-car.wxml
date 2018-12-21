@@ -21,10 +21,10 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(万)</view>
-  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
+  <input  class='input' bindinput='bindValuation' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
   </view>
 
-  <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
+  <view  class="weui-cell__hd weui-check__hd_in-checkbox" bindtap="checkboxChange">
   <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
   <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
    <view class="right-text">新车</view>
@@ -47,9 +47,15 @@
  </view>
 </view>
  <view class='dis-line'></view>
-<!-- 预计运费 ---------------------------------------------------------------------- -->
+  <!-- 车辆保险 ---------------------------------------------------------------------- -->
+<view class="insurance">
+<view class="insurance-text">车辆保险</view>
+<switch  class='insurance-checked' bindtap='insuranceChange' checked='{{insurance}}'></switch>
+</view>
+ <view class='dis-line'></view>
+<!-- 预计费用 ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
-<view class='sum-text'>预计运费</view>
+<view class='sum-text'>预计费用</view>
 <view class='stay-expect'>
 <view class='stay-num'>{{sumPrice}}</view>
 <view class='stay-text'>元</view>

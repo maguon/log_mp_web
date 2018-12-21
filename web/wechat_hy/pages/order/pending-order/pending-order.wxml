@@ -1,0 +1,94 @@
+<view class='container'>
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>大连</view>
+<image class='head-staycar' src='../../../images/transport.png'></image>
+<view class='head-city'>沈阳</view>
+<image class='head-customer' src='../../../images/customer.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way' hover-class="active">
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>当地自提</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-content' hover-class="active">
+<view class='city'>
+<image class='city-img' src='../../../images/car_02.png'></image>
+<view class='city-text'>运送车辆</view>
+<view class='stay-expect stay-text'>3</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-content01' hover-class="active">
+<view class='stay-detail'>
+<view class='stay-car'>FHLWHR38429823845</view>
+</view>
+
+<view class='city'>
+<view class='city-text'>标准轿车</view>
+<image class='city-arrow' src='../../../images/new.png'></image>
+<image class='arrow'src='../../../images/arrow.png'></image>
+<view class='stay-expect stay-text'>240000 元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-add'>
+<button class='add-button'>
+<view class='add-text'>完善车辆信息</view>
+</button>
+</view>
+<view class='sum-line'></view>
+
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-sum'>
+<view class='sum-text'>预计费用</view>
+<view class='stay-expect'>
+<view class='stay-num sum-text01'>1700.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-sum'>
+<view class='sum-text'>协商费用</view>
+<view class='stay-expect'>
+<view class='stay-num '>500.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>留言</view>
+<input class='note-input' placeholder='填写留言信息' placeholder-style='font-size:15px; color:#c0bcbc; z-index:0'></input>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-orderid'>
+<view class='orderid'>
+<view class='orderid-text'>订单编号：344334555553</view>
+<button class='orderid-button'>
+<view class='button-text'>复制</view>
+</button>
+</view>
+<view class='create-time'>创建时间：2018-08-26 11:20:31</view>
+<view class='create-time'>协商时间：2018-08-26 11:20:31</view>
+</view>
+
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-cancel' hover-class="cancel_btn">
+<button class='cancel' >取消订单</button>
+<button disabled='{{false}}' class='submit'>提交完善信息</button>
+</view>
+
+</view>

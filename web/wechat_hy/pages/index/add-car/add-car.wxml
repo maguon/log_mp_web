@@ -47,9 +47,15 @@
  </view>
 </view>
  <view class='dis-line'></view>
-<!-- 预计运费 ---------------------------------------------------------------------- -->
+ <!-- 车辆保险 ---------------------------------------------------------------------- -->
+<view class="insurance">
+<view class="insurance-text">车辆保险</view>
+<switch bindtap='insuranceChange' class='insurance-checked' checked='{{insurance}}'></switch>
+</view>
+ <view class='dis-line'></view>
+<!-- 预计费用 ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
-<view class='sum-text'>预计运费</view>
+<view class='sum-text'>预计费用</view>
 <view class='stay-expect'>
 <view class='stay-num'>{{sumPrice}}</view>
 <view class='stay-text'>元</view>

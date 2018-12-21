@@ -1,0 +1,39 @@
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>大连</view>
+<image class='head-staycar' src='../../../images/arrow_02.png'></image>
+<view class='head-city'>沈阳</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way' hover-class="active">
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>当地自提</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img' src='../../../images/location_01.png'></image>
+<view class='people'>发车人:王雪</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+
+<view class='phone'>电话：15840668526</view>
+<view class='address'>地址：辽宁省 大连市 开发区 金马路342号 凯伦国际大厦B座 2608室</view>
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img' src='../../../images/location.png'></image>
+<view class='people'>收车人:王雪</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+
+<view class='phone'>电话：15840668526</view>
+<view class='address'>地址：辽宁省 大连市 开发区 金马路342号 凯伦国际大厦B座 2608室</view>
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+    <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>

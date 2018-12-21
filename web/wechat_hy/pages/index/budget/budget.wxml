@@ -14,7 +14,7 @@
 </view>
 <view class='dis-line'></view>
 <!-- 内容 ---------------------------------------------------------------------- -->
-<view class='dis-content' hover-class="active" wx:for="{{carList}}" wx:key="u" bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}' >
+<view class='dis-content' hover-class="active" wx:for="{{carList}}" wx:key="u" bindtap='bindcarList' data-id="{{index}}"  data-name='carlist' hidden='{{!item.status}}' >
 
 <view class='city'>
 <image class='city-img' src='../../../images/car_02.png'></image>
@@ -37,7 +37,7 @@
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='dis-sum'>
-<view class='sum-text'>预计总运费</view>
+<view class='sum-text'>预计总费用</view>
 <view class='stay-expect'>
 <view class='stay-num'>{{sumFee}}</view>
 <view class='stay-text'>元</view>
@@ -52,7 +52,7 @@
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='dis-add'>
-<button bindtap='addCar' class='add-button'>
+<button bindtap='addCar' data-name='budget' class='add-button'>
 <view class='add-text'>增加车型</view>
 </button>
 </view>

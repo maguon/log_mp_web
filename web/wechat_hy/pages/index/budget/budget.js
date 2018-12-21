@@ -12,7 +12,7 @@ Page({
 
     inquiryId:'',
 
-    array: ["送到指定地点", "送到当地自提"],
+    array: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
     index: '',
 
@@ -30,8 +30,8 @@ Page({
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/queryInquiry?inquiryId=" + inquiryId,(err,res)=>{
       console.log(res)
       this.setData({
-        beginCity: res.data.result[0].route_start,
-        endCity: res.data.result[0].route_end,
+        beginCity: res.data.result[0].start_city,
+        endCity: res.data.result[0].end_city,
         index: res.data.result[0].service_type,
         inquiryId: inquiryId,
       })
@@ -74,16 +74,20 @@ Page({
   bindcarList:function(e){
   console.log(e)
   var id=e.currentTarget.dataset.id;
+  var name = e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId,
+      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId+"&name="+name,
     })
   },
+
+  
   /**
    * 添加车辆
    */
-  addCar:function(){
+  addCar:function(e){
+    var name = e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: "/pages/index/add-car/add-car?inquiryId="+this.data.inquiryId,
+      url: "/pages/index/add-car/add-car?inquiryId=" + this.data.inquiryId + "&name=" + name,
     })
   },
   /**

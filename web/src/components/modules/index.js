@@ -1,6 +1,7 @@
 export CancelInquiryModal from "./CancelInquiryModal";
 export CancelOrderModal from "./CancelOrderModal";
 export EditUserAddressModal from "./EditUserAddressModal";
+export EditOrderCarModal from "./EditOrderCarModal";
 export InquiryInfoModal from "./InquiryInfoModal";
 export InquiryModal from "./InquiryModal";
 export NewLogSiteContactModal from "./NewLogSiteContactModal";

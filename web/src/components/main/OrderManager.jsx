@@ -265,6 +265,7 @@ class OrderManager extends React.Component {
                                 <th>支付费用</th>
                                 <th className="center">创建类型</th>
                                 <th>下单账号</th>
+                                <th>用户昵称</th>
                                 <th>创建人</th>
                                 <th className="center">创建时间</th>
                                 <th className="center">支付 / 物流</th>
@@ -284,6 +285,7 @@ class OrderManager extends React.Component {
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, item.created_type)}</td>
                                         <td>{item.phone}</td>
                                         <td>{item.user_name}</td>
+                                        <td>{item.admin_name}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.LOG_STATUS, item.log_status)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_STATUS, item.status)}</td>
@@ -297,7 +299,7 @@ class OrderManager extends React.Component {
                             })}
                             {orderManagerReducer.orderArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
-                                <td className="no-data-tr" colSpan="12">暂无数据</td>
+                                <td className="no-data-tr" colSpan="13">暂无数据</td>
                             </tr>}
                             </tbody>
                         </table>

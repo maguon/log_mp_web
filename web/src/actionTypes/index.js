@@ -29,6 +29,7 @@ import * as NewOrderModalActionType  from './modules/NewOrderModalActionType';
 import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActionType';
 import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionType';
 import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
+import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalActionType';
 
 export  {
     LoginActionType,
@@ -61,5 +62,6 @@ export  {
     NewOrderModalActionType,
     CancelInquiryModalActionType,
     CancelOrderModalActionType,
-    EditUserAddressModalActionType
+    EditUserAddressModalActionType,
+    EditOrderCarModalActionType
 }

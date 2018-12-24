@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {
-    OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,
+    OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,EditOrderCarModalActionType,
     CancelOrderModalActionType
 } from '../../actionTypes';
-import {InquiryInfoModal, EditUserAddressModal, CancelOrderModal} from '../modules/index';
+import {InquiryInfoModal, EditUserAddressModal, EditOrderCarModal, CancelOrderModal} from '../modules/index';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
+const editOrderCarModalAction = require('../../actions/modules/EditOrderCarModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -40,6 +41,14 @@ class OrderManagerDetail extends React.Component {
     showInquiryInfoModal = () => {
         this.props.initInquiryInfoModalData(this.props.orderManagerDetailReducer.orderInfo[0].inquiry_id,this.props.orderManagerDetailReducer.orderInfo[0].user_id);
         $('#inquiryInfoModal').modal('open');
+    };
+
+    /**
+     * 显示 增加车辆/编辑车辆 模态画面
+     */
+    showEditOrderCarModal = (pageType) => {
+        this.props.initEditOrderCarModalData(pageType, this.props.orderManagerDetailReducer.orderInfo);
+        $('#editOrderCarModal').modal('open');
     };
 
     /**
@@ -185,6 +194,14 @@ class OrderManagerDetail extends React.Component {
                                 <button type="button" className="btn confirm-btn width-auto margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[1].value)}}>重新完善价格</button>
                             </div>}
 
+                            {/** 内部订单：增加车辆 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value &&
+                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                                <button type="button" className="btn confirm-btn" onClick={() => {this.showEditOrderCarModal('new')}}>增加车辆</button>
+                            </div>}
+
+                            <EditOrderCarModal/>
+
                             {/* 运送车辆 */}
                             <div className={`row margin-left50 margin-right50 ${(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value
                                 || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value) ? "" : "margin-top40"}`}>
@@ -259,8 +276,10 @@ class OrderManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                                {/* 发货信息 详情 */}
-                                {orderManagerDetailReducer.orderInfo[0].send_name !== null && orderManagerDetailReducer.orderInfo[0].send_name !== '' &&
+                                {/* 发货信息 内部订单/外部订单(存在内容)时，显示详情 */}
+                                {/* 发货信息 内部订单/外部订单(存在内容)时，显示详情 */}
+                                {(orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value ||
+                                    (orderManagerDetailReducer.orderInfo[0].send_name !== null && orderManagerDetailReducer.orderInfo[0].send_name !== '')) &&
                                 <div>
                                     <div className="col s3 margin-top10">
                                         <i className="mdi mdi-account-outline fz20 pink-font"/>
@@ -269,7 +288,7 @@ class OrderManagerDetail extends React.Component {
 
                                     <div className="col s8 margin-top10">
                                         <i className="mdi mdi-map-marker-outline fz20 pink-font"/>
-                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].send_address}</span>
+                                        <span className="margin-left10">地址：{orderManagerDetailReducer.orderInfo[0].send_address}</span>
                                     </div>
                                     {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value ||
                                         orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value ||
@@ -280,7 +299,9 @@ class OrderManagerDetail extends React.Component {
                                 </div>}
 
                                 {/* 收货信息 详情 */}
-                                {orderManagerDetailReducer.orderInfo[0].recv_name !== null && orderManagerDetailReducer.orderInfo[0].recv_name !== '' &&
+                                {/* 发货信息 内部订单/外部订单(存在内容)时，显示详情 */}
+                                {(orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value ||
+                                    (orderManagerDetailReducer.orderInfo[0].recv_name !== null && orderManagerDetailReducer.orderInfo[0].recv_name !== '')) &&
                                 <div>
                                     <div className="col s3 margin-top10">
                                         <i className="mdi mdi-account-outline fz20 orange-text text-lighten-3"/>
@@ -288,7 +309,7 @@ class OrderManagerDetail extends React.Component {
                                     </div>
                                     <div className="col s8 margin-top10">
                                         <i className="mdi mdi-map-marker-outline fz20 orange-text text-lighten-3"/>
-                                        <span className="margin-left10">{orderManagerDetailReducer.orderInfo[0].recv_address}</span>
+                                        <span className="margin-left10">地址：{orderManagerDetailReducer.orderInfo[0].recv_address}</span>
                                     </div>
                                     {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value ||
                                         orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value ||
@@ -300,7 +321,8 @@ class OrderManagerDetail extends React.Component {
                                 </div>}
                             </div>
 
-                            {/* 客户备注 */}
+                            {/* 客户备注 (仅外部订单 显示)*/}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
                             <div className="row margin-top40 margin-left50 margin-right50">
                                 <div className="col s12 pink-font">
                                     <i className="mdi mdi-square-edit-outline fz20"/>
@@ -308,13 +330,13 @@ class OrderManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                                {/* 收货信息 详情 */}
+                                {/* 客户备注 详情 */}
                                 {orderManagerDetailReducer.orderInfo[0].mark !== null && orderManagerDetailReducer.orderInfo[0].mark !== '' &&
                                 <div>
                                     <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].mark}</div>
                                     <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
                                 </div>}
-                            </div>
+                            </div>}
 
                             {/* 客服备注 */}
                             <div className="row margin-top40 margin-left50 margin-right50">
@@ -502,6 +524,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getOrderInfo: () => {
         dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
         dispatch(commonAction.getOrderCarList(ownProps.match.params.id));
+    },
+    initEditOrderCarModalData: (pageType, orderInfo) => {
+        dispatch(EditOrderCarModalActionType.setPageType(pageType));
+        dispatch(EditOrderCarModalActionType.setOrderInfo(orderInfo));
+
+        if (pageType === 'new') {
+            dispatch(editOrderCarModalAction.initOrderCarData());
+        } else {
+
+        }
     },
     changeOrderStatus: (value) => {
         dispatch(orderManagerDetailAction.changeOrderStatus(ownProps.match.params.id, value))

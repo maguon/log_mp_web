@@ -13,11 +13,11 @@ export const saveOrderUserAddress = () => async (dispatch, getState) => {
         // 画面区分
         const pageType = getState().EditUserAddressModalReducer.pageType;
         // 用户
-        const orderUser = getState().EditUserAddressModalReducer.orderUser.trim();
+        const orderUser = getState().EditUserAddressModalReducer.orderUser == null ? '' : getState().EditUserAddressModalReducer.orderUser.trim();
         // 电话
-        const orderPhone = getState().EditUserAddressModalReducer.orderPhone.trim();
+        const orderPhone = getState().EditUserAddressModalReducer.orderPhone == null ? '' : getState().EditUserAddressModalReducer.orderPhone.trim();
         // 地址
-        const orderAddress = getState().EditUserAddressModalReducer.orderAddress.trim();
+        const orderAddress = getState().EditUserAddressModalReducer.orderAddress == null ? '' : getState().EditUserAddressModalReducer.orderAddress.trim();
 
         if (orderUser === '' || orderPhone === '' || orderAddress === '') {
             swal('保存失败', '请输入完整的收发货信息！', 'warning');

@@ -32,6 +32,7 @@ import NewOrderModalReducer from './modules/NewOrderModalReducer';
 import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
 import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
 import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
+import EditOrderCarModalReducer from './modules/EditOrderCarModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -65,5 +66,6 @@ export default combineReducers({
     NewOrderModalReducer,
     CancelInquiryModalReducer,
     CancelOrderModalReducer,
-    EditUserAddressModalReducer
+    EditUserAddressModalReducer,
+    EditOrderCarModalReducer
 })

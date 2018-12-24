@@ -1037,8 +1037,12 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 706px;
 }
 
+#editOrderCarModal{
+    max-height: 600px;
+}
+
 #inquiryModal{
-    max-height: 570px;
+    max-height: 638px;
 }
 
 #newSupplierModal, #newOfferModal, #cancelInquiryModal {

@@ -4,6 +4,7 @@ import {InquiryInfoModalActionType} from "../../actionTypes";
 
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 /**
  * UI组件：询价模块。
@@ -55,8 +56,7 @@ class InquiryInfoModal extends React.Component {
                                 <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
                                 {inquiryInfoModalReducer.inquiryInfo[0].end_city}
                                 <span className="margin-left30 fz15 grey-text text-darken-2">
-                                    ( {(inquiryInfoModalReducer.inquiryInfo[0].service_type !== 1 && inquiryInfoModalReducer.inquiryInfo[0].service_type !== 2)
-                                        ? '未知' : sysConst.SERVICE_MODE[inquiryInfoModalReducer.inquiryInfo[0].service_type - 1].label} )
+                                    ( {commonUtil.getJsonValue(sysConst.SERVICE_MODE,inquiryInfoModalReducer.inquiryInfo[0].service_type)} )
                                 </span>
                             </div>
                         </div>
@@ -78,6 +78,8 @@ class InquiryInfoModal extends React.Component {
                                 <th className="center">是否新车</th>
                                 <th className="right-align">估值单价 ( 元 )</th>
                                 <th className="right-align">预计运费单价 ( 元 )</th>
+                                <th className="center">是否保险</th>
+                                <th className="right-align">保险单价 ( 元 )</th>
                                 <th className="right-align">数量</th>
                                 <th className="right-align">估值总额 ( 元 )</th>
                                 <th className="right-align padding-right10">预计费用</th>
@@ -87,33 +89,38 @@ class InquiryInfoModal extends React.Component {
                             {inquiryInfoModalReducer.inquiryCarArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
-                                        <td className="padding-left10">
-                                            {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
-                                                ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
-                                        </td>
-                                        <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.plan_solo,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.fee_solo,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
+                                        <td className="padding-left10">{commonUtil.getJsonValue(sysConst.CAR_MODEL,item.model_id)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.old_car)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.trans_price,2)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.safe_status)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.insure_price,2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.plan_total,2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.trans_total + item.insure_price,2)}</td>
                                     </tr>
                                 )
                             }, this)}
                             {inquiryInfoModalReducer.inquiryCarArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
-                                <td className="no-data-tr" colSpan="7">暂无数据</td>
+                                <td className="no-data-tr" colSpan="9">暂无数据</td>
                             </tr>}
                             </tbody>
                         </table>
                     </div>
 
                     <div className="row margin-bottom10 grey-text text-darken-2">
-                        <div className="col s8 right-align">
+                        <div className="col s3 padding-right0">
                             <span className="fz14">估值总额：</span><span className="fz16">{formatUtil.formatNumber(inquiryInfoModalReducer.totalValuation)}</span>
                         </div>
-                        <div className="col s4 right-align">
+                        <div className="col s3 right-align no-padding">
                             <span className="fz14">预计总运费：</span><span className="fz16">{formatUtil.formatNumber(inquiryInfoModalReducer.totalFreight,2)}</span>
+                        </div>
+                        <div className="col s3 right-align no-padding">
+                            <span className="fz14">预计总保费：</span><span className="fz16">{formatUtil.formatNumber(inquiryInfoModalReducer.totalInsuranceFee,2)}</span>
+                        </div>
+                        <div className="col s3 right-align padding-left0">
+                            <span className="fz14">预计总费用：</span><span className="fz16">{formatUtil.formatNumber(inquiryInfoModalReducer.totalFreight + inquiryInfoModalReducer.totalInsuranceFee,2)}</span>
                         </div>
                     </div>
                     <div className="row divider bold-divider"/>
@@ -122,15 +129,20 @@ class InquiryInfoModal extends React.Component {
                     {inquiryInfoModalReducer.inquiryInfo.length > 0 && inquiryInfoModalReducer.prePage === 'order' &&
                     <div className="row detail-box margin-top40 grey-text text-darken-2">
 
-                        <div className="col s12 no-padding custom-grey">
-                            <div className="col s6 margin-top10 margin-bottom10">
-                                协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].fee_price,2)}</span> 元
+                        <div className="col s12 padding-top10 padding-bottom10 custom-grey pink-font">协商结果</div>
+                        <div className="col s12 no-padding divider"/>
+
+                        <div className="col s12 no-padding">
+                            <div className="col s3 margin-top10 margin-bottom10">
+                                协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_trans_price,2)}</span> 元
                             </div>
-                            <div className="col s6 margin-top10 right-align">
-                                协商时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].inquiry_time)}
+                            <div className="col s4 margin-top10 right-align">
+                                协商保费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
+                            </div>
+                            <div className="col s5 margin-top10 right-align">
+                                协商总费用：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_trans_price + inquiryInfoModalReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
                             </div>
                         </div>
-
                         <div className="col s12 no-padding divider"/>
 
                         <div className="col s-percent-10 margin-top10 margin-bottom10 padding-right0">
@@ -138,6 +150,14 @@ class InquiryInfoModal extends React.Component {
                         </div>
                         <div className="col s-percent-90 margin-top10 margin-bottom10 padding-left0">
                             {inquiryInfoModalReducer.inquiryInfo[0].mark}
+                        </div>
+                        <div className="col s12 no-padding divider"/>
+
+                        <div className="col s6 margin-top10 margin-bottom10 padding-right0">
+                            协商客服：{inquiryInfoModalReducer.inquiryInfo[0].admin_user}
+                        </div>
+                        <div className="col s6 margin-top10 margin-bottom10 padding-left0 right-align">
+                            协商时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].inquiry_time)}
                         </div>
                     </div>}
 
@@ -174,8 +194,7 @@ class InquiryInfoModal extends React.Component {
                                 <div className="row margin-top15 margin-bottom10">
                                     <div className="col s6 pink-font">运送车辆：{formatUtil.formatNumber(commonReducer.orderCarArray.length)}</div>
                                     <div className="col s6 pink-font right-align">
-                                        {(inquiryInfoModalReducer.orderInfo[0].log_status !== 0 && inquiryInfoModalReducer.orderInfo[0].log_status !== 1)
-                                            ? '未知' : sysConst.LOG_STATUS[inquiryInfoModalReducer.orderInfo[0].log_status].label}
+                                        {commonUtil.getJsonValue(sysConst.LOG_STATUS,inquiryInfoModalReducer.orderInfo[0].log_status)}
                                     </div>
                                 </div>
                                 <div className="row detail-box">
@@ -186,7 +205,9 @@ class InquiryInfoModal extends React.Component {
                                             <th className="center">车型</th>
                                             <th className="center">是否新车</th>
                                             <th className="right-align">估值 ( 元 )</th>
-                                            <th className="right-align">预计费用 ( 元 )</th>
+                                            <th className="center">是否保险</th>
+                                            <th className="right-align">实际运费 ( 元 )</th>
+                                            <th className="right-align">实际保费 ( 元 )</th>
                                             <th className="right-align padding-right10">实际费用 ( 元 )</th>
                                         </tr>
                                         </thead>
@@ -195,39 +216,40 @@ class InquiryInfoModal extends React.Component {
                                             return (
                                                 <tr className="grey-text text-darken-1">
                                                     <td className="padding-left10">{item.vin}</td>
-                                                    <td className="center">
-                                                        {(item.model_type !== 1 && item.model_type !== 2 && item.model_type !== 3 && item.model_type !== 4 && item.model_type !== 5)
-                                                            ? '未知' : sysConst.CAR_MODEL[item.model_type - 1].label}
-                                                    </td>
-                                                    <td className="center">{(item.old_car !== 0 && item.old_car !== 1) ? '未知' : sysConst.YES_NO[item.old_car].label}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL,item.model_type)}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.old_car)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                    <td className="right-align">{formatUtil.formatNumber(item.ora_price,2)}</td>
-                                                    <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_price,2)}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.safe_status)}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.act_trans_price,2)}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.act_insure_price,2)}</td>
+                                                    <td className="right-align padding-right10">{formatUtil.formatNumber(item.act_trans_price + item.act_insure_price,2)}</td>
                                                 </tr>
                                             )
                                         }, this)}
                                         {commonReducer.orderCarArray.length === 0 &&
                                         <tr className="grey-text white text-darken-1">
-                                            <td className="no-data-tr" colSpan="6">暂无数据</td>
+                                            <td className="no-data-tr" colSpan="8">暂无数据</td>
                                         </tr>}
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <div className="row margin-bottom10 grey-text text-darken-2">
-                                    <div className="col s6">
-                                        支付运费：<span className="fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.orderInfo[0].fee_price,2)}</span> 元
+                                    <div className="col s4 padding-right0">
+                                        运费总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
                                     </div>
-                                    <div className="col s6 right-align">
-                                        实收运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
+                                    <div className="col s4 right-align no-padding">
+                                        保费总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalInsuranceFee,2)}</span> 元
+                                    </div>
+                                    <div className="col s4 right-align padding-left0">
+                                        总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee,2)}</span> 元
                                     </div>
                                 </div>
                                 <div className="row divider bold-divider"/>
 
                                 <div className="row margin-top15 margin-bottom10">
                                     <div className="col s12 purple-font">
-                                        {(inquiryInfoModalReducer.orderInfo[0].service_type !== 1 && inquiryInfoModalReducer.orderInfo[0].service_type !== 2)
-                                        ? '未知' : sysConst.SERVICE_MODE[inquiryInfoModalReducer.orderInfo[0].service_type - 1].label}
+                                        {commonUtil.getJsonValue(sysConst.SERVICE_MODE,inquiryInfoModalReducer.orderInfo[0].service_type)}
                                     </div>
                                 </div>
                                 <div className="row divider margin-bottom10 bold-divider"/>
@@ -244,13 +266,15 @@ class InquiryInfoModal extends React.Component {
                             </div>}
                         </div>}
 
-                        <div className="col s6 margin-top10 margin-bottom10">
-                            协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].fee_price,2)}</span> 元
+                        <div className="col s3 margin-top10 margin-bottom10">
+                            协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_trans_price,2)}</span> 元
                         </div>
-                        <div className="col s6 margin-top10 right-align">
-                            协商时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].inquiry_time)}
+                        <div className="col s4 margin-top10 right-align">
+                            协商保费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
                         </div>
-
+                        <div className="col s5 margin-top10 right-align">
+                            协商总费用：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].total_trans_price + inquiryInfoModalReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
+                        </div>
                         <div className="col s12 no-padding divider"/>
 
                         <div className="col s-percent-10 margin-top10 margin-bottom10 padding-right0">
@@ -258,6 +282,14 @@ class InquiryInfoModal extends React.Component {
                         </div>
                         <div className="col s-percent-90 margin-top10 margin-bottom10 padding-left0">
                             {inquiryInfoModalReducer.inquiryInfo[0].mark}
+                        </div>
+                        <div className="col s12 no-padding divider"/>
+
+                        <div className="col s6 margin-top10 margin-bottom10 padding-right0">
+                            协商客服：{inquiryInfoModalReducer.inquiryInfo[0].admin_user}
+                        </div>
+                        <div className="col s6 margin-top10 margin-bottom10 padding-left0 right-align">
+                            协商时间：{formatUtil.getDateTime(inquiryInfoModalReducer.inquiryInfo[0].inquiry_time)}
                         </div>
                     </div>}
                 </div>

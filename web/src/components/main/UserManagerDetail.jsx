@@ -10,6 +10,7 @@ const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAc
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 class UserManagerDetail extends React.Component {
 
@@ -127,15 +128,12 @@ class UserManagerDetail extends React.Component {
                                         <i className="mdi margin-left30 fz20 mdi-gender-female pink-font"/> :
                                         <i className="mdi margin-left30 fz20 mdi-gender-male blue-font"/>}
                                     {/* 授权状态：已授权/未授权 */}
-                                    <span className="margin-left30">
-                                        {(userManagerDetailReducer.userInfo[0].wechat_status !== 0 && userManagerDetailReducer.userInfo[0].wechat_status !== 1)
-                                            ? '未知' : sysConst.WE_CHAT_STATUS[userManagerDetailReducer.userInfo[0].wechat_status].label}
-                                    </span>
+                                    <span className="margin-left30">{commonUtil.getJsonValue(sysConst.WE_CHAT_STATUS,userManagerDetailReducer.userInfo[0].wechat_status)}</span>
                                 </div>
                                 <div className="margin-top15 pink-font">
                                     {/* 认证状态：已认证/未认证 */}
-                                    {(userManagerDetailReducer.userInfo[0].auth_status !== 0 && userManagerDetailReducer.userInfo[0].auth_status !== 1)
-                                        ? '未知' : sysConst.AUTH_STATUS[userManagerDetailReducer.userInfo[0].auth_status].label}
+                                    {commonUtil.getJsonValue(sysConst.AUTH_STATUS,userManagerDetailReducer.userInfo[0].auth_status)}
+
                                     {/* 用户电话：已认证时，显示 */}
                                     {userManagerDetailReducer.userInfo[0].auth_status === 1 &&
                                     <span>
@@ -244,7 +242,8 @@ class UserManagerDetail extends React.Component {
                                     <th className="padding-left20">线路</th>
                                     <th>车辆数</th>
                                     <th className="center">服务方式</th>
-                                    <th className="right-align">预计费用</th>
+                                    <th className="right-align">预计运费</th>
+                                    <th className="right-align">预计保费</th>
                                     <th className="center">询价时间</th>
                                     <th className="center">状态</th>
                                     <th className="center">操作</th>
@@ -256,8 +255,9 @@ class UserManagerDetail extends React.Component {
                                         <tr className="grey-text text-darken-1">
                                             <td className="padding-left20">{item.start_city} - {item.end_city}</td>
                                             <td>{formatUtil.formatNumber(item.car_num)}</td>
-                                            <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
+                                            <td className="center">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,item.service_type)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.ora_trans_price,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.ora_insure_price,2)}</td>
                                             <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                             <td className="center">{sysConst.INQUIRY_STATUS[item.status].label}</td>
                                             <td className="operation center">
@@ -270,7 +270,7 @@ class UserManagerDetail extends React.Component {
                                 }, this)}
                                 {userManagerDetailReducer.inquiryArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="7">暂无数据</td>
+                                    <td className="no-data-tr" colSpan="8">暂无数据</td>
                                 </tr>}
                                 </tbody>
                             </table>

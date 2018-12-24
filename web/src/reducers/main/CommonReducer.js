@@ -10,6 +10,8 @@ const initialState = {
     totalValuation: 0,
     // 订单信息：总运费
     totalActFreight: 0,
+    // 订单信息：总保费
+    totalInsuranceFee: 0
 };
 
 export default handleActions({
@@ -41,5 +43,11 @@ export default handleActions({
             totalActFreight: action.payload
         }
     },
+    [CommonActionType.setTotalInsuranceFee]: (state, action) => {
+        return {
+            ...state,
+            totalInsuranceFee: action.payload
+        }
+    }
 }, initialState)
 

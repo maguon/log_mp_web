@@ -40,16 +40,15 @@ export const getInquiryList = () => async (dispatch, getState) => {
             // 检索条件：客户电话
             phone: conditionPhone,
             // 检索条件：起始城市
-            routeStart: conditionStartCity === null ? '' : conditionStartCity.value,
+            startCityId: conditionStartCity === null ? '' : conditionStartCity.value,
             // 检索条件：目的城市
-            routeEnd: conditionEndCity === null ? '' : conditionEndCity.value,
+            endCityId: conditionEndCity === null ? '' : conditionEndCity.value,
 
             // 检索条件：服务方式
             serviceType: conditionServiceType === null ? '' : conditionServiceType.value,
             // 检索条件：询价时间
             inquiryTimeStart: conditionCreatedOnStart,
             inquiryTimeEnd: conditionCreatedOnEnd,
-
             // 检索条件：状态
             status: conditionInquiryStatus === null ? '' : conditionInquiryStatus.value,
         };

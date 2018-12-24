@@ -7,6 +7,7 @@ import {NewOfferModal, CancelInquiryModal} from '../modules/index';
 const inquiryManagerDetailAction = require('../../actions/main/InquiryManagerDetailAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 class InquiryManagerDetail extends React.Component {
 
@@ -30,8 +31,9 @@ class InquiryManagerDetail extends React.Component {
      */
     showNewOfferModal = () => {
         let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
-        let freight = this.props.inquiryManagerDetailReducer.totalFreight;
-        this.props.initNewOfferModalData(userId, freight, '', '');
+        let totalFreight = this.props.inquiryManagerDetailReducer.totalFreight;
+        let totalInsuranceFee = this.props.inquiryManagerDetailReducer.totalInsuranceFee;
+        this.props.initNewOfferModalData(userId, totalFreight, totalInsuranceFee, 0, 0, '');
         $('#newOfferModal').modal('open');
     };
 
@@ -40,10 +42,12 @@ class InquiryManagerDetail extends React.Component {
      */
     showOfferModal = () => {
         let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
-        let freight = this.props.inquiryManagerDetailReducer.totalFreight;
-        let feePrice = this.props.inquiryManagerDetailReducer.inquiryInfo[0].fee_price;
+        let totalFreight = this.props.inquiryManagerDetailReducer.totalFreight;
+        let totalInsuranceFee = this.props.inquiryManagerDetailReducer.totalInsuranceFee;
+        let actTotalFreight = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_trans_price;
+        let actTotalInsuranceFee = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_insure_price;
         let remark = this.props.inquiryManagerDetailReducer.inquiryInfo[0].mark;
-        this.props.initNewOfferModalData(userId, freight, feePrice, remark);
+        this.props.initNewOfferModalData(userId, totalFreight, totalInsuranceFee, actTotalFreight, actTotalInsuranceFee, remark);
         $('#newOfferModal').modal('open');
     };
 
@@ -52,8 +56,11 @@ class InquiryManagerDetail extends React.Component {
      */
     showCancelInquiryModal = () => {
         let freight = this.props.inquiryManagerDetailReducer.totalFreight;
-        let feePrice = this.props.inquiryManagerDetailReducer.inquiryInfo[0].fee_price;
-        this.props.initCancelInquiryModalData(feePrice, freight);
+        let insuranceFee = this.props.inquiryManagerDetailReducer.totalInsuranceFee;
+        let actTotalFreight = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_trans_price;
+        let actTotalInsuranceFee = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_insure_price;
+
+        this.props.initCancelInquiryModalData(freight, insuranceFee, actTotalFreight, actTotalInsuranceFee);
         $('#cancelInquiryModal').modal('open');
     };
 
@@ -94,10 +101,7 @@ class InquiryManagerDetail extends React.Component {
                                     <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].start_city}</span>
                                     <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
                                     <span className="fz20 purple-font">{inquiryManagerDetailReducer.inquiryInfo[0].end_city}</span>
-                                    <span className="margin-left30">
-                                        {(inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 1 && inquiryManagerDetailReducer.inquiryInfo[0].service_type !== 2)
-                                        ? '未知' : sysConst.SERVICE_MODE[inquiryManagerDetailReducer.inquiryInfo[0].service_type - 1].label}
-                                    </span>
+                                    <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,inquiryManagerDetailReducer.inquiryInfo[0].service_type)}</span>
                                 </div>
 
                                 <div className="margin-top15">
@@ -144,10 +148,12 @@ class InquiryManagerDetail extends React.Component {
                                 <tr className="grey-text text-darken-2">
                                     <th className="padding-left10">车型</th>
                                     <th className="center">是否新车</th>
-                                    <th className="right-align">估值单价 ( 元 )</th>
-                                    <th className="right-align">预计运费单价 ( 元 )</th>
+                                    <th className="right-align">估值单价(元)</th>
+                                    <th className="right-align">预计运费单价(元)</th>
+                                    <th className="center">是否保险</th>
+                                    <th className="right-align">保险单价(元)</th>
                                     <th className="right-align">数量</th>
-                                    <th className="right-align">估值总额 ( 元 )</th>
+                                    <th className="right-align">估值(元)</th>
                                     <th className="right-align padding-right10">预计费用</th>
                                 </tr>
                                 </thead>
@@ -155,33 +161,40 @@ class InquiryManagerDetail extends React.Component {
                                 {inquiryManagerDetailReducer.inquiryCarArray.map(function (item) {
                                     return (
                                         <tr className="grey-text text-darken-1">
-                                            <td className="padding-left10">
-                                                {(item.model_id !== 1 && item.model_id !== 2 && item.model_id !== 3 && item.model_id !== 4 && item.model_id !== 5)
-                                                    ? '未知' : sysConst.CAR_MODEL[item.model_id - 1].label}
-                                            </td>
+                                            <td className="padding-left10">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_id)}</td>
                                             <td className="center">{sysConst.YES_NO[item.old_car].label}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.plan_solo,2)}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.fee_solo,2)}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
                                             <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.fee,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.trans_price,2)}</td>
+                                            <td className="center">{sysConst.YES_NO[item.safe_status].label}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.insure_price)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.plan_total,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.trans_total + item.insure_price,2)}</td>
                                         </tr>
                                     )
                                 }, this)}
                                 {inquiryManagerDetailReducer.inquiryCarArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="7">暂无数据</td>
+                                    <td className="no-data-tr" colSpan="9">暂无数据</td>
                                 </tr>}
                                 </tbody>
                             </table>
                         </div>
 
                         <div className="row margin-bottom10 grey-text text-darken-2 bold-font">
-                            <div className="col s8">
+                            <div className="col s2">
                                 <span className="fz14">估值总额：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalValuation)}</span>
                             </div>
+
+                            <div className="col s3 right-align">
+                                <span className="fz14">预计总费用：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalFreight,2)}</span>
+                            </div>
+                            <div className="col s3 right-align">
+                                <span className="fz14">预计总保费：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalInsuranceFee,2)}</span>
+                            </div>
+
                             <div className="col s4 right-align">
-                                <span className="fz14">预计总运费：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalFreight,2)}</span>
+                                <span className="fz14">预计总费用：</span><span className="fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.totalFreight + inquiryManagerDetailReducer.totalInsuranceFee,2)}</span>
                             </div>
                         </div>
                         <div className="row divider bold-divider"/>
@@ -212,13 +225,15 @@ class InquiryManagerDetail extends React.Component {
 
                             {inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
                             <div>
-                                <div className="col s6 margin-top10 margin-bottom10 bold-font">
-                                    协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].fee_price,2)}</span> 元
+                                <div className="col s3 margin-top10 margin-bottom10 bold-font">
+                                    协商运费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].total_trans_price,2)}</span> 元
                                 </div>
-                                <div className="col s6 margin-top10 right-align bold-font">
-                                    协商时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time)}
+                                <div className="col s4 margin-top10 right-align bold-font">
+                                    协商保费：<span className="margin-left10 fz16 pink-font">{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
                                 </div>
-
+                                <div className="col s5 margin-top10 right-align bold-font blue-text text-lighten-2">
+                                    协商总费用：<span className="margin-left10 fz16">{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].total_trans_price + inquiryManagerDetailReducer.inquiryInfo[0].total_insure_price,2)}</span> 元
+                                </div>
                                 <div className="col s12 no-padding divider"/>
 
                                 <div className="col s-percent-8 padding-right0 margin-top10 margin-bottom10 bold-font">
@@ -226,6 +241,14 @@ class InquiryManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
                                     {inquiryManagerDetailReducer.inquiryInfo[0].mark}
+                                </div>
+                                <div className="col s12 no-padding divider"/>
+
+                                <div className="col s6 margin-top10 margin-bottom10 bold-font">
+                                    协商客服：{inquiryManagerDetailReducer.inquiryInfo[0].admin_user}
+                                </div>
+                                <div className="col s6 margin-top10 right-align bold-font">
+                                    协商时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time)}
                                 </div>
                             </div>}
                         </div>}
@@ -265,19 +288,21 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(inquiryManagerDetailAction.getInquiryInfo(ownProps.match.params.id));
         dispatch(inquiryManagerDetailAction.getInquiryCarList(ownProps.match.params.id));
     },
-    initNewOfferModalData: (userId, freight, feePrice, remark) => {
+    initNewOfferModalData: (userId, totalFreight, totalInsuranceFee, actfreight, actInsuranceFee, remark) => {
         dispatch(NewOfferModalActionType.setInquiryId(ownProps.match.params.id));
         dispatch(NewOfferModalActionType.setUserId(userId));
-        dispatch(NewOfferModalActionType.setFreight(freight));
-        dispatch(NewOfferModalActionType.setFeePrice(feePrice));
+        dispatch(NewOfferModalActionType.setFreight(totalFreight));
+        dispatch(NewOfferModalActionType.setInsuranceFee(totalInsuranceFee));
+        dispatch(NewOfferModalActionType.setActFreight(actfreight));
+        dispatch(NewOfferModalActionType.setActInsuranceFee(actInsuranceFee));
         dispatch(NewOfferModalActionType.setRemark(remark));
-        // material textarea 自动适配 高度，否则显示不全
-        $('.no-border-bottom').trigger('autoresize');
     },
-    initCancelInquiryModalData: (feePrice, freight) => {
+    initCancelInquiryModalData: (freight, insuranceFee, actTotalFreight, actTotalInsuranceFee) => {
         dispatch(CancelInquiryModalActionType.setInquiryId(ownProps.match.params.id));
         dispatch(CancelInquiryModalActionType.setFreight(freight));
-        dispatch(CancelInquiryModalActionType.setFeePrice(feePrice));
+        dispatch(CancelInquiryModalActionType.setInsuranceFee(insuranceFee));
+        dispatch(CancelInquiryModalActionType.setActFreight(actTotalFreight));
+        dispatch(CancelInquiryModalActionType.setActInsuranceFee(actTotalInsuranceFee));
         dispatch(CancelInquiryModalActionType.setRemark(''));
     },
     generateOrder: (userId) => {

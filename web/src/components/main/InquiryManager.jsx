@@ -208,7 +208,7 @@ class InquiryManager extends React.Component {
                                 <th>车辆数</th>
                                 <th className="center">服务方式</th>
                                 <th className="center">预计费用</th>
-                                <th>询价人</th>
+                                <th>询价用户</th>
                                 <th className="center">电话</th>
                                 <th className="center">询价时间</th>
                                 <th>协商费用</th>

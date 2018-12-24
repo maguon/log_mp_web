@@ -25,8 +25,15 @@ class NewOfferModal extends React.Component {
     /**
      * 更新 协商运费
      */
-    changeFeePrice = (event) => {
-        this.props.setFeePrice(event.target.value);
+    changeActFreight = (event) => {
+        this.props.setActFreight(event.target.value);
+    };
+
+    /**
+     * 更新 协商保费
+     */
+    changeActInsuranceFee = (event) => {
+        this.props.setActInsuranceFee(event.target.value);
     };
 
     /**
@@ -49,19 +56,25 @@ class NewOfferModal extends React.Component {
 
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
-                    <div className="row margin-top30">
-                        <div className="col input-field s6">
-                            <div className="col s12 custom-label-field grey-text">
-                                预计运费：<span className="fz16 pink-font">{formatUtil.formatNumber(newOfferModalReducer.freight,2)}</span> 元
-                            </div>
-                        </div>
-                        <Input s={6} label="协商运费(元)" type="number" maxLength="10" value={newOfferModalReducer.feePrice} onChange={this.changeFeePrice}/>
+                    <div className="row margin-top30 grey-text margin-bottom10">
+                        <div className="col s3">预计运费：<span className="fz16 pink-font">{formatUtil.formatNumber(newOfferModalReducer.freight,2)}</span> 元</div>
+                        <div className="col s4 right-align">预计保费：<span className="fz16 pink-font">{formatUtil.formatNumber(newOfferModalReducer.insuranceFee,2)}</span> 元</div>
+                        <div className="col s5 right-align">预计总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(newOfferModalReducer.freight + newOfferModalReducer.insuranceFee,2)}</span> 元</div>
+                    </div>
+                    <div className="row"><div className="col s12"><div className="col s12 margin-top3 divider"/></div></div>
 
-                        <div className="col s12 margin-top20">
-                            <div className="col s12 detail-box no-padding min-height50">
-                                <Input s={12} type='textarea' placeholder="协商描述" className="no-border-bottom" maxLength="200" value={newOfferModalReducer.remark} onChange={this.changeRemark}/>
+                    <div className="row margin-top10">
+                        <Input s={4} label="协商运费(元)" className="right-align" type="number" value={newOfferModalReducer.actFreight} onChange={this.changeActFreight}/>
+                        <Input s={4} label="协商保费(元)" className="right-align" type="number" value={newOfferModalReducer.actInsuranceFee} onChange={this.changeActInsuranceFee}/>
+                        <div className="col input-field s4">
+                            <div className="col s12 custom-label-field grey-text right-align">
+                                协商总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(parseInt(newOfferModalReducer.actFreight) + parseInt(newOfferModalReducer.actInsuranceFee),2)}</span> 元
                             </div>
                         </div>
+                    </div>
+
+                    <div className="row">
+                        <Input s={12} label="协商描述" maxLength="200" value={newOfferModalReducer.remark} onChange={this.changeRemark}/>
                     </div>
                 </div>
 
@@ -88,8 +101,11 @@ const mapStateToProps = (state) => {
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
  */
 const mapDispatchToProps = (dispatch) => ({
-    setFeePrice: (value) => {
-        dispatch(NewOfferModalActionType.setFeePrice(value))
+    setActFreight: (value) => {
+        dispatch(NewOfferModalActionType.setActFreight(value))
+    },
+    setActInsuranceFee: (value) => {
+        dispatch(NewOfferModalActionType.setActInsuranceFee(value))
     },
     setRemark: (value) => {
         dispatch(NewOfferModalActionType.setRemark(value))

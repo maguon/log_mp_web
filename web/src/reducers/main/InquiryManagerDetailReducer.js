@@ -11,6 +11,8 @@ const initialState = {
     totalValuation: 0,
     // 预计总运费
     totalFreight: 0,
+    // 预计总保费
+    totalInsuranceFee: 0,
     // 订单信息
     orderInfo: []
 };
@@ -38,6 +40,12 @@ export default handleActions({
         return {
             ...state,
             totalFreight: action.payload
+        }
+    },
+    [InquiryManagerDetailActionType.setTotalInsuranceFee]: (state, action) => {
+        return {
+            ...state,
+            totalInsuranceFee: action.payload
         }
     },
     [InquiryManagerDetailActionType.getOrderInfo]: (state, action) => {

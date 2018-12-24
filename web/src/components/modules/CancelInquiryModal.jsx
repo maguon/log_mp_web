@@ -42,19 +42,23 @@ class CancelInquiryModal extends React.Component {
 
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
-                    <div className="row margin-top30">
-                        <div className="col input-field s6">
-                            预计运费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.freight,2)}</span> 元
-                        </div>
-                        <div className="col input-field s6">
-                            协商运费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.feePrice,2)}</span> 元
-                        </div>
 
-                        <div className="col s12 margin-top20">
-                            <div className="col s12 detail-box no-padding min-height50">
-                                <Input s={12} type='textarea' placeholder="取消原因" className="no-border-bottom" maxLength="200" value={cancelInquiryModalReducer.remark} onChange={this.changeRemark}/>
-                            </div>
-                        </div>
+                    <div className="row margin-top30 grey-text margin-bottom10">
+                        <div className="col s3">预计运费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.freight,2)}</span> 元</div>
+                        <div className="col s4 right-align">预计保费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.insuranceFee,2)}</span> 元</div>
+                        <div className="col s5 right-align">预计总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.freight + cancelInquiryModalReducer.insuranceFee,2)}</span> 元</div>
+                    </div>
+                    <div className="row"><div className="col s12"><div className="col s12 margin-top3 dotted-line"/></div></div>
+
+                    <div className="row margin-top30 grey-text margin-bottom10">
+                        <div className="col s3">协商运费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.actFreight,2)}</span> 元</div>
+                        <div className="col s4 right-align">协商保费：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.actInsuranceFee,2)}</span> 元</div>
+                        <div className="col s5 right-align">协商总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(cancelInquiryModalReducer.actFreight + cancelInquiryModalReducer.actInsuranceFee,2)}</span> 元</div>
+                    </div>
+                    <div className="row"><div className="col s12"><div className="col s12 margin-top3 dotted-line"/></div></div>
+
+                    <div className="row">
+                        <Input s={12} label="取消原因" maxLength="200" value={cancelInquiryModalReducer.remark} onChange={this.changeRemark}/>
                     </div>
                 </div>
 

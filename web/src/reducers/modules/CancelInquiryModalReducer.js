@@ -7,8 +7,12 @@ const initialState = {
     inquiryId: '',
     // 预计运费
     freight: 0,
+    // 预计保费
+    insuranceFee: 0,
     // 协商运费
-    feePrice: 0,
+    actFreight: 0,
+    // 协商保费
+    actInsuranceFee: 0,
     // 备注
     remark: ''
 };
@@ -26,10 +30,22 @@ export default handleActions({
             freight: action.payload
         }
     },
-    [CancelInquiryModalActionType.setFeePrice]: (state, action) => {
+    [CancelInquiryModalActionType.setInsuranceFee]: (state, action) => {
         return {
             ...state,
-            feePrice: action.payload
+            insuranceFee: action.payload
+        }
+    },
+    [CancelInquiryModalActionType.setActFreight]: (state, action) => {
+        return {
+            ...state,
+            actFreight: action.payload
+        }
+    },
+    [CancelInquiryModalActionType.setActInsuranceFee]: (state, action) => {
+        return {
+            ...state,
+            actInsuranceFee: action.payload
         }
     },
     [CancelInquiryModalActionType.setRemark]: (state, action) => {

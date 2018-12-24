@@ -12,15 +12,18 @@ export const saveOffer = () => async (dispatch, getState) => {
         // 用户ID
         const userId = getState().NewOfferModalReducer.userId;
         // 协商运费
-        const feePrice = getState().NewOfferModalReducer.feePrice;
+        const actFreight = getState().NewOfferModalReducer.actFreight;
+        // 协商保费
+        const actInsuranceFee = getState().NewOfferModalReducer.actInsuranceFee;
         // 备注
         const remark = getState().NewOfferModalReducer.remark;
 
-        if (feePrice === '') {
-            swal('保存失败', '请输入协商运费！', 'warning');
+        if (actFreight === '' || actInsuranceFee === '') {
+            swal('保存失败', '请输入完整的报价信息！', 'warning');
         } else {
             const params = {
-                feePrice: feePrice,
+                feePrice: actFreight,
+                totalInsurePrice: actInsuranceFee,
                 mark: remark
             };
             // 基本url

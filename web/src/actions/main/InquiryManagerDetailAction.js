@@ -38,12 +38,16 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
             let totalValuation = 0;
             // 预计总运费
             let totalFreight = 0;
+            // 预计总保费
+            let totalInsuranceFee = 0;
             res.result.forEach((item) => {
-                totalValuation = totalValuation + item.plan;
-                totalFreight = totalFreight + item.fee;
+                totalValuation = totalValuation + item.plan_total;
+                totalFreight = totalFreight + item.trans_total;
+                totalInsuranceFee = totalInsuranceFee + item.insure_price;
             });
             dispatch({type: InquiryManagerDetailActionType.setTotalValuation, payload: totalValuation});
             dispatch({type: InquiryManagerDetailActionType.setTotalFreight, payload: totalFreight});
+            dispatch({type: InquiryManagerDetailActionType.setTotalInsuranceFee, payload: totalInsuranceFee});
         } else if (res.success === false) {
             swal('获取询价车辆详细信息失败', res.msg, 'warning');
         }

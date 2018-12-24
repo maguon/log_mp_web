@@ -52,7 +52,16 @@ export const getDate = (date) => {
 export const formatNumber = (number, decimals) => {
     decimals = typeof decimals === 'undefined' ? 0 : decimals;
     // 保留指定小数点后位数，并分割数组
-    let x = (number == null ? 0 : number).toFixed(decimals).split('.');
+    let formatNum = 0;
+    if (!isNaN(number)) {
+        formatNum = number;
+    } else  if (typeof number === 'string') {
+        formatNum = parseInt(number);
+        formatNum = isNaN(parseInt(number)) ? 0 : formatNum;
+    } else {
+        formatNum = 0;
+    }
+    let x = formatNum.toFixed(decimals).split('.');
     let x1 = x[0];
     let x2 = x.length > 1 ? '.' + x[1] : '';
     let rgx = /(\d+)(\d{3})/;

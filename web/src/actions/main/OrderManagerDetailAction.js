@@ -99,6 +99,30 @@ export const changeOrderStatus = (orderId, status) => async (dispatch) => {
 };
 
 
+export const deleteOrderItem = (orderId, orderItemId) => async (dispatch) => {
+    swal({
+        title: '确定删除该车辆？',
+        text: '',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/orderItem/' + orderItemId;
+            const res = await httpUtil.httpDelete(url, {});
+            if (res.success === true) {
+                swal("删除成功", "", "success");
+                dispatch(getOrderInfo(orderId));
+                dispatch(commonAction.getOrderCarList(orderId));
+            } else if (res.success === false) {
+                swal('删除失败', res.msg, 'warning');
+            }
+        }
+    });
+};
 
 
 

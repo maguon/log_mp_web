@@ -46,18 +46,25 @@ class OrderManagerDetail extends React.Component {
     /**
      * 显示 增加车辆/编辑车辆 模态画面
      */
-    showEditOrderCarModal = (pageType) => {
-        this.props.initEditOrderCarModalData(pageType, this.props.orderManagerDetailReducer.orderInfo);
+    showEditOrderCarModal = (pageType, orderItem) => {
+        this.props.initEditOrderCarModalData(pageType, this.props.orderManagerDetailReducer.orderInfo, orderItem);
         $('#editOrderCarModal').modal('open');
+    };
+
+    /**
+     * 删除 运送车辆
+     */
+    deleteOrderItem = (orderItemId) => {
+        this.props.deleteOrderItem(orderItemId);
     };
 
     /**
      * 更新 订单备注
      */
-    saveOrderItemInfo = (actFee, premium) => {
+    saveOrderItemInfo = (transFee, insureFee) => {
 
-        console.log('actFee',$('#' + actFee).val());
-        console.log('premium',$('#' + actFee).text());
+        console.log('transFee',$('#' + transFee).val());
+        console.log('insureFee',$('#' + insureFee).val());
     };
 
     /**
@@ -183,21 +190,24 @@ class OrderManagerDetail extends React.Component {
                             {/** 外部订单：回到待完善信息/完善价格 按钮 */}
                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
-                                <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[0].value)}}>回到待完善信息</button>
+                                <button type="button" className="btn custom-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[0].value)}}>回到待完善信息</button>
                                 <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[2].value)}}>完善价格</button>
                             </div>}
 
                             {/** 外部订单：生成运输需求/重新完善价格 按钮 */}
                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
-                                <button type="button" className="btn cancel-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value)}}>生成运输需求</button>
+                                <button type="button" className="btn custom-btn width-auto" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value)}}>生成运输需求</button>
                                 <button type="button" className="btn confirm-btn width-auto margin-left20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[1].value)}}>重新完善价格</button>
                             </div>}
 
                             {/** 内部订单：增加车辆 按钮 */}
-                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value &&
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                            (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value) &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
-                                <button type="button" className="btn confirm-btn" onClick={() => {this.showEditOrderCarModal('new')}}>增加车辆</button>
+                                {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
+                                <button type="button" className="btn custom-btn width-auto margin-right20" onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value)}}>生成运输需求</button>}
+                                <button type="button" className="btn confirm-btn" onClick={() => {this.showEditOrderCarModal('new','')}}>增加车辆</button>
                             </div>}
 
                             <EditOrderCarModal/>
@@ -222,7 +232,14 @@ class OrderManagerDetail extends React.Component {
                                             <th className="center">车型</th>
                                             <th className="center">是否新车</th>
                                             <th className="right-align">估值 ( 元 )</th>
-                                            <th className="right-align padding-right50 width-300">实际费用 ( 元 )</th>
+                                            <th className="center">是否保险</th>
+                                            <th className="right-align width-150">实际运费 ( 元 )</th>
+                                            <th className="right-align width-200">实际保费 ( 元 )</th>
+                                            <th className="right-align">实际费用 ( 元 )</th>
+                                            {/* 内部订单，并且是：待生成需求 状态时，显示 */}
+                                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                            orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
+                                            <th className="width-100"/>}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -233,15 +250,47 @@ class OrderManagerDetail extends React.Component {
                                                     <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
                                                     <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                    <td className="right-align padding-right10 width-300">
-                                                        {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
-                                                        <div>
-                                                            <input id={`index${key}`} defaultValue={item.act_price} className="margin-bottom0 width-200 right-align"/>
-                                                            <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer" onClick={()=> {this.saveOrderItemInfo(`index${key}`,`index${key}`)}}/>
-                                                        </div>}
-                                                        {orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[1].value &&
-                                                        <span className="margin-right50">{formatUtil.formatNumber(item.act_price, 2)}</span>}
+                                                    {/* 是否保险 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
+                                                    {/* 实际运费 */}
+                                                    <td className="right-align width-150">
+                                                        {/* 外部订单，并且是：待完善价格 状态时，可编辑 */}
+                                                        {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value
+                                                        && orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
+                                                        <input id={`trans_index${key}`} defaultValue={item.act_trans_price} className="margin-bottom0 width-100 right-align"/>}
+
+                                                        {/* 内部订单  后者  外部订单，并且不是：待完善价格 状态时，只显示 */}
+                                                        {(orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value ||
+                                                            (orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value
+                                                                && orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[1].value)) &&
+                                                        <span>{formatUtil.formatNumber(item.act_trans_price, 2)}</span>}
                                                     </td>
+                                                    {/* 实际保费 */}
+                                                    <td className="right-align width-200">
+                                                        {/* 外部订单，并且是：待完善价格 状态时，可编辑 */}
+                                                        {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                                                         orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
+                                                        <div>
+                                                            <input id={`insure_index${key}`} defaultValue={item.act_insure_price} className="margin-bottom0 width-100 right-align"/>
+                                                            <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
+                                                               onClick={()=> {this.saveOrderItemInfo(`trans_index${key}`,`insure_index${key}`)}}/>
+                                                        </div>}
+                                                        {/* 内部订单  后者  外部订单，并且不是：待完善价格 状态时，只显示 */}
+                                                        {(orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value ||
+                                                            (orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value
+                                                                && orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[1].value)) &&
+                                                        <span>{formatUtil.formatNumber(item.act_insure_price, 2)}</span>}
+                                                    </td>
+
+                                                    {/* 实际费用 */}
+                                                    <td className="right-align">{formatUtil.formatNumber(item.act_trans_price + item.act_insure_price, 2)}</td>
+                                                    {/* 操作 内部订单，并且是：待生成需求 状态时，显示 */}
+                                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                                    orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value &&
+                                                    <td className="right-align width-100">
+                                                        <i className="mdi mdi-pencil margin-left30 fz20 pink-font pointer" onClick={()=> {this.showEditOrderCarModal('new',item)}}/>
+                                                        <i className="mdi mdi-delete margin-left10 fz20 pink-font pointer" onClick={()=> {this.deleteOrderItem(item.id)}}/>
+                                                    </td>}
                                                 </tr>
                                             )
                                         }, this)}
@@ -252,19 +301,25 @@ class OrderManagerDetail extends React.Component {
                                 {/* 运送车辆 总计 */}
                                 {commonReducer.orderCarArray.length > 0 &&
                                 <div className="col s12 margin-top20 grey-text text-darken-2">
-                                    <div className="col s6">
+                                    <div className="col s3">
                                         估值总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalValuation,2)}</span> 元
                                     </div>
-                                    <div className="col s6 right-align">
-                                        总运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
+                                    <div className="col s3 right-align">
+                                        运费总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight,2)}</span> 元
+                                    </div>
+                                    <div className="col s3 right-align">
+                                        保费总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalInsuranceFee,2)}</span> 元
+                                    </div>
+                                    <div className="col s3 right-align">
+                                        总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee,2)}</span> 元
                                     </div>
                                 </div>}
 
                                 {/* 分割线 */}
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                                {/* 无 运送车辆 时，提示文字 */}
-                                {commonReducer.orderCarArray.length === 0 &&
+                                {/* 外部订单，并且没有 运送车辆 时，提示文字 */}
+                                {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && commonReducer.orderCarArray.length === 0 &&
                                 <div className="col s12 margin-top10 grey-text text-lighten-1">等待用户完善车辆信息</div>}
                             </div>
 
@@ -369,7 +424,7 @@ class OrderManagerDetail extends React.Component {
                                 || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[2].value || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[3].value) &&
                             <div className="row margin-right60 right-align">
                                 <CancelOrderModal/>
-                                <button type="button" className="btn cancel-btn" onClick={this.showCancelOrderModal}>取消订单</button>
+                                <button type="button" className="btn custom-btn" onClick={this.showCancelOrderModal}>取消订单</button>
                             </div>}
 
                             {/* 取消原因 已取消 状态时，显示详情 */}
@@ -525,15 +580,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
         dispatch(commonAction.getOrderCarList(ownProps.match.params.id));
     },
-    initEditOrderCarModalData: (pageType, orderInfo) => {
+    initEditOrderCarModalData: (pageType, orderInfo, orderItem) => {
         dispatch(EditOrderCarModalActionType.setPageType(pageType));
         dispatch(EditOrderCarModalActionType.setOrderInfo(orderInfo));
-
-        if (pageType === 'new') {
-            dispatch(editOrderCarModalAction.initOrderCarData());
-        } else {
-
-        }
+        dispatch(editOrderCarModalAction.initOrderCarData(pageType, orderItem));
+    },
+    deleteOrderItem: (orderItemId) => {
+        dispatch(orderManagerDetailAction.deleteOrderItem(ownProps.match.params.id, orderItemId))
     },
     changeOrderStatus: (value) => {
         dispatch(orderManagerDetailAction.changeOrderStatus(ownProps.match.params.id, value))
@@ -542,13 +595,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(EditUserAddressModalActionType.setOrderId(ownProps.match.params.id));
         dispatch(EditUserAddressModalActionType.setPageType(pageType));
         if (pageType === 'send') {
-            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.send_name));
-            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.send_phone));
-            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.send_address));
+            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.send_name == null ? "" : orderInfo.send_name));
+            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.send_phone == null ? "" : orderInfo.send_phone));
+            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.send_address == null ? "" : orderInfo.send_address));
         } else {
-            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.recv_name));
-            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.recv_phone));
-            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.recv_address));
+            dispatch(EditUserAddressModalActionType.setOrderUser(orderInfo.recv_name == null ? "" : orderInfo.recv_name));
+            dispatch(EditUserAddressModalActionType.setOrderPhone(orderInfo.recv_phone == null ? "" : orderInfo.recv_phone));
+            dispatch(EditUserAddressModalActionType.setOrderAddress(orderInfo.recv_address == null ? "" : orderInfo.recv_address));
         }
     },
     setOrderRemark: (value) => {

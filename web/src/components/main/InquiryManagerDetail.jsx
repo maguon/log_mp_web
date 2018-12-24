@@ -132,7 +132,7 @@ class InquiryManagerDetail extends React.Component {
                         {/** 已报价状态显示：取消询价/重新报价/生成订单 按钮 */}
                         {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 1 &&
                         <div className="row margin-bottom10 right-align">
-                            <button type="button" className="btn cancel-btn" onClick={this.showCancelInquiryModal}>取消询价</button>
+                            <button type="button" className="btn custom-btn" onClick={this.showCancelInquiryModal}>取消询价</button>
                             <button type="button" className="btn confirm-btn margin-left20" onClick={this.showOfferModal}>重新报价</button>
                             <button type="button" className="btn orange-btn margin-left20" onClick={this.generateOrder}>生成订单</button>
                         </div>}

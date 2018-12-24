@@ -64,7 +64,7 @@ class EditOrderCarModal extends React.Component {
             <div id="editOrderCarModal" className="modal modal-fixed-footer row">
 
                 {/** Modal头部：Title */}
-                <div className="modal-title center-align white-text">询&nbsp;价</div>
+                <div className="modal-title center-align white-text">{editOrderCarModalReducer.pageType === 'new' ? '增加车辆' : '车辆信息'}</div>
 
                 {/** Modal主体 */}
                 <div className="modal-content white">

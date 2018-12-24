@@ -10,21 +10,38 @@ const formatUtil = require('../../util/FormatUtil');
 
 
 // 添加车辆 画面 初期
-export const initOrderCarData = () => async (dispatch) => {
-    // vin
-    dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
-    // 车型
-    dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
-    // 是否新车
-    dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: null});
-    // 估值
-    dispatch({type: EditOrderCarModalActionType.setValuation, payload: ''});
-    // 是否购买保险
-    dispatch({type: InquiryModalActionType.setInsuranceFlag, payload: '1'});
-    // 预计运费
-    dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)});
-    // 实际运费
-    dispatch({type: EditOrderCarModalActionType.setActFreight, payload: ''});
+export const initOrderCarData = (pageType, orderItem) => async (dispatch) => {
+    if (pageType === 'edit') {
+        // vin
+        dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
+        // 车型
+        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
+        // 是否新车
+        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: null});
+        // 估值
+        dispatch({type: EditOrderCarModalActionType.setValuation, payload: ''});
+        // 是否购买保险
+        dispatch({type: InquiryModalActionType.setInsuranceFlag, payload: '1'});
+        // 预计运费
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)});
+        // 实际运费
+        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: ''});
+    } else {
+        // vin
+        dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
+        // 车型
+        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
+        // 是否新车
+        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: null});
+        // 估值
+        dispatch({type: EditOrderCarModalActionType.setValuation, payload: ''});
+        // 是否购买保险
+        dispatch({type: InquiryModalActionType.setInsuranceFlag, payload: '1'});
+        // 预计运费
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)});
+        // 实际运费
+        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: ''});
+    }
 };
 
 /**

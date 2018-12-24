@@ -1,0 +1,44 @@
+
+<view class='dis-head'>
+<view class='head-city'>大连</view>
+<image class='head-staycar' src='../../../images/arrow_02.png'></image>
+<view class='head-city'>沈阳</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way' hover-class="active">
+<view class='way-text'>选择车型</view>
+<view class='way-right'>标准车型</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>VIN</view>
+<input class='note-input' placeholder='填写车辆18位识别码' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+</view>
+<view class='dis-line'></view>
+
+<!-- 车辆估值 ---------------------------------------------------------------------- -->
+  <view class='valuation' >
+  <view class='valuation-item'>
+  <view class='valuation-text'>车辆估值(元)</view>
+  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  </view>
+
+  <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
+  <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
+  <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
+   <view class="right-text">新车</view>
+  </view>
+ 
+  </view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+  <button hidden='{{!hidden}}'  bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
+
+   <view hidden='{{hidden}}' >
+   <button   bindtap="bindtap" class="btn-area button" hover-class="weui-cell_active">确定</button>
+  <button bindtap="bindDelete" class="btn-area area" hover-class="weui-cell_active">删除</button>
+ </view>

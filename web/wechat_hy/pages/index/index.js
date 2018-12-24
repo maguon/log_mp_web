@@ -14,7 +14,7 @@ Page({
     endCityId: '',
 
      //系数相关
-    array:["送到指定地点","送到当地自提"],
+    array:["上门服务","当地自提"],
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车","大型商务车"],
     unitPrice: 1.2,
     valuationRate: 0.05,
@@ -22,6 +22,7 @@ Page({
     new_old: [0.8,1.0],
     fee:[500,0],
     checked: 0,
+    insurance:1,
     index:'',
     car_index:'',
     valuation:'',
@@ -136,6 +137,21 @@ Page({
     }
    
   },
+   insuranceChange: function () {
+    if (this.data.insurance == 1) {
+      this.setData({
+        insurance: 0,
+        valuationRate:0,
+      })
+    } else {
+      this.setData({
+        insurance: 1,
+        valuationRate:0.05,
+      })
+    }
+
+  },
+ 
   /**
    * 询价
    */
@@ -206,6 +222,12 @@ Page({
               var fee = feeNumber.toFixed(2);
               console.log(fee)
 
+              console.log(this.data.distance)
+              console.log(this.data.ratio[this.data.car_index])
+              console.log(this.data.new_old[this.data.checked])
+              console.log(this.data.valuationRate)
+              console.log(this.data.fee[this.data.index])
+
               var params = {
                 routeId: res.data.result[0].route_id,
                 serviceType: parseInt(that.data.index) + 1,
@@ -214,7 +236,11 @@ Page({
                 carNum: 1,
                 inquiryName: "",
                 plan: that.data.valuation,
-                fee: fee
+                fee: fee,
+                startCity: that.data.beginCity,
+                endCity:that.data.endCity,
+                safeStatus:that.data.insurance,
+                safePrice: that.data.valuation*that.data.valuationRate,
               }
               //发送服务器
               reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "//inquiry", params, (err, res) => {

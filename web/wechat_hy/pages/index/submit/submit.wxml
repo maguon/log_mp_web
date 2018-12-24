@@ -2,9 +2,10 @@
    <icon class='icon' type="success" size="100"></icon>
       <view class="title">已提交客服</view>
         <view class="desc">我们会在一个工作日内与您联系</view>
-        <view class="desc01">您也可以点击下方联系客服按钮直接与客服进行协商</view>
+        <view class="desc01">您也可以点击下方<view class='disc-text'>联系客服</view>按钮直接与客服进行协商</view>
    
 <!-- 按键 ---------------------------------------------------------------------- -->
+<view class='button'>
       <button bindtap="bindCustomer" class="area" hover-class="weui-cell_active">
        <image class='customer' src='../../../images/customer.png'></image>
        <text class='text'>联系客服</text>
@@ -13,4 +14,5 @@
         <button bindtap="bindInquiry" class="area" hover-class="weui-cell_active">
        <text class='text'>继续询价</text>
        </button>
+       </view>
  </view>

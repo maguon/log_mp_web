@@ -1,5 +1,5 @@
 page{
-   background: #f8f6f8;
+  background: #f8f6f8;
 }
 .icon-box{
   width: 100%;
@@ -28,19 +28,14 @@ color: #8a8a8a;
 display: flex;
 flex-direction: row;
 }
-.disc-text{
- color: #d35093;
+.desc-text{
+  color: #d43286;
 }
 /* <!-- 按钮 ---------------------------------------------------------------------- --> */
-.button{
-  width: 100%;
-  margin-top: 30px;
-}
 .area{
-  margin-top: 20px;
+  margin-top: 50px;
   height: 45px;
   width: 90%;
-  background: white;
   border: 1px solid #7a387a;
   color: #7a387a;
   display: flex;

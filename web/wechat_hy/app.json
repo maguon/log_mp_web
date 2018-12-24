@@ -1,6 +1,6 @@
 {
   "pages":[
-  
+ 
     "pages/login/login",
     "pages/index/index",
     "pages/index/submit/submit",
@@ -12,12 +12,15 @@
    
     "pages/order/order",
     "pages/order/order-discuss/order-discuss",
+    "pages/order/pending-order/pending-order",
+    "pages/order/transport/transport",
+    "pages/order/models/models",
+    "pages/order/submit/submit",
   
     "pages/about/about",
 
     "pages/user/user",
     "pages/user/bind/bind"
-
   ],
   "window":{
     "backgroundTextStyle":"light",

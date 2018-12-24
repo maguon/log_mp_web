@@ -58,6 +58,11 @@
   </view>
 
 </view>
+<!-- 车辆保险 ---------------------------------------------------------------------- -->
+<view class="insurance">
+<view class="insurance-text">车辆保险</view>
+<switch bindtap='insuranceChange' class='insurance-checked' checked='{{insurance}}'></switch>
+</view>
 <!-- 按键 ---------------------------------------------------------------------- -->
     <button   bindtap="bindInquiry" class="btn-area" hover-class="weui-cell_active">询价</button>
 

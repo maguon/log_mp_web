@@ -1,4 +1,7 @@
 // pages/order/order.js
+const app = getApp()
+const config = require('../../config.js');
+const reqUtil = require('../../utils/ReqUtil.js')
 Page({
 
   /**
@@ -40,25 +43,16 @@ Page({
         hidden: false,
         status: false,
         number: 0.5,
-      },
-      {
-        name: "待评价",
-        url: '../../images/evaluation.png',
-        hidden: false,
-        status: false,
-        number: 0.5,
       }
     ],
-
-
-   
-
+    orderlist:[],
+    index:0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (e) {
 
   },
 
@@ -73,37 +67,110 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+  var index=this.data.index;
+  var userId=app.globalData.userId;
+  var orderState = this.data.orderState;
 
+  switch(index){
+    case 0:
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/queryInquiry", (err, res) => {
+        if (res.data.result!=''){
+        orderState[0].hidden=true;
+       
+        for(var i=0; i<res.data.result.length;i++){
+          res.data.result[i].fee= this.decimal(res.data.result[i].fee);
+          res.data.result[i].fee_price=this.decimal(res.data.result[i].fee_price);
+          if(res.data.result[i].status==3){
+            res.data.result[i].state = 0;
+          }else{
+            res.data.result[i].state = 1;
+          }
+        }
+
+        this.setData({
+          orderState: orderState,
+          orderlist:res.data.result,
+        })
+        }
+        console.log(res.data.result)
+      })
+      
+      break;
+    case 1:
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+        orderState[1].hidden = true;
+          for (var i = 0; i < res.data.result.length; i++) {
+            res.data.result[i].fee = this.decimal(res.data.result[i].fee);
+            res.data.result[i].fee_price = this.decimal(res.data.result[i].fee_price);
+          }
+        console.log(res.data.result)
+          this.setData({
+            orderState: orderState,
+            orderlist: res.data.result,
+          })
+          
+      })
+    
+      break;
+    case 2:
+   
+      break;
+    case 3:
+    
+      break;
+    case 4:
+  
+      break;
+    default:
+    
+  }
   },
 /**
  * 订单导航栏
  */
   selectButton:function(e){
-    console.log(e)
     var that=this;
     var index=e.currentTarget.dataset.index;
     var orderState = that.data.orderState;
+    var userId = app.globalData.userId;
     //判断用户点击
     for (var i = 0; i < orderState.length;i++){
       if (index==i){
         orderState[i].status = true;
         orderState[i].number=1;
-        console.log(i+'----')
       }else{
         orderState[i].status = false;
         orderState[i].number = 0.5;
-        console.log(i)
       }
     }
     //更新点击
     that.setData({
       orderState: orderState,
+      index:index,
+    })
+
+
+
+
+
+    this.onShow();
+  },
+  bindDetail:function(e){
+    var index = e.currentTarget.dataset.index;
+    var id = this.data.orderlist[index].id;
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/order/order-discuss/order-discuss?id='+id+"&index="+index,
     })
   },
-  bindDetail:function(){
-    wx.navigateTo({
-      url: '/pages/order/order-discuss/order-discuss',
-    })
+  /**
+   * 保留小数
+   */
+  decimal: function (e) {
+    //钱数小数点后二位设定
+    var total_price = Number(e);
+    var money = total_price.toFixed(2);
+    return money;
   },
   /**
    * 生命周期函数--监听页面隐藏

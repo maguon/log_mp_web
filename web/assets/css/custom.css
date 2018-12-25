@@ -47,6 +47,14 @@ body {
     width: auto !important;
 }
 
+.width-100 {
+    width: 100px !important;
+}
+
+.width-150 {
+    width: 150px !important;
+}
+
 .width-200 {
     width: 200px !important;
 }
@@ -451,6 +459,10 @@ table.striped > tbody > tr:nth-child(odd) {
     margin-top: 15px !important;
 }
 
+.margin-top16 {
+    margin-top: 16px !important;
+}
+
 .margin-top20 {
     margin-top: 20px;
 }
@@ -672,7 +684,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .no-padding {
-    padding: 0;
+    padding: 0 !important;
 }
 
 .position-relative {
@@ -843,7 +855,7 @@ table.striped > tbody > tr:nth-child(odd) {
     background: #8D8D8D !important;
 }
 
-.cancel-btn {
+.custom-btn {
     width: 110px;
     padding: 0 10px !important;
     color: #C54C88;
@@ -851,7 +863,12 @@ table.striped > tbody > tr:nth-child(odd) {
     border: 1px solid #C54C88;
 }
 
-.cancel-btn:hover {
+.custom-btn:hover {
+    background-color: #efefef !important;
+    color: #C54C88;
+}
+
+.custom-btn:focus {
     background-color: #efefef !important;
     color: #C54C88;
 }
@@ -1038,7 +1055,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #editOrderCarModal{
-    max-height: 600px;
+    max-height: 680px;
 }
 
 #inquiryModal{

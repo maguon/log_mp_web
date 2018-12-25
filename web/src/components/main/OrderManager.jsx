@@ -382,7 +382,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(OrderManagerActionType.setConditionOrderStatus(value))
     },
     initModalData: () => {
-        // dispatch(commonAction.getCityList());
         dispatch(NewOrderModalActionType.setStartCity(null));
         dispatch(NewOrderModalActionType.setEndCity(null));
         dispatch(NewOrderModalActionType.setServiceType(null));

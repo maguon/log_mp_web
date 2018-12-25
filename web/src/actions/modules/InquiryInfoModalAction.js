@@ -10,7 +10,7 @@ export const getInquiryInfo = (inquiryId, userId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/queryInquiry?inquiryId=' + inquiryId + '&userId=' + userId;
+            + '/inquiry?inquiryId=' + inquiryId + '&userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: InquiryInfoModalActionType.getInquiryInfo, payload: res.result});

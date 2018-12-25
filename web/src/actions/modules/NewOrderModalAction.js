@@ -52,7 +52,7 @@ export const saveOrder = () => async (dispatch, getState) => {
                 serviceType: serviceType.value
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/orderNew';
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/order';
             let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {
                 $('#newOrderModal').modal('close');

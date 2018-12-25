@@ -38,7 +38,7 @@ export const getUserInquiryList = (userId) => async (dispatch, getState) => {
 
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/queryInquiry?start=' + start + '&size=' + size + '&userId=' + userId;
+            + '/inquiry?start=' + start + '&size=' + size + '&userId=' + userId;
 
         // 检索条件
         let conditionsObj = {

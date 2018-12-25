@@ -7,9 +7,10 @@ import {EditOrderCarModalActionType} from "../../actionTypes";
 const editOrderCarModalAction = require('../../actions/modules/EditOrderCarModalAction');
 const sysConst = require('../../util/SysConst');
 const commonUtil = require('../../util/CommonUtil');
+const formatUtil = require('../../util/FormatUtil');
 
 /**
- * UI组件：询价模块。
+ * UI组件：增加车辆/车辆信息 修改模块。
  */
 class EditOrderCarModal extends React.Component {
 
@@ -42,10 +43,17 @@ class EditOrderCarModal extends React.Component {
     };
 
     /**
+     * 改变是否新车
+     */
+    changeCarFlag = (event) => {
+        this.props.changeCarFlag(event.target.checked);
+    };
+
+    /**
      * 改变是否保险
      */
     changeInsuranceFlag = (event) => {
-        this.props.changeInsuranceFlag(event.target.value);
+        this.props.changeInsuranceFlag(event.target.checked);
     };
 
     /**
@@ -56,10 +64,17 @@ class EditOrderCarModal extends React.Component {
     };
 
     /**
+     * 实际运费
+     */
+    changeActInsureFee = (event) => {
+        this.props.changeActInsureFee(event.target.value);
+    };
+
+    /**
      * 渲染(挂载)画面。
      */
     render() {
-        const {editOrderCarModalReducer, commonReducer, changeCarModel, changeCarFlag, saveOrderCar, closeModal} = this.props;
+        const {editOrderCarModalReducer, commonReducer, changeCarModel, saveOrderCar, closeModal} = this.props;
         return (
             <div id="editOrderCarModal" className="modal modal-fixed-footer row">
 
@@ -73,9 +88,9 @@ class EditOrderCarModal extends React.Component {
                     {editOrderCarModalReducer.orderInfo.length > 0 &&
                     <div className="row margin-top20 detail-box custom-grey grey-text text-darken-2">
                         <div className="col s6 margin-top20 margin-bottom20 purple-font">
-                            {editOrderCarModalReducer.orderInfo[0].start_city}
+                            <span className="fz16">{editOrderCarModalReducer.orderInfo[0].start_city}</span>
                             <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
-                            {editOrderCarModalReducer.orderInfo[0].end_city}
+                            <span className="fz16">{editOrderCarModalReducer.orderInfo[0].end_city}</span>
                         </div>
                         <div className="col s6 margin-top20 right-align">
                             服务方式：{commonUtil.getJsonValue(sysConst.SERVICE_MODE, editOrderCarModalReducer.orderInfo[0].service_type)}
@@ -83,10 +98,10 @@ class EditOrderCarModal extends React.Component {
                     </div>}
 
                     {/** 第一行 */}
-                    <div className="row margin-top20">
+                    <div className="row margin-top20 margin-bottom10">
 
                         <div className="custom-input-field col s6">
-                            <Input s={12} label="VIN" value={editOrderCarModalReducer.vin} onChange={this.changeVin}/>
+                            <Input s={12} label="VIN" maxLength="17" value={editOrderCarModalReducer.vin} onChange={this.changeVin}/>
                         </div>
 
                         <div className="input-field col s6">
@@ -98,51 +113,58 @@ class EditOrderCarModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">车型</label>
                         </div>
                     </div>
 
                     {/** 第二行 */}
-                    <div className="row">
-                        <div className="input-field col s6">
-                            <Select
-                                options={sysConst.YES_NO}
-                                onChange={changeCarFlag}
-                                value={editOrderCarModalReducer.carFlag}
-                                isSearchable={false}
-                                placeholder={"请选择"}
-                                styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                isClearable={false}
-                            />
-                            <label className="active">是否新车</label>
+                    <div className="row margin-bottom10">
+                        <div className="col s6 margin-top16">
+                            <div className="col s12 custom-label-field grey-text">
+                                <input type="checkbox" id="new-car-flag" className="filled-in"
+                                       checked={editOrderCarModalReducer.carFlag}
+                                       onChange={this.changeCarFlag}/>
+                                <label htmlFor="new-car-flag">新车</label>
+
+                                <input type="checkbox" id="insurance-flag" className="filled-in"
+                                       checked={editOrderCarModalReducer.insuranceFlag}
+                                       onChange={this.changeInsuranceFlag}/>
+                                <label htmlFor="insurance-flag" className="margin-left30">保险</label>
+                            </div>
                         </div>
+
                         <div className="custom-input-field col s6">
                             <Input s={12} label="估值" type="number" value={editOrderCarModalReducer.valuation} onChange={this.changeValuation}/>
                         </div>
                     </div>
 
-                    {/** 第三行：是否保险，预计费用 */}
+                    {/** 第三行：预计保费，实际保费 */}
                     <div className="row margin-bottom10">
-                        <div className="col s6">
-                            <span className="grey-text">是否购买保险：</span>
-                            <input type="radio" id="insurance-yes" value="1" className='with-gap' checked={editOrderCarModalReducer.insuranceFlag==='1'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="insurance-yes">是</label>
-                            <input type="radio" id="insurance-no"  value="0" className='with-gap' checked={editOrderCarModalReducer.insuranceFlag==='0'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="insurance-no" className="margin-left10">否</label>
-
+                        <div className="col input-field s6">
+                            <div className="col s12 custom-label-field grey-text">
+                                预计保费：<span className="pink-font margin-left5 fz18">{formatUtil.formatNumber(editOrderCarModalReducer.insureFee, 2)}</span> 元
+                            </div>
                         </div>
-
-                        <div className="col s6 right-align">
-                            预计费用：<span className="red-font margin-left5 fz18">{editOrderCarModalReducer.freight}</span>元
-                        </div>
+                        <Input s={6} label="实际保费" className="right-align" type="number" value={editOrderCarModalReducer.actInsureFee} onChange={this.changeActInsureFee}/>
                     </div>
 
-                    <div className="row col s12"><div className="col s12 dotted-line"/></div>
+                    {/** 最终行：预计运费，实际运费 */}
+                    <div className="row margin-bottom10">
+                        <div className="col input-field s6">
+                            <div className="col s12 custom-label-field grey-text">
+                                预计运费：<span className="pink-font margin-left5 fz18">{formatUtil.formatNumber(editOrderCarModalReducer.freight, 2)}</span> 元
+                            </div>
+                        </div>
+                        <Input s={6} label="实际运费" className="right-align" type="number" value={editOrderCarModalReducer.actFreight} onChange={this.changeActFreight}/>
+                    </div>
 
-                    {/** 最终行：实际运费 */}
-                    <div className="row margin-bottom0 bold red-text">
-                        <Input s={12} label="实际运费" type="number" value={editOrderCarModalReducer.actFreight} onChange={this.changeActFreight}/>
+                    {/** 最终行：实际总费用 */}
+                    <div className="row margin-bottom0">
+                        <div className="col input-field s12 right-align">
+                            实际总费用：<span className="pink-font margin-left5 fz18">{formatUtil.formatNumber(parseInt(editOrderCarModalReducer.actInsureFee) + parseInt(editOrderCarModalReducer.actFreight), 2)}</span> 元
+                        </div>
                     </div>
                 </div>
 
@@ -190,17 +212,20 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(EditOrderCarModalActionType.setCarFlag(carFlag));
         dispatch(editOrderCarModalAction.calculateFreight());
     },
-    changeValuation: (valuation) => {
-        dispatch(EditOrderCarModalActionType.setValuation(valuation));
-        dispatch(editOrderCarModalAction.calculateFreight());
-    },
     changeInsuranceFlag: (value) => {
         dispatch(EditOrderCarModalActionType.setInsuranceFlag(value));
         dispatch(editOrderCarModalAction.calculateFreight());
     },
+    changeValuation: (valuation) => {
+        dispatch(EditOrderCarModalActionType.setValuation(valuation));
+        dispatch(editOrderCarModalAction.calculateFreight());
+    },
+
     changeActFreight: (value) => {
         dispatch(EditOrderCarModalActionType.setActFreight(value));
-        dispatch(editOrderCarModalAction.calculateFreight());
+    },
+    changeActInsureFee: (value) => {
+        dispatch(EditOrderCarModalActionType.setActInsureFee(value));
     },
 
     saveOrderCar: () => {

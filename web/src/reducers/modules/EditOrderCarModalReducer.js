@@ -7,22 +7,26 @@ const initialState = {
     pageType: '',
     // 订单信息
     orderInfo: [],
-
+    // 运送车辆ID
+    orderItemId: '',
     // vin
     vin: '',
     // 车型
     carModel: null,
     // 是否新车
-    carFlag: null,
+    carFlag: true,
     // 估值
     valuation: '',
     // 是否购买保险
-    insuranceFlag: '1',
-
+    insuranceFlag: true,
     // 预计运费
     freight: 0,
+    // 预计保费
+    insureFee: 0,
     // 实际运费
-    actFreight: 0
+    actFreight: 0,
+    // 实际保费
+    actInsureFee: 0
 };
 
 export default handleActions({
@@ -38,9 +42,12 @@ export default handleActions({
             orderInfo: action.payload
         }
     },
-
-
-
+    [EditOrderCarModalActionType.setOrderItemId]: (state, action) => {
+        return {
+            ...state,
+            orderItemId: action.payload
+        }
+    },
     [EditOrderCarModalActionType.setVin]: (state, action) => {
         return {
             ...state,
@@ -71,16 +78,16 @@ export default handleActions({
             insuranceFlag: action.payload
         }
     },
-
-
-
-
-
-
     [EditOrderCarModalActionType.setFreight]: (state, action) => {
         return {
             ...state,
             freight: action.payload
+        }
+    },
+    [EditOrderCarModalActionType.setInsureFee]: (state, action) => {
+        return {
+            ...state,
+            insureFee: action.payload
         }
     },
     [EditOrderCarModalActionType.setActFreight]: (state, action) => {
@@ -89,4 +96,10 @@ export default handleActions({
             actFreight: action.payload
         }
     },
+    [EditOrderCarModalActionType.setActInsureFee]: (state, action) => {
+        return {
+            ...state,
+            actInsureFee: action.payload
+        }
+    }
 }, initialState)

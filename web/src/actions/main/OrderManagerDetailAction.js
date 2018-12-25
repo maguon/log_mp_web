@@ -46,34 +46,7 @@ export const saveOrderRemark = (id) => async (dispatch, getState) => {
     }
 };
 
-export const changeOrderStatus = (orderId, status) => async (dispatch) => {
-    let tipsTitle;
-    let tipsText = '';
-    switch (status) {
-        // 更改为 待完善信息 状态
-        case sysConst.ORDER_STATUS[0].value:
-            tipsTitle = '确定要回到待完善信息？';
-            break;
-
-        // 更改为 待完善价格 状态
-        case sysConst.ORDER_STATUS[1].value:
-            tipsTitle = '确定要重新完善价格？';
-            break;
-
-        // 更改为 未生成需求 状态
-        case sysConst.ORDER_STATUS[2].value:
-            tipsTitle = '确定要完善价格？';
-            break;
-
-        // 更改为 待安排车辆 状态
-        case sysConst.ORDER_STATUS[3].value:
-            tipsTitle = '确定要生成运输需求？';
-            tipsText = '运输需求生成后，订单将进入待安排车辆状态，车辆信息将不可再修改！';
-            break;
-        default:
-            tipsText = '';
-    }
-
+export const changeOrderStatus = (orderId, status, tipsTitle, tipsText) => async (dispatch) => {
     swal({
         title: tipsTitle,
         text: tipsText,
@@ -98,6 +71,34 @@ export const changeOrderStatus = (orderId, status) => async (dispatch) => {
     });
 };
 
+export const saveOrderItem = (orderId, orderItemId, actTransFee, actInsuranceFee) => async (dispatch) => {
+    swal({
+        title: '确定修改运费和保费？',
+        text: '',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/orderItem/' + orderItemId  + '/actFeeAndSafePrice';
+            const params = {
+                actFee: actTransFee,
+                safePrice: actInsuranceFee
+            };
+            const res = await httpUtil.httpPut(url, params);
+            if (res.success === true) {
+                swal("修改成功", "", "success");
+                dispatch(getOrderInfo(orderId));
+                dispatch(commonAction.getOrderCarList(orderId));
+            } else if (res.success === false) {
+                swal('修改失败', res.msg, 'warning');
+            }
+        }
+    });
+};
 
 export const deleteOrderItem = (orderId, orderItemId) => async (dispatch) => {
     swal({

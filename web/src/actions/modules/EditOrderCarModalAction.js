@@ -1,158 +1,185 @@
 import {EditOrderCarModalActionType, InquiryModalActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
-import {getLogSiteContactList} from "../main/LogSiteSettingDetailAction";
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
+const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
-const formatUtil = require('../../util/FormatUtil');
-
+const commonUtil = require('../../util/CommonUtil');
 
 // 添加车辆 画面 初期
 export const initOrderCarData = (pageType, orderItem) => async (dispatch) => {
     if (pageType === 'edit') {
         // vin
-        dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
+        dispatch({type: EditOrderCarModalActionType.setOrderItemId, payload: orderItem.id});
+        // vin
+        dispatch({type: EditOrderCarModalActionType.setVin, payload: orderItem.vin});
         // 车型
-        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
-        // 是否新车
-        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: null});
+        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: {value: orderItem.model_type,label: commonUtil.getJsonValue(sysConst.CAR_MODEL,orderItem.model_type)}});
+        // 是否新车 如果是1，则为true 选中，否则
+        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: orderItem.old_car === 1});
+        // 是否购买保险 如果是1，则为true 选中，否则
+        dispatch({type: EditOrderCarModalActionType.setInsuranceFlag, payload: orderItem.safe_status === 1});
         // 估值
-        dispatch({type: EditOrderCarModalActionType.setValuation, payload: ''});
-        // 是否购买保险
-        dispatch({type: InquiryModalActionType.setInsuranceFlag, payload: '1'});
+        dispatch({type: EditOrderCarModalActionType.setValuation, payload: orderItem.valuation});
         // 预计运费
-        dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)});
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: orderItem.ora_trans_price});
+        // 预计保费
+        dispatch({type: EditOrderCarModalActionType.setInsureFee, payload: orderItem.ora_insure_price});
         // 实际运费
-        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: ''});
+        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: orderItem.act_trans_price});
+        // 实际保费
+        dispatch({type: EditOrderCarModalActionType.setActInsureFee, payload: orderItem.act_insure_price});
     } else {
         // vin
         dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
         // 车型
         dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
         // 是否新车
-        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: null});
+        dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: true});
+        // 是否购买保险
+        dispatch({type: EditOrderCarModalActionType.setInsuranceFlag, payload: true});
         // 估值
         dispatch({type: EditOrderCarModalActionType.setValuation, payload: ''});
-        // 是否购买保险
-        dispatch({type: InquiryModalActionType.setInsuranceFlag, payload: '1'});
         // 预计运费
-        dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(0, 2)});
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: 0});
+        // 预计保费
+        dispatch({type: EditOrderCarModalActionType.setInsureFee, payload: 0});
         // 实际运费
-        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: ''});
+        dispatch({type: EditOrderCarModalActionType.setActFreight, payload: 0});
+        // 实际保费
+        dispatch({type: EditOrderCarModalActionType.setActInsureFee, payload: 0});
     }
 };
 
 /**
  * 设定画面预计运费结果。
  */
-export const calculateFreight = () => (dispatch, getState) => {
+export const calculateFreight = () => async (dispatch, getState) => {
+    // 订单信息
+    const orderInfo = getState().EditOrderCarModalReducer.orderInfo;
     // 里程
-    // const mileage = getState().EditOrderCarModalReducer.mileage;
-    const mileage = 1000;
+    const distance = orderInfo[0].distance;
     // 服务方式
-    const serviceMode = 1;
+    const serviceMode = orderInfo[0].service_type;
     // 车型
     const carModel = getState().EditOrderCarModalReducer.carModel;
     // 是否新车
-    const carFlag = getState().EditOrderCarModalReducer.carFlag;
+    const carFlag = getState().EditOrderCarModalReducer.carFlag ? 1:0;
     // 估值
     const valuation = getState().EditOrderCarModalReducer.valuation;
     // 是否购买保险
-    const insuranceFlag = getState().EditOrderCarModalReducer.insuranceFlag;
+    const insuranceFlag = getState().EditOrderCarModalReducer.insuranceFlag ? 1:0;
 
     // 预计运费
     let freight = 0;
-    if (carModel !== null && carModel.value !== undefined
-        && carFlag !== null && carFlag.value !== undefined && valuation !== '') {
-        // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 是否购买保险*估值*估值比率  + 服务方式费用
-        freight = mileage * sysConst.INQUIRY_PARAMS.unitPrice * sysConst.CAR_MODEL[carModel.value - 1].ratio * sysConst.YES_NO[carFlag.value].ratio
-            + insuranceFlag * valuation * sysConst.INQUIRY_PARAMS.valuationRate + sysConst.SERVICE_MODE[serviceMode - 1].fee;
+    // 预计保费
+    let insuranceFee = 0;
+    if (orderInfo.length > 0 && carModel != null && valuation !== '') {
+        // // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 是否购买保险*估值*估值比率  + 服务方式费用
+        // freight = distance * sysConst.INQUIRY_PARAMS.unitPrice * sysConst.CAR_MODEL[carModel.value - 1].ratio * sysConst.YES_NO[carFlag].ratio
+        //     + sysConst.SERVICE_MODE[serviceMode - 1].fee;
+        // insuranceFee = insuranceFlag * valuation * sysConst.INQUIRY_PARAMS.valuationRate;
+        const params = {
+            distance: distance,
+            modelType: carModel.value,
+            oldCar: carFlag,
+            serviceType: serviceMode,
+            valuation: valuation,
+            insuranceFlag: insuranceFlag
+        };
+
+        // 基本url
+        let url = apiHost + '/api/transAndInsurePrice';
+        let res = await httpUtil.httpPost(url, params);
+        if (res.success === true) {
+            if (res.result.length > 0) {
+                freight = res.result[0].trans;
+                insuranceFee = res.result[0].insure;
+            }
+        } else if (res.success === false) {
+            swal('预计费用取得失败', res.msg, 'warning');
+        }
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: freight});
+        dispatch({type: EditOrderCarModalActionType.setInsureFee, payload: insuranceFee});
     }
-    dispatch({type: EditOrderCarModalActionType.setFreight, payload: formatUtil.formatNumber(freight, 2)})
 };
-
-
 
 export const saveOrderCar = () => async (dispatch, getState) => {
     try {
         // 订单信息
-        const orderId = getState().EditOrderCarModalReducer.orderInfo.id;
-
+        const pageType = getState().EditOrderCarModalReducer.pageType;
+        // 订单信息
+        const orderInfo = getState().EditOrderCarModalReducer.orderInfo;
+        // 里程
+        const distance = orderInfo[0].distance;
+        // 订单ID
+        const orderId = orderInfo[0].id;
+        // 运送车辆ID
+        const orderItemId = getState().EditOrderCarModalReducer.orderItemId;
         // VIN
         const vin = getState().EditOrderCarModalReducer.vin;
         // 车型
         const carModel = getState().EditOrderCarModalReducer.carModel;
         // 是否新车
         const carFlag = getState().EditOrderCarModalReducer.carFlag;
-        // 估值
-        const valuation = getState().EditOrderCarModalReducer.valuation;
         // 是否购买保险
         const insuranceFlag = getState().EditOrderCarModalReducer.insuranceFlag;
-
+        // 估值
+        const valuation = getState().EditOrderCarModalReducer.valuation;
         // 实际运费
         const actFreight = getState().EditOrderCarModalReducer.actFreight;
+        // 实际保费
+        const actInsureFee = getState().EditOrderCarModalReducer.actInsureFee;
 
-        if (vin !== '' && carModel !== null && carModel.value !== undefined
-            && carFlag !== null && carFlag.value !== undefined && valuation !== '' && actFreight !== '') {
+        if (orderId === undefined || vin === '' || carModel == null || valuation === '' || actFreight === '' || actInsureFee === '') {
             swal('保存失败', '请输入完整的车辆信息！', 'warning');
         } else {
-            // {
-            //     "safePrice": 0,
-            //     "safeStatus": 0
-            // }
-
             const params = {
-                userId: '',
-                orderId: orderId,
                 vin: vin,
                 modelType: carModel.value,
-                oldCar: carFlag.value,
+                oldCar: carFlag ? 1 : 0,
+                safeStatus: insuranceFlag ? 1 : 0,
                 valuation: valuation,
-                oraPrice: actFreight
+                actTransPrice: actFreight,
+                actInsurePrice: actInsureFee,
+                distance: distance
+
+                // "vin": "string",
+                // "modelType": 0,
+                // "oldCar": 0,
+                // "valuation": 0,
+                // "safeStatus": 0,
+                // "oraPrice": 0,
+                // "safePrice": 0
             };
+
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/carAdmin';
-            let res = await httpUtil.httpPost(url, params);
+            let url = null;
+            let res = null;
+            // 编辑时
+            if (pageType === 'edit') {
+                url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/orderItem/' + orderItemId + '/orderItemInfo';
+                res = await httpUtil.httpPut(url, params);
+            } else {
+                // 基本url
+                url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/order/' + orderId + '/carAdmin';
+                // 新建时
+                res = await httpUtil.httpPost(url, params);
+            }
             if (res.success === true) {
                 $('#editOrderCarModal').modal('close');
                 swal("保存成功", "", "success");
                 // 保存成功后，重新检索画面数据
                 dispatch(orderManagerDetailAction.getOrderInfo(orderId));
+                dispatch(commonAction.getOrderCarList(orderId));
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }
         }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const deleteOrderCar = (logSiteId, contactId) => async (dispatch) => {
-    try {
-        swal({
-            title: "确定删除该联系方式？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#724278',
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-        }).then(async function (isConfirm) {
-            if (isConfirm && isConfirm.value === true) {
-                // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    // + '/supplier/' + logSiteId
-                    + '/addressContact/' + contactId;
-                const res = await httpUtil.httpDelete(url);
-                if (res.success === true) {
-                    dispatch(getLogSiteContactList(logSiteId));
-                } else if (res.success === false) {
-                    swal('删除收发货地点联系方式失败', res.msg, 'warning');
-                }
-            }
-        });
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

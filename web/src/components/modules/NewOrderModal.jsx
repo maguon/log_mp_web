@@ -46,6 +46,7 @@ class NewOrderModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE_FOR_MODAL}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">起始城市</label>
                         </div>
@@ -59,6 +60,7 @@ class NewOrderModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE_FOR_MODAL}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">目的城市</label>
                         </div>
@@ -72,6 +74,7 @@ class NewOrderModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE_FOR_MODAL}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">服务方式</label>
                         </div>

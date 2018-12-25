@@ -35,10 +35,17 @@ class InquiryModal extends React.Component {
     };
 
     /**
+     * 改变是否新车
+     */
+    changeCarFlag = (event) => {
+        this.props.changeCarFlag(event.target.checked);
+    };
+
+    /**
      * 改变是否保险
      */
     changeInsuranceFlag = (event) => {
-        this.props.changeInsuranceFlag(event.target.value);
+        this.props.changeInsuranceFlag(event.target.checked);
     };
 
     /**
@@ -56,7 +63,7 @@ class InquiryModal extends React.Component {
                 <div className="modal-content white">
 
                     {/** 第一行 */}
-                    <div className="row margin-top20">
+                    <div className="row margin-top30">
                         <div className="input-field col s6">
                             <Select
                                 options={commonReducer.cityList}
@@ -66,6 +73,7 @@ class InquiryModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">始发城市</label>
                         </div>
@@ -78,6 +86,7 @@ class InquiryModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">终到城市</label>
                         </div>
@@ -99,6 +108,7 @@ class InquiryModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">服务方式</label>
                         </div>
@@ -111,6 +121,7 @@ class InquiryModal extends React.Component {
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                 isClearable={false}
+                                backspaceRemovesValue={false}
                             />
                             <label className="active">车型</label>
                         </div>
@@ -118,18 +129,20 @@ class InquiryModal extends React.Component {
 
                     {/** 第三行 */}
                     <div className="row">
-                        <div className="input-field col s6">
-                            <Select
-                                options={sysConst.YES_NO}
-                                onChange={changeCarFlag}
-                                value={inquiryModalReducer.carFlag}
-                                isSearchable={false}
-                                placeholder={"请选择"}
-                                styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                isClearable={false}
-                            />
-                            <label className="active">是否新车</label>
+                        <div className="col s6 margin-top16">
+                            <div className="col s12 custom-label-field grey-text">
+                                <input type="checkbox" id="new-car" className="filled-in"
+                                       checked={inquiryModalReducer.carFlag}
+                                       onChange={this.changeCarFlag}/>
+                                <label htmlFor="new-car">新车</label>
+
+                                <input type="checkbox" id="insurance" className="filled-in"
+                                       checked={inquiryModalReducer.insuranceFlag}
+                                       onChange={this.changeInsuranceFlag}/>
+                                <label htmlFor="insurance" className="margin-left30">保险</label>
+                            </div>
                         </div>
+
                         <div className="custom-input-field col s6">
                             <Input s={12} label="估值" type="number" value={inquiryModalReducer.valuation} onChange={this.changeValuation}/>
                         </div>
@@ -138,40 +151,38 @@ class InquiryModal extends React.Component {
                     {/** 第四行：是否保险，预计保费 */}
                     <div className="row">
                         <div className="col s6">
-                            <span className="grey-text">是否购买保险：</span>
-                            <input type="radio" id="yes" value="1" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='1'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="yes">是</label>
-                            <input type="radio" id="no"  value="0" className='with-gap' checked={inquiryModalReducer.insuranceFlag==='0'} onChange={this.changeInsuranceFlag}/>
-                            <label htmlFor="no" className="margin-left10">否</label>
+                            预计保费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.insuranceFee, 2)}</span>元
                         </div>
 
                         <div className="col s6 right-align">
-                            预计保费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.insuranceFee, 2)}</span>元
+                            预计运费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight, 2)}</span>元
                         </div>
                     </div>
                     <div className="row col s12"><div className="col s12 dotted-line"/></div>
 
-                    {/** 第五行：预计运费，预计总费用 */}
-                    <div className="row">
-                        <div className="col s6">
-                            预计运费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight, 2)}</span>元
-                        </div>
+                    {/** 最终行：提示信息 */}
+                    <div className="row margin-bottom0">
+                        <div className="row input-field col s12">
+                            <div className="col left-align" style={{width: '4%'}}>
+                                {inquiryModalReducer.errorRouteFlg &&
+                                <div className="bold red-text">
+                                    <span className="mdi mdi-alert-circle red-text fz30"/>
+                                </div>
+                                }
+                            </div>
+                            <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
+                                {inquiryModalReducer.errorRouteFlg &&
+                                <div className="bold red-text">
+                                    当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
+                                </div>
+                                }
+                            </div>
 
-                        <div className="col s6 right-align">
-                            预计总费用：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight + inquiryModalReducer.insuranceFee, 2)}</span>元
+                            <div className="col right-align no-padding" style={{width: '36%', marginTop: '12px'}}>
+                                预计总费用：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight + inquiryModalReducer.insuranceFee, 2)}</span>元
+                            </div>
                         </div>
                     </div>
-
-                    {/** 最终行：提示信息 */}
-                    {inquiryModalReducer.errorRouteFlg &&
-                    <div className="row margin-bottom0 bold red-text">
-                        <div className="col left-align s-percent-4">
-                            <span className="mdi mdi-alert-circle red-text fz30"/>
-                        </div>
-                        <div className="col left-align s-percent-96 margin-top10">
-                            当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
-                        </div>
-                    </div> }
                 </div>
 
                 {/** Modal固定底部：取消确定按钮 */}
@@ -222,14 +233,14 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(InquiryModalActionType.setCarFlag(carFlag));
         dispatch(inquiryModalAction.calculateFreight());
     },
-    // 估值
-    changeValuation: (valuation) => {
-        dispatch(InquiryModalActionType.setValuation(valuation));
-        dispatch(inquiryModalAction.calculateFreight());
-    },
     // 是否保险
     changeInsuranceFlag: (value) => {
         dispatch(InquiryModalActionType.setInsuranceFlag(value));
+        dispatch(inquiryModalAction.calculateFreight());
+    },
+    // 估值
+    changeValuation: (valuation) => {
+        dispatch(InquiryModalActionType.setValuation(valuation));
         dispatch(inquiryModalAction.calculateFreight());
     },
     closeModal: () => {

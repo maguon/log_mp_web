@@ -12,11 +12,11 @@ const initialState = {
     // 车型
     carModel: null,
     // 是否新车
-    carFlag: null,
+    carFlag: true,
     // 估值
     valuation: '',
     // 是否购买保险
-    insuranceFlag: '1',
+    insuranceFlag: true,
 
     // 错误路线标记
     errorRouteFlg: false,

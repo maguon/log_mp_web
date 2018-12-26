@@ -88,9 +88,9 @@ class EditOrderCarModal extends React.Component {
                     {editOrderCarModalReducer.orderInfo.length > 0 &&
                     <div className="row margin-top20 detail-box custom-grey grey-text text-darken-2">
                         <div className="col s6 margin-top20 margin-bottom20 purple-font">
-                            <span className="fz16">{editOrderCarModalReducer.orderInfo[0].start_city}</span>
+                            <span className="fz16 bold-font">{editOrderCarModalReducer.orderInfo[0].start_city}</span>
                             <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
-                            <span className="fz16">{editOrderCarModalReducer.orderInfo[0].end_city}</span>
+                            <span className="fz16 bold-font">{editOrderCarModalReducer.orderInfo[0].end_city}</span>
                         </div>
                         <div className="col s6 margin-top20 right-align">
                             服务方式：{commonUtil.getJsonValue(sysConst.SERVICE_MODE, editOrderCarModalReducer.orderInfo[0].service_type)}
@@ -194,16 +194,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
     changeVin: (value) => {
         dispatch(EditOrderCarModalActionType.setVin(value));
-        dispatch(editOrderCarModalAction.calculateFreight())
     },
-    // changeEndCity: (value) => {
-    //     dispatch(EditOrderCarModalActionType.setEndCity(value));
-    //     dispatch(editOrderCarModalAction.calculateMileage())
-    // },
-    // changeServiceMode: (serviceMode) => {
-    //     dispatch(EditOrderCarModalActionType.setServiceMode(serviceMode));
-    //     dispatch(editOrderCarModalAction.calculateFreight());
-    // },
     changeCarModel: (carModel) => {
         dispatch(EditOrderCarModalActionType.setCarModel(carModel));
         dispatch(editOrderCarModalAction.calculateFreight());
@@ -220,14 +211,12 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(EditOrderCarModalActionType.setValuation(valuation));
         dispatch(editOrderCarModalAction.calculateFreight());
     },
-
     changeActFreight: (value) => {
         dispatch(EditOrderCarModalActionType.setActFreight(value));
     },
     changeActInsureFee: (value) => {
         dispatch(EditOrderCarModalActionType.setActInsureFee(value));
     },
-
     saveOrderCar: () => {
         dispatch(editOrderCarModalAction.saveOrderCar())
     },

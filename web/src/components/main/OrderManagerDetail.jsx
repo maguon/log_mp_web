@@ -330,12 +330,12 @@ class OrderManagerDetail extends React.Component {
 
                                 {/* 发货信息 详情 */}
                                 <div>
-                                    <div className="col s3 margin-top10">
+                                    <div className="col s4 margin-top10">
                                         <i className="mdi mdi-account-outline fz20 pink-font"/>
                                         <span className="margin-left10">发货人：{orderManagerDetailReducer.orderInfo[0].send_name} {orderManagerDetailReducer.orderInfo[0].send_phone}</span>
                                     </div>
 
-                                    <div className="col s8 margin-top10">
+                                    <div className="col s7 margin-top10">
                                         <i className="mdi mdi-map-marker-outline fz20 pink-font"/>
                                         <span className="margin-left10">地址：{orderManagerDetailReducer.orderInfo[0].send_address}</span>
                                     </div>
@@ -348,11 +348,11 @@ class OrderManagerDetail extends React.Component {
 
                                 {/* 收货信息 详情 */}
                                 <div>
-                                    <div className="col s3 margin-top10">
+                                    <div className="col s4 margin-top10">
                                         <i className="mdi mdi-account-outline fz20 orange-text text-lighten-3"/>
                                         <span className="margin-left10">收货人：{orderManagerDetailReducer.orderInfo[0].recv_name} {orderManagerDetailReducer.orderInfo[0].recv_phone}</span>
                                     </div>
-                                    <div className="col s8 margin-top10">
+                                    <div className="col s7 margin-top10">
                                         <i className="mdi mdi-map-marker-outline fz20 orange-text text-lighten-3"/>
                                         <span className="margin-left10">地址：{orderManagerDetailReducer.orderInfo[0].recv_address}</span>
                                     </div>

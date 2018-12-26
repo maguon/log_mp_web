@@ -53,7 +53,7 @@ export const formatNumber = (number, decimals) => {
     decimals = typeof decimals === 'undefined' ? 0 : decimals;
     // 保留指定小数点后位数，并分割数组
     let formatNum = 0;
-    if (!isNaN(number)) {
+    if (isNumber(number)) {
         formatNum = number;
     } else  if (typeof number === 'string') {
         formatNum = parseInt(number);
@@ -78,3 +78,11 @@ export const formatNumber = (number, decimals) => {
 export const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {style: 'currency', currency: 'CNY',currencyDisplay: "symbol"}).format(amount);
 };
+
+function isNumber(val){
+    //非负浮点数
+    let regPos = /^\d+(\.\d+)?$/;
+    //负浮点数
+    let regNeg = /^(-(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*)))$/;
+    return regPos.test(val) || regNeg.test(val);
+}

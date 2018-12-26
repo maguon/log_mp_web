@@ -102,7 +102,7 @@ export const getInvoiceList = (userId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryInvoice?userId=' + userId;
+            + '/invoice?userId=' + userId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: UserManagerDetailActionType.getInvoiceList, payload: res.result});

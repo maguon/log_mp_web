@@ -68,8 +68,8 @@ class InquiryManagerDetail extends React.Component {
      * 生成订单 点击事件
      */
     generateOrder = () => {
-        let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
-        this.props.generateOrder(userId);
+        // let userId = this.props.inquiryManagerDetailReducer.inquiryInfo[0].user_id;
+        this.props.generateOrder();
     };
 
     render() {
@@ -169,7 +169,7 @@ class InquiryManagerDetail extends React.Component {
                                             <td className="right-align">{formatUtil.formatNumber(item.insure_price)}</td>
                                             <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
                                             <td className="right-align">{formatUtil.formatNumber(item.plan_total,2)}</td>
-                                            <td className="right-align">{formatUtil.formatNumber(item.trans_total + item.insure_price,2)}</td>
+                                            <td className="right-align">{formatUtil.formatNumber(item.trans_total,2) + formatUtil.formatNumber(item.insure_price,2)}</td>
                                         </tr>
                                     )
                                 }, this)}
@@ -305,8 +305,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(CancelInquiryModalActionType.setActInsuranceFee(actTotalInsuranceFee));
         dispatch(CancelInquiryModalActionType.setRemark(''));
     },
-    generateOrder: (userId) => {
-        dispatch(inquiryManagerDetailAction.generateOrder(ownProps.match.params.id, userId));
+    generateOrder: () => {
+        dispatch(inquiryManagerDetailAction.generateOrder(ownProps.match.params.id));
     }
 });
 

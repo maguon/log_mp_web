@@ -9,7 +9,7 @@ export const getInvoiceInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
         const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryInvoice?inquiryInvoiceId=' + id;
+            + '/invoice?inquiryInvoiceId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: InvoiceManagerDetailActionType.getInvoiceInfo, payload: res.result});

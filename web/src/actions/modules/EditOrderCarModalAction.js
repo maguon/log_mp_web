@@ -1,4 +1,4 @@
-import {EditOrderCarModalActionType, InquiryModalActionType} from "../../actionTypes";
+import {EditOrderCarModalActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
@@ -114,6 +114,8 @@ export const saveOrderCar = () => async (dispatch, getState) => {
         const orderInfo = getState().EditOrderCarModalReducer.orderInfo;
         // 里程
         const distance = orderInfo[0].distance;
+        // 服务方式
+        const serviceType = orderInfo[0].service_type;
         // 订单ID
         const orderId = orderInfo[0].id;
         // 运送车辆ID
@@ -138,6 +140,7 @@ export const saveOrderCar = () => async (dispatch, getState) => {
         } else {
             const params = {
                 vin: vin,
+                serviceType: serviceType,
                 modelType: carModel.value,
                 oldCar: carFlag ? 1 : 0,
                 safeStatus: insuranceFlag ? 1 : 0,
@@ -145,14 +148,6 @@ export const saveOrderCar = () => async (dispatch, getState) => {
                 actTransPrice: actFreight,
                 actInsurePrice: actInsureFee,
                 distance: distance
-
-                // "vin": "string",
-                // "modelType": 0,
-                // "oldCar": 0,
-                // "valuation": 0,
-                // "safeStatus": 0,
-                // "oraPrice": 0,
-                // "safePrice": 0
             };
 
             // 基本url

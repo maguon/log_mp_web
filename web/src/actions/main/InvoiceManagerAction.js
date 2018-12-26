@@ -23,7 +23,7 @@ export const getInvoiceList = () => async (dispatch, getState) => {
 
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryInvoice?start=' + start + '&size=' + size;
+            + '/invoice?start=' + start + '&size=' + size;
 
         // 检索条件
         let conditionsObj = {

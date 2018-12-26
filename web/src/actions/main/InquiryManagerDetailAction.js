@@ -72,7 +72,7 @@ export const getOrderInfo = (inquiryId) => async (dispatch) => {
     }
 };
 
-export const generateOrder = (inquiryId, userId) => async (dispatch) => {
+export const generateOrder = (inquiryId) => async (dispatch) => {
     swal({
         title: "确定将该询价生成订单？",
         text: "",
@@ -84,7 +84,7 @@ export const generateOrder = (inquiryId, userId) => async (dispatch) => {
     }).then(async function (isConfirm) {
         if (isConfirm && isConfirm.value === true) {
             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/user/' + userId  + '/inquiry/' + inquiryId + '/order';
+                + '/inquiry/' + inquiryId + '/order';
             const res = await httpUtil.httpPost(url, {});
             if (res.success === true) {
                 swal("修改成功", "", "success");

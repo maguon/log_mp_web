@@ -9,6 +9,7 @@ const inquiryManagerAction = require('../../actions/main/InquiryManagerAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
 
 class InquiryManager extends React.Component {
 
@@ -223,16 +224,14 @@ class InquiryManager extends React.Component {
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.start_city} - {item.end_city}</td>
                                         <td>{formatUtil.formatNumber(item.car_num)}</td>
-                                        <td className="center">{(item.service_type !== 1 && item.service_type !== 2) ? '未知' : sysConst.SERVICE_MODE[item.service_type - 1].label}</td>
-                                        <td className="center">{formatUtil.formatNumber(item.fee,2)}</td>
-                                        <td>{item.inquiry_name}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,item.service_type)}</td>
+                                        <td className="center">{formatUtil.formatNumber(item.ora_trans_price + item.ora_insure_price,2)}</td>
+                                        <td>{item.user_name}</td>
                                         <td className="center">{item.phone}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                        <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
+                                        <td>{formatUtil.formatNumber(item.total_trans_price + item.total_insure_price,2)}</td>
                                         <td className="center">{formatUtil.getDateTime(item.inquiry_time)}</td>
-                                        <td className={`center ${item.status === 0 ? "pink-font" : ""}`}>
-                                            {(item.status !== 0 && item.status !== 1 && item.status !== 2 && item.status !== 3) ? '未知' : sysConst.INQUIRY_STATUS[item.status].label}
-                                        </td>
+                                        <td className={`center ${item.status === 0 ? "pink-font" : ""}`}>{commonUtil.getJsonValue(sysConst.INQUIRY_STATUS,item.status)}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/inquiry/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>

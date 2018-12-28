@@ -7,11 +7,13 @@ import {
     OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,EditOrderCarModalActionType,
     CancelOrderModalActionType
 } from '../../actionTypes';
-import {InquiryInfoModal, EditUserAddressModal, EditOrderCarModal, CancelOrderModal} from '../modules/index';
+import {InquiryInfoModal, EditUserAddressModal, EditOrderCarModal, CancelOrderModal, NewPaymentModal, NewRefundModal} from '../modules/index';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
 const editOrderCarModalAction = require('../../actions/modules/EditOrderCarModalAction');
+const newPaymentModalAction = require('../../actions/modules/NewPaymentModalAction');
+const newRefundModalAction = require('../../actions/modules/NewRefundModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -32,11 +34,17 @@ class OrderManagerDetail extends React.Component {
     componentDidMount() {
         // 取得用户信息
         this.props.getOrderInfo();
+
+        // TODO delete
+        this.props.getPaymentInfo();
+
+
+
         $('ul.tabs').tabs();
     }
 
     /**
-     * 显示询价信息详细内容
+     * 详情头部：显示询价信息详细内容
      */
     showInquiryInfoModal = () => {
         this.props.initInquiryInfoModalData(this.props.orderManagerDetailReducer.orderInfo[0].inquiry_id,this.props.orderManagerDetailReducer.orderInfo[0].user_id);
@@ -44,7 +52,7 @@ class OrderManagerDetail extends React.Component {
     };
 
     /**
-     * 显示 增加车辆/编辑车辆 模态画面
+     * 订单信息TAB：显示 增加车辆/编辑车辆 模态画面
      */
     showEditOrderCarModal = (pageType, orderItem) => {
         this.props.initEditOrderCarModalData(pageType, this.props.orderManagerDetailReducer.orderInfo, orderItem);
@@ -52,28 +60,28 @@ class OrderManagerDetail extends React.Component {
     };
 
     /**
-     * 删除 运送车辆
+     * 订单信息TAB：删除 运送车辆
      */
     deleteOrderItem = (orderItemId) => {
         this.props.deleteOrderItem(orderItemId);
     };
 
     /**
-     * 修改 实际运费，实际保费
+     * 订单信息TAB：修改 实际运费，实际保费
      */
     saveOrderItemInfo = (orderItem, transFee, insureFee) => {
         this.props.saveOrderItem(orderItem.id, $('#' + transFee).val(), $('#' + insureFee).val());
     };
 
     /**
-     * 更新 订单状态
+     * 订单信息TAB：更新 订单状态
      */
     changeOrderStatus = (status, tipsTitle, tipsText) => {
         this.props.changeOrderStatus(status, tipsTitle, tipsText);
     };
 
     /**
-     * 显示 更新 收发货信息
+     * 订单信息TAB：显示 更新 收发货信息 模态
      */
     showEditUserAddressModal = (pageType) => {
         this.props.initEditUserAddressModalData(pageType, this.props.orderManagerDetailReducer.orderInfo[0]);
@@ -81,18 +89,56 @@ class OrderManagerDetail extends React.Component {
     };
 
     /**
-     * 更新 订单备注
+     * 订单信息TAB：更新 订单备注
      */
     changeOrderRemark = (event) => {
         this.props.setOrderRemark(event.target.value);
     };
 
     /**
-     * 取消订单按钮 点击事件
+     * 订单信息TAB：取消订单按钮 点击事件
      */
     showCancelOrderModal = () => {
         this.props.initCancelOrderModalData();
         $('#cancelOrderModal').modal('open');
+    };
+
+
+
+
+
+
+    /**
+     * 支付信息TAB：显示 支付 模态画面
+     */
+    showPaymentModal = () => {
+        // 应付运费
+        let freight = this.props.commonReducer.totalActFreight;
+        // 应付保费
+        let insuranceFee = this.props.commonReducer.totalInsuranceFee;
+        // 应付总额
+        let totalFee = this.props.commonReducer.totalActFreight + this.props.commonReducer.totalInsuranceFee;
+        // 剩余应付
+        let leftPayment = this.props.commonReducer.totalActFreight + this.props.commonReducer.totalInsuranceFee - this.props.orderManagerDetailReducer.orderPaymentPaid;
+
+        this.props.initNewPaymentModalData(freight, insuranceFee, totalFee, leftPayment);
+        $('#newPaymentModal').modal('open');
+    };
+
+    /**
+     * 支付信息TAB：更新 订单支付备注
+     */
+    changeOrderPaymentRemark = (event) => {
+        // this.props.setOrderRemark(event.target.value);
+    };
+
+
+    /**
+     * 支付信息TAB：显示 申请退款 模态画面
+     */
+    showRefundModal = () => {
+        this.props.initNewRefundModalData();
+        $('#newRefundModal').modal('open');
     };
 
     render() {
@@ -172,8 +218,8 @@ class OrderManagerDetail extends React.Component {
                         </div>}
                         <InquiryInfoModal/>
                         <ul className="tabs">
-                            <li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
+                            <li className="tab col s-percent-20"><a className="active" href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getLogInfo}>运输信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>
@@ -390,8 +436,7 @@ class OrderManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
                                 {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
-                                {orderManagerDetailReducer.orderInfo.length > 0
-                                && orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
+                                {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
                                 (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
                                     orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
                                 <div>
@@ -417,8 +462,7 @@ class OrderManagerDetail extends React.Component {
                             </div>}
 
                             {/* 取消原因 已取消 状态时，显示详情 */}
-                            {orderManagerDetailReducer.orderInfo.length > 0
-                            && orderManagerDetailReducer.orderInfo[0].cancel_reason !== null && orderManagerDetailReducer.orderInfo[0].cancel_reason !== '' &&
+                            {orderManagerDetailReducer.orderInfo[0].cancel_reason !== null && orderManagerDetailReducer.orderInfo[0].cancel_reason !== '' &&
                             orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value &&
                             <div className="row margin-top40 margin-left50 margin-right50">
                                 <div className="col s12 pink-font">
@@ -432,52 +476,130 @@ class OrderManagerDetail extends React.Component {
                         </div>}
                     </div>
 
-
-
-
-
-
-
                     {/* TAB 2 : 支付信息TAB */}
                     <div id="tab-payment-info" className="col s12">
-                        {orderManagerDetailReducer.logInfoArray.length === 0 &&
-                        <div className="row center grey-text margin-top40 fz18">
-                            该用户暂无收发货信息
-                        </div>}
-                        <div className="row margin-top40 margin-left50 margin-right50">
-                            {orderManagerDetailReducer.logInfoArray.map(function (item) {
+                        {orderManagerDetailReducer.orderInfo.length > 0 &&
+                        <div>
+                            {/* 头部：支付概述 */}
+                            <div className="row margin-top40 margin-left50 margin-right50 detail-box">
+                                <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
+                                    <div className="col s6">
+                                        应付总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee,2)}</span> 元
+                                    </div>
+                                    {/* 支付状态 */}
+                                    <div className="col s6 pink-font right-align">
+                                        {commonUtil.getJsonValue(sysConst.ORDER_PAYMENT_STATUS, orderManagerDetailReducer.orderInfo[0].payment_status)}
+                                    </div>
+                                </div>
+                                <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                    <div className="col s6">
+                                        已支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid,2)}</span> 元
+                                    </div>
+
+                                    <div className="col s6 right-align">
+                                        剩余应付：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee - orderManagerDetailReducer.orderPaymentPaid,2)}</span> 元
+                                    </div>
+                                </div>
+                                <div className="col s12 padding-top15 padding-bottom15">
+                                    <div className="col s6">
+                                        已退款：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
+                                    </div>
+                                    <div className="col s6 right-align">
+                                        实际支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid - orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 第二部分：支付信息 */}
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s6 no-padding pink-font">
+                                    <i className="mdi mdi-currency-cny fz20"/>
+                                    <span className="margin-left10 fz16">支付信息</span>
+                                </div>
+
+                                {/* 追加支付 按钮 内部订单 并且 是 未支付/部分支付 时 显示 */}
+                                <div className="col s6 no-padding right-align">
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                    (orderManagerDetailReducer.orderInfo[0].payment_status === sysConst.ORDER_PAYMENT_STATUS[0].value ||
+                                    orderManagerDetailReducer.orderInfo[0].payment_status === sysConst.ORDER_PAYMENT_STATUS[1].value) &&
+                                    <button type="button" className="btn confirm-btn" onClick={() => {this.showPaymentModal()}}>支付</button>}
+                                </div>
+                                {/* 分割线 */}
+                                <div className="col s12 no-padding"><div className="col s12 margin-top5 divider bold-divider"/></div>
+                                <NewPaymentModal/>
+
+                                {/* 外部订单，并且没有 运送车辆 时，提示文字 */}
+                                {orderManagerDetailReducer.orderPaymentArray.length === 0 &&
+                                <div className="col s12 no-padding margin-top10 grey-text text-lighten-1">暂无支付信息</div>}
+                            </div>
+
+                            {/* 支付信息 明细 */}
+                            {orderManagerDetailReducer.orderPaymentArray.map(function (item) {
                                 return (
-                                    <div className="row margin-bottom0">
-                                        <div className="row detail-box-header margin-bottom0">
-                                            {/* 地址信息：名称 */}
-                                            <div className="col s12">
-                                                <i className="mdi mdi-city fz20"/><span className="margin-left10">{item.city}</span>
+                                    <div className="row margin-top20 margin-left50 margin-right50 detail-box">
+                                        <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
+                                            <div className="col s6 purple-font">支付编号：{item.id}</div>
+                                            {/* 支付状态 */}
+                                            <div className="col s6 pink-font right-align">
+                                                {commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.status)}
                                             </div>
                                         </div>
-                                        <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
-                                            {/* 地址信息：收货人 */}
-                                            <div className="col s2">
-                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-account-outline"/>
-                                                <span className="margin-left10 grey-text text-darken-1">{item.name}</span>
-                                            </div>
-                                            {/* 地址信息：收货电话 */}
-                                            <div className="col s2">
-                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-cellphone"/>
-                                                <span className="margin-left10 grey-text text-darken-1">{item.phone}</span>
-                                            </div>
-                                            {/* 地址信息：收货地址 */}
-                                            <div className="col s8 right-align">
-                                                <i className="mdi fz20 pink-text text-lighten-4 mdi-map-marker"/>
-                                                <span className="margin-left10 grey-text text-darken-1">{item.address}</span>
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s4">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</div>
+                                            <div className="col s4">支付账户：{item.bank_code}</div>
+                                            <div className="col s4 right-align">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                        </div>
+                                        <div className="col s12 padding-top15 padding-bottom15">
+                                            <div className="col s12 right-align">
+                                                支付金额：<span className="fz16 pink-font">{formatUtil.formatNumber(item.total_fee,2)}</span> 元
                                             </div>
                                         </div>
                                     </div>
                                 )
-                            }, this)}
-                            {orderManagerDetailReducer.logInfoArray.length > 0 &&
-                            <div className="row divider grey-border"/>}
-                        </div>
+                            })}
+
+                            {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
+                            {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
+                            (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
+                                orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
+                            <div>
+                                <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].admin_mark}</div>
+                                <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
+                            </div>}
+
+                            {/* 支付备注 已取消/已完成 以外状态时，可以编辑 */}
+                            {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
+                                orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
+                            <div className="row margin-top10 margin-left40 margin-right50 position-relative">
+                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>
+                            </div>}
+
+                            {/* 第三部分：退款申请 */}
+                            <div className="row margin-top40 margin-left50 margin-right50">
+                                <div className="col s6 no-padding pink-font">
+                                    <i className="mdi mdi-currency-cny fz20"/>
+                                    <span className="margin-left10 fz16">退款申请</span>
+                                </div>
+
+                                {/* 追加支付 按钮 内部订单 显示 */}
+                                <div className="col s6 no-padding right-align">
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                    <button type="button" className="btn custom-btn" onClick={() => {this.showRefundModal()}}>退款</button>}
+                                </div>
+                                {/* 分割线 */}
+                                <div className="col s12 no-padding"><div className="col s12 margin-top5 divider bold-divider"/></div>
+                                <NewRefundModal/>
+
+                                {/* 外部订单，并且没有 运送车辆 时，提示文字 */}
+                                {orderManagerDetailReducer.orderRefundApplyArray.length === 0 &&
+                                <div className="col s12 no-padding margin-top10 grey-text text-lighten-1">暂无退款信息</div>}
+                            </div>
+
+
+                        </div>}
                     </div>
+
 
                     {/* TAB 3 : 运输信息TAB */}
                     <div id="tab-log-info" className="col s12">
@@ -564,6 +686,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId, userId));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId, userId));
     },
+
     // TAB1：订单信息
     getOrderInfo: () => {
         dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
@@ -606,10 +729,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(CancelOrderModalActionType.setOrderId(ownProps.match.params.id));
         dispatch(CancelOrderModalActionType.setRemark(''));
     },
+
     // TAB2：支付信息
     getPaymentInfo: () => {
-        dispatch(orderManagerDetailAction.getPaymentInfo(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getOrderPaymentList(ownProps.match.params.id))
     },
+    initNewPaymentModalData: (freight, insuranceFee, totalFee, leftPayment) => {
+        dispatch(newPaymentModalAction.initNewPaymentModal(ownProps.match.params.id, freight, insuranceFee, totalFee, leftPayment));
+    },
+    initNewRefundModalData: () => {
+        dispatch(newRefundModalAction.initNewRefundModal(ownProps.match.params.id));
+    },
+
+
     // TAB3：运输信息
     getLogInfo: () => {
         dispatch(orderManagerDetailAction.getBankCardList(ownProps.match.params.id))

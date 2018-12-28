@@ -8,6 +8,8 @@ export NewLogSiteContactModal from "./NewLogSiteContactModal";
 export NewLogSiteModal from "./NewLogSiteModal";
 export NewOfferModal from "./NewOfferModal";
 export NewOrderModal from "./NewOrderModal";
+export NewPaymentModal from "./NewPaymentModal";
+export NewRefundModal from "./NewRefundModal";
 export NewSupplierBankModal from "./NewSupplierBankModal";
 export NewSupplierContactModal from "./NewSupplierContactModal";
 export NewSupplierModal from "./NewSupplierModal";

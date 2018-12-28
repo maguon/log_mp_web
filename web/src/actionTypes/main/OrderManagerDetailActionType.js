@@ -2,15 +2,13 @@ import {createAction} from 'redux-actions';
 
 export const getOrderInfo = createAction('GET_ORDER_INFO');
 export const setOrderRemark = createAction('SET_ORDER_REMARK');
+export const setOrderPaymentPaid = createAction('SET_ORDER_PAYMENT_PAID');
+export const setOrderPaymentRefund = createAction('SET_ORDER_PAYMENT_REFUND');
+export const getOrderPaymentArray = createAction('GET_ORDER_PAYMENT_DATA_ARRAY');
+export const getOrderRefundApplyArray = createAction('GET_ORDER_REFUND_APPLY_ARRAY');
 
 
 
-
-
-
-
-export const setInquiryConditionStartCity = createAction('SET_INQUIRY_CONDITION_START_CITY');
-export const setInquiryConditionEndCity = createAction('SET_INQUIRY_CONDITION_END_CITY');
 export const setInquiryConditionServiceType = createAction('SET_INQUIRY_CONDITION_SERVICE_TYPE');
 export const setInquiryConditionStatus = createAction('SET_INQUIRY_CONDITION_STATUS');
 export const getUserInquiryList = createAction('GET_USER_INQUIRY_LIST');

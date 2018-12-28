@@ -125,5 +125,30 @@ export const deleteOrderItem = (orderId, orderItemId) => async (dispatch) => {
     });
 };
 
-
+export const getOrderPaymentList = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/payment?orderId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: OrderManagerDetailActionType.getOrderPaymentArray, payload: res.result});
+            let refund = 0;
+            let paid = 0;
+            for (let i = 0; i < res.result.length; i++) {
+                if (res.result[i].type === sysConst.PAYMENT_STATUS[0].value) {
+                    refund = refund + res.result[i].total_fee;
+                } else if (res.result[i].type === sysConst.PAYMENT_STATUS[1].value) {
+                    paid = paid + res.result[i].total_fee;
+                }
+            }
+            dispatch({type: OrderManagerDetailActionType.setOrderPaymentRefund, payload: refund});
+            dispatch({type: OrderManagerDetailActionType.setOrderPaymentPaid, payload: paid});
+        } else if (res.success === false) {
+            swal('获取订单支付信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
 

@@ -29,6 +29,8 @@ import NewLogSiteModalReducer from './modules/NewLogSiteModalReducer';
 import NewLogSiteContactModalReducer from './modules/NewLogSiteContactModalReducer';
 import NewOfferModalReducer from './modules/NewOfferModalReducer';
 import NewOrderModalReducer from './modules/NewOrderModalReducer';
+import NewPaymentModalReducer from './modules/NewPaymentModalReducer';
+import NewRefundModalReducer from './modules/NewRefundModalReducer';
 import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
 import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
 import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
@@ -64,6 +66,8 @@ export default combineReducers({
     NewLogSiteContactModalReducer,
     NewOfferModalReducer,
     NewOrderModalReducer,
+    NewPaymentModalReducer,
+    NewRefundModalReducer,
     CancelInquiryModalReducer,
     CancelOrderModalReducer,
     EditUserAddressModalReducer,

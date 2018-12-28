@@ -63,6 +63,9 @@ body {
     width: 300px !important;
 }
 
+.height-35 {
+    height: 35px !important;
+}
 /** 主画面 头部(header)样式 end */
 
 
@@ -762,6 +765,10 @@ table.striped > tbody > tr:nth-child(odd) {
     border-bottom: 1px solid #D4D4D4;
 }
 
+.border-bottom-dotted-line {
+    border-bottom: 1px dotted #D4D4D4;
+}
+
 .border-left-line {
     border-left: 1px solid #D4D4D4;
 }
@@ -780,6 +787,10 @@ table.striped > tbody > tr:nth-child(odd) {
 .bold-divider {
     background: #ccc;
     height: 2px;
+}
+
+.grey-divider {
+    background: #D4D4D4;
 }
 
 /** 虚分割线 */
@@ -1049,9 +1060,9 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 616px;
 }
 
-.inquiryInfoModal {
-    width: 1024px;
-    max-height: 706px;
+#newRefundModal {
+    width: 1200px;
+    max-height: 616px;
 }
 
 #editOrderCarModal{
@@ -1062,7 +1073,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 638px;
 }
 
-#newSupplierModal, #newOfferModal, #cancelInquiryModal {
+#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal {
     max-height: 456px;
 }
 

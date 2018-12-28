@@ -136,18 +136,6 @@ export const TRANSPORT_MODE = [
     }
 ];
 
-// 订单类型
-export const ORDER_TYPE = [
-    {
-        value: 1,
-        label: "内部订单"
-    },
-    {
-        value: 2,
-        label: "外部订单"
-    }
-];
-
 // 物流状态
 export const LOG_STATUS = [
     {
@@ -160,15 +148,15 @@ export const LOG_STATUS = [
     }
 ];
 
-// 支付状态
-export const PAYMENT_STATUS = [
-    {
-        value: 0,
-        label: "未支付"
-    },
+// 订单类型
+export const ORDER_TYPE = [
     {
         value: 1,
-        label: "已支付"
+        label: "内部订单"
+    },
+    {
+        value: 2,
+        label: "外部订单"
     }
 ];
 
@@ -201,6 +189,58 @@ export const ORDER_STATUS = [
     {
         value: 9,
         label: "已完成"
+    }
+];
+
+// 订单支付状态
+export const ORDER_PAYMENT_STATUS = [
+    {
+        value: 0,
+        label: "未支付"
+    },
+    {
+        value: 1,
+        label: "部分支付"
+    },
+    {
+        value: 2,
+        label: "支付完成"
+    }
+];
+
+// 支付方式
+export const PAYMENT_MODE = [
+    {
+        value: 1,
+        label: "微信"
+    },
+    {
+        value: 2,
+        label: "银行转账"
+    }
+];
+
+// 支付方式
+export const PAYMENT_TYPE = [
+    {
+        value: 0,
+        label: "退款"
+    },
+    {
+        value: 1,
+        label: "支付"
+    }
+];
+
+// 支付状态
+export const PAYMENT_STATUS = [
+    {
+        value: 0,
+        label: "待确认"
+    },
+    {
+        value: 1,
+        label: "已支付"
     }
 ];
 

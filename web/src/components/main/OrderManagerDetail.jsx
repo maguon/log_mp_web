@@ -7,13 +7,22 @@ import {
     OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,EditOrderCarModalActionType,
     CancelOrderModalActionType
 } from '../../actionTypes';
-import {InquiryInfoModal, EditUserAddressModal, EditOrderCarModal, CancelOrderModal, NewPaymentModal, NewRefundModal} from '../modules/index';
+import {
+    InquiryInfoModal,
+    EditUserAddressModal,
+    EditOrderCarModal,
+    CancelOrderModal,
+    NewPaymentModal,
+    NewRefundModal,
+    NewInvoiceModal
+} from '../modules/index';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const inquiryInfoModalAction = require('../../actions/modules/InquiryInfoModalAction');
 const editOrderCarModalAction = require('../../actions/modules/EditOrderCarModalAction');
 const newPaymentModalAction = require('../../actions/modules/NewPaymentModalAction');
 const newRefundModalAction = require('../../actions/modules/NewRefundModalAction');
+const newInvoiceModalAction = require('../../actions/modules/NewInvoiceModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -132,7 +141,6 @@ class OrderManagerDetail extends React.Component {
         // this.props.setOrderRemark(event.target.value);
     };
 
-
     /**
      * 支付信息TAB：显示 申请退款 模态画面
      */
@@ -140,6 +148,19 @@ class OrderManagerDetail extends React.Component {
         this.props.initNewRefundModalData();
         $('#newRefundModal').modal('open');
     };
+
+
+
+
+
+    /**
+     * 发票信息TAB：显示 申请开票 模态画面
+     */
+    showNewInvoiceModal = () => {
+        this.props.initNewInvoiceModalData();
+        $('#newInvoiceModal').modal('open');
+    };
+
 
     render() {
         const {
@@ -505,7 +526,7 @@ class OrderManagerDetail extends React.Component {
                                         已退款：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
                                     </div>
                                     <div className="col s6 right-align">
-                                        实际支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid - orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
+                                        实际支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid + orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
                                     </div>
                                 </div>
                             </div>
@@ -545,9 +566,9 @@ class OrderManagerDetail extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                            <div className="col s4">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</div>
-                                            <div className="col s4">支付账户：{item.bank_code}</div>
-                                            <div className="col s4 right-align">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                            <div className="col s2">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</div>
+                                            <div className="col s7 no-padding">支付账户：{item.bank} {item.bank_code} {item.account_name}</div>
+                                            <div className="col s3 right-align">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15">
                                             <div className="col s12 right-align">
@@ -595,8 +616,6 @@ class OrderManagerDetail extends React.Component {
                                 {orderManagerDetailReducer.orderRefundApplyArray.length === 0 &&
                                 <div className="col s12 no-padding margin-top10 grey-text text-lighten-1">暂无退款信息</div>}
                             </div>
-
-
                         </div>}
                     </div>
 
@@ -630,42 +649,83 @@ class OrderManagerDetail extends React.Component {
 
                     {/* TAB 4 : 发票信息TAB */}
                     <div id="tab-invoice" className="col s12">
-                        {orderManagerDetailReducer.invoiceArray.length === 0 &&
-                        <div className="row center grey-text margin-top40 fz18">
-                            该用户暂未添加发票信息
-                        </div>}
-                        {orderManagerDetailReducer.invoiceArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
-                        {orderManagerDetailReducer.invoiceArray.map(function (item) {
-                            return (
-                                <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
-                                    <div className="row margin-top10 padding-left10 padding-right10">
-                                        {/* 地址信息：收货人 */}
-                                        <div className="col s-percent-4 margin-top10">
-                                            <i className={`mdi mdi-file-document-box fz20 ${item.status === 1 ? "purple-font" : "grey-text"}`}/>
-                                        </div>
-                                        <div className="col s-percent-96 no-padding margin-top5 fz14 grey-text">
-                                            <div className="col s12 margin-top10">
-                                                <div className="col s10 fz18 purple-font">{item.company_name}</div>
-                                                <div className="col s2 right-align fz15 pink-font">{item.status === 1 && '默认'}</div>
-                                            </div>
-                                            <div className="col s12 margin-top15">
-                                                <div className="col s4">企业税号：{item.tax_number}</div>
-                                                <div className="col s8 right-align">
-                                                    <span>开户银行：{item.bank}</span>
-                                                    <span className="margin-left30">银行账户：{item.bank_code}</span>
-                                                </div>
-                                            </div>
-                                            <div className="col s12 margin-top10">
-                                                <div className="col s9">企业地址：{item.company_address}</div>
-                                                <div className="col s3 right-align">企业电话：{item.company_phone}</div>
-                                            </div>
-                                        </div>
+                        {orderManagerDetailReducer.orderInfo.length > 0 &&
+                        <div>
+                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                                <button type="button" className="btn confirm-btn margin-left20"
+                                        onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
+                                <NewInvoiceModal/>
+                            </div>
+                            {/** 内部订单时，没有发票信息时，显示 申请开票 按钮 */}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.invoiceArray.length === 0 &&
+                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                                <button type="button" className="btn confirm-btn margin-left20"
+                                        onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
+                                <NewInvoiceModal/>
+                            </div>}
+                            {/** 外部订单时，没有发票信息时，显示 暂无发票信息  */}
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.invoiceArray.length === 0 &&
+                            <div className="row center grey-text margin-top40 fz18">
+                                暂无发票信息
+                            </div>}
+
+                            {/* 主体：发票信息 */}
+                            {orderManagerDetailReducer.invoiceArray.length > 0 &&
+                            <div className="row margin-top40 margin-left50 margin-right50 detail-box">
+                                <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
+                                    <div className="col s6">
+                                        发票编号：11111111111111111111111
                                     </div>
-                                    <div className="row margin-bottom0 divider grey-border"/>
+                                    {/* 发票状态 */}
+                                    <div className="col s6 pink-font right-align">
+                                        {commonUtil.getJsonValue(sysConst.INVOICE_STATUS, orderManagerDetailReducer.invoiceArray[0].status)}
+                                    </div>
                                 </div>
-                            )
-                        })}
+                                <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                    <div className="col s6">发票抬头：{orderManagerDetailReducer.invoiceArray[0].company_name}</div>
+                                    <div className="col s6 right-align">税号：{orderManagerDetailReducer.invoiceArray[0].tax_number}</div>
+                                    <div className="col s6 margin-top10">开户银行：{orderManagerDetailReducer.invoiceArray[0].bank}</div>
+                                    <div className="col s6 margin-top10 right-align">银行账户：{orderManagerDetailReducer.invoiceArray[0].bank_code}</div>
+                                    <div className="col s9 margin-top10">企业地址：{orderManagerDetailReducer.invoiceArray[0].company_address}</div>
+                                    <div className="col s3 margin-top10 right-align">电话号码：{orderManagerDetailReducer.invoiceArray[0].company_phone}</div>
+                                    <div className="col s12 margin-top10">备注：{orderManagerDetailReducer.invoiceArray[0].remark}</div>
+                                </div>
+                                <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                    <div className="col s12">收货信息：{orderManagerDetailReducer.invoiceArray[0].remark}</div>
+                                </div>
+                                <div className="col s12 padding-top15 padding-bottom15 grey-text">
+                                    <div className="col s6">申请时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</div>
+                                    <div className="col s6 right-align">开票时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</div>
+                                </div>
+                            </div>}
+
+                            {/* 关联：合并开票订单 */}
+                            {orderManagerDetailReducer.invoiceArray.length > 0 &&
+                            <div className="row margin-top40 margin-left50 margin-right50 detail-box">
+                                <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
+                                    合并开票订单
+                                </div>
+                                {orderManagerDetailReducer.invoiceArray.map(function (item) {
+                                    return (
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s2 no-padding">订单编号：{item.id}</div>
+                                            <div className="col s3">{item.start_city} - {item.end_city}</div>
+                                            <div className="col s2">车辆：{formatUtil.formatNumber(item.car_num)}</div>
+                                            <div className="col s2">支付金额：{formatUtil.formatNumber(item.total_trans_price + item.total_insure_price, 2)}</div>
+                                            <div className="col s3 no-padding">创建时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                        </div>
+                                    )
+                                })}
+                            </div>}
+                        </div>}
                     </div>
+
+
+
+
+
+
+
                 </div>
             </div>
         )
@@ -750,9 +810,13 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getInvoiceList: () => {
         dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
     },
+    initNewInvoiceModalData: () => {
+        dispatch(newInvoiceModalAction.initNewInvoiceModal(ownProps.match.params.id));
+    },
+
     // TAB5：操作记录
     getOperationList: () => {
-        dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getOperationList(ownProps.match.params.id))
     }
 });
 

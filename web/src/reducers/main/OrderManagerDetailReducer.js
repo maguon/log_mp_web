@@ -19,7 +19,9 @@ const initialState = {
     // 银行卡TAB：列表
     bankCardArray: [],
     // 发票信息TAB：列表
-    invoiceArray: []
+    invoiceArray: [],
+    // 操作记录TAB：列表
+    operationArray: []
 };
 
 export default handleActions({
@@ -57,6 +59,14 @@ export default handleActions({
         return {
             ...state,
             orderRefundApplyArray: action.payload
+        }
+    },
+
+
+    [OrderManagerDetailActionType.getInvoiceArray]: (state, action) => {
+        return {
+            ...state,
+            invoiceArray: action.payload
         }
     }
 }, initialState)

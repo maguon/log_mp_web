@@ -244,6 +244,18 @@ export const PAYMENT_STATUS = [
     }
 ];
 
+// 发票状态
+export const INVOICE_STATUS = [
+    {
+        value: 0,
+        label: "申请中"
+    },
+    {
+        value: 1,
+        label: "已申请"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

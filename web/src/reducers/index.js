@@ -31,6 +31,7 @@ import NewOfferModalReducer from './modules/NewOfferModalReducer';
 import NewOrderModalReducer from './modules/NewOrderModalReducer';
 import NewPaymentModalReducer from './modules/NewPaymentModalReducer';
 import NewRefundModalReducer from './modules/NewRefundModalReducer';
+import NewInvoiceModalReducer from './modules/NewInvoiceModalReducer';
 import CancelInquiryModalReducer from './modules/CancelInquiryModalReducer';
 import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
 import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
@@ -68,6 +69,7 @@ export default combineReducers({
     NewOrderModalReducer,
     NewPaymentModalReducer,
     NewRefundModalReducer,
+    NewInvoiceModalReducer,
     CancelInquiryModalReducer,
     CancelOrderModalReducer,
     EditUserAddressModalReducer,

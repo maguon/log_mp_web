@@ -10,6 +10,7 @@ export NewOfferModal from "./NewOfferModal";
 export NewOrderModal from "./NewOrderModal";
 export NewPaymentModal from "./NewPaymentModal";
 export NewRefundModal from "./NewRefundModal";
+export NewInvoiceModal from "./NewInvoiceModal";
 export NewSupplierBankModal from "./NewSupplierBankModal";
 export NewSupplierContactModal from "./NewSupplierContactModal";
 export NewSupplierModal from "./NewSupplierModal";

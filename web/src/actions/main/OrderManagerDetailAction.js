@@ -152,3 +152,19 @@ export const getOrderPaymentList = (id) => async (dispatch) => {
     }
 };
 
+
+export const getInvoiceList = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/invoice?orderId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: OrderManagerDetailActionType.getInvoiceArray, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取订单发票信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};

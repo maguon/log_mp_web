@@ -28,6 +28,7 @@ import * as NewOfferModalActionType  from './modules/NewOfferModalActionType';
 import * as NewOrderModalActionType  from './modules/NewOrderModalActionType';
 import * as NewPaymentModalActionType  from './modules/NewPaymentModalActionType';
 import * as NewRefundModalActionType  from './modules/NewRefundModalActionType';
+import * as NewInvoiceModalActionType  from './modules/NewInvoiceModalActionType';
 import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActionType';
 import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionType';
 import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
@@ -64,6 +65,7 @@ export  {
     NewOrderModalActionType,
     NewPaymentModalActionType,
     NewRefundModalActionType,
+    NewInvoiceModalActionType,
     CancelInquiryModalActionType,
     CancelOrderModalActionType,
     EditUserAddressModalActionType,

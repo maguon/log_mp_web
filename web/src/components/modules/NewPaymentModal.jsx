@@ -85,13 +85,13 @@ class NewPaymentModal extends React.Component {
                     </div>
 
                     <div className="row">
-                        <Input s={6} label="付款银行" maxLength="50" value={newPaymentModalReducer.paymentBank} onChange={this.changePaymentBank}/>
-                        <Input s={6} label="银行账号" maxLength="50" value={newPaymentModalReducer.bankNum} onChange={this.changeBankNum}/>
+                        <Input s={6} label="付款银行" maxLength="50" className="right-align" value={newPaymentModalReducer.paymentBank} onChange={this.changePaymentBank}/>
+                        <Input s={6} label="银行账号" maxLength="50" className="right-align" value={newPaymentModalReducer.bankNum} onChange={this.changeBankNum}/>
                     </div>
 
                     <div className="row margin-bottom0">
-                        <Input s={6} label="户主姓名" maxLength="50" value={newPaymentModalReducer.bankUser} onChange={this.changeBankUser}/>
-                        <Input s={6} label="本次支付" maxLength="50" value={newPaymentModalReducer.paymentFee} onChange={this.changePaymentFee}/>
+                        <Input s={6} label="户主姓名" maxLength="50" className="right-align" value={newPaymentModalReducer.bankUser} onChange={this.changeBankUser}/>
+                        <Input s={6} label="本次支付" type="number" className="right-align" value={newPaymentModalReducer.paymentFee} onChange={this.changePaymentFee}/>
                     </div>
                 </div>
 

@@ -1,7 +1,7 @@
 import {apiHost} from '../../config/HostConfig';
 import {NewPaymentModalActionType} from "../../actionTypes";
 
-const orderManagerAction = require('../../actions/main/OrderManagerAction');
+const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -41,24 +41,27 @@ export const savePayment = () => async (dispatch, getState) => {
         // 户主姓名
         const bankUser = getState().NewPaymentModalReducer.bankUser.trim();
         // 本次支付
-        const paymentFee = getState().NewPaymentModalReducer.bankUser;
+        const paymentFee = getState().NewPaymentModalReducer.paymentFee;
 
         if (paymentBank === '' || bankNum === '' || bankUser === '' || paymentFee === '') {
             swal('保存失败', '请输入完整的支付信息！', 'warning');
         } else {
             const params = {
-                routeStartId: startCity.value,
-                routeEndId: endCity.value,
-                serviceType: serviceType.value
+                bank: paymentBank,
+                bankCode: bankNum,
+                accountName: bankUser,
+                totalFee: paymentFee
             };
+            console.log('params',params);
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/order';
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/order/' + orderId + '/bankPayment';
             let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {
                 $('#newPaymentModal').modal('close');
                 swal("保存成功", "", "success");
                 // 保存成功后，重新检索画面数据
-                dispatch(orderManagerAction.getOrderList());
+                dispatch(orderManagerDetailAction.getOrderPaymentList(orderId));
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }

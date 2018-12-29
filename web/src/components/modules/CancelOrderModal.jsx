@@ -5,6 +5,9 @@ import {CancelOrderModalActionType} from "../../actionTypes";
 
 const cancelOrderModalAction = require('../../actions/modules/CancelOrderModalAction');
 
+/**
+ * UI组件：取消订单 模块。
+ */
 class CancelOrderModal extends React.Component {
 
     /**

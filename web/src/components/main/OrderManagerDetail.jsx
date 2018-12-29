@@ -674,7 +674,6 @@ class OrderManagerDetail extends React.Component {
                         </div>}
                     </div>
 
-
                     {/* TAB 3 : 运输信息TAB */}
                     <div id="tab-log-info" className="col s12">
                         {orderManagerDetailReducer.bankCardArray.length === 0 &&
@@ -706,13 +705,16 @@ class OrderManagerDetail extends React.Component {
                     <div id="tab-invoice" className="col s12">
                         {orderManagerDetailReducer.orderInfo.length > 0 &&
                         <div>
+                            {/** TODO delete */}
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
                                 <button type="button" className="btn confirm-btn margin-left20"
                                         onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
                                 <NewInvoiceModal/>
                             </div>
                             {/** 内部订单时，没有发票信息时，显示 申请开票 按钮 */}
-                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.invoiceArray.length === 0 &&
+                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                            orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value &&
+                            orderManagerDetailReducer.invoiceArray.length === 0 &&
                             <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
                                 <button type="button" className="btn confirm-btn margin-left20"
                                         onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>

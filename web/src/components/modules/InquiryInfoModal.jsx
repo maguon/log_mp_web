@@ -7,7 +7,7 @@ const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
 
 /**
- * UI组件：询价模块。
+ * UI组件：询价详情 模块。
  */
 class InquiryInfoModal extends React.Component {
 

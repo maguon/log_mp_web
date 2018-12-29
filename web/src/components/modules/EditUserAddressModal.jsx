@@ -5,6 +5,9 @@ import {EditUserAddressModalActionType} from "../../actionTypes";
 
 const editUserAddressModalAction = require('../../actions/modules/EditUserAddressModalAction');
 
+/**
+ * UI组件：收发货信息 模块。
+ */
 class EditUserAddressModal extends React.Component {
 
     /**

@@ -495,7 +495,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 .margin-bottom10 {
-    margin-bottom: 10px;
+    margin-bottom: 10px !important;
 }
 
 .margin-bottom15 {
@@ -1071,6 +1071,11 @@ table.striped > tbody > tr:nth-child(odd) {
 
 #inquiryModal{
     max-height: 638px;
+}
+
+#newInvoiceModal{
+    height: 75% !important;
+    max-height: 75% !important;
 }
 
 #newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal {

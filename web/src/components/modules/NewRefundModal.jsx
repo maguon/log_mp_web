@@ -5,9 +5,11 @@ import {NewRefundModalActionType} from "../../actionTypes";
 
 const NewRefundModalAction = require('../../actions/modules/NewRefundModalAction');
 const formatUtil = require('../../util/FormatUtil');
+const commonUtil = require('../../util/CommonUtil');
+const sysConst = require('../../util/SysConst');
 
 /**
- * UI组件：支付 模块。
+ * UI组件：申请退款 模块。
  */
 class NewRefundModal extends React.Component {
 
@@ -55,7 +57,7 @@ class NewRefundModal extends React.Component {
             <div id="newRefundModal" className="modal modal-fixed-footer row">
 
                 {/** Modal头部：Title */}
-                <div className="modal-title center-align white-text">支付</div>
+                <div className="modal-title center-align white-text">申请退款</div>
 
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
@@ -75,10 +77,10 @@ class NewRefundModal extends React.Component {
                                 <div className="col s12 grey-text text-darken-1">
                                     <input type="radio" name="payment" id={`index${key}`} className='with-gap select-payment' onChange={() => {this.changePaymentItem(item)}}/>
                                     <label className="col s12 margin-top10 height-35 border-bottom-line" htmlFor={`index${key}`}>
-                                        <div className="col s5 no-padding">{item.bank} {item.bank_code} {item.account_name}</div>
+                                        <div className="col s6 no-padding">{item.bank} {item.bank_code} {item.account_name}</div>
                                         <div className="col s3 no-padding">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
                                         <div className="col s2 no-padding">支付金额：{formatUtil.formatNumber(item.total_fee,2)} 元</div>
-                                        <div className="col s2 no-padding">剩余金额：<span className="pink-font">{formatUtil.formatNumber(item.total_fee,2)} 元</span></div>
+                                        <div className="col s1 pink-font no-padding right-align">{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS,item.status)}</div>
                                     </label>
                                 </div>
                             )

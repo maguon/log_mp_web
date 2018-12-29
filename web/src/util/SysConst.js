@@ -244,6 +244,22 @@ export const PAYMENT_STATUS = [
     }
 ];
 
+// 退款状态 0:不给退款，1：给退款2默认申请中
+export const REFUND_STATUS = [
+    {
+        value: 0,
+        label: "已拒绝"
+    },
+    {
+        value: 1,
+        label: "已退款"
+    },
+    {
+        value: 2,
+        label: "申请中"
+    }
+];
+
 // 发票状态
 export const INVOICE_STATUS = [
     {

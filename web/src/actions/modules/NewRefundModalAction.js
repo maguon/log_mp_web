@@ -9,6 +9,8 @@ const sysConst = require('../../util/SysConst');
 // 申请退款模态画面 初期
 export const initNewRefundModal = (orderId) => async (dispatch) => {
     try {
+        // 订单ID
+        dispatch({type: NewRefundModalActionType.setOrderId, payload: orderId});
         // 申请金额
         dispatch({type: NewRefundModalActionType.setRefundFee, payload: ''});
         // 清空画面选中项目
@@ -35,28 +37,25 @@ export const saveRefund = () => async (dispatch, getState) => {
     try {
         // 订单编号
         const orderId = getState().NewRefundModalReducer.orderId;
-
         // 申请金额
         const refundFee = getState().NewRefundModalReducer.refundFee;
         // 选中支付
         const selectedItem = getState().NewRefundModalReducer.selectedItem;
         // 申请原因
         const remark = getState().NewRefundModalReducer.remark.trim();
-
-        console.log('refundFee',refundFee);
-        console.log('selectedItem',selectedItem);
-        console.log('remark',remark);
-
         if (refundFee === '' || selectedItem == null) {
             swal('保存失败', '请输入完整的申请退款信息！', 'warning');
         } else {
             const params = {
-                routeStartId: startCity.value,
-                routeEndId: endCity.value,
-                serviceType: serviceType.value
+                mark: remark,
+                applyFee: refundFee,
+                bank: selectedItem.bank,
+                bankCode: selectedItem.bank_code,
+                accountName: selectedItem.account_name
             };
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/order';
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/order/' + orderId + '/payment/' + selectedItem.id + '/refundApply';
             let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {
                 $('#newRefundModal').modal('close');

@@ -152,6 +152,21 @@ export const getOrderPaymentList = (id) => async (dispatch) => {
     }
 };
 
+export const getOrderRefundList = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/refundApply?orderId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: OrderManagerDetailActionType.getOrderRefundApplyArray, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取订单退款申请信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
 
 export const getInvoiceList = (id) => async (dispatch) => {
     try {

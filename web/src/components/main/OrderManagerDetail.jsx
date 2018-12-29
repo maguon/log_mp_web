@@ -605,7 +605,7 @@ class OrderManagerDetail extends React.Component {
 
                                 {/* 追加支付 按钮 内部订单 显示 */}
                                 <div className="col s6 no-padding right-align">
-                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.orderPaymentArray.length > 0 &&
                                     <button type="button" className="btn custom-btn" onClick={() => {this.showRefundModal()}}>退款</button>}
                                 </div>
                                 {/* 分割线 */}
@@ -616,6 +616,61 @@ class OrderManagerDetail extends React.Component {
                                 {orderManagerDetailReducer.orderRefundApplyArray.length === 0 &&
                                 <div className="col s12 no-padding margin-top10 grey-text text-lighten-1">暂无退款信息</div>}
                             </div>
+
+                            {/* 退款申请 明细 */}
+                            {orderManagerDetailReducer.orderRefundApplyArray.map(function (item) {
+                                return (
+                                    <div className="row margin-top20 margin-left50 margin-right50 detail-box">
+                                        <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
+                                            <div className="col s6">退款编号：{item.id}</div>
+                                            {/* 支付状态 */}
+                                            <div className="col s6 pink-font right-align">
+                                                {commonUtil.getJsonValue(sysConst.REFUND_STATUS, item.status)}
+                                            </div>
+                                        </div>
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s6">
+                                                申请金额：<span className="fz16 pink-font">{formatUtil.formatNumber(item.apply_fee, 2)}</span> 元
+                                            </div>
+                                            <div className="col s6 right-align">申请时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                        </div>
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s6">支付账户：{item.bank} {item.bank_code} {item.account_name}</div>
+                                            <div className="col s3 no-padding">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                            <div className="col s3 right-align">
+                                                支付金额：<span className="fz16 pink-font">{formatUtil.formatNumber(item.total_fee, 2)}</span> 元
+                                            </div>
+                                        </div>
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s12 right-align">申请原因：{item.mark}</div>
+                                        </div>
+
+                                        {/* 已退款/已拒绝 状态：显示退款描述 */}
+                                        {(item.status === sysConst.REFUND_STATUS[0].value || item.status === sysConst.REFUND_STATUS[1].value) &&
+                                        <div>
+                                            <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                                <div className="col s12 right-align">退款描述：{item.refuse_reason}</div>
+                                            </div>
+                                            <div className="col s12 padding-top15 padding-bottom15">
+                                                <div className="col s6">
+                                                    {/* 已退款 状态：显示退款金额 */}
+                                                    {item.status === sysConst.REFUND_STATUS[1].value &&
+                                                    <span>退款金额：<span className="fz16 pink-font">{formatUtil.formatNumber(item.refund_fee, 2)}</span> 元</span>}
+                                                </div>
+                                                <div className="col s6 right-align">处理时间：{formatUtil.getDateTime(item.updated_on)}</div>
+                                            </div>
+                                        </div>}
+                                    </div>
+                                )
+                            })}
+
+
+
+
+
+
+
+
                         </div>}
                     </div>
 
@@ -792,7 +847,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     // TAB2：支付信息
     getPaymentInfo: () => {
-        dispatch(orderManagerDetailAction.getOrderPaymentList(ownProps.match.params.id))
+        dispatch(orderManagerDetailAction.getOrderPaymentList(ownProps.match.params.id));
+        dispatch(orderManagerDetailAction.getOrderRefundList(ownProps.match.params.id));
     },
     initNewPaymentModalData: (freight, insuranceFee, totalFee, leftPayment) => {
         dispatch(newPaymentModalAction.initNewPaymentModal(ownProps.match.params.id, freight, insuranceFee, totalFee, leftPayment));

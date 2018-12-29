@@ -9,6 +9,8 @@ import UserManagerReducer from './main/UserManagerReducer';
 import UserManagerDetailReducer from './main/UserManagerDetailReducer';
 import OrderManagerReducer from './main/OrderManagerReducer';
 import OrderManagerDetailReducer from './main/OrderManagerDetailReducer';
+import PaymentManagerReducer from './main/PaymentManagerReducer';
+import PaymentManagerDetailReducer from './main/PaymentManagerDetailReducer';
 import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
 import InvoiceManagerReducer from './main/InvoiceManagerReducer';
@@ -47,6 +49,8 @@ export default combineReducers({
     UserManagerDetailReducer,
     OrderManagerReducer,
     OrderManagerDetailReducer,
+    PaymentManagerReducer,
+    PaymentManagerDetailReducer,
     InquiryManagerReducer,
     InquiryManagerDetailReducer,
     InvoiceManagerReducer,

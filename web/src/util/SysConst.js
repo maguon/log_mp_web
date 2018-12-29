@@ -220,7 +220,7 @@ export const PAYMENT_MODE = [
     }
 ];
 
-// 支付方式
+// 支付类型
 export const PAYMENT_TYPE = [
     {
         value: 0,

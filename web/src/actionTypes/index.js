@@ -6,6 +6,8 @@ import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
 import * as OrderManagerActionType  from './main/OrderManagerActionType';
 import * as OrderManagerDetailActionType  from './main/OrderManagerDetailActionType';
+import * as PaymentManagerActionType  from './main/PaymentManagerActionType';
+import * as PaymentManagerDetailActionType  from './main/PaymentManagerDetailActionType';
 import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
 import * as InvoiceManagerActionType  from './main/InvoiceManagerActionType';
@@ -43,6 +45,8 @@ export  {
     UserManagerDetailActionType,
     OrderManagerActionType,
     OrderManagerDetailActionType,
+    PaymentManagerActionType,
+    PaymentManagerDetailActionType,
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
     InvoiceManagerActionType,

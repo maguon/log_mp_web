@@ -8,6 +8,8 @@ import {
     UserManagerDetail,
     OrderManager,
     OrderManagerDetail,
+    PaymentManager,
+    PaymentManagerDetail,
     InquiryManager,
     InquiryManagerDetail,
     InvoiceManager,
@@ -72,7 +74,6 @@ const routes = [
         component: InquiryManager
     },
     {
-        // 询价管理
         path: '/inquiry/:id',
         exact: true,
         component: InquiryManagerDetail
@@ -84,10 +85,20 @@ const routes = [
         component: OrderManager
     },
     {
-        // 询价管理
         path: '/order/:id',
         exact: true,
         component: OrderManagerDetail
+    },
+    {
+        // 支付管理
+        path: "/payment",
+        exact: true,
+        component: PaymentManager
+    },
+    {
+        path: '/payment/:id',
+        exact: true,
+        component: PaymentManagerDetail
     },
 
     // 设置模块
@@ -195,6 +206,8 @@ class Container extends React.Component {
                                             <li><Link to="/inquiry"><i className="mdi mdi-chevron-right"/>询价管理</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/order"><i className="mdi mdi-chevron-right"/>订单管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/payment"><i className="mdi mdi-chevron-right"/>支付管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>

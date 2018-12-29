@@ -3,6 +3,8 @@ export UserManager from "./UserManager";
 export UserManagerDetail from "./UserManagerDetail";
 export OrderManager from "./OrderManager";
 export OrderManagerDetail from "./OrderManagerDetail";
+export PaymentManager from "./PaymentManager";
+export PaymentManagerDetail from "./PaymentManagerDetail";
 export InquiryManager from "./InquiryManager";
 export InquiryManagerDetail from "./InquiryManagerDetail";
 export InvoiceManager from "./InvoiceManager";

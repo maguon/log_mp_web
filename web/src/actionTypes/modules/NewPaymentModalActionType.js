@@ -1,6 +1,8 @@
 import {createAction} from 'redux-actions';
 
+export const setPageType = createAction('SET_NEW_PAYMENT_PAGE_TYPE');
 export const setOrderId = createAction('SET_NEW_PAYMENT_ORDER_ID');
+export const setPaymentId = createAction('SET_NEW_PAYMENT_ID');
 export const setFreight = createAction('SET_NEW_PAYMENT_FREIGHT');
 export const setInsuranceFee = createAction('SET_NEW_PAYMENT_INSURANCE_FEE');
 export const setTotalFee = createAction('SET_NEW_PAYMENT_TOTAL_FEE');

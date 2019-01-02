@@ -3,8 +3,12 @@ import {NewPaymentModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
+    // 画面区分
+    pageType: '',
     // 订单编号
     orderId: '',
+    // 支付编号
+    paymentId: '',
     // 应付运费
     freight: 0,
     // 应付保费
@@ -24,10 +28,22 @@ const initialState = {
 };
 
 export default handleActions({
+    [NewPaymentModalActionType.setPageType]: (state, action) => {
+        return {
+            ...state,
+            pageType: action.payload
+        }
+    },
     [NewPaymentModalActionType.setOrderId]: (state, action) => {
         return {
             ...state,
             orderId: action.payload
+        }
+    },
+    [NewPaymentModalActionType.setPaymentId]: (state, action) => {
+        return {
+            ...state,
+            paymentId: action.payload
         }
     },
     [NewPaymentModalActionType.setFreight]: (state, action) => {

@@ -7,6 +7,7 @@ import {PaymentManagerActionType} from '../../actionTypes';
 
 const commonAction = require('../../actions/main/CommonAction');
 const paymentManagerAction = require('../../actions/main/PaymentManagerAction');
+const paymentManagerDetailAction = require('../../actions/main/PaymentManagerDetailAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -114,10 +115,16 @@ class PaymentManager extends React.Component {
         this.props.getPaymentList();
     };
 
+    /**
+     * 确认支付 按钮
+     */
+    confirmPayment = (paymentId) => {
+        this.props.confirmPayment(paymentId);
+    };
+
     render() {
         const {
-            paymentManagerReducer, commonReducer,
-            changeConditionPaymentMode, changeConditionPaymentType, changeConditionPaymentStatus,
+            paymentManagerReducer, changeConditionPaymentMode, changeConditionPaymentType, changeConditionPaymentStatus,
         } = this.props;
         return (
             <div>
@@ -227,12 +234,10 @@ class PaymentManager extends React.Component {
                                 <th>订单编号</th>
                                 <th>支付类型</th>
                                 <th>支付方式</th>
-
                                 <th>付款银行</th>
                                 <th>银行账号</th>
                                 <th>户名</th>
                                 <th>支付金额 ( 元 )</th>
-
                                 <th>订单创建人</th>
                                 <th className="center">提交时间</th>
                                 <th className="center">状态</th>
@@ -247,29 +252,23 @@ class PaymentManager extends React.Component {
                                         <td>{item.order_id}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.PAYMENT_TYPE, item.type)}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</td>
-
                                         <td>{item.bank}</td>
                                         <td>{item.bank_code}</td>
                                         <td>{item.account_name}</td>
                                         <td>{item.total_fee}</td>
-
-                                        {/*<td>{item.phone}</td>*/}
-                                        {/*<td>{formatUtil.formatNumber(item.fee_price,2)}</td>*/}
-                                        {/*<td className="center">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, item.created_type)}</td>*/}
-                                        {/*<td>{item.phone}</td>*/}
-                                        {/*<td>{item.user_name}</td>*/}
-
-                                        <td>{item.admin_name}</td>
+                                        <td>{item.createOrderUser}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className={`center ${item.status === 0 ? "pink-font" : ""}`}>{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS,item.status)}</td>
-                                        <td className="operation center">
+                                        <td className="operation right-align padding-right20 purple-font">
+                                            {item.status === sysConst.PAYMENT_STATUS[0].value &&
+                                            <i className="mdi mdi-check-circle margin-right20 pointer" onClick={() => {this.confirmPayment(item.id)}}/>}
                                             <Link to={{pathname: '/payment/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
                                     </tr>
                                 )
-                            })}
+                            },this)}
                             {paymentManagerReducer.paymentArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
                                 <td className="no-data-tr" colSpan="13">暂无数据</td>
@@ -314,15 +313,9 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(commonAction.getCityList());
         dispatch(paymentManagerAction.getPaymentList())
     },
-
-
-
-
     setStartNumber: (start) => {
         dispatch(PaymentManagerActionType.setStartNumber(start))
     },
-
-
     setConditionNo: (value) => {
         dispatch(PaymentManagerActionType.setConditionNo(value))
     },
@@ -338,8 +331,6 @@ const mapDispatchToProps = (dispatch) => ({
     setConditionCreateUser: (value) => {
         dispatch(PaymentManagerActionType.setConditionCreateUser(value))
     },
-
-
     setConditionBank: (value) => {
         dispatch(PaymentManagerActionType.setConditionBank(value))
     },
@@ -354,6 +345,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     changeConditionPaymentStatus: (value) => {
         dispatch(PaymentManagerActionType.setConditionPaymentStatus(value))
+    },
+    confirmPayment: (paymentId) => {
+        dispatch(paymentManagerDetailAction.confirmPayment(paymentId, 'payment'));
     }
 });
 

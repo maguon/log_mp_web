@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {NewOfferModalActionType, CancelInquiryModalActionType} from '../../actionTypes';
 
 const paymentManagerDetailAction = require('../../actions/main/PaymentManagerDetailAction');
 const sysConst = require('../../util/SysConst');
@@ -145,8 +144,6 @@ class PaymentManagerDetail extends React.Component {
                             </div>
                         </div>}
                     </div>
-
-
                 </div>
             </div>
         )
@@ -164,7 +161,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(paymentManagerDetailAction.getPaymentInfo(ownProps.match.params.id));
     },
     confirmPayment: () => {
-        dispatch(paymentManagerDetailAction.confirmPayment(ownProps.match.params.id));
+        dispatch(paymentManagerDetailAction.confirmPayment(ownProps.match.params.id,'payment_detail'));
     }
 });
 

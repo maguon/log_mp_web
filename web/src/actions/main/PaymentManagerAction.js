@@ -48,12 +48,12 @@ export const getPaymentList = () => async (dispatch, getState) => {
             // 检索条件：支付类型
             type: conditionPaymentType === null ? '' : conditionPaymentType.value,
             // 检索条件：创建人
-            conditionCreateUser: conditionCreateUser,
+            createOrderUser: conditionCreateUser,
 
             // 检索条件：付款银行
             bank: conditionBank,
             // 检索条件：户主
-            bankUser: conditionBankUser,
+            accountUser: conditionBankUser,
             // 检索条件：提交时间
             createdOnStart: conditionCreatedOnStart,
             createdOnEnd: conditionCreatedOnEnd,

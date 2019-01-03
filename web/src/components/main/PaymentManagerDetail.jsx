@@ -41,7 +41,7 @@ class PaymentManagerDetail extends React.Component {
     };
 
     render() {
-        const {paymentManagerDetailReducer} = this.props;
+        const {paymentManagerDetailReducer, commonReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -121,42 +121,42 @@ class PaymentManagerDetail extends React.Component {
                             <div className="col s12 margin-top5 divider bold-divider"/>
                         </div>
 
-                        {paymentManagerDetailReducer.orderInfo.length > 0 &&
+                        {commonReducer.orderInfo.length > 0 &&
                         <div className="col s12 no-padding margin-top20 detail-box z-depth-1">
 
                             <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
                                 <div className="col s6 purple-font">
-                                    {commonUtil.getJsonValue(sysConst.ORDER_TYPE, paymentManagerDetailReducer.orderInfo[0].created_type)}
-                                    <span className="margin-left10 grey-text">编号：{paymentManagerDetailReducer.orderInfo[0].id}</span>
+                                    {commonUtil.getJsonValue(sysConst.ORDER_TYPE, commonReducer.orderInfo[0].created_type)}
+                                    <span className="margin-left10 grey-text">编号：{commonReducer.orderInfo[0].id}</span>
                                 </div>
                                 {/* 订单状态 */}
                                 <div className="col s6 pink-font right-align">
-                                    {commonUtil.getJsonValue(sysConst.ORDER_STATUS, paymentManagerDetailReducer.orderInfo[0].status)}
+                                    {commonUtil.getJsonValue(sysConst.ORDER_STATUS, commonReducer.orderInfo[0].status)}
                                 </div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
                                 <div className="col s6">
                                     {/* 线路 */}
-                                    <span className="fz18 purple-font">{paymentManagerDetailReducer.orderInfo[0].start_city} - {paymentManagerDetailReducer.orderInfo[0].end_city}</span>
+                                    <span className="fz18 purple-font">{commonReducer.orderInfo[0].start_city} - {commonReducer.orderInfo[0].end_city}</span>
                                     {/* 服务类型 */}
-                                    <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, paymentManagerDetailReducer.orderInfo[0].service_type)}</span>
-                                    <span className="margin-left30">运输车辆：{formatUtil.formatNumber(paymentManagerDetailReducer.orderInfo[0].car_num)}</span>
+                                    <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</span>
+                                    <span className="margin-left30">运输车辆：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</span>
                                 </div>
 
                                 <div className="col s6 right-align">
-                                    创建人：{paymentManagerDetailReducer.orderInfo[0].admin_name}
-                                    <span className="margin-left30">创建时间：{formatUtil.getDateTime(paymentManagerDetailReducer.orderInfo[0].created_on)}</span>
+                                    创建人：{commonReducer.orderInfo[0].admin_name}
+                                    <span className="margin-left30">创建时间：{formatUtil.getDateTime(commonReducer.orderInfo[0].created_on)}</span>
                                 </div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15">
                                 <div className="col s4">
-                                    运费：<span className="fz16 pink-font">{formatUtil.formatNumber(paymentManagerDetailReducer.orderInfo[0].total_trans_price, 2)}</span> 元
+                                    运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price, 2)}</span> 元
                                 </div>
                                 <div className="col s4">
-                                    保费：<span className="fz16 pink-font">{formatUtil.formatNumber(paymentManagerDetailReducer.orderInfo[0].total_insure_price, 2)}</span> 元
+                                    保费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_insure_price, 2)}</span> 元
                                 </div>
                                 <div className="col s4 right-align">
-                                    订单金额：<span className="fz16 pink-font">{formatUtil.formatNumber(paymentManagerDetailReducer.orderInfo[0].total_trans_price + paymentManagerDetailReducer.orderInfo[0].total_insure_price, 2)}</span> 元
+                                    订单金额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price + commonReducer.orderInfo[0].total_insure_price, 2)}</span> 元
                                 </div>
                             </div>
                         </div>}
@@ -169,7 +169,8 @@ class PaymentManagerDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        paymentManagerDetailReducer: state.PaymentManagerDetailReducer
+        paymentManagerDetailReducer: state.PaymentManagerDetailReducer,
+        commonReducer: state.CommonReducer
     }
 };
 

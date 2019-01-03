@@ -3,9 +3,7 @@ import {PaymentManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
     // 支付信息
-    paymentInfo: [],
-    // 订单信息
-    orderInfo: []
+    paymentInfo: []
 };
 
 export default handleActions({
@@ -13,12 +11,6 @@ export default handleActions({
         return {
             ...state,
             paymentInfo: action.payload
-        }
-    },
-    [PaymentManagerDetailActionType.getOrderInfo]: (state, action) => {
-        return {
-            ...state,
-            orderInfo: action.payload
         }
     }
 }, initialState)

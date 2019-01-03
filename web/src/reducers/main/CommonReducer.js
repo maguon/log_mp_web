@@ -4,6 +4,8 @@ import {CommonActionType} from '../../actionTypes';
 const initialState = {
     // 城市列表
     cityList: [],
+    // 订单信息
+    orderInfo: [],
     // 订单信息：运送车辆列表
     orderCarArray: [],
     // 订单信息：估值总额
@@ -23,6 +25,12 @@ export default handleActions({
         return {
             ...state,
             cityList: cityList
+        }
+    },
+    [CommonActionType.getOrderInfo]: (state, action) => {
+        return {
+            ...state,
+            orderInfo: action.payload
         }
     },
     [CommonActionType.getOrderCarList]: (state, action) => {

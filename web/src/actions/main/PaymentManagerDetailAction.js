@@ -2,6 +2,7 @@ import {PaymentManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const paymentManagerAction = require('../../actions/main/PaymentManagerAction');
+const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -16,26 +17,10 @@ export const getPaymentInfo = (id) => async (dispatch) => {
             dispatch({type: PaymentManagerDetailActionType.getPaymentInfo, payload: res.result});
             if (res.result.length > 0) {
                 // 订单信息
-                dispatch(getOrderInfo(res.result[0].order_id));
+                dispatch(commonAction.getOrderInfo(res.result[0].order_id));
             }
         } else if (res.success === false) {
             swal('获取支付详细信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const getOrderInfo = (orderId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/order?orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: PaymentManagerDetailActionType.getOrderInfo, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取订单详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

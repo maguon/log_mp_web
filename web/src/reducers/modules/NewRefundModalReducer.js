@@ -3,6 +3,10 @@ import {NewRefundModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
+    // 画面区分
+    pageType: '',
+    // 退款申请编号
+    refundApplyId: '',
     // 订单编号
     orderId: '',
     // 申请金额
@@ -16,6 +20,18 @@ const initialState = {
 };
 
 export default handleActions({
+    [NewRefundModalActionType.setPageType]: (state, action) => {
+        return {
+            ...state,
+            pageType: action.payload
+        }
+    },
+    [NewRefundModalActionType.setRefundApplyId]: (state, action) => {
+        return {
+            ...state,
+            refundApplyId: action.payload
+        }
+    },
     [NewRefundModalActionType.setOrderId]: (state, action) => {
         return {
             ...state,

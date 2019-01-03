@@ -46,7 +46,7 @@ export const initNewPaymentModal = (orderId, freight, insuranceFee, totalFee, le
 
 export const savePayment = () => async (dispatch, getState) => {
     try {
-        // 订单编号
+        // 画面区分
         const pageType = getState().NewPaymentModalReducer.pageType;
 
         // 订单编号

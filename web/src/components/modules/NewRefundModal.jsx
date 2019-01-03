@@ -37,7 +37,7 @@ class NewRefundModal extends React.Component {
     /**
      * 更新 退款账户
      */
-    changePaymentItem = (orderItem) => {
+    changePaymentId = (orderItem) => {
         this.props.setSelectedItem(orderItem);
     };
 
@@ -72,11 +72,11 @@ class NewRefundModal extends React.Component {
                     </div>
 
                     <div className="row">
-                        {newRefundModalReducer.paymentArray.map(function (item, key) {
+                        {newRefundModalReducer.paymentArray.map(function (item) {
                             return (
                                 <div className="col s12 grey-text text-darken-1">
-                                    <input type="radio" name="payment" id={`index${key}`} className='with-gap select-payment' onChange={() => {this.changePaymentItem(item)}}/>
-                                    <label className="col s12 margin-top10 height-35 border-bottom-line" htmlFor={`index${key}`}>
+                                    <input type="radio" name="payment" id={`index${item.id}`} className='with-gap select-payment' onChange={() => {this.changePaymentId(item)}}/>
+                                    <label className="col s12 margin-top10 height-35 border-bottom-line" htmlFor={`index${item.id}`}>
                                         <div className="col s6 no-padding">{item.bank} {item.bank_code} {item.account_name}</div>
                                         <div className="col s3 no-padding">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
                                         <div className="col s2 no-padding">支付金额：{formatUtil.formatNumber(item.total_fee,2)} 元</div>

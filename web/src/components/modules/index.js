@@ -14,3 +14,4 @@ export NewInvoiceModal from "./NewInvoiceModal";
 export NewSupplierBankModal from "./NewSupplierBankModal";
 export NewSupplierContactModal from "./NewSupplierContactModal";
 export NewSupplierModal from "./NewSupplierModal";
+export ConfirmPaymentModal from "./ConfirmPaymentModal";

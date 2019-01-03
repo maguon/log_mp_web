@@ -16,6 +16,7 @@ export const getOrderInfo = (id) => async (dispatch) => {
             dispatch({type: OrderManagerDetailActionType.getOrderInfo, payload: res.result});
             if (res.result.length > 0) {
                 dispatch({type: OrderManagerDetailActionType.setOrderRemark, payload: res.result[0].admin_mark});
+                dispatch({type: OrderManagerDetailActionType.setOrderPaymentRemark, payload: res.result[0].payment_remark});
             }
         } else if (res.success === false) {
             swal('获取订单信息失败', res.msg, 'warning');
@@ -135,15 +136,21 @@ export const getOrderPaymentList = (id) => async (dispatch) => {
             dispatch({type: OrderManagerDetailActionType.getOrderPaymentArray, payload: res.result});
             let refund = 0;
             let paid = 0;
+            let paymentSize = 0;
             for (let i = 0; i < res.result.length; i++) {
-                if (res.result[i].type === sysConst.PAYMENT_STATUS[0].value) {
+                if (res.result[i].type === sysConst.PAYMENT_TYPE[0].value) {
                     refund = refund + res.result[i].total_fee;
-                } else if (res.result[i].type === sysConst.PAYMENT_STATUS[1].value) {
+                } else if (res.result[i].type === sysConst.PAYMENT_TYPE[1].value) {
                     paid = paid + res.result[i].total_fee;
+                    // 已支付的数据
+                    if (res.result[i].status === sysConst.PAYMENT_STATUS[1].value) {
+                        paymentSize++;
+                    }
                 }
             }
             dispatch({type: OrderManagerDetailActionType.setOrderPaymentRefund, payload: refund});
             dispatch({type: OrderManagerDetailActionType.setOrderPaymentPaid, payload: paid});
+            dispatch({type: OrderManagerDetailActionType.setOrderPaymentPaidSize, payload: paymentSize});
         } else if (res.success === false) {
             swal('获取订单支付信息失败', res.msg, 'warning');
         }
@@ -162,6 +169,52 @@ export const getOrderRefundList = (id) => async (dispatch) => {
             dispatch({type: OrderManagerDetailActionType.getOrderRefundApplyArray, payload: res.result});
         } else if (res.success === false) {
             swal('获取订单退款申请信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+export const deleteRefundApply = (item) => async (dispatch) => {
+    swal({
+        title: '确定删除该退款申请？',
+        text: '',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            // 基本检索URL
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/order/' + item.order_id +'/payment/' + item.payment_id + '/deleteRefundApply/' + item.id;
+            const res = await httpUtil.httpDelete(url, {});
+            if (res.success === true) {
+                swal("删除成功", "", "success");
+                dispatch(getOrderRefundList(item.order_id));
+            } else if (res.success === false) {
+                swal('删除失败', res.msg, 'warning');
+            }
+        }
+    });
+};
+
+export const saveOrderPaymentRemark = (id) => async (dispatch, getState) => {
+    try {
+        const orderPaymentRemark = getState().OrderManagerDetailReducer.orderPaymentRemark;
+
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/order/' + id + '/paymentRemark';
+        const params = {
+            remark: orderPaymentRemark
+        };
+        const res = await httpUtil.httpPut(url, params);
+        if (res.success === true) {
+            swal("保存成功", "", "success");
+        } else if (res.success === false) {
+            swal('保存失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

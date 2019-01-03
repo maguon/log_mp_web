@@ -6,15 +6,19 @@ const initialState = {
     orderInfo: [],
     // 订单信息TAB：订单备注
     orderRemark: '',
+
     // 支付信息TAB：已支付
     orderPaymentPaid: 0,
     // 支付信息TAB：已退款
     orderPaymentRefund: 0,
+    // 支付信息TAB：申请退款 列表长度
+    orderPaymentSize: 0,
     // 支付信息TAB：支付列表
     orderPaymentArray: [],
     // 支付信息TAB：支付列表
     orderRefundApplyArray: [],
-
+    // 订单信息TAB：订单的支付备注
+    orderPaymentRemark: '',
 
     // 银行卡TAB：列表
     bankCardArray: [],
@@ -37,6 +41,8 @@ export default handleActions({
             orderRemark: action.payload
         }
     },
+
+
     [OrderManagerDetailActionType.setOrderPaymentPaid]: (state, action) => {
         return {
             ...state,
@@ -49,6 +55,12 @@ export default handleActions({
             orderPaymentRefund: action.payload
         }
     },
+    [OrderManagerDetailActionType.setOrderPaymentPaidSize]: (state, action) => {
+        return {
+            ...state,
+            orderPaymentSize: action.payload
+        }
+    },
     [OrderManagerDetailActionType.getOrderPaymentArray]: (state, action) => {
         return {
             ...state,
@@ -59,6 +71,12 @@ export default handleActions({
         return {
             ...state,
             orderRefundApplyArray: action.payload
+        }
+    },
+    [OrderManagerDetailActionType.setOrderPaymentRemark]: (state, action) => {
+        return {
+            ...state,
+            orderPaymentRemark: action.payload
         }
     },
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
@@ -120,7 +119,7 @@ class OrderManagerDetail extends React.Component {
     /**
      * 支付信息TAB：显示 支付 模态画面
      */
-    showPaymentModal = () => {
+    showPaymentModal = (pageType, item) => {
         // 应付运费
         let freight = this.props.commonReducer.totalActFreight;
         // 应付保费
@@ -130,7 +129,7 @@ class OrderManagerDetail extends React.Component {
         // 剩余应付
         let leftPayment = this.props.commonReducer.totalActFreight + this.props.commonReducer.totalInsuranceFee - this.props.orderManagerDetailReducer.orderPaymentPaid;
 
-        this.props.initNewPaymentModalData(freight, insuranceFee, totalFee, leftPayment);
+        this.props.initNewPaymentModalData(pageType, item, freight, insuranceFee, totalFee, leftPayment);
         $('#newPaymentModal').modal('open');
     };
 
@@ -138,18 +137,24 @@ class OrderManagerDetail extends React.Component {
      * 支付信息TAB：更新 订单支付备注
      */
     changeOrderPaymentRemark = (event) => {
-        // this.props.setOrderRemark(event.target.value);
+        this.props.setOrderPaymentRemark(event.target.value);
     };
 
     /**
      * 支付信息TAB：显示 申请退款 模态画面
      */
-    showRefundModal = () => {
-        this.props.initNewRefundModalData();
+    showRefundModal = (pageType, item) => {
+        this.props.initNewRefundModalData(pageType, item);
         $('#newRefundModal').modal('open');
     };
 
 
+    /**
+     * 支付信息TAB：删除 申请退款
+     */
+    deleteRefundApply = (item) => {
+        this.props.deleteRefundApply(item);
+    };
 
 
 
@@ -168,7 +173,7 @@ class OrderManagerDetail extends React.Component {
             getOrderInfo, getPaymentInfo, getLogInfo, getInvoiceList, getOperationList,
             changeInquiryConditionStartCity, changeInquiryConditionEndCity,
             changeInquiryConditionServiceType, changeInquiryConditionStatus,
-            saveOrderRemark
+            saveOrderRemark,saveOrderPaymentRemark
         } = this.props;
         return (
             <div>
@@ -543,7 +548,7 @@ class OrderManagerDetail extends React.Component {
                                     {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
                                     (orderManagerDetailReducer.orderInfo[0].payment_status === sysConst.ORDER_PAYMENT_STATUS[0].value ||
                                     orderManagerDetailReducer.orderInfo[0].payment_status === sysConst.ORDER_PAYMENT_STATUS[1].value) &&
-                                    <button type="button" className="btn confirm-btn" onClick={() => {this.showPaymentModal()}}>支付</button>}
+                                    <button type="button" className="btn confirm-btn" onClick={() => {this.showPaymentModal('new','')}}>支付</button>}
                                 </div>
                                 {/* 分割线 */}
                                 <div className="col s12 no-padding"><div className="col s12 margin-top5 divider bold-divider"/></div>
@@ -563,6 +568,9 @@ class OrderManagerDetail extends React.Component {
                                             {/* 支付状态 */}
                                             <div className="col s6 pink-font right-align">
                                                 {commonUtil.getJsonValue(sysConst.PAYMENT_STATUS, item.status)}
+                                                {/* 申请中的 可编辑 */}
+                                                {item.status === sysConst.PAYMENT_STATUS[0].value &&
+                                                <i className="mdi mdi-pencil margin-left20 pointer" onClick={() => {this.showPaymentModal('edit',item)}}/>}
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
@@ -577,7 +585,7 @@ class OrderManagerDetail extends React.Component {
                                         </div>
                                     </div>
                                 )
-                            })}
+                            },this)}
 
                             {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
                             {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
@@ -592,8 +600,8 @@ class OrderManagerDetail extends React.Component {
                             {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
                                 orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
                             <div className="row margin-top10 margin-left40 margin-right50 position-relative">
-                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
-                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>
+                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderPaymentRemark} onChange={this.changeOrderPaymentRemark}/>
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderPaymentRemark}/>
                             </div>}
 
                             {/* 第三部分：退款申请 */}
@@ -605,8 +613,8 @@ class OrderManagerDetail extends React.Component {
 
                                 {/* 追加支付 按钮 内部订单 显示 */}
                                 <div className="col s6 no-padding right-align">
-                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.orderPaymentArray.length > 0 &&
-                                    <button type="button" className="btn custom-btn" onClick={() => {this.showRefundModal()}}>退款</button>}
+                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.orderPaymentSize > 0 &&
+                                    <button type="button" className="btn custom-btn" onClick={() => {this.showRefundModal('new','')}}>退款</button>}
                                 </div>
                                 {/* 分割线 */}
                                 <div className="col s12 no-padding"><div className="col s12 margin-top5 divider bold-divider"/></div>
@@ -626,6 +634,12 @@ class OrderManagerDetail extends React.Component {
                                             {/* 支付状态 */}
                                             <div className="col s6 pink-font right-align">
                                                 {commonUtil.getJsonValue(sysConst.REFUND_STATUS, item.status)}
+                                                {/* 申请中的 可编辑 */}
+                                                {item.status === sysConst.REFUND_STATUS[2].value &&
+                                                <span>
+                                                    <i className="mdi mdi-pencil margin-left20 pointer" onClick={() => {this.showRefundModal('edit',item)}}/>
+                                                    <i className="mdi mdi-close margin-left10 pointer" onClick={() => {this.deleteRefundApply(item)}}/>
+                                                </span>}
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
@@ -642,7 +656,7 @@ class OrderManagerDetail extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                            <div className="col s12 right-align">申请原因：{item.mark}</div>
+                                            <div className="col s12 right-align">申请原因：{item.remark}</div>
                                         </div>
 
                                         {/* 已退款/已拒绝 状态：显示退款描述 */}
@@ -662,7 +676,7 @@ class OrderManagerDetail extends React.Component {
                                         </div>}
                                     </div>
                                 )
-                            })}
+                            }, this)}
 
 
 
@@ -752,7 +766,10 @@ class OrderManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12 padding-top15 padding-bottom15 grey-text">
                                     <div className="col s6">申请时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</div>
-                                    <div className="col s6 right-align">开票时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</div>
+                                    <div className="col s6 right-align">
+                                        {orderManagerDetailReducer.invoiceArray[0].status === sysConst.INVOICE_STATUS[1].value &&
+                                        <span>开票时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</span>}
+                                    </div>
                                 </div>
                             </div>}
 
@@ -769,7 +786,7 @@ class OrderManagerDetail extends React.Component {
                                             <div className="col s3">{item.start_city} - {item.end_city}</div>
                                             <div className="col s2">车辆：{formatUtil.formatNumber(item.car_num)}</div>
                                             <div className="col s2">支付金额：{formatUtil.formatNumber(item.total_trans_price + item.total_insure_price, 2)}</div>
-                                            <div className="col s3 no-padding">创建时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                            <div className="col s3 no-padding right-align">创建时间：{formatUtil.getDateTime(item.created_on)}</div>
                                         </div>
                                     )
                                 })}
@@ -852,11 +869,20 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(orderManagerDetailAction.getOrderPaymentList(ownProps.match.params.id));
         dispatch(orderManagerDetailAction.getOrderRefundList(ownProps.match.params.id));
     },
-    initNewPaymentModalData: (freight, insuranceFee, totalFee, leftPayment) => {
-        dispatch(newPaymentModalAction.initNewPaymentModal(ownProps.match.params.id, freight, insuranceFee, totalFee, leftPayment));
+    initNewPaymentModalData: (pageType, item, freight, insuranceFee, totalFee, leftPayment) => {
+        dispatch(newPaymentModalAction.initNewPaymentModal(ownProps.match.params.id, freight, insuranceFee, totalFee, leftPayment, pageType, item));
     },
-    initNewRefundModalData: () => {
-        dispatch(newRefundModalAction.initNewRefundModal(ownProps.match.params.id));
+    initNewRefundModalData: (pageType,item) => {
+        dispatch(newRefundModalAction.initNewRefundModal(ownProps.match.params.id, pageType, item));
+    },
+    deleteRefundApply: (item) => {
+        dispatch(orderManagerDetailAction.deleteRefundApply(item));
+    },
+    setOrderPaymentRemark: (value) => {
+        dispatch(OrderManagerDetailActionType.setOrderPaymentRemark(value))
+    },
+    saveOrderPaymentRemark: (value) => {
+        dispatch(orderManagerDetailAction.saveOrderPaymentRemark(ownProps.match.params.id))
     },
 
 

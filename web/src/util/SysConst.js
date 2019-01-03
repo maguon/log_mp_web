@@ -268,7 +268,7 @@ export const INVOICE_STATUS = [
     },
     {
         value: 1,
-        label: "已申请"
+        label: "已开票"
     }
 ];
 

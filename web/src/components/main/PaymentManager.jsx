@@ -4,10 +4,12 @@ import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {PaymentManagerActionType} from '../../actionTypes';
+import {ConfirmPaymentModal} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');
 const paymentManagerAction = require('../../actions/main/PaymentManagerAction');
 const paymentManagerDetailAction = require('../../actions/main/PaymentManagerDetailAction');
+const confirmPaymentModalAction = require('../../actions/modules/ConfirmPaymentModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -118,8 +120,14 @@ class PaymentManager extends React.Component {
     /**
      * 确认支付 按钮
      */
-    confirmPayment = (paymentId) => {
-        this.props.confirmPayment(paymentId);
+    confirmPayment = (type, paymentId, paymentMoney) => {
+        // 退款
+        if (type === sysConst.PAYMENT_TYPE[0].value) {
+            this.props.confirmPayment(paymentId);
+        } else {
+            this.props.initConfirmPaymentModalData(paymentId, paymentMoney);
+            $('#confirmPaymentModal').modal('open');
+        }
     };
 
     render() {
@@ -191,13 +199,13 @@ class PaymentManager extends React.Component {
                             </div>
 
                             <div className="input-field col s-percent-20 custom-input-field">
-                                <Input s={12} label="创建时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                <Input s={12} label="提交时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={paymentManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             <div className="input-field col s-percent-20 custom-input-field">
-                                <Input s={12} label="创建时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
+                                <Input s={12} label="提交时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
                                        value={paymentManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
@@ -237,7 +245,7 @@ class PaymentManager extends React.Component {
                                 <th>付款银行</th>
                                 <th>银行账号</th>
                                 <th>户名</th>
-                                <th>支付金额 ( 元 )</th>
+                                <th>金额(元)</th>
                                 <th>订单创建人</th>
                                 <th className="center">提交时间</th>
                                 <th className="center">状态</th>
@@ -261,7 +269,7 @@ class PaymentManager extends React.Component {
                                         <td className={`center ${item.status === 0 ? "pink-font" : ""}`}>{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS,item.status)}</td>
                                         <td className="operation right-align padding-right20 purple-font">
                                             {item.status === sysConst.PAYMENT_STATUS[0].value &&
-                                            <i className="mdi mdi-check-circle margin-right20 pointer" onClick={() => {this.confirmPayment(item.id)}}/>}
+                                            <i className="mdi mdi-check-circle margin-right20 pointer" onClick={() => {this.confirmPayment(item.type, item.id, item.total_fee)}}/>}
                                             <Link to={{pathname: '/payment/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
@@ -271,7 +279,7 @@ class PaymentManager extends React.Component {
                             },this)}
                             {paymentManagerReducer.paymentArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
-                                <td className="no-data-tr" colSpan="13">暂无数据</td>
+                                <td className="no-data-tr" colSpan="12">暂无数据</td>
                             </tr>}
                             </tbody>
                         </table>
@@ -291,6 +299,7 @@ class PaymentManager extends React.Component {
                         </div>
                     </div>
                 </div>
+                <ConfirmPaymentModal/>
             </div>
         )
     }
@@ -348,6 +357,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     confirmPayment: (paymentId) => {
         dispatch(paymentManagerDetailAction.confirmPayment(paymentId, 'payment'));
+    },
+    initConfirmPaymentModalData: (paymentId, paymentMoney) => {
+        dispatch(confirmPaymentModalAction.initConfirmPaymentModal('payment', paymentId, paymentMoney));
     }
 });
 

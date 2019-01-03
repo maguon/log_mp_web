@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
+import {ConfirmPaymentModal} from '../modules/index';
 
 const paymentManagerDetailAction = require('../../actions/main/PaymentManagerDetailAction');
+const confirmPaymentModalAction = require('../../actions/modules/ConfirmPaymentModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -24,8 +26,22 @@ class PaymentManagerDetail extends React.Component {
         this.props.getPaymentInfo();
     }
 
+    /**
+     * 确认支付 按钮
+     */
+    confirmPayment = (type, paymentId, paymentMoney) => {
+        let paymentInfo = this.props.paymentManagerDetailReducer.paymentInfo[0];
+        // 退款
+        if (paymentInfo.type === sysConst.PAYMENT_TYPE[0].value) {
+            this.props.confirmPayment();
+        } else {
+            this.props.initConfirmPaymentModalData(paymentInfo.total_fee);
+            $('#confirmPaymentModal').modal('open');
+        }
+    };
+
     render() {
-        const {paymentManagerDetailReducer, confirmPayment} = this.props;
+        const {paymentManagerDetailReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -76,7 +92,7 @@ class PaymentManagerDetail extends React.Component {
                                 </div>
 
                                 <div className="col s3 right-align">
-                                    支付金额：<span className="fz16 pink-font">{formatUtil.formatNumber(paymentManagerDetailReducer.paymentInfo[0].total_fee, 2)}</span> 元
+                                    金额：<span className="fz16 pink-font">{formatUtil.formatNumber(paymentManagerDetailReducer.paymentInfo[0].total_fee, 2)}</span> 元
                                 </div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15">
@@ -87,10 +103,11 @@ class PaymentManagerDetail extends React.Component {
                         </div>}
                     </div>
 
-                    {/** 待完善信息：内部订单时，增加车辆 按钮 */}
+                    {/** 支付状态：待确认时，确认支付 按钮 */}
                     {paymentManagerDetailReducer.paymentInfo.length > 0 && paymentManagerDetailReducer.paymentInfo[0].status === sysConst.PAYMENT_STATUS[0].value &&
                     <div className="row margin-top20 margin-bottom0 right-align">
-                        <button type="button" className="btn confirm-btn" onClick={confirmPayment}>确认支付</button>
+                        <button type="button" className="btn confirm-btn" onClick={() => {this.confirmPayment()}}>确认支付</button>
+                        <ConfirmPaymentModal/>
                     </div>}
 
                     {/* 下部：订单信息 */}
@@ -162,6 +179,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     confirmPayment: () => {
         dispatch(paymentManagerDetailAction.confirmPayment(ownProps.match.params.id,'payment_detail'));
+    },
+    initConfirmPaymentModalData: (paymentMoney) => {
+        dispatch(confirmPaymentModalAction.initConfirmPaymentModal('payment_detail', ownProps.match.params.id, paymentMoney));
     }
 });
 

@@ -656,7 +656,7 @@ class OrderManagerDetail extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                            <div className="col s12 right-align">申请原因：{item.remark}</div>
+                                            <div className="col s12 right-align">申请原因：{item.apply_reason}</div>
                                         </div>
 
                                         {/* 已退款/已拒绝 状态：显示退款描述 */}

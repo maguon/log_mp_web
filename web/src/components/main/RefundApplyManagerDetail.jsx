@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {ConfirmRefundModal, RefuseRefundModal} from '../modules/index';
+import {ConfirmRefundModal, RefuseRefundModal, OrderInfoModal} from '../modules/index';
 
+const commonAction = require('../../actions/main/CommonAction');
 const refundApplyManagerDetailAction = require('../../actions/main/RefundApplyManagerDetailAction');
 const refuseRefundModalAction = require('../../actions/modules/RefuseRefundModalAction');
 const confirmRefundModalAction = require('../../actions/modules/ConfirmRefundModalAction');
@@ -43,6 +44,15 @@ class PaymentManagerDetail extends React.Component {
         // 初期化数据
         this.props.initConfirmRefundModalData(this.props.refundApplyManagerDetailReducer.refundApplyInfo[0]);
         $('#confirmRefundModal').modal('open');
+    };
+
+    /**
+     * 订单详情 按钮
+     */
+    showOrderInfo = () => {
+        // 初期化数据
+        this.props.initOrderInfoModalData(this.props.refundApplyManagerDetailReducer.refundApplyInfo[0].order_id);
+        $('#orderInfoModal').modal('open');
     };
 
     render() {
@@ -166,10 +176,15 @@ class PaymentManagerDetail extends React.Component {
 
                     {/* 下部：订单信息 */}
                     <div className="row margin-top40">
-                        <div className="col s12 no-padding pink-font">
+                        <div className="col s6 no-padding pink-font">
                             <i className="mdi mdi-currency-cny fz20"/>
                             <span className="margin-left10 fz16">订单信息</span>
                         </div>
+                        {commonReducer.orderInfo.length > 0 &&
+                        <div className="col s6 no-padding right-align">
+                            <button type="button" className="btn custom-btn detail-btn" onClick={() => {this.showOrderInfo()}}>订单详情</button>
+                            <OrderInfoModal/>
+                        </div>}
                         {/* 分割线 */}
                         <div className="col s12 no-padding">
                             <div className="col s12 margin-top5 divider bold-divider"/>
@@ -263,6 +278,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     initConfirmRefundModalData: (refundApplyInfo) => {
         dispatch(confirmRefundModalAction.initConfirmRefundModal(refundApplyInfo));
+    },
+    initOrderInfoModalData: (orderId) => {
+        dispatch(commonAction.getOrderInfo(orderId));
+        dispatch(commonAction.getOrderCarList(orderId));
     }
 });
 

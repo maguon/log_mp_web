@@ -18,6 +18,8 @@ import * as SupplierSettingActionType  from './main/SupplierSettingActionType';
 import * as SupplierSettingDetailActionType  from './main/SupplierSettingDetailActionType';
 import * as LogSiteSettingActionType  from './main/LogSiteSettingActionType';
 import * as LogSiteSettingDetailActionType  from './main/LogSiteSettingDetailActionType';
+import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionType';
+import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
 
 import * as InquiryModalActionType  from './modules/InquiryModalActionType';
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
@@ -58,6 +60,8 @@ export  {
     SupplierSettingDetailActionType,
     LogSiteSettingActionType,
     LogSiteSettingDetailActionType,
+    RefundApplyManagerActionType,
+    RefundApplyManagerDetailActionType,
 
     InquiryModalActionType,
     InquiryInfoModalActionType,

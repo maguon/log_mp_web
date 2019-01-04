@@ -10,6 +10,8 @@ import {
     OrderManagerDetail,
     PaymentManager,
     PaymentManagerDetail,
+    RefundApplyManager,
+    RefundApplyManagerDetail,
     InquiryManager,
     InquiryManagerDetail,
     InvoiceManager,
@@ -99,6 +101,17 @@ const routes = [
         path: '/payment/:id',
         exact: true,
         component: PaymentManagerDetail
+    },
+    {
+        // 订单退款管理
+        path: "/refund",
+        exact: true,
+        component: RefundApplyManager
+    },
+    {
+        path: '/refund/:id',
+        exact: true,
+        component: RefundApplyManagerDetail
     },
 
     // 设置模块
@@ -208,6 +221,8 @@ class Container extends React.Component {
                                             <li><Link to="/order"><i className="mdi mdi-chevron-right"/>订单管理</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/payment"><i className="mdi mdi-chevron-right"/>支付管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/refund"><i className="mdi mdi-chevron-right"/>订单退款</Link></li>
                                         </ul>
                                     </div>
                                 </li>

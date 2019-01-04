@@ -19,6 +19,7 @@ export const getCityList = () => async (dispatch) => {
     }
 };
 
+// 检索订单基本信息
 export const getOrderInfo = (orderId) => async (dispatch) => {
     try {
         // 基本检索URL
@@ -59,6 +60,37 @@ export const getOrderCarList = (orderId) => async (dispatch) => {
             dispatch({type: CommonActionType.setTotalInsuranceFee, payload: totalInsuranceFee});
         } else if (res.success === false) {
             swal('获取订单车辆详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+// 检索订单 支付信息列表(已支付)
+export const getOrderPaymentList = (orderId) => async (dispatch) => {
+    try {
+        // 基本检索URL 已支付
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/payment?orderId=' + orderId + '&status=' + sysConst.PAYMENT_STATUS[1].value;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getOrderPaymentList, payload: res.result});
+            // 支付金额
+            let totalPayment = 0;
+            // 退款金额
+            let totalRefund = 0;
+            res.result.forEach((item) => {
+                // 退款
+                if (item.type === sysConst.PAYMENT_TYPE[0].value) {
+                    totalRefund = totalRefund + item.total_fee;
+                } else {
+                    totalPayment = totalPayment + item.total_fee;
+                }
+            });
+            dispatch({type: CommonActionType.setOrderTotalPayment, payload: totalPayment});
+            dispatch({type: CommonActionType.setOrderTotalRefund, payload: totalRefund});
+        } else if (res.success === false) {
+            swal('获取订单支付详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

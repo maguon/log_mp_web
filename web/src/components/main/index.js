@@ -5,6 +5,8 @@ export OrderManager from "./OrderManager";
 export OrderManagerDetail from "./OrderManagerDetail";
 export PaymentManager from "./PaymentManager";
 export PaymentManagerDetail from "./PaymentManagerDetail";
+export RefundApplyManager from "./RefundApplyManager";
+export RefundApplyManagerDetail from "./RefundApplyManagerDetail";
 export InquiryManager from "./InquiryManager";
 export InquiryManagerDetail from "./InquiryManagerDetail";
 export InvoiceManager from "./InvoiceManager";

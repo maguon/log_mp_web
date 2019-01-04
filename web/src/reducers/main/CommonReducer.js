@@ -1,4 +1,4 @@
-import {handleActions} from 'redux-actions';
+import {createAction, handleActions} from 'redux-actions';
 import {CommonActionType} from '../../actionTypes';
 
 const initialState = {
@@ -13,7 +13,14 @@ const initialState = {
     // 订单信息：总运费
     totalActFreight: 0,
     // 订单信息：总保费
-    totalInsuranceFee: 0
+    totalInsuranceFee: 0,
+
+    // 订单信息：已支付列表
+    orderPaymentArray: [],
+    // 订单信息：支付总金额
+    totalPayment: 0,
+    // 订单信息：退款总金额
+    totalRefund: 0
 };
 
 export default handleActions({
@@ -55,6 +62,24 @@ export default handleActions({
         return {
             ...state,
             totalInsuranceFee: action.payload
+        }
+    },
+    [CommonActionType.getOrderPaymentList]: (state, action) => {
+        return {
+            ...state,
+            orderPaymentArray: action.payload
+        }
+    },
+    [CommonActionType.setOrderTotalPayment]: (state, action) => {
+        return {
+            ...state,
+            totalPayment: action.payload
+        }
+    },
+    [CommonActionType.setOrderTotalRefund]: (state, action) => {
+        return {
+            ...state,
+            totalRefund: action.payload
         }
     }
 }, initialState)

@@ -21,6 +21,8 @@ import SupplierSettingReducer from './main/SupplierSettingReducer';
 import SupplierSettingDetailReducer from './main/SupplierSettingDetailReducer';
 import LogSiteSettingReducer from './main/LogSiteSettingReducer';
 import LogSiteSettingDetailReducer from './main/LogSiteSettingDetailReducer';
+import RefundApplyManagerReducer from './main/RefundApplyManagerReducer';
+import RefundApplyManagerDetailReducer from './main/RefundApplyManagerDetailReducer';
 
 import InquiryModalReducer from './modules/InquiryModalReducer';
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
@@ -62,6 +64,8 @@ export default combineReducers({
     SupplierSettingDetailReducer,
     LogSiteSettingReducer,
     LogSiteSettingDetailReducer,
+    RefundApplyManagerReducer,
+    RefundApplyManagerDetailReducer,
 
     InquiryModalReducer,
     InquiryInfoModalReducer,

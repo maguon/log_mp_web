@@ -656,14 +656,17 @@ class OrderManagerDetail extends React.Component {
                                             </div>
                                         </div>
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                            <div className="col s12 right-align">申请原因：{item.apply_reason}</div>
+                                            <div className="col s12">申请原因：{item.apply_reason}</div>
                                         </div>
 
                                         {/* 已退款/已拒绝 状态：显示退款描述 */}
                                         {(item.status === sysConst.REFUND_STATUS[0].value || item.status === sysConst.REFUND_STATUS[1].value) &&
                                         <div>
                                             <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                                <div className="col s12 right-align">退款描述：{item.refuse_reason}</div>
+                                                {item.status === sysConst.REFUND_STATUS[0].value &&
+                                                <div className="col s12">拒绝原因：{item.refuse_reason}</div>}
+                                                {item.status === sysConst.REFUND_STATUS[1].value &&
+                                                <div className="col s12">退款描述：{item.remark}</div>}
                                             </div>
                                             <div className="col s12 padding-top15 padding-bottom15">
                                                 <div className="col s6">

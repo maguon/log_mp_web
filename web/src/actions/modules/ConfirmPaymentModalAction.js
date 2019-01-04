@@ -31,11 +31,10 @@ export const confirmPayment = () => async (dispatch, getState) => {
         } else {
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/payment/' + paymentId + '/bankTransfer/paymentReview';
+                + '/payment/' + paymentId + '/paymentReview';
 
             const params = {
-                totalFee: paymentMoney,
-                status: sysConst.PAYMENT_STATUS[1].value
+                totalFee: paymentMoney
             };
 
             let res = await httpUtil.httpPut(url, params);

@@ -1,7 +1,6 @@
 import {RefundApplyManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
-const paymentManagerAction = require('../../actions/main/PaymentManagerAction');
 const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');

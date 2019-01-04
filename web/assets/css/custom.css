@@ -1060,7 +1060,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 616px;
 }
 
-#newRefundModal {
+#newRefundModal, #orderInfoModal {
     width: 1200px;
     max-height: 616px;
 }

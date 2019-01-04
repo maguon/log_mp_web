@@ -1,0 +1,62 @@
+page{
+background: #efeff4;
+}
+.wraper .listItems{
+    padding: 0 30rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+    border-top: 5rpx solid #f3f3f3;
+    font-size: 18px;
+}
+.wraper .listItems .listLeft{
+    float: left;
+}
+.wraper .listItems .listRight{
+    float: left;
+    margin-left: 20rpx;
+    margin-top: 40rpx;
+    width: 420rpx;
+}
+.text{
+    font-size: 18px;
+    padding: 0 30rpx;
+    height: 100rpx;
+    line-height: 100rpx;
+}
+.listItems{
+  background: white;
+}
+.prompt{
+  width: 100%;
+  font-size: 15px;
+  margin-top: 30px;
+  text-align: center;
+  color: #c8a0c8;
+}
+.listRight{
+ position: absolute;
+ right: 10px;
+ font-size: 15px;
+ color:#9b9898;
+ text-align: right;
+}
+.item{
+  padding: 0 30rpx;
+  height: 190rpx;
+  background: white;
+}
+
+
+.btn{
+  height: 40px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+  position: fixed;
+  bottom: 20px;
+  right: 2%;
+  left: 2%;
+}
+ .weui-cell_active{
+   background-color: #ececec;
+  }

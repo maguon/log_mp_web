@@ -2,28 +2,30 @@
   <view bindtap='selectButton' data-index='{{index}}' class='items' wx:for='{{orderState}}' wx:key='u' >
    <view hidden='{{!item.status}}'  class='item' style="opacity:{{item.number}}">
     <image class='item-img' src='{{item.url}}'></image>
-    <view hidden='{{item.hidden}}' class='item-point'></view>
+    <view hidden='{{!item.hidden}}' class='item-point'></view>
     <view class='item-text'>{{item.name}}</view>
      <view class='divline'></view>
    </view>
+   
+   <loading hidden="{{loadingHidden}}">加载中</loading>
 
     <view hidden='{{item.status}}'  class='item' style="opacity:{{item.number}}">
     <image class='item-img' src='{{item.url}}'></image>
-    <view hidden='{{item.hidden}}' class='item-point'></view>
+    <view hidden='{{!item.hidden}}' class='item-point'></view>
     <view class='item-text'>{{item.name}}</view>
    </view> 
  </view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
-<view wx:for="{{orderlist}}" wx:key='u'>
+<view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'>
 <view hidden='{{!item.state}}' bindtap='bindDetail' data-index='{{index}}' data-name='orderlist' class='content' hover-class="active">
 <view class='city'>
 <image class='city-img' src='../../images/car_04.png'></image>
 <view class='city-text'>{{item.start_city}}</view>
 <image class='city-arrow' src='../../images/arrow_02.png'></image>
 <view class='city-text'>{{item.end_city}}</view>
-<view hidden='{{!item.status}}' class='state'>已报价</view>
-<view hidden='{{item.status}}' class='state'>待报价</view>
+<!-- <view hidden='{{!item.status}}' class='state'>已报价</view> -->
+<view  class='state'>{{state[item.stay]}}</view>
 <image class='arrow'src='../../images/arrow.png'></image>
 </view>
 
@@ -32,12 +34,12 @@
 
 <view hidden='{{!item.status}}' class='stay-expect'>
 <view class='stay-text'>协商费用:</view>
-<view class='stay-num'>{{item.fee_price}}</view>
+<view class='stay-num'>{{item.total_trans_price}}</view>
 <view class='stay-text'>元</view>
 </view>
 <view hidden='{{item.status}}'class='stay-expect'>
 <view class='stay-text'>预计费用:</view>
-<view class='stay-num'>{{item.fee}}</view>
+<view class='stay-num01'>{{item.fee_price}}</view>
 <view class='stay-text'>元</view>
 </view>
 
@@ -46,3 +48,4 @@
 </view>
 </view>
 
+<view class='content-text' hidden='{{!flag}}'>～暂无内容请先进行询价</view>

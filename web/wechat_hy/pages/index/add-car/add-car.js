@@ -11,25 +11,23 @@ Page({
     endCity: '', 
     inquiryId:'',
     
+    
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
-    car_index:'',
+    car_index:0,
     service_type: '',
     valuation:'',
     distance:'',
     minusStatus: 'disabled', 
-    //系数
-    unitPrice: 1.2,
-    valuationRate: 0.05,
-    ratio: [0.9, 1.0, 1.1, 1.0, 1.1],
-    new_old: [0.8, 1.0],
-    fee: [500, 0],
+
     price:0,
     sumPrice: 0, 
     num: 1,
-    checked:0,
+    checked:1,
     insurance:1,
     name:'',
   },
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -38,11 +36,8 @@ Page({
     var inquiryId = e.inquiryId;
     var userId = app.globalData.userId;
 
-    this.setData({
-      name:e.name,
-    })
    //请求询价id相关数据
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId+ "/queryInquiry?inquiryId=" + inquiryId, (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId+ "/inquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
       this.setData({
         beginCity: res.data.result[0].start_city,
@@ -50,28 +45,44 @@ Page({
         distance: res.data.result[0].distance,
         service_type: res.data.result[0].service_type-1,
         inquiryId: inquiryId,
+        name: e.name,
       })
     })
   },
+
+
+
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
-    if (this.data.car_index != '' && this.data.valuation != ''){
-    // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
-    var feeNumber = Number((this.data.distance * this.data.unitPrice * this.data.ratio[this.data.car_index] * this.data.new_old[this.data.checked]) + (this.data.valuation * this.data.valuationRate) + this.data.fee[this.data.service_type]);
-    //保存2位小数
-    var fee = feeNumber.toFixed(2);
-    var sumPrice=fee*this.data.num;
-    console.log(fee)
-    this.setData({
-      price:fee, 
-      sumPrice: sumPrice.toFixed(2),  
+    //传递参数
+  var params={
+    distance: this.data.distance,
+    modelType: parseInt(this.data.car_index)+1,
+    oldCar: this.data.checked,
+    serviceType: parseInt(this.data.service_type)+1,
+    valuation: this.data.valuation,
+    insuranceFlag: this.data.insurance,
+    }
+    //计算费用
+    reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params,(err, res) => {
+      //计算价格
+      var price = this.money(res.data.result[0].trans + res.data.result[0].insure);
+      var sumPrice = this.money(price*this.data.num);
+      console.log(res)
+      this.setData({
+        price: price,
+        sumPrice:sumPrice,
+      })
     })
-   }
   },
+
+
+
+
+
   /**
    * 车辆估值
    */
@@ -90,6 +101,10 @@ Page({
     })
     this.onShow();
   },
+
+
+
+
   /**
    * 保存2位小数
    */
@@ -107,27 +122,34 @@ Page({
       this.setData({
         checked: 1,
       })
+      this.onShow();
     } else {
       this.setData({
         checked: 0,
       })
+      this.onShow();
     }
-    this.onShow();
+    
   },
+
+
+
   insuranceChange: function () {
     if (this.data.insurance == 1) {
       this.setData({
         insurance: 0,
-        valuationRate:0,
       })
     } else {
       this.setData({
         insurance: 1,
-        valuationRate:0.05,
       })
     }
     this.onShow();
   },
+
+
+
+
   /**
    *  点击减号 
    */
@@ -147,6 +169,10 @@ Page({
       minusStatus: minusStatus
     });
   },
+  
+
+
+
 
   /**
   *点击加号
@@ -166,6 +192,11 @@ Page({
     });
   },
 
+
+
+
+
+
   /**
   *输入框事件
    */
@@ -179,10 +210,17 @@ Page({
       sumPrice: price,
     });
   },
+
+
+
+
+
   /**
    * 点击确定
    */
   bindAdd:function(){
+    var userId = app.globalData.userId;
+    //判断用户输入
     if(this.data.car_index == ''){
       wx.showModal({
         content: '请选择车型',
@@ -199,74 +237,31 @@ Page({
       });
       return;
     }
-    var userId = app.globalData.userId;
+  //设置参数
     var params = {
-      inquiryId:this.data.inquiryId,
       vin: "",
       modelId: parseInt(this.data.car_index)+1,
       oldCar: this.data.checked,
       plan: this.data.valuation,
-      fee:this.data.sumPrice,
+      fee:this.data.price,
       carNum: this.data.num,
       safePrice: this.data.valuation * this.data.valuationRate,
       safeStatus: this.data.insurance,
     }
     //发送服务器
-    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiryCar", params, (err, res) => {
+    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + this.data.inquiryId+"/inquiryCar", params, (err, res) => {
       if(this.data.name == "budget"){
       wx.redirectTo({
         url: '/pages/index/budget/budget?inquiryId=' + this.data.inquiryId,
       })
       }else{
         wx.redirectTo({
-          url: '/pages/order/order-discuss/order-discuss?id=' + this.data.inquiryId,
+          url: '/pages/order/order-inquiry/order-inquiry?id=' + this.data.inquiryId,
         })
       }
     })
-    
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
   },
 
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  
 })

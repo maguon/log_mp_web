@@ -28,7 +28,7 @@
 <view class='stay-car'>数量:{{item.car_num}}</view>
 <view class='stay-expect'>
 <view class='stay-text'>预计费用:</view>
-<view class='stay-num'>{{item.fee}}</view>
+<view class='stay-num'>{{item.price}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>
@@ -44,6 +44,7 @@
 </view>
 </view>
 <view class='sum-line'></view>
+
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='dis-prompt'>
@@ -57,10 +58,11 @@
 </button>
 </view>
 </view>
-
+<view class='null'></view>
 <!--  ---------------------------------------------------------------------- -->
+<view class='butlist'>
     <button   bindtap="bindInquiry" class="btn-area" hover-class="weui-cell_active">客服协商</button>
 
        <button bindtap="Inquiry" class="btn-area area" hover-class="weui-cell_active">继续询价</button>
-
+</view>
 

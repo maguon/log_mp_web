@@ -1,0 +1,106 @@
+page{
+  background: #efeff4;
+}
+/* ---------------------------------------------------------------------- */
+.bank{
+  height: 100px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 2%;
+  background: #864c86;
+}
+.bank-msg{
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 15px;
+}
+.bank-img{
+  height: 25px;
+  width: 25px;
+  margin-left: 10px;
+}
+.bank-name{
+  font-size: 15px;
+  color: white;
+  margin-left: 10px;
+}
+.name{
+  font-size: 15px;
+  color: #cca8cc;
+  position: absolute;
+  right: 30px;
+}
+.bank-num{
+  width: 70%;
+  line-height: 50px;
+  font-size: 18px;
+  color: #cca8cc;
+  margin-left: 15px;
+}
+.bank-sure{
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  right: 30px;
+}
+
+/* ---------------------------------------------------------------------- */
+.add{
+  height: 40px;
+  width: 100%;
+  margin-top: 2px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 200px;
+}
+.add-img{
+height: 15px;
+width: 15px;
+color: #8a8a8a;
+margin-left: 15px;
+}
+.add-text{
+color: #8a8a8a;
+margin-left: 10px;
+font-size: 15px;
+}
+.arrow{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 5px;
+}
+
+.weui-cell_active{
+  background-color:#ececec;
+  }
+.active{
+  background-color:#a158a1;
+}
+  /* ---------------------------------------------------------------------- */
+   .btnGroup{
+    position: fixed;
+    bottom: 0px;
+     width: 100%;
+     height: 65px;
+     background: #efeff4;
+   }
+    .btn{
+    position: fixed;
+    bottom: 20px;
+    left: 5%;
+    height: 40px;
+    width: 90%;
+    background: #874086;
+    color: white;
+}
+  .weui-cell_active_btn{
+  background-color: #e6e6e6;
+  }

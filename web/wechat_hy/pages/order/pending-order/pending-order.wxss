@@ -62,8 +62,12 @@ page{
  background: white;
  display: flex;
  flex-direction: column;
-
-
+}
+.orderItem{
+  width: 100%;
+}
+.heigh{
+  height: 45px;
 }
 .city-arrow{
   width:18px;
@@ -74,6 +78,13 @@ page{
   height: 20px;
   position: absolute;
   right: 2px;
+}
+.car-arrow{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 2px;
+  margin-top: -20px;
 }
 .active{
 background-color:#ececec;
@@ -162,8 +173,26 @@ margin-left: 15px;
 }
 .note-input{
   font-size: 15px;
-   color: #c0bcbc;
+   color: #8a8a8a;
    width: 80%;
+ 
+}
+.stay-detail{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.tag{
+  width: 23px;
+  height: 20px;
+  border-radius: 50%;
+  color: white;
+  font-size: 12px;
+  background: red;
+  margin-left: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 /* ---------------------------------------------------------------------- */
 

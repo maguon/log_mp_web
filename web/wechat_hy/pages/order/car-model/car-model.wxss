@@ -162,3 +162,21 @@ font-size: 15px;
 .weui-cell_active{
   background-color:#ececec;
   }
+
+/* <!--  ---------------------------------------------------------------------- --> */
+.insurance{
+width: 100%;
+height: 50px;
+background: white;
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.insurance-text{
+margin-left: 10px;
+font-size: 15px;
+}
+.insurance-checked{
+  position: absolute;
+  right: 10px;
+}

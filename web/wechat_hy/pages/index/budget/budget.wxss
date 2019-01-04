@@ -167,12 +167,19 @@ margin-left: 15px;
 }
 
 /* ---------------------------------------------------------------------- */
+.butlist{
+  height: 130px;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+  background: #f7f5f7;
+}
 .btn-area{
   margin-top:30px; 
-  /* position: fixed;
+  position: fixed;
   left: 1%;
   right: 1%;
-  bottom: 80px; */
+  bottom: 80px;
   height: 45px;
   width: 90%;
   background: #7a387a;
@@ -183,8 +190,8 @@ button[disabled]{
   color:white !important;
 }
 .area{
-  /* position: fixed;
-  bottom: 20px; */
+  position: fixed;
+  bottom: 0px;
   margin-top:20px; 
   margin-bottom:20px; 
   background: white;
@@ -204,4 +211,9 @@ button[disabled]{
 
 .weui-cell_active{
   background-color:#ececec;
+  }
+  .null{
+    width: 100%;
+    height: 140px;
+    background: white;
   }

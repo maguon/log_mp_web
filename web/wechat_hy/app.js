@@ -1,17 +1,22 @@
 const config = require('config.js');
 const reqUtil = require('utils/ReqUtil.js');
 //app.js
+
 App({
   //设置全局变量
   globalData: {
     userInfo: null,
     openid: '',
-    userId: 0,
+    userId: 10004,
     accessToken: '',
     session_key: '',
     trainBeginCity: '',
-    trainEndCity: ''
+    trainEndCity: '',
   },
+
+
+
+
 
   /**
    * 异步执行登录信息加载

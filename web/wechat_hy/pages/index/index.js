@@ -6,7 +6,6 @@ const reqUtil = require('../../utils/ReqUtil.js')
 
 Page({
   data: {
-
     //选择城市
     beginCity:'',
     endCity:'', 
@@ -16,12 +15,12 @@ Page({
      //系数相关
     array:["上门服务","当地自提"],
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车","大型商务车"],
-    unitPrice: 1.2,
-    valuationRate: 0.05,
-    ratio: [0.9,1.0,1.1,1.0,1.1],
-    new_old: [0.8,1.0],
-    fee:[500,0],
-    checked: 0,
+    // unitPrice: 1.2,
+    // valuationRate: 0.05,
+    // ratio: [0.9,1.0,1.1,1.0,1.1],
+    // new_old: [0.8,1.0],
+    // fee:[500,0],
+    checked: 1,
     insurance:1,
     index:'',
     car_index:'',
@@ -31,12 +30,16 @@ Page({
     //显示控制
     loadingHidden: false,
   },
+
+
   /**
    * 加载页面执行
    */
   onLoad: function () {
     console.log(app.globalData.userId)
   },
+
+
 
 /**
  * 页面执行
@@ -76,6 +79,10 @@ Page({
       })
     }
   },
+
+
+
+
     /**
    * 选择开始城市
    */
@@ -84,6 +91,10 @@ Page({
       url: '/pages/index/citys/citys?cityType=begin',
     })
   },
+
+
+
+
   /**
    * 选择结束城市
    */
@@ -91,8 +102,10 @@ Page({
     wx.navigateTo({
       url: '/pages/index/citys/citys?cityType=end',
     })
-
   },
+
+
+
   /**
    * 服务方式
    */
@@ -101,8 +114,11 @@ Page({
        index:e.detail.value,
        service_hidden:true,
     })
-  
   },
+
+
+
+
   /**
    * 车型
    */
@@ -111,8 +127,11 @@ Page({
       car_index: e.detail.value,
       models_hidden:true,
     })
-    
   },
+
+
+
+
   /**
    * 车辆估值
    */
@@ -120,8 +139,11 @@ Page({
     this.setData({
       valuation: e.detail.value,
     })
-
   },
+
+
+
+
   /**
    * 选择新车
    */
@@ -135,8 +157,11 @@ Page({
         checked: 0,
       })
     }
-   
   },
+
+
+
+
    insuranceChange: function () {
     if (this.data.insurance == 1) {
       this.setData({
@@ -149,9 +174,11 @@ Page({
         valuationRate:0.05,
       })
     }
-
   },
  
+
+
+
   /**
    * 询价
    */
@@ -215,36 +242,25 @@ Page({
               that.setData({
                 distance: res.data.result[0].distance,
               })
-              //计算运输费用
-              // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 估值*估值比率  + 服务方式费用
-              var feeNumber = Number((that.data.distance * that.data.unitPrice * that.data.ratio[that.data.car_index] * that.data.new_old[that.data.checked]) + (that.data.valuation * that.data.valuationRate) + that.data.fee[that.data.index]);
-              //保存2位小数
-              var fee = feeNumber.toFixed(2);
-              console.log(fee)
-
-              console.log(this.data.distance)
-              console.log(this.data.ratio[this.data.car_index])
-              console.log(this.data.new_old[this.data.checked])
-              console.log(this.data.valuationRate)
-              console.log(this.data.fee[this.data.index])
-
+              //设置参数
               var params = {
                 routeId: res.data.result[0].route_id,
                 serviceType: parseInt(that.data.index) + 1,
-                modelId: parseInt(that.data.car_index) + 1,
-                oldCar: that.data.checked,
-                carNum: 1,
+                modelId: [parseInt(that.data.car_index) + 1],
+                oldCar: [that.data.checked],
+                carNum: [1],
                 inquiryName: "",
-                plan: that.data.valuation,
-                fee: fee,
+                plan: [that.data.valuation],                
+                startId: app.globalData.trainBeginCity,
+                endId: app.globalData.trainEndCity,
                 startCity: that.data.beginCity,
                 endCity:that.data.endCity,
-                safeStatus:that.data.insurance,
-                safePrice: that.data.valuation*that.data.valuationRate,
+                safeStatus:[that.data.insurance],
+                distance: that.data.distance,
               }
               //发送服务器
-              reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "//inquiry", params, (err, res) => {
-                wx.redirectTo({
+              reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiry", params, (err, res) => {
+                wx.navigateTo({
                   url: '/pages/index/budget/budget?inquiryId=' + res.data.result[0].inquiryId,
                 })
               })
@@ -281,6 +297,10 @@ Page({
     
      }
   },
+
+
+
+
   /**
    * 联系客服
    */
@@ -295,4 +315,6 @@ Page({
       }
     })
   },
+
+  
 })

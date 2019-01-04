@@ -1,0 +1,23 @@
+
+<view class="wraper">
+
+<view class="listItems">
+<text class="listLeft">收车人</text>
+<input class="listRight" type="text" bindinput='addName' placeholder='请输入收货人姓名' value="{{addressList.user_name}}" name="consignee"/>
+</view>
+
+<view class="listItems">
+<text class="listLeft">手机号</text>
+<input class="listRight" type="number" bindinput='userPhone' placeholder='请输入收货人电话' value="{{addressList.phone}}" name="mobile"/>
+</view>
+<text class="text">收货地址</text>
+<view class="item">
+<text class="listLeft"></text>
+<textarea  class="textarea" type="text" bindinput='addRess' placeholder='请输入收货人详细地址' value="{{addressList.detail_address}}" name="address"> </textarea>
+</view>
+
+<view class="btnGroup">
+ <button bindtap='saveAddress' class="btn" hover-class="weui-cell_active">{{add}}</button>
+</view>
+</view>
+

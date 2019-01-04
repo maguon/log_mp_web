@@ -1,0 +1,129 @@
+page{
+  background: #efeff4;
+}
+.transfer{
+ height: 350px;
+ width: 96%;
+ background: white;
+ margin-top: 15px;
+ margin-left: 2%;
+ margin-right:2%;
+}
+.transfer-head{
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.transfer-text{
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-left: 15px;
+}
+.bankname{
+  margin-left: 2px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.transfer-num{
+  margin-left: 15px;
+  font-size: 26px;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 15px 15px 15px;
+}
+.payee-msg{
+  height: 100px;
+}
+.payee{
+position: absolute;
+right: 25px;
+font-size: 18px;
+font-weight: bold;
+margin-bottom: 15px;
+}
+.div-line{
+  border: 1px solid #efeff4;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+/* ---------------------------------------------------------------------- */
+.cost{
+height: 80px;
+display: flex;
+flex-direction: row;
+align-items: center;
+font-size: 18px;
+margin-left: 15px;
+
+}
+
+.cost-num{
+font-size: 25px;
+position: absolute;
+right: 30px;
+text-align: right;
+}
+.prompt{
+  height: 60px;
+  margin-left: 15px;
+  margin-right: 15px;
+  background: #f2f2f2;
+  border-radius: 2%;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 60px;
+  color: #8a8a8a;
+  font-size: 15px;
+}
+/* ---------------------------------------------------------------------- */
+.bankcard{
+  margin-top: 10px;
+  height: 50px;
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.card-img{
+  width: 25px;
+  height: 25px;
+  margin-left: 15px;
+}
+.card-text{
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-left: 5px;
+}
+.card-text01{
+  font-size: 15px;
+  margin-left: 15px;
+}
+.arrow{
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  right: 5px;
+}
+.weui-cell_active{
+  background-color:#ececec;
+  }
+  /* ---------------------------------------------------------------------- */
+  .btn-area{
+  position: fixed;
+  left: 1%;
+  right: 1%;
+  bottom: 20px;
+  height: 45px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+}
+button[disabled]{
+  background: #c295c1;
+}
+.weui-cell_active{
+  background-color:#ececec;
+  }

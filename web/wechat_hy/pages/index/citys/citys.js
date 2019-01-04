@@ -1,6 +1,7 @@
 const app = getApp()
 const config = require('../../../config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
+
 Page({
   /**
  * 页面的初始数据
@@ -11,10 +12,12 @@ Page({
     cityType: 'begin',
     cityResults: null,
     cityAZ: [{ city_name: 'A' }, { city_name: 'B' }, { city_name: 'C' }, { city_name: 'D' }, { city_name: 'E' }, { city_name: 'F' }, { city_name: 'G' }, { city_name: 'H' }, { city_name: 'J' }, { city_name: 'K' }, { city_name: 'L' }, { city_name: 'M' }, { city_name: 'N' }, { city_name: 'P' }, { city_name: 'Q' }, { city_name: 'R' }, { city_name: 'S' }, { city_name: 'T' }, { city_name: 'W' }, { city_name: 'X' }, { city_name: 'Y' }, { city_name: 'Z' },],
-
+    
     citys: [],
-
   },
+
+
+
 
   /**
   * 生命周期函数--监听页面加载
@@ -35,6 +38,10 @@ Page({
     }
   })
   },
+
+
+
+
   bindAZ: function (e) {
     var currentCityName = e.currentTarget.dataset.id
     var that = this;
@@ -64,21 +71,18 @@ Page({
         }
       })
     }
-
-
   },
+
+
+
+
   onPageScroll: function (e) { // 获取滚动条当前位置
     this.setData({
       scrollNow: e.scrollTop
     })
   },
 
-  /**
-  * 生命周期函数--监听页面初次渲染完成
-  */
-  onReady: function () {
-
-  },
+ 
   citySelected: function (e) {
     var cityNameTemp = e.currentTarget.dataset.cityname
     console.log(e.currentTarget)
@@ -131,6 +135,10 @@ Page({
       cityResults: cityResultsTemp
     })
   },
+
+
+
+
   /**
   * 生命周期函数--监听页面显示
   */
@@ -138,19 +146,7 @@ Page({
     console.log(this.data.cityResults) 
   },
 
-  /**
-  * 生命周期函数--监听页面隐藏
-  */
-  onHide: function () {
 
-  },
-
-  /**
-  * 生命周期函数--监听页面卸载
-  */
-  onUnload: function () {
-
-  },
 
   /**
   * 页面相关事件处理函数--监听用户下拉动作
@@ -162,17 +158,5 @@ Page({
 
   },
 
-  /**
-  * 页面上拉触底事件的处理函数
-  */
-  onReachBottom: function () {
 
-  },
-
-  /**
-  * 用户点击右上角分享
-  */
-  onShareAppMessage: function () {
-
-  }, 
 })

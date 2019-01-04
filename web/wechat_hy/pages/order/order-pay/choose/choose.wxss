@@ -1,0 +1,80 @@
+page{
+    background: #f8f6f8;
+}
+.pay{
+margin-top: 5px;
+width: 100%;
+height: 40px;
+background: white;
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.pay-text{
+margin-left: 10px;
+font-size: 15px;
+}
+.pay-right{
+display: flex;
+flex-direction: row;
+position: absolute;
+right: 15px;
+}
+.pay-num{
+color: red;
+font-size: 18px;
+}
+.yuan{
+  font-size: 15px;
+  color: #8a8a8a;
+  padding-top: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+.choose-head{
+  margin-left: 10px;
+  font-size: 15px;
+  color: #8a8a8a;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+}
+.wxpay{
+  height: 50px;
+  width: 100%;
+  margin-bottom: 2px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: white;
+}
+.wxpay-text{
+  font-size: 15px;
+  margin-left: 15px;
+}
+.wximg{
+  height: 21px;
+  width: 23px;
+  margin-left: 15px;
+}
+.choose-img{
+  position: absolute;
+  right: 15px;
+  padding-top: 5px;
+}
+/* ---------------------------------------------------------------------- */
+
+.btn-area{
+  position: fixed;
+  left: 1%;
+  right: 1%;
+  bottom: 20px;
+  height: 45px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+}
+
+.weui-cell_active{
+  background-color:#ececec;
+  }

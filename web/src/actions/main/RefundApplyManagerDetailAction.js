@@ -28,31 +28,3 @@ export const getRefundApplyInfo = (id) => async (dispatch) => {
         swal('操作失败', err.message, 'error');
     }
 };
-
-export const confirmPayment = (paymentId, pageType) => async (dispatch) => {
-    swal({
-        title: "确定该支付已到账？",
-        text: "",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#724278',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-    }).then(async function (isConfirm) {
-        if (isConfirm && isConfirm.value === true) {
-            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/payment/' + paymentId + '/bankStatus/' + sysConst.PAYMENT_STATUS[1].value;
-            const res = await httpUtil.httpPut(url, {});
-            if (res.success === true) {
-                swal("修改成功", "", "success");
-                if (pageType === 'payment') {
-                    dispatch(paymentManagerAction.getPaymentList());
-                } else {
-                    dispatch(getPaymentInfo(paymentId));
-                }
-            } else if (res.success === false) {
-                swal('修改失败', res.msg, 'warning');
-            }
-        }
-    });
-};

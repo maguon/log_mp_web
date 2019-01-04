@@ -1,22 +1,24 @@
 
 <view class='dis-head'>
-<view class='head-city'>大连</view>
+<view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/arrow_02.png'></image>
-<view class='head-city'>沈阳</view>
+<view class='head-city'>{{orderlist.end_city}}</view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
+<picker bindchange="bindModels"  value="{{car_index}}" range="{{carModel}}">
 <view class='dis-way' hover-class="active">
 <view class='way-text'>选择车型</view>
-<view class='way-right'>标准车型</view>
+<view class='way-right'>{{carModel[car_index]}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
+ </picker>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='note'>
 <view class='note-text'>VIN</view>
-<input class='note-input' placeholder='填写车辆18位识别码' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<input bindinput='noteInput'  class='note-input' placeholder='填写车辆17位识别码' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
 
@@ -24,7 +26,7 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  <input bindinput='bindValuation' type='number' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
   </view>
 
   <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
@@ -35,8 +37,14 @@
  
   </view>
 <view class='dis-line'></view>
+ <!-- 车辆保险 ---------------------------------------------------------------------- -->
+<view class="insurance">
+<view class="insurance-text">车辆保险</view>
+<switch bindtap='insuranceChange' class='insurance-checked' checked='{{insurance}}'></switch>
+</view>
+ <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-  <button hidden='{{!hidden}}'  bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
+  <button hidden='{{!hidden}}'  bindtap="bindtap" class="btn-area" hover-class="weui-cell_active">确定</button>
 
    <view hidden='{{hidden}}' >
    <button   bindtap="bindtap" class="btn-area button" hover-class="weui-cell_active">确定</button>

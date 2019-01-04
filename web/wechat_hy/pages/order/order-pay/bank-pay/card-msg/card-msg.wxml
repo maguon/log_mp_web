@@ -1,0 +1,22 @@
+
+<view class="wraper">
+
+<view class="listItems">
+<text class="listLeft">持卡人</text>
+<input bindblur='addName' class="listRight" type="text" bindinput='addName' placeholder='请输入持卡人姓名' value="{{addressList.ship_name}}" name="consignee"/>
+</view>
+
+<view class="listItems">
+<text class="listLeft">银行名称</text>
+<input bindblur='bankName' class="listRight" type="number" bindinput='userPhone' placeholder='请输入银行名称' value="{{addressList.ship_phone}}" name="mobile"/>
+</view>
+
+<view class="listItems">
+<text class="listLeft">银行卡号</text>
+<input bindblur='addNumber' type='number' class="listRight" type="number" bindinput='userPhone' placeholder='请输入银行卡号' value="{{addressList.ship_phone}}" name="mobile"/>
+</view>
+
+<view class='prompt'>此信息只作为转账审核凭证，不具线上转账功能</view>
+ <button bindtap='addCard' class="btn" hover-class="weui-cell_active">确定</button>
+
+</view>

@@ -1,7 +1,9 @@
 {
   "pages":[
- 
+    "pages/order/order-pay/bank-pay/end-pay/end-pay",
+    "pages/order/order-pay/bank-pay/bank-pay",
     "pages/login/login",
+
     "pages/index/index",
     "pages/index/submit/submit",
     "pages/index/change-car/change-car",
@@ -11,16 +13,28 @@
     "pages/index/citys/citys",
    
     "pages/order/order",
-    "pages/order/order-discuss/order-discuss",
+    "pages/order/order-inquiry/order-inquiry",
     "pages/order/pending-order/pending-order",
+    "pages/order/delivery-order/delivery-order",
+    "pages/order/order-pay/choose/choose",
+    "pages/order/order-pay/weixin-pay/weixin-pay",
+  
+    "pages/order/order-pay/bank-pay/card-msg/card-msg",
+    "pages/order/order-pay/bank-pay/add-card/add-card",
+    "pages/order/car-msg/car-msg",
+    "pages/order/order-pay/order-pay",
     "pages/order/transport/transport",
-    "pages/order/models/models",
+    "pages/order/car-model/car-model",
     "pages/order/submit/submit",
   
     "pages/about/about",
 
     "pages/user/user",
-    "pages/user/bind/bind"
+    "pages/user/bind/bind",
+    "pages/user/addressList/addressList",
+    "pages/user/address/address"
+   
+  
   ],
   "window":{
     "backgroundTextStyle":"light",

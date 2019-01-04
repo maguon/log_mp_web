@@ -2,22 +2,24 @@
 const app = getApp()
 const config = require('../../../config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
-Page({
 
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-    orderlist:[],
-    carlist:[],
-    service:["上门服务","当地自提"],
+    orderlist: [],
+    carlist: [],
+    service: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
-    service_type:'',
-    sumFee:'',
-    carCount:'',
-    inquiryId:'',
-    index:'',
+    service_type: '',
+    sumFee: '',
+    carCount: '',
+    inquiryId: '',
   },
+
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -25,47 +27,47 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-    var inquiryId=e.id;
-    this.setData({
-      index:e.index,
-    })
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/queryInquiry?inquiryId=" + inquiryId, (err, res) => {
+    var inquiryId = e.id;
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
       res.data.result[0].fee_price = this.decimal(res.data.result[0].fee_price);
-        this.setData({
-          orderlist: res.data.result[0],
-          service_type: res.data.result[0].service_type-1,
-          inquiryId: inquiryId,
-        })
+      this.setData({
+        orderlist: res.data.result[0],
+        service_type: res.data.result[0].service_type - 1,
+        inquiryId: inquiryId,
+      })
     })
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId+ "/inquiryCar?inquiryId=" + inquiryId, (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
-       var index=this.data.index;
       var sum = 0;
-      var count=0;
+      var count = 0;
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 1) {
-          sum += res.data.result[i].fee;
+          //设置单价
+          res.data.result[i].price = this.decimal((res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num);
+          //设置总价
+          sum += (res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num;
+          ////车辆数
           count += res.data.result[i].car_num;
-         
         }
       }
-      
-      res.data.result[0].fee = this.decimal(res.data.result[0].fee);
+      //更新显示
       this.setData({
         carlist: res.data.result,
-        sumFee: sum.toFixed(2),
-        carCount:count,
+        sumFee: this.decimal(sum),
+        carCount: count,
       })
-      console.log(res.data.result[index])
     })
-
   },
+
+
+
   /**
    * 复制成功
    */
-  textPaste:function() {
+  textPaste: function () {
     wx.showToast({
       title: '复制成功',
     })
@@ -74,26 +76,17 @@ Page({
       success: function (res) {
         wx.getClipboardData({
           //这个api是把拿到的数据放到电脑系统中的
-          success: function(res) {
+          success: function (res) {
             console.log(res.data) // data
           }
         })
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
 
-  },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
 
-  },
+
   /**
      * 保留小数
      */
@@ -103,6 +96,11 @@ Page({
     var money = total_price.toFixed(2);
     return money;
   },
+
+
+
+
+
   /**
  * 联系客服
  */
@@ -117,6 +115,10 @@ Page({
       }
     })
   },
+
+
+
+
   /**
    * 点击修改
    */
@@ -125,38 +127,53 @@ Page({
     var id = e.currentTarget.dataset.id;
     var name = e.currentTarget.dataset.name;
     wx.navigateTo({
-      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId+"&name="+name,
+      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId + "&name=" + name,
     })
   },
+
+
+
+
 
   /**
     * 添加车辆
     */
   addCar: function (e) {
-    var name= e.currentTarget.dataset.name;
+    var name = e.currentTarget.dataset.name;
     console.log(e)
     wx.navigateTo({
-      url: "/pages/index/add-car/add-car?inquiryId=" + this.data.inquiryId+"&name="+name,
+      url: "/pages/index/add-car/add-car?inquiryId=" + this.data.inquiryId + "&name=" + name,
     })
   },
+
+
+
+
   /**
    * 取消订单
    */
-  cancel:function(){
-    var inquiryId=this.data.inquiryId;
-    var userId=app.globalData.userId;
+  cancel: function () {
+    var inquiryId = this.data.inquiryId;
+    var userId = app.globalData.userId;
+    wx.showModal({
+      content: '确定要取消订单吗？',
+      confirmColor: "#a744a7",
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + inquiryId + "/cancel", "", (err, res) => {
+            wx.navigateBack({})
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    });
 
-    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + inquiryId +"/cancel","", (err, res) => { 
-      wx.navigateBack({ })
-    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
-  },
+
 
   /**
    * 生命周期函数--监听页面卸载
@@ -167,24 +184,5 @@ Page({
     })
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
 
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -32,7 +32,7 @@ bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
 <view class='stay-car'>数量:{{item.car_num}}</view>
 <view class='stay-expect'>
 <view class='stay-text'>预计费用:</view>
-<view class='stay-num'>{{item.fee}}</view>
+<view class='stay-num'>{{item.price}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>
@@ -67,7 +67,7 @@ bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
  <view hidden='{{!orderlist.status}}' class='box'>
  <view class='box-text'>协商费用</view>
  <view class='stay-expect'>
- <view class='stay-num'>{{orderlist.fee_price}}</view>
+ <view class='stay-num'>{{orderlist.total_trans_price}}</view>
  <view class='stay-text'>元</view>
  </view>
  </view>
@@ -97,8 +97,8 @@ bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
 
 <!--  ---------------------------------------------------------------------- -->
 
-<view bindtap='cancel' class='dis-cancel'>
-<view class='cancel' hover-class="cancel_btn">
+<view class='dis-cancel'>
+<view  bindtap='cancel' class='cancel' hover-class="cancel_btn">
 <view class='button' >取消订单</view>
 </view>
 

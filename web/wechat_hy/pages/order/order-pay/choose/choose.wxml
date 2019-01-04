@@ -1,0 +1,33 @@
+<view class='pay'>
+<view class='pay-text'>支付金额</view>
+<view class='pay-right'>
+<view class='pay-num'>{{fee}}</view>
+<view class='yuan'>元</view>
+</view>
+</view>
+
+
+<view class='choose'>
+<view class='choose-head'>选择支付方式</view>
+<view class='wxpay'>
+<image class='wximg' src='../../../../images/wepay.png'></image>
+<view class='wxpay-text'>微信支付</view>
+<view bindtap='checkboxChange' data-name="weixin" class='choose-img'>
+  <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{!checked}}"></icon>
+  <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{checked}}"></icon>
+  </view>
+</view>
+
+
+<view class='wxpay'>
+<image class='wximg'  src='../../../../images/bank_card02.png'></image>
+<view class='wxpay-text'>银行转账</view>
+<view bindtap='checkboxChange' data-name="bank" class='choose-img'>
+  <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
+  <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
+  </view>
+</view>
+</view>
+
+ <button   bindtap="bindtap" class="btn-area" hover-class="weui-cell_active">确定</button>
+

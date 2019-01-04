@@ -1,0 +1,31 @@
+<view class='transfer'>
+<view class='transfer-head'>
+<view class='transfer-text'>请将运费汇款至</view>
+<view class='bankname'>中国银行</view>
+</view>
+<view class='div-line'></view>
+<view class='payee-msg'>
+<view class='transfer-num'>6225 34567 8976 658</view>
+<view class='payee'>收款人:李建国</view>
+</view>
+<view class='div-line'></view>
+
+<view  class='cost'>
+<view>支付金额(元)</view>
+<input bindinput='costNum' class='cost-num' placeholder='{{totalPrice}}'></input>
+</view>
+<view class='div-line'></view>
+
+<view class='prompt'>运费到账后，我们会尽快为您安排发运</view>
+</view>
+
+
+<view bindtap='chooseBank' class='bankcard' hover-class="weui-cell_active">
+<image class='card-img' src='../../../../images/bank_card02.png'></image>
+<view hidden='{{hidden}}' class='card-text'>选择/添加银行卡</view>
+<view hidden='{{!hidden}}' class='card-text01'> {{bankMsg.bank}} {{bankMsg.bank_code}} {{bankMsg.account_name}}</view>
+<image class='arrow' src='../../../../images/arrow.png'></image>
+</view>
+
+<button   bindtap="bindtap" disabled='{{disabled}}' class="btn-area" hover-class="weui-cell_active">去付款</button>
+

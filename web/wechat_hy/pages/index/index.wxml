@@ -46,7 +46,7 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input bindinput='bindValuation' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  <input bindinput='bindValuation' type='number' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
   </view>
 
   <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">

@@ -1,0 +1,77 @@
+page{
+   background: #f8f6f8;
+}
+.carMsg{
+ width: 100%;
+ height: 40px;
+ display: flex;
+ flex-direction: row;
+ align-items: center;
+}
+.carMsg-text{
+  font-size: 15px;
+  color: #504e4e;
+  margin-left: 10px;
+}
+.carMsg-num{
+  position: absolute;
+  right: 10px;
+  font-size: 15px;
+  color: #504e4e;
+}
+/* ---------------------------------------------------------------------- */
+.items{
+ width: 100%;
+ height: 80px;
+ background: white;
+ margin-bottom: 5px;
+}
+.item{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-vin{
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-left: 5px;
+}
+.item-v{
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-left: 40px;
+}
+.item-model{
+width: 90px;
+position: absolute;
+right: 10px;
+display: flex;
+flex-direction: row;
+}
+.item-car{
+  font-size: 15px;
+  color: #8a8a8a;
+   margin-left: 5px;
+}
+.item-old{
+  width: 20px;
+  height: 20px;
+}
+.car-img{
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+}
+.item-fee{
+ position: absolute;
+ right: 10px;
+ display: flex;
+ flex-direction: row;
+}
+.item-money{
+  color: #d43286;
+  font-size: 20px;
+  margin-top: -5px;
+}

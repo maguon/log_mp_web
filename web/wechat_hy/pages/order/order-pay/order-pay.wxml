@@ -1,0 +1,65 @@
+<view class='container'>
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>{{orderlist.start_city}}</view>
+<image class='head-staycar' src='../../../images/transport.png'></image>
+<view class='head-city'>{{orderlist.end_city}}</view>
+<image bindtap='bindCustomer' class='head-customer' src='../../../images/customer.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view bindtap='service' class='dis-way' hover-class="active">
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>{{service[orderlist.service_type-1]}}</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view bindtap='carMsg' class='dis-content' hover-class="active">
+<view class='city'>
+<image class='city-img' src='../../../images/car_02.png'></image>
+<view class='city-text'>运送车辆</view>
+<view class='stay-text01'>{{orderlist.car_num}}</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+</view>
+<view class='dis-line'></view>
+
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-sum'>
+<image class='city-img' src='../../../images/money.png' style=' width:25px; height: 25px;'></image>
+<view class='sum-text'>协商费用</view>
+<view class='stay-expect'>
+<view class='stay-num '>{{orderlist.total_insure_price}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>留言</view>
+<view class='note-right'>{{orderlist.mark}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-orderid'>
+<view class='orderid'>
+<view class='orderid-text'>订单编号：{{orderlist.id}}</view>
+<button bindtap='textPaste' class='orderid-button'>
+<view  class='button-text'>复制</view>
+</button>
+</view>
+<view class='create-time'>创建时间：{{orderlist.created_on}}</view>
+<view class='create-time'>协商时间：{{orderlist.updated_on}}</view>
+</view>
+<view class='heigh'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='dis-cancel' >
+<button class='cancel' bindtap='cancel' hover-class="cancel_btn" >取消订单</button>
+<button bindtap='payment' disabled='{{false}}' class='submit' hover-class="cancel_btn">付款</button>
+</view>
+
+</view>

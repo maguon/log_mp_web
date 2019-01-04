@@ -38,6 +38,8 @@ import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionTy
 import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
 import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalActionType';
 import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalActionType';
+import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
+import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
 
 export  {
     LoginActionType,
@@ -79,5 +81,7 @@ export  {
     CancelOrderModalActionType,
     EditUserAddressModalActionType,
     EditOrderCarModalActionType,
-    ConfirmPaymentModalActionType
+    ConfirmPaymentModalActionType,
+    ConfirmRefundModalActionType,
+    RefuseRefundModalActionType
 }

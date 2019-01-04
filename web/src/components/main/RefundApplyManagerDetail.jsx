@@ -1,10 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {ConfirmPaymentModal} from '../modules/index';
+import {ConfirmRefundModal, RefuseRefundModal} from '../modules/index';
 
 const refundApplyManagerDetailAction = require('../../actions/main/RefundApplyManagerDetailAction');
-const confirmPaymentModalAction = require('../../actions/modules/ConfirmPaymentModalAction');
+const refuseRefundModalAction = require('../../actions/modules/RefuseRefundModalAction');
+const confirmRefundModalAction = require('../../actions/modules/ConfirmRefundModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -27,17 +28,21 @@ class PaymentManagerDetail extends React.Component {
     }
 
     /**
-     * 确认支付 按钮
+     * 拒绝退款 按钮
      */
-    confirmPayment = (type, paymentId, paymentMoney) => {
-        let refundApplyInfo = this.props.refundApplyManagerDetailReducer.refundApplyInfo[0];
-        // 退款
-        if (refundApplyInfo.type === sysConst.PAYMENT_TYPE[0].value) {
-            this.props.confirmPayment();
-        } else {
-            this.props.initConfirmPaymentModalData(refundApplyInfo.total_fee);
-            $('#confirmPaymentModal').modal('open');
-        }
+    refuseRefund = () => {
+        // 初期化数据
+        this.props.initRefuseRefundModalData(this.props.refundApplyManagerDetailReducer.refundApplyInfo[0]);
+        $('#refuseRefundModal').modal('open');
+    };
+
+    /**
+     * 同意退款 按钮
+     */
+    confirmRefund = () => {
+        // 初期化数据
+        this.props.initConfirmRefundModalData(this.props.refundApplyManagerDetailReducer.refundApplyInfo[0]);
+        $('#confirmRefundModal').modal('open');
     };
 
     render() {
@@ -153,9 +158,10 @@ class PaymentManagerDetail extends React.Component {
                     {/** 退款状态：申请中时，拒绝退款 同意退款 按钮 */}
                     {refundApplyManagerDetailReducer.refundApplyInfo.length > 0 && refundApplyManagerDetailReducer.refundApplyInfo[0].status === sysConst.REFUND_STATUS[2].value &&
                     <div className="row margin-top20 margin-bottom0 right-align">
-                        <button type="button" className="btn custom-btn" onClick={() => {this.confirmPayment()}}>拒绝退款</button>
-                        <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.confirmPayment()}}>同意退款</button>
-                        <ConfirmPaymentModal/>
+                        <button type="button" className="btn custom-btn" onClick={() => {this.refuseRefund()}}>拒绝退款</button>
+                        <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.confirmRefund()}}>同意退款</button>
+                        <ConfirmRefundModal/>
+                        <RefuseRefundModal/>
                     </div>}
 
                     {/* 下部：订单信息 */}
@@ -252,11 +258,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getRefundApplyInfo: () => {
         dispatch(refundApplyManagerDetailAction.getRefundApplyInfo(ownProps.match.params.id));
     },
-    confirmPayment: () => {
-        dispatch(refundApplyManagerDetailAction.confirmPayment(ownProps.match.params.id,'payment_detail'));
+    initRefuseRefundModalData: (refundApplyInfo) => {
+        dispatch(refuseRefundModalAction.initRefuseRefundModal(refundApplyInfo));
     },
-    initConfirmPaymentModalData: (paymentMoney) => {
-        dispatch(confirmPaymentModalAction.initConfirmPaymentModal('payment_detail', ownProps.match.params.id, paymentMoney));
+    initConfirmRefundModalData: (refundApplyInfo) => {
+        dispatch(confirmRefundModalAction.initConfirmRefundModal(refundApplyInfo));
     }
 });
 

@@ -41,6 +41,8 @@ import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
 import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
 import EditOrderCarModalReducer from './modules/EditOrderCarModalReducer';
 import ConfirmPaymentModalReducer from './modules/ConfirmPaymentModalReducer';
+import ConfirmRefundModalReducer from './modules/ConfirmRefundModalReducer';
+import RefuseRefundModalReducer from './modules/RefuseRefundModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -83,5 +85,7 @@ export default combineReducers({
     CancelOrderModalReducer,
     EditUserAddressModalReducer,
     EditOrderCarModalReducer,
-    ConfirmPaymentModalReducer
+    ConfirmPaymentModalReducer,
+    ConfirmRefundModalReducer,
+    RefuseRefundModalReducer
 })

@@ -6,7 +6,6 @@ import {Input} from 'react-materialize';
 import {PaymentManagerActionType} from '../../actionTypes';
 import {ConfirmPaymentModal} from '../modules/index';
 
-const commonAction = require('../../actions/main/CommonAction');
 const paymentManagerAction = require('../../actions/main/PaymentManagerAction');
 const paymentManagerDetailAction = require('../../actions/main/PaymentManagerDetailAction');
 const confirmPaymentModalAction = require('../../actions/modules/ConfirmPaymentModalAction');
@@ -95,7 +94,7 @@ class PaymentManager extends React.Component {
     /**
      * 查询订单列表
      */
-    queryOrderList = () => {
+    queryPaymentList = () => {
         // 默认第一页
         this.props.setStartNumber(0);
         this.props.getPaymentList();
@@ -226,7 +225,7 @@ class PaymentManager extends React.Component {
 
                     {/* 查询按钮 */}
                     <div className="col s1">
-                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryOrderList}>
+                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryPaymentList}>
                             <i className="mdi mdi-magnify"/>
                         </a>
                     </div>
@@ -312,14 +311,12 @@ const mapStateToProps = (state, ownProps) => {
     }
     return {
         paymentManagerReducer: state.PaymentManagerReducer,
-        commonReducer: state.CommonReducer,
         fromDetail: fromDetail
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     getPaymentList: () => {
-        dispatch(commonAction.getCityList());
         dispatch(paymentManagerAction.getPaymentList())
     },
     setStartNumber: (start) => {

@@ -79,8 +79,7 @@ class NewRefundModal extends React.Component {
                                     <label className="col s12 margin-top10 height-35 border-bottom-line" htmlFor={`index${item.id}`}>
                                         <div className="col s6 no-padding">{item.bank} {item.bank_code} {item.account_name}</div>
                                         <div className="col s3 no-padding">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
-                                        <div className="col s2 no-padding">支付金额：{formatUtil.formatNumber(item.total_fee,2)} 元</div>
-                                        <div className="col s1 pink-font no-padding right-align">{commonUtil.getJsonValue(sysConst.PAYMENT_STATUS,item.status)}</div>
+                                        <div className="col s3 no-padding right-align">支付金额：{formatUtil.formatNumber(item.total_fee,2)} 元</div>
                                     </label>
                                 </div>
                             )

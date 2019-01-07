@@ -27,7 +27,7 @@ export const initNewRefundModal = (orderId, pageType, item) => async (dispatch) 
             // 申请金额
             dispatch({type: NewRefundModalActionType.setRefundFee, payload: item.apply_fee});
             // 申请原因
-            dispatch({type: NewRefundModalActionType.setRemark, payload: item.remark});
+            dispatch({type: NewRefundModalActionType.setRemark, payload: item.apply_reason});
         }
 
         // 基本检索URL
@@ -74,10 +74,7 @@ export const saveRefund = () => async (dispatch, getState) => {
         } else {
             const params = {
                 mark: remark,
-                applyFee: refundFee,
-                bank: selectedItem.bank,
-                bankCode: selectedItem.bank_code,
-                accountName: selectedItem.account_name
+                applyFee: refundFee
             };
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)

@@ -11,6 +11,8 @@ export InquiryManager from "./InquiryManager";
 export InquiryManagerDetail from "./InquiryManagerDetail";
 export InvoiceTitleManager from "./InvoiceTitleManager";
 export InvoiceTitleManagerDetail from "./InvoiceTitleManagerDetail";
+export InvoiceApplyManager from "./InvoiceApplyManager";
+export InvoiceApplyManagerDetail from "./InvoiceApplyManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

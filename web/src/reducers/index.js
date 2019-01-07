@@ -15,6 +15,8 @@ import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
 import InvoiceTitleManagerReducer from './main/InvoiceTitleManagerReducer';
 import InvoiceTitleManagerDetailReducer from './main/InvoiceTitleManagerDetailReducer';
+import InvoiceApplyManagerReducer from './main/InvoiceApplyManagerReducer';
+import InvoiceApplyManagerDetailReducer from './main/InvoiceApplyManagerDetailReducer';
 import CitySettingReducer from './main/CitySettingReducer';
 import RouteSettingReducer from './main/RouteSettingReducer';
 import SupplierSettingReducer from './main/SupplierSettingReducer';
@@ -60,6 +62,8 @@ export default combineReducers({
     InquiryManagerDetailReducer,
     InvoiceTitleManagerReducer,
     InvoiceTitleManagerDetailReducer,
+    InvoiceApplyManagerReducer,
+    InvoiceApplyManagerDetailReducer,
     CitySettingReducer,
     RouteSettingReducer,
     SupplierSettingReducer,

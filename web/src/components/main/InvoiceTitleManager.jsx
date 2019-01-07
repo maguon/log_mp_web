@@ -2,11 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {InvoiceManagerActionType} from '../../actionTypes';
+import {InvoiceTitleManagerActionType} from '../../actionTypes';
 
-const invoiceManagerAction = require('../../actions/main/InvoiceManagerAction');
+const invoiceTitleManagerAction = require('../../actions/main/InvoiceTitleManagerAction');
 
-class InvoiceManager extends React.Component {
+class InvoiceTitleManager extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -70,7 +70,7 @@ class InvoiceManager extends React.Component {
      * 上一页
      */
     preBtn = () => {
-        this.props.setStartNumber(this.props.invoiceManagerReducer.start - (this.props.invoiceManagerReducer.size - 1));
+        this.props.setStartNumber(this.props.invoiceTitleManagerReducer.start - (this.props.invoiceTitleManagerReducer.size - 1));
         this.props.getInvoiceList();
     };
 
@@ -78,12 +78,12 @@ class InvoiceManager extends React.Component {
      * 下一页
      */
     nextBtn = () => {
-        this.props.setStartNumber(this.props.invoiceManagerReducer.start + (this.props.invoiceManagerReducer.size - 1));
+        this.props.setStartNumber(this.props.invoiceTitleManagerReducer.start + (this.props.invoiceTitleManagerReducer.size - 1));
         this.props.getInvoiceList();
     };
 
     render() {
-        const {invoiceManagerReducer} = this.props;
+        const {invoiceTitleManagerReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -98,16 +98,16 @@ class InvoiceManager extends React.Component {
                 <div className="row grey-text text-darken-1">
                     <div className="col s11 search-condition-box">
                         {/* 查询条件：发票抬头编号 */}
-                        <Input s={3} label="发票抬头编号" value={invoiceManagerReducer.conditionInvoiceNo} onChange={this.changeConditionInvoiceNo}/>
+                        <Input s={3} label="发票抬头编号" value={invoiceTitleManagerReducer.conditionInvoiceNo} onChange={this.changeConditionInvoiceNo}/>
 
                         {/* 查询条件：企业抬头 */}
-                        <Input s={3} label="企业抬头" value={invoiceManagerReducer.conditionCompany} onChange={this.changeConditionCompany}/>
+                        <Input s={3} label="企业抬头" value={invoiceTitleManagerReducer.conditionCompany} onChange={this.changeConditionCompany}/>
 
                         {/* 查询条件：企业税号 */}
-                        <Input s={3} label="企业税号" value={invoiceManagerReducer.conditionCompanyTax} onChange={this.changeConditionCompanyTax}/>
+                        <Input s={3} label="企业税号" value={invoiceTitleManagerReducer.conditionCompanyTax} onChange={this.changeConditionCompanyTax}/>
 
                         {/* 查询条件：所属用户 */}
-                        <Input s={3} label="所属用户" value={invoiceManagerReducer.conditionUser} onChange={this.changeConditionUser}/>
+                        <Input s={3} label="所属用户" value={invoiceTitleManagerReducer.conditionUser} onChange={this.changeConditionUser}/>
                     </div>
 
                     {/* 查询按钮 */}
@@ -133,7 +133,7 @@ class InvoiceManager extends React.Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {invoiceManagerReducer.invoiceArray.map(function (item) {
+                            {invoiceTitleManagerReducer.invoiceArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
@@ -142,14 +142,14 @@ class InvoiceManager extends React.Component {
                                         <td>{item.company_phone}</td>
                                         <td>{item.user_name}</td>
                                         <td className="operation center">
-                                            <Link to={{pathname: '/invoice/' + item.id}}>
+                                            <Link to={{pathname: '/invoiceTitle/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
                                     </tr>
                                 )
                             })}
-                            { invoiceManagerReducer.invoiceArray.length === 0 &&
+                            { invoiceTitleManagerReducer.invoiceArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
                                     <td className="no-data-tr" colSpan="6">暂无数据</td>
                                 </tr>
@@ -161,11 +161,11 @@ class InvoiceManager extends React.Component {
                     {/* 上下页按钮 */}
                     <div className="col s12 margin-top10">
                         <div className="right">
-                            {invoiceManagerReducer.start > 0 && invoiceManagerReducer.dataSize > 0 &&
+                            {invoiceTitleManagerReducer.start > 0 && invoiceTitleManagerReducer.dataSize > 0 &&
                             <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.preBtn}>
                                 上一页
                             </a>}
-                            {invoiceManagerReducer.dataSize >= invoiceManagerReducer.size &&
+                            {invoiceTitleManagerReducer.dataSize >= invoiceTitleManagerReducer.size &&
                             <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.nextBtn}>
                                 下一页
                             </a>}
@@ -183,30 +183,30 @@ const mapStateToProps = (state, ownProps) => {
         fromDetail = true;
     }
     return {
-        invoiceManagerReducer: state.InvoiceManagerReducer,
+        invoiceTitleManagerReducer: state.InvoiceTitleManagerReducer,
         fromDetail: fromDetail
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
     getInvoiceList: () => {
-        dispatch(invoiceManagerAction.getInvoiceList())
+        dispatch(invoiceTitleManagerAction.getInvoiceList())
     },
     setStartNumber: (start) => {
-        dispatch(InvoiceManagerActionType.setStartNumber(start))
+        dispatch(InvoiceTitleManagerActionType.setStartNumber(start))
     },
     setConditionInvoiceNo: (value) => {
-        dispatch(InvoiceManagerActionType.setConditionInvoiceNo(value))
+        dispatch(InvoiceTitleManagerActionType.setConditionInvoiceNo(value))
     },
     setConditionCompany: (value) => {
-        dispatch(InvoiceManagerActionType.setConditionCompany(value))
+        dispatch(InvoiceTitleManagerActionType.setConditionCompany(value))
     },
     setConditionCompanyTax: (value) => {
-        dispatch(InvoiceManagerActionType.setConditionCompanyTax(value))
+        dispatch(InvoiceTitleManagerActionType.setConditionCompanyTax(value))
     },
     setConditionUser: (value) => {
-        dispatch(InvoiceManagerActionType.setConditionUser(value))
+        dispatch(InvoiceTitleManagerActionType.setConditionUser(value))
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(InvoiceManager)
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceTitleManager)

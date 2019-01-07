@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 
-const invoiceManagerDetailAction = require('../../actions/main/InvoiceManagerDetailAction');
+const invoiceTitleManagerDetailAction = require('../../actions/main/InvoiceTitleManagerDetailAction');
 
-class InvoiceManagerDetail extends React.Component {
+class InvoiceTitleManagerDetail extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -22,13 +22,13 @@ class InvoiceManagerDetail extends React.Component {
     }
 
     render() {
-        const {inquiryManagerDetailReducer} = this.props;
+        const {invoiceTitleManagerDetailReducer} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
                 <div className="row margin-bottom0">
                     <div className="input-field col s12">
-                        <Link to={{pathname: '/invoice', state: {fromDetail: true}}}>
+                        <Link to={{pathname: '/invoiceTitle', state: {fromDetail: true}}}>
                             <a className="btn-floating btn waves-effect custom-blue waves-light fz15">
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
@@ -39,35 +39,35 @@ class InvoiceManagerDetail extends React.Component {
                 </div>
 
                 {/* 主体 */}
-                {inquiryManagerDetailReducer.invoiceInfo.length > 0 &&
+                {invoiceTitleManagerDetailReducer.invoiceInfo.length > 0 &&
                 <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1 grey-text">
                     <div className="col s12 padding-top20 padding-bottom20 custom-grey purple-font border-bottom-line">
-                        <div className="col s12 margin-top5">编号：{inquiryManagerDetailReducer.invoiceInfo[0].id}</div>
-                        <div className="col s6 fz16 bold-font margin-top10">{inquiryManagerDetailReducer.invoiceInfo[0].company_name}</div>
-                        <div className="col s6 fz16 bold-font margin-top10 right-align">税号：{inquiryManagerDetailReducer.invoiceInfo[0].tax_number}</div>
+                        <div className="col s12 margin-top5">编号：{invoiceTitleManagerDetailReducer.invoiceInfo[0].id}</div>
+                        <div className="col s6 fz16 bold-font margin-top10">{invoiceTitleManagerDetailReducer.invoiceInfo[0].company_name}</div>
+                        <div className="col s6 fz16 bold-font margin-top10 right-align">税号：{invoiceTitleManagerDetailReducer.invoiceInfo[0].tax_number}</div>
                     </div>
 
                     <div className="col s12 margin-top5 padding-top20 padding-bottom20">
-                        <div className="col s6">开户银行：{inquiryManagerDetailReducer.invoiceInfo[0].bank}</div>
-                        <div className="col s6 right-align">银行账户：{inquiryManagerDetailReducer.invoiceInfo[0].bank_code}</div>
+                        <div className="col s6">开户银行：{invoiceTitleManagerDetailReducer.invoiceInfo[0].bank}</div>
+                        <div className="col s6 right-align">银行账户：{invoiceTitleManagerDetailReducer.invoiceInfo[0].bank_code}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 dotted-line"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20">
-                        <div className="col s12">电话号码：{inquiryManagerDetailReducer.invoiceInfo[0].company_phone}</div>
+                        <div className="col s12">电话号码：{invoiceTitleManagerDetailReducer.invoiceInfo[0].company_phone}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 dotted-line"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20">
-                        <div className="col s12">单位地址：{inquiryManagerDetailReducer.invoiceInfo[0].company_address}</div>
+                        <div className="col s12">单位地址：{invoiceTitleManagerDetailReducer.invoiceInfo[0].company_address}</div>
                     </div>
 
                     <div className="col s12 padding-left20 padding-right20"><div className="col s12 divider"/></div>
 
                     <div className="col s12 padding-top20 padding-bottom20 right-align">
-                        <div className="col s12">所属用户：{inquiryManagerDetailReducer.invoiceInfo[0].user_name}</div>
+                        <div className="col s12">所属用户：{invoiceTitleManagerDetailReducer.invoiceInfo[0].user_name}</div>
                     </div>
                 </div>}
             </div>
@@ -77,14 +77,14 @@ class InvoiceManagerDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        inquiryManagerDetailReducer: state.InvoiceManagerDetailReducer
+        invoiceTitleManagerDetailReducer: state.InvoiceTitleManagerDetailReducer
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getInvoiceInfo: () => {
-        dispatch(invoiceManagerDetailAction.getInvoiceInfo(ownProps.match.params.id));
+        dispatch(invoiceTitleManagerDetailAction.getInvoiceInfo(ownProps.match.params.id));
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(InvoiceManagerDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceTitleManagerDetail)

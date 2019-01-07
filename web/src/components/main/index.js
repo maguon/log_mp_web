@@ -9,8 +9,8 @@ export RefundApplyManager from "./RefundApplyManager";
 export RefundApplyManagerDetail from "./RefundApplyManagerDetail";
 export InquiryManager from "./InquiryManager";
 export InquiryManagerDetail from "./InquiryManagerDetail";
-export InvoiceManager from "./InvoiceManager";
-export InvoiceManagerDetail from "./InvoiceManagerDetail";
+export InvoiceTitleManager from "./InvoiceTitleManager";
+export InvoiceTitleManagerDetail from "./InvoiceTitleManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

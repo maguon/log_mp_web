@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {InvoiceManagerDetailActionType} from '../../actionTypes';
+import {InvoiceTitleManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
     // 发票信息
@@ -7,7 +7,7 @@ const initialState = {
 };
 
 export default handleActions({
-    [InvoiceManagerDetailActionType.getInvoiceInfo]: (state, action) => {
+    [InvoiceTitleManagerDetailActionType.getInvoiceInfo]: (state, action) => {
         return {
             ...state,
             invoiceInfo: action.payload

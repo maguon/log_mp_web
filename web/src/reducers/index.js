@@ -13,8 +13,8 @@ import PaymentManagerReducer from './main/PaymentManagerReducer';
 import PaymentManagerDetailReducer from './main/PaymentManagerDetailReducer';
 import InquiryManagerReducer from './main/InquiryManagerReducer';
 import InquiryManagerDetailReducer from './main/InquiryManagerDetailReducer';
-import InvoiceManagerReducer from './main/InvoiceManagerReducer';
-import InvoiceManagerDetailReducer from './main/InvoiceManagerDetailReducer';
+import InvoiceTitleManagerReducer from './main/InvoiceTitleManagerReducer';
+import InvoiceTitleManagerDetailReducer from './main/InvoiceTitleManagerDetailReducer';
 import CitySettingReducer from './main/CitySettingReducer';
 import RouteSettingReducer from './main/RouteSettingReducer';
 import SupplierSettingReducer from './main/SupplierSettingReducer';
@@ -58,8 +58,8 @@ export default combineReducers({
     PaymentManagerDetailReducer,
     InquiryManagerReducer,
     InquiryManagerDetailReducer,
-    InvoiceManagerReducer,
-    InvoiceManagerDetailReducer,
+    InvoiceTitleManagerReducer,
+    InvoiceTitleManagerDetailReducer,
     CitySettingReducer,
     RouteSettingReducer,
     SupplierSettingReducer,

@@ -1,5 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
-import {InvoiceManagerDetailActionType} from '../../actionTypes';
+import {InvoiceTitleManagerDetailActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
@@ -12,7 +12,7 @@ export const getInvoiceInfo = (id) => async (dispatch) => {
             + '/invoice?inquiryInvoiceId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: InvoiceManagerDetailActionType.getInvoiceInfo, payload: res.result});
+            dispatch({type: InvoiceTitleManagerDetailActionType.getInvoiceInfo, payload: res.result});
         } else if (res.success === false) {
             swal('获取发票信息失败', res.msg, 'warning');
         }

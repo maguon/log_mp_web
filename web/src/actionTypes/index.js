@@ -10,8 +10,8 @@ import * as PaymentManagerActionType  from './main/PaymentManagerActionType';
 import * as PaymentManagerDetailActionType  from './main/PaymentManagerDetailActionType';
 import * as InquiryManagerActionType  from './main/InquiryManagerActionType';
 import * as InquiryManagerDetailActionType  from './main/InquiryManagerDetailActionType';
-import * as InvoiceManagerActionType  from './main/InvoiceManagerActionType';
-import * as InvoiceManagerDetailActionType  from './main/InvoiceManagerDetailActionType';
+import * as InvoiceTitleManagerActionType  from './main/InvoiceTitleManagerActionType';
+import * as InvoiceTitleManagerDetailActionType  from './main/InvoiceTitleManagerDetailActionType';
 import * as CitySettingActionType  from './main/CitySettingActionType';
 import * as RouteSettingActionType  from './main/RouteSettingActionType';
 import * as SupplierSettingActionType  from './main/SupplierSettingActionType';
@@ -54,8 +54,8 @@ export  {
     PaymentManagerDetailActionType,
     InquiryManagerActionType,
     InquiryManagerDetailActionType,
-    InvoiceManagerActionType,
-    InvoiceManagerDetailActionType,
+    InvoiceTitleManagerActionType,
+    InvoiceTitleManagerDetailActionType,
     CitySettingActionType,
     RouteSettingActionType,
     SupplierSettingActionType,

@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {InvoiceManagerActionType} from '../../actionTypes';
+import {InvoiceTitleManagerActionType} from '../../actionTypes';
 
 const initialState = {
     // 开始位置
@@ -23,43 +23,43 @@ const initialState = {
 };
 
 export default handleActions({
-    [InvoiceManagerActionType.getInvoiceList]: (state, action) => {
+    [InvoiceTitleManagerActionType.getInvoiceList]: (state, action) => {
         return {
             ...state,
             invoiceArray: action.payload
         }
     },
-    [InvoiceManagerActionType.setStartNumber]: (state, action) => {
+    [InvoiceTitleManagerActionType.setStartNumber]: (state, action) => {
         return {
             ...state,
             start: action.payload
         }
     },
-    [InvoiceManagerActionType.setDataSize]: (state, action) => {
+    [InvoiceTitleManagerActionType.setDataSize]: (state, action) => {
         return {
             ...state,
             dataSize: action.payload
         }
     },
-    [InvoiceManagerActionType.setConditionInvoiceNo]: (state, action) => {
+    [InvoiceTitleManagerActionType.setConditionInvoiceNo]: (state, action) => {
         return {
             ...state,
             conditionInvoiceNo: action.payload
         }
     },
-    [InvoiceManagerActionType.setConditionCompany]: (state, action) => {
+    [InvoiceTitleManagerActionType.setConditionCompany]: (state, action) => {
         return {
             ...state,
             conditionCompany: action.payload
         }
     },
-    [InvoiceManagerActionType.setConditionCompanyTax]: (state, action) => {
+    [InvoiceTitleManagerActionType.setConditionCompanyTax]: (state, action) => {
         return {
             ...state,
             conditionCompanyTax: action.payload
         }
     },
-    [InvoiceManagerActionType.setConditionUser]: (state, action) => {
+    [InvoiceTitleManagerActionType.setConditionUser]: (state, action) => {
         return {
             ...state,
             conditionUser: action.payload

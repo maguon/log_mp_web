@@ -39,7 +39,7 @@ export const confirmPayment = (paymentId, pageType) => async (dispatch) => {
     }).then(async function (isConfirm) {
         if (isConfirm && isConfirm.value === true) {
             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/payment/' + paymentId + '/bankStatus/' + sysConst.PAYMENT_STATUS[1].value;
+                + '/payment/' + paymentId + '/bankStatus';
             const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
                 swal("修改成功", "", "success");

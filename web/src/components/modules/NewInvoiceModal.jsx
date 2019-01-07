@@ -108,8 +108,8 @@ class NewInvoiceModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
                     <div className="row margin-bottom10">
-                        <Input s={12} label="发票抬头" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.invoiceTitle} onChange={this.changeInvoiceTitle}/>
-                        <Input s={6} label="税号" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyTax} onChange={this.changeBankNum}/>
+                        <Input s={12} label={<span><span className="must-input">*</span>发票抬头</span>} maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.invoiceTitle} onChange={this.changeInvoiceTitle}/>
+                        <Input s={6} label={<span><span className="must-input">*</span>税号</span>} maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyTax} onChange={this.changeBankNum}/>
                         <Input s={6} label="电话号码" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyPhone} onChange={this.changeBankNum}/>
 
                         <Input s={6} label="开户银行" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.bank} onChange={this.changeBankNum}/>

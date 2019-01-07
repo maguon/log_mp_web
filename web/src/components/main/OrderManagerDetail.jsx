@@ -728,7 +728,7 @@ class OrderManagerDetail extends React.Component {
                                         onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
                                 <NewInvoiceModal/>
                             </div>
-                            {/** 内部订单时，没有发票信息时，显示 申请开票 按钮 */}
+                            {/** 内部订单，没有发票信息，并且为已完成状态时，显示 申请开票 按钮 */}
                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
                             orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value &&
                             orderManagerDetailReducer.invoiceArray.length === 0 &&

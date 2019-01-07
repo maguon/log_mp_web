@@ -1021,6 +1021,11 @@ table.striped > tbody > tr:nth-child(odd) {
 .ellipsis-td {
     width: 300px;
 }
+
+.must-input {
+    color: #F44336;
+    margin-right: 3px !important;
+}
 /** 自定义-全画面列表部分样式补充 end */
 
 

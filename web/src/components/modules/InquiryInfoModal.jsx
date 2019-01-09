@@ -149,7 +149,7 @@ class InquiryInfoModal extends React.Component {
                             协商描述：
                         </div>
                         <div className="col s-percent-90 margin-top10 margin-bottom10 padding-left0">
-                            {inquiryInfoModalReducer.inquiryInfo[0].mark}
+                            {inquiryInfoModalReducer.inquiryInfo[0].remark}
                         </div>
                         <div className="col s12 no-padding divider"/>
 
@@ -281,7 +281,7 @@ class InquiryInfoModal extends React.Component {
                             协商描述：
                         </div>
                         <div className="col s-percent-90 margin-top10 margin-bottom10 padding-left0">
-                            {inquiryInfoModalReducer.inquiryInfo[0].mark}
+                            {inquiryInfoModalReducer.inquiryInfo[0].remark}
                         </div>
                         <div className="col s12 no-padding divider"/>
 

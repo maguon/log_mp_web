@@ -46,9 +46,9 @@ export const getInvoiceList = () => async (dispatch, getState) => {
 
             // 检索条件：订单编号
             orderId: conditionInvoiceOrderNo,
-            // 检索条件：开票时间
-            invoiceApplyTime: conditionInvoiceCreatedOnStart,
-            invoicedTime: conditionInvoiceCreatedOnEnd,
+            // 检索条件：处理时间
+            invoicedTimeStart: conditionInvoiceCreatedOnStart,
+            invoicedTimeEnd: conditionInvoiceCreatedOnEnd,
             // 检索条件：物流状态
             invoiceStatus: conditionInvoiceApplyStatus === null ? '' : conditionInvoiceApplyStatus.value,
         };

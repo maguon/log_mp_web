@@ -15,7 +15,7 @@ export const initNewInvoiceModal = (prePage, orderId, invoiceApplyInfo) => async
     // 订单编号
     dispatch({type: NewInvoiceModalActionType.setOrderId, payload: orderId});
 
-    if (prePage === 'invoiceApplyDetail') {
+    if (prePage === 'invoiceApplyDetail' || (prePage === 'orderManagerDetail' && invoiceApplyInfo !== '')) {
         // 发票申请编号
         dispatch({type: NewInvoiceModalActionType.setInvoiceApplyId, payload: invoiceApplyInfo.invoice_apply_id});
         // 发票抬头
@@ -115,7 +115,7 @@ export const saveInvoice = () => async (dispatch, getState) => {
                 } else if (prePage === 'invoiceApplyDetail') {
                     dispatch(invoiceApplyManagerDetailAction.getInvoiceApplyInfo(invoiceApplyId));
                 } else if (prePage === 'orderManagerDetail') {
-                    dispatch(orderManagerDetailAction.getOrderPaymentList(orderId));
+                    dispatch(orderManagerDetailAction.getInvoiceList(orderId));
                 }
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');

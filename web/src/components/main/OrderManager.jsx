@@ -279,9 +279,9 @@ class OrderManager extends React.Component {
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
                                         <td>{item.start_city} - {item.end_city}</td>
-                                        <td>{item.count}</td>
+                                        <td>{item.car_num}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.SERVICE_MODE, item.service_type)}</td>
-                                        <td>{formatUtil.formatNumber(item.fee_price,2)}</td>
+                                        <td>{formatUtil.formatNumber(item.real_payment_price,2)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, item.created_type)}</td>
                                         <td>{item.phone}</td>
                                         <td>{item.user_name}</td>

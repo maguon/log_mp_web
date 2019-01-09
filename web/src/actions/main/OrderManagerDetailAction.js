@@ -225,7 +225,7 @@ export const getInvoiceList = (id) => async (dispatch) => {
     try {
         // 基本检索URL
         const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/invoice?orderId=' + id;
+            + '/invoicesList?orderId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: OrderManagerDetailActionType.getInvoiceArray, payload: res.result});
@@ -235,4 +235,29 @@ export const getInvoiceList = (id) => async (dispatch) => {
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
+};
+
+export const deleteInvoiceApply = (invoiceApplyId, orderId) => async (dispatch) => {
+    swal({
+        title: '确定删除该发票申请？',
+        text: '',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            // 基本检索URL
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/controlInvoices/' + invoiceApplyId + '/revokeInvoice';
+            const res = await httpUtil.httpDelete(url, {});
+            if (res.success === true) {
+                swal("删除成功", "", "success");
+                dispatch(getInvoiceList(orderId));
+            } else if (res.success === false) {
+                swal('删除失败', res.msg, 'warning');
+            }
+        }
+    });
 };

@@ -3,7 +3,10 @@ import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {
-    OrderManagerDetailActionType, InquiryInfoModalActionType, EditUserAddressModalActionType,EditOrderCarModalActionType,
+    OrderManagerDetailActionType,
+    InquiryInfoModalActionType,
+    EditUserAddressModalActionType,
+    EditOrderCarModalActionType,
     CancelOrderModalActionType
 } from '../../actionTypes';
 import {
@@ -161,11 +164,17 @@ class OrderManagerDetail extends React.Component {
     /**
      * 发票信息TAB：显示 申请开票 模态画面
      */
-    showNewInvoiceModal = () => {
-        this.props.initNewInvoiceModalData();
+    showNewInvoiceModal = (invoiceApplyInfo) => {
+        this.props.initNewInvoiceModalData(invoiceApplyInfo);
         $('#newInvoiceModal').modal('open');
     };
 
+    /**
+     * 发票信息TAB：删除 发票申请
+     */
+    deleteInvoiceApply = (invoiceApplyId) => {
+        this.props.deleteInvoiceApply(invoiceApplyId);
+    };
 
     render() {
         const {
@@ -722,23 +731,20 @@ class OrderManagerDetail extends React.Component {
                     <div id="tab-invoice" className="col s12">
                         {orderManagerDetailReducer.orderInfo.length > 0 &&
                         <div>
-                            {/** TODO delete */}
-                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
-                                <button type="button" className="btn confirm-btn margin-left20"
-                                        onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
-                                <NewInvoiceModal/>
-                            </div>
                             {/** 内部订单，没有发票信息，并且为已完成状态时，显示 申请开票 按钮 */}
                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
                             orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value &&
                             orderManagerDetailReducer.invoiceArray.length === 0 &&
-                            <div className="row margin-top20 margin-right60 margin-bottom0 right-align">
+                            <div className="row margin-top40 margin-right60 margin-bottom0 right-align">
                                 <button type="button" className="btn confirm-btn margin-left20"
-                                        onClick={() => {this.showNewInvoiceModal()}}>申请开票</button>
+                                        onClick={() => {this.showNewInvoiceModal('')}}>申请开票</button>
                                 <NewInvoiceModal/>
                             </div>}
                             {/** 外部订单时，没有发票信息时，显示 暂无发票信息  */}
-                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.invoiceArray.length === 0 &&
+                            {((orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
+                                orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value &&
+                                orderManagerDetailReducer.invoiceArray.length === 0) ||
+                            (orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.invoiceArray.length === 0)) &&
                             <div className="row center grey-text margin-top40 fz18">
                                 暂无发票信息
                             </div>}
@@ -748,15 +754,24 @@ class OrderManagerDetail extends React.Component {
                             <div className="row margin-top40 margin-left50 margin-right50 detail-box">
                                 <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
                                     <div className="col s6">
-                                        发票编号：11111111111111111111111
+                                        发票申请编号：{orderManagerDetailReducer.invoiceArray[0].invoice_apply_id}
                                     </div>
                                     {/* 发票状态 */}
                                     <div className="col s6 pink-font right-align">
-                                        {commonUtil.getJsonValue(sysConst.INVOICE_STATUS, orderManagerDetailReducer.invoiceArray[0].status)}
+                                        {commonUtil.getJsonValue(sysConst.INVOICE_STATUS, orderManagerDetailReducer.invoiceArray[0].invoiced_status)}
+
+
+                                        {/* 编辑按钮 */}
+                                        {orderManagerDetailReducer.invoiceArray[0].invoiced_status !== sysConst.INVOICE_STATUS[1].value &&
+                                        <span>
+                                            <i className="mdi mdi-close pointer fz20 margin-left20" onClick={() => {this.deleteInvoiceApply(orderManagerDetailReducer.invoiceArray[0].invoice_apply_id)}}/>
+                                            <i className="mdi mdi-pencil pointer fz20 margin-left20" onClick={() => {this.showNewInvoiceModal(orderManagerDetailReducer.invoiceArray[0])}}/>
+                                            <NewInvoiceModal/>
+                                        </span>}
                                     </div>
                                 </div>
                                 <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                    <div className="col s6">发票抬头：{orderManagerDetailReducer.invoiceArray[0].company_name}</div>
+                                    <div className="col s6">发票抬头：{orderManagerDetailReducer.invoiceArray[0].title}</div>
                                     <div className="col s6 right-align">税号：{orderManagerDetailReducer.invoiceArray[0].tax_number}</div>
                                     <div className="col s6 margin-top10">开户银行：{orderManagerDetailReducer.invoiceArray[0].bank}</div>
                                     <div className="col s6 margin-top10 right-align">银行账户：{orderManagerDetailReducer.invoiceArray[0].bank_code}</div>
@@ -764,35 +779,17 @@ class OrderManagerDetail extends React.Component {
                                     <div className="col s3 margin-top10 right-align">电话号码：{orderManagerDetailReducer.invoiceArray[0].company_phone}</div>
                                     <div className="col s12 margin-top10">备注：{orderManagerDetailReducer.invoiceArray[0].remark}</div>
                                 </div>
+                                {orderManagerDetailReducer.invoiceArray[0].invoiced_status === sysConst.INVOICE_STATUS[2].value &&
                                 <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                    <div className="col s12">收货信息：{orderManagerDetailReducer.invoiceArray[0].remark}</div>
-                                </div>
+                                    <div className="col s12">拒绝原因：{orderManagerDetailReducer.invoiceArray[0].refuse_reason}</div>
+                                </div>}
                                 <div className="col s12 padding-top15 padding-bottom15 grey-text">
                                     <div className="col s6">申请时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</div>
                                     <div className="col s6 right-align">
-                                        {orderManagerDetailReducer.invoiceArray[0].status === sysConst.INVOICE_STATUS[1].value &&
-                                        <span>开票时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</span>}
+                                        {orderManagerDetailReducer.invoiceArray[0].invoiced_status !== sysConst.INVOICE_STATUS[0].value &&
+                                        <span>处理时间：{formatUtil.getDateTime(orderManagerDetailReducer.invoiceArray[0].created_on)}</span>}
                                     </div>
                                 </div>
-                            </div>}
-
-                            {/* 关联：合并开票订单 */}
-                            {orderManagerDetailReducer.invoiceArray.length > 0 &&
-                            <div className="row margin-top40 margin-left50 margin-right50 detail-box">
-                                <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
-                                    合并开票订单
-                                </div>
-                                {orderManagerDetailReducer.invoiceArray.map(function (item) {
-                                    return (
-                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                            <div className="col s2 no-padding">订单编号：{item.id}</div>
-                                            <div className="col s3">{item.start_city} - {item.end_city}</div>
-                                            <div className="col s2">车辆：{formatUtil.formatNumber(item.car_num)}</div>
-                                            <div className="col s2">支付金额：{formatUtil.formatNumber(item.total_trans_price + item.total_insure_price, 2)}</div>
-                                            <div className="col s3 no-padding right-align">创建时间：{formatUtil.getDateTime(item.created_on)}</div>
-                                        </div>
-                                    )
-                                })}
                             </div>}
                         </div>}
                     </div>
@@ -897,8 +894,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getInvoiceList: () => {
         dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
     },
-    initNewInvoiceModalData: () => {
-        dispatch(newInvoiceModalAction.initNewInvoiceModal(ownProps.match.params.id));
+    initNewInvoiceModalData: (invoiceApplyInfo) => {
+        dispatch(newInvoiceModalAction.initNewInvoiceModal('orderManagerDetail', ownProps.match.params.id, invoiceApplyInfo));
+    },
+    deleteInvoiceApply: (invoiceApplyId) => {
+        dispatch(orderManagerDetailAction.deleteInvoiceApply(invoiceApplyId, ownProps.match.params.id))
     },
 
     // TAB5：操作记录

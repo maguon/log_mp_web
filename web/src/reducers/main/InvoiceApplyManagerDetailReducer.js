@@ -1,16 +1,24 @@
 import {handleActions} from 'redux-actions';
-import {InvoiceTitleManagerDetailActionType} from '../../actionTypes';
+import {InvoiceApplyManagerDetailActionType} from '../../actionTypes';
 
 const initialState = {
-    // 发票信息
-    invoiceInfo: []
+    // 发票申请 详细信息
+    invoiceApplyInfo: [],
+    // 开票订单(输入)
+    invoiceOrderId: ''
 };
 
 export default handleActions({
-    [InvoiceTitleManagerDetailActionType.getInvoiceInfo]: (state, action) => {
+    [InvoiceApplyManagerDetailActionType.getInvoiceApplyInfo]: (state, action) => {
         return {
             ...state,
-            invoiceInfo: action.payload
+            invoiceApplyInfo: action.payload
+        }
+    },
+    [InvoiceApplyManagerDetailActionType.setInvoiceOrderId]: (state, action) => {
+        return {
+            ...state,
+            invoiceOrderId: action.payload
         }
     }
 }, initialState)

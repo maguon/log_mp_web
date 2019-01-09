@@ -264,11 +264,15 @@ export const REFUND_STATUS = [
 export const INVOICE_STATUS = [
     {
         value: 0,
-        label: "申请中"
+        label: "待开票"
     },
     {
         value: 1,
         label: "已开票"
+    },
+    {
+        value: 2,
+        label: "已拒绝"
     }
 ];
 

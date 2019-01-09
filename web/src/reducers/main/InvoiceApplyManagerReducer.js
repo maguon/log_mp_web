@@ -10,18 +10,26 @@ const initialState = {
     // TAB 开票申请：检索结果数量
     invoiceDataSize: 0,
 
-    // 检索条件：发票抬头编号
-    conditionInvoiceNo: '',
-    // 检索条件：企业抬头
-    conditionCompany: '',
-    // 检索条件：企业税号
+    // TAB 开票申请：：检索条件 发票申请编号
+    conditionInvoiceApplyNo: '',
+    // TAB 开票申请：：检索条件 企业税号
     conditionCompanyTax: '',
-    // 检索条件：所属用户
-    conditionUser: '',
+    // TAB 开票申请：：检索条件 发票抬头
+    conditionInvoiceTitle: '',
+    // TAB 开票申请：检索条件 创建人
+    conditionInvoiceOrderCreateUser: '',
+
+    // TAB 未开票订单：检索条件：订单编号
+    conditionInvoiceOrderNo: '',
+    // TAB 未开票订单：检索条件：创建时间(始)
+    conditionInvoiceCreatedOnStart: '',
+    // TAB 未开票订单：检索条件：创建时间(终)
+    conditionInvoiceCreatedOnEnd: '',
+    // TAB 未开票订单：检索条件：状态
+    conditionInvoiceApplyStatus: null,
 
     // 发票列表
     invoiceArray: [],
-
 
     // TAB 未开票订单：开始位置
     orderStart: 0,
@@ -67,18 +75,10 @@ export default handleActions({
             invoiceDataSize: action.payload
         }
     },
-
-
-    [InvoiceApplyManagerActionType.setConditionInvoiceNo]: (state, action) => {
+    [InvoiceApplyManagerActionType.setConditionInvoiceApplyNo]: (state, action) => {
         return {
             ...state,
-            conditionInvoiceNo: action.payload
-        }
-    },
-    [InvoiceApplyManagerActionType.setConditionCompany]: (state, action) => {
-        return {
-            ...state,
-            conditionCompany: action.payload
+            conditionInvoiceApplyNo: action.payload
         }
     },
     [InvoiceApplyManagerActionType.setConditionCompanyTax]: (state, action) => {
@@ -87,16 +87,42 @@ export default handleActions({
             conditionCompanyTax: action.payload
         }
     },
-    [InvoiceApplyManagerActionType.setConditionUser]: (state, action) => {
+    [InvoiceApplyManagerActionType.setConditionInvoiceTitle]: (state, action) => {
         return {
             ...state,
-            conditionUser: action.payload
+            conditionInvoiceTitle: action.payload
         }
     },
-
-
-
-
+    [InvoiceApplyManagerActionType.setConditionInvoiceOrderCreateUser]: (state, action) => {
+        return {
+            ...state,
+            conditionInvoiceOrderCreateUser: action.payload
+        }
+    },
+    [InvoiceApplyManagerActionType.setConditionInvoiceOrderNo]: (state, action) => {
+        return {
+            ...state,
+            conditionInvoiceOrderNo: action.payload
+        }
+    },
+    [InvoiceApplyManagerActionType.setConditionInvoiceCreatedOnStart]: (state, action) => {
+        return {
+            ...state,
+            conditionInvoiceCreatedOnStart: action.payload
+        }
+    },
+    [InvoiceApplyManagerActionType.setConditionInvoiceCreatedOnEnd]: (state, action) => {
+        return {
+            ...state,
+            conditionInvoiceCreatedOnEnd: action.payload
+        }
+    },
+    [InvoiceApplyManagerActionType.setConditionInvoiceApplyStatus]: (state, action) => {
+        return {
+            ...state,
+            conditionInvoiceApplyStatus: action.payload
+        }
+    },
     [InvoiceApplyManagerActionType.getOrderList]: (state, action) => {
         return {
             ...state,
@@ -115,8 +141,6 @@ export default handleActions({
             orderDataSize: action.payload
         }
     },
-
-
     [InvoiceApplyManagerActionType.setConditionOrderNo]: (state, action) => {
         return {
             ...state,
@@ -141,8 +165,6 @@ export default handleActions({
             conditionOrderPaymentStatus: action.payload
         }
     },
-
-
     [InvoiceApplyManagerActionType.setConditionOrderCreatedOnStart]: (state, action) => {
         return {
             ...state,
@@ -160,5 +182,5 @@ export default handleActions({
             ...state,
             conditionOrderCreateUser: action.payload
         }
-    },
+    }
 }, initialState)

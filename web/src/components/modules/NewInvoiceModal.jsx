@@ -74,31 +74,10 @@ class NewInvoiceModal extends React.Component {
     };
 
     /**
-     * 更新 收货人
-     */
-    changeReceiveUser = (event) => {
-        this.props.setReceiveUser(event.target.value);
-    };
-
-    /**
-     * 更新 联系电话
-     */
-    changeReceivePhone = (event) => {
-        this.props.setReceivePhone(event.target.value);
-    };
-
-    /**
-     * 更新 收货地址
-     */
-    changeReceiveAddress = (event) => {
-        this.props.setReceiveAddress(event.target.value);
-    };
-
-    /**
      * 渲染(挂载)画面。
      */
     render() {
-        const {newPaymentModalReducer, closeModal, saveInvoice} = this.props;
+        const {newInvoiceModalReducer, closeModal, saveInvoice} = this.props;
         return (
             <div id="newInvoiceModal" className="modal modal-fixed-footer row">
 
@@ -108,26 +87,13 @@ class NewInvoiceModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
                     <div className="row margin-bottom10">
-                        <Input s={12} label={<span><span className="must-input">*</span>发票抬头</span>} maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.invoiceTitle} onChange={this.changeInvoiceTitle}/>
-                        <Input s={6} label={<span><span className="must-input">*</span>税号</span>} maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyTax} onChange={this.changeBankNum}/>
-                        <Input s={6} label="电话号码" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyPhone} onChange={this.changeBankNum}/>
-
-                        <Input s={6} label="开户银行" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.bank} onChange={this.changeBankNum}/>
-                        <Input s={6} label="银行账号" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.bankNum} onChange={this.changeBankNum}/>
-
-                        <Input s={12} label="单位地址" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.companyAddress} onChange={this.changeInvoiceTitle}/>
-                        <Input s={12} label="备注" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.remark} onChange={this.changeInvoiceTitle}/>
-                    </div>
-
-                    <div className="row margin-bottom0 detail-box">
-                        <div className="col s12 padding-top10 padding-bottom10 custom-grey pink-font left-align padding-left20 border-bottom-line">
-                            接收信息
-                        </div>
-                        <div className="col s12 padding-top10 padding-bottom10">
-                            <Input s={6} label="收货人" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.receiveUser} onChange={this.changePaymentBank}/>
-                            <Input s={6} label="联系电话" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.receivePhone} onChange={this.changeBankNum}/>
-                            <Input s={12} label="收货地址" maxLength="50" className="right-align margin-bottom10" value={newPaymentModalReducer.receiveAddress} onChange={this.changeBankNum}/>
-                        </div>
+                        <Input s={12} label={<span><span className="must-input">*</span>发票抬头</span>} maxLength="50" value={newInvoiceModalReducer.invoiceTitle} onChange={this.changeInvoiceTitle}/>
+                        <Input s={6} label={<span><span className="must-input">*</span>税号</span>} maxLength="20" value={newInvoiceModalReducer.companyTax} onChange={this.changeCompanyTax}/>
+                        <Input s={6} label="电话号码" maxLength="20" value={newInvoiceModalReducer.companyPhone} onChange={this.changeCompanyPhone}/>
+                        <Input s={6} label="开户银行" maxLength="20" value={newInvoiceModalReducer.bank} onChange={this.changeBank}/>
+                        <Input s={6} label="银行账号" maxLength="20" value={newInvoiceModalReducer.bankNum} onChange={this.changeBankNum}/>
+                        <Input s={12} label="单位地址" maxLength="100" value={newInvoiceModalReducer.companyAddress} onChange={this.changeCompanyAddress}/>
+                        <Input s={12} label="备注" maxLength="200" value={newInvoiceModalReducer.remark} onChange={this.changeRemark}/>
                     </div>
                 </div>
 
@@ -146,7 +112,7 @@ class NewInvoiceModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        newPaymentModalReducer: state.NewPaymentModalReducer
+        newInvoiceModalReducer: state.NewInvoiceModalReducer
     }
 };
 
@@ -174,15 +140,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setRemark: (value) => {
         dispatch(NewInvoiceModalActionType.setRemark(value));
-    },
-    setReceiveUser: (value) => {
-        dispatch(NewInvoiceModalActionType.setReceiveUser(value));
-    },
-    setReceivePhone: (value) => {
-        dispatch(NewInvoiceModalActionType.setReceivePhone(value));
-    },
-    setReceiveAddress: (value) => {
-        dispatch(NewInvoiceModalActionType.setReceiveAddress(value));
     },
     saveInvoice: () => {
         dispatch(newInvoiceModalAction.saveInvoice());

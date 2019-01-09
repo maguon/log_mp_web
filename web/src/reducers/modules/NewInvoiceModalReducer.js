@@ -3,6 +3,11 @@ import {NewInvoiceModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
+    // 前画面区分
+    prePage: '',
+
+    // 发票申请编号
+    invoiceApplyId: '',
     // 订单编号
     orderId: '',
     // 发票抬头
@@ -18,17 +23,22 @@ const initialState = {
     // 单位地址
     companyAddress: '',
     // 备注
-    remark: '',
-
-    // 收货人
-    receiveUser: '',
-    // 联系电话
-    receivePhone: '',
-    // 收货地址
-    receiveAddress: ''
+    remark: ''
 };
 
 export default handleActions({
+    [NewInvoiceModalActionType.setPrePage]: (state, action) => {
+        return {
+            ...state,
+            prePage: action.payload
+        }
+    },
+    [NewInvoiceModalActionType.setInvoiceApplyId]: (state, action) => {
+        return {
+            ...state,
+            invoiceApplyId: action.payload
+        }
+    },
     [NewInvoiceModalActionType.setOrderId]: (state, action) => {
         return {
             ...state,
@@ -75,24 +85,6 @@ export default handleActions({
         return {
             ...state,
             remark: action.payload
-        }
-    },
-    [NewInvoiceModalActionType.setReceiveUser]: (state, action) => {
-        return {
-            ...state,
-            receiveUser: action.payload
-        }
-    },
-    [NewInvoiceModalActionType.setReceivePhone]: (state, action) => {
-        return {
-            ...state,
-            receivePhone: action.payload
-        }
-    },
-    [NewInvoiceModalActionType.setReceiveAddress]: (state, action) => {
-        return {
-            ...state,
-            receiveAddress: action.payload
         }
     }
 }, initialState)

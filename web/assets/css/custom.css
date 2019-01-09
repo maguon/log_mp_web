@@ -1079,8 +1079,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #newInvoiceModal{
-    height: 75% !important;
-    max-height: 75% !important;
+    max-height: 580px;
 }
 
 #newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal {

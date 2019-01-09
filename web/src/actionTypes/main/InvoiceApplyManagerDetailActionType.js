@@ -1,3 +1,4 @@
 import {createAction} from 'redux-actions';
 
-export const getInvoiceInfo = createAction('GET_INVOICE_INFO');
+export const getInvoiceApplyInfo = createAction('GET_INVOICE_APPLY_INFO');
+export const setInvoiceOrderId = createAction('SET_INVOICE_APPLY_ORDER_ID');

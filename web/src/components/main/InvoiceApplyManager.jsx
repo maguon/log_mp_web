@@ -199,7 +199,7 @@ class InvoiceApplyManager extends React.Component {
                         <span className="margin-left10">开票申请</span>
                         <div className="divider custom-divider margin-top10"/>
                         <ul className="tabs">
-                            <li className="tab col s6"><a className="active" href="#tab-invoice" onClick={this.getInvoiceList}>开票申请</a></li>
+                            <li className="tab col s6"><a className="active" href="#tab-invoice" onClick={this.queryInvoiceList}>开票申请</a></li>
                             <li className="tab col s6"><a href="#tab-order" onClick={this.queryOrderList}>未开票订单</a></li>
                         </ul>
                     </div>

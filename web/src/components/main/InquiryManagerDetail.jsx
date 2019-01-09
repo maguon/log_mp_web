@@ -89,11 +89,11 @@ class InquiryManagerDetail extends React.Component {
                     </div>
                 </div>
 
+                {inquiryManagerDetailReducer.inquiryInfo.length > 0 &&
                 <div className="row">
                     {/* 头部 */}
                     <div className="col s12">
                         {/* 询价详情：基本信息 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 &&
                         <div className="inquiry-detail-header">
                             {/* 左侧：图标 */}
                             <div className="col s8 margin-top5 grey-text text-darken-1">
@@ -117,20 +117,20 @@ class InquiryManagerDetail extends React.Component {
                                 <div className="margin-top3">询价时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].created_on)}</div>
                                 <div className="margin-top15 pink-font">{sysConst.INQUIRY_STATUS[inquiryManagerDetailReducer.inquiryInfo[0].status].label}</div>
                             </div>
-                        </div>}
+                        </div>
                     </div>
 
                     {/* 主体 */}
                     <div className="col s12 margin-top40 padding-left50 padding-right50">
 
                         {/** 待报价状态显示：报价按钮 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 0 &&
+                        {inquiryManagerDetailReducer.inquiryInfo[0].status === 0 &&
                         <div className="row margin-bottom10 right-align">
                             <button type="button" className="btn confirm-btn" onClick={this.showNewOfferModal}>报价</button>
                         </div>}
 
                         {/** 已报价状态显示：取消询价/重新报价/生成订单 按钮 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 1 &&
+                        {inquiryManagerDetailReducer.inquiryInfo[0].status === 1 &&
                         <div className="row margin-bottom10 right-align">
                             <button type="button" className="btn custom-btn" onClick={this.showCancelInquiryModal}>取消询价</button>
                             <button type="button" className="btn confirm-btn margin-left20" onClick={this.showOfferModal}>重新报价</button>
@@ -140,7 +140,7 @@ class InquiryManagerDetail extends React.Component {
                         <CancelInquiryModal/>
 
                         <div className="row margin-bottom10 margin-left5 pink-font bold-font">
-                            运送车辆：{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryCarArray.length)}
+                            运送车辆：{formatUtil.formatNumber(inquiryManagerDetailReducer.inquiryInfo[0].car_num)}
                         </div>
                         <div className="row detail-box">
                             <table className="bordered">
@@ -200,13 +200,13 @@ class InquiryManagerDetail extends React.Component {
                         <div className="row divider bold-divider"/>
 
                         {/** 已取消状态显示：取消时间 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time == null &&
+                        {inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time == null &&
                         <div className="row margin-top20 grey-text text-darken-2">
                             <div className="col s12 right-align">取消时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].cancel_time)}</div>
                         </div>}
 
                         {/** 已报价/已完成状态(status:1,2,3)显示：报价信息 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
+                        {inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
                         (inquiryManagerDetailReducer.inquiryInfo[0].status === 1 || inquiryManagerDetailReducer.inquiryInfo[0].status === 2 || inquiryManagerDetailReducer.inquiryInfo[0].status === 3) &&
                         <div className="row detail-box margin-top40 grey-text text-darken-2">
                             {/** 已完成状态(status:2)显示：订单信息 */}
@@ -236,10 +236,10 @@ class InquiryManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12 no-padding divider"/>
 
-                                <div className="col s-percent-8 padding-right0 margin-top10 margin-bottom10 bold-font">
+                                <div className="col s-percent-6 padding-right0 margin-top10 margin-bottom10 bold-font">
                                     协商描述：
                                 </div>
-                                <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
+                                <div className="col s-percent-94 margin-top10 margin-bottom10 grey-text">
                                     {inquiryManagerDetailReducer.inquiryInfo[0].remark}
                                 </div>
                                 <div className="col s12 no-padding divider"/>
@@ -254,7 +254,7 @@ class InquiryManagerDetail extends React.Component {
                         </div>}
 
                         {/** 已取消状态显示：取消时间 / 取消原因 */}
-                        {inquiryManagerDetailReducer.inquiryInfo.length > 0 && inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
+                        {inquiryManagerDetailReducer.inquiryInfo[0].status === 3 && inquiryManagerDetailReducer.inquiryInfo[0].inquiry_time !== null &&
                         <div className="row detail-box margin-top40 grey-text text-darken-2">
                             <div className="bold-font">
                                 <div className="col s12 padding-top10 padding-bottom10 right-align custom-grey">取消时间：{formatUtil.getDateTime(inquiryManagerDetailReducer.inquiryInfo[0].cancel_time)}</div>
@@ -271,7 +271,7 @@ class InquiryManagerDetail extends React.Component {
                             </div>
                         </div>}
                     </div>
-                </div>
+                </div>}
             </div>
         )
     }

@@ -13,6 +13,8 @@ export InvoiceTitleManager from "./InvoiceTitleManager";
 export InvoiceTitleManagerDetail from "./InvoiceTitleManagerDetail";
 export InvoiceApplyManager from "./InvoiceApplyManager";
 export InvoiceApplyManagerDetail from "./InvoiceApplyManagerDetail";
+export InvoiceManager from "./InvoiceManager";
+export InvoiceManagerDetail from "./InvoiceManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

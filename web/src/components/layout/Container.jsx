@@ -18,6 +18,8 @@ import {
     InvoiceTitleManagerDetail,
     InvoiceApplyManager,
     InvoiceApplyManagerDetail,
+    InvoiceManager,
+    InvoiceManagerDetail,
     CitySetting,
     RouteSetting,
     SupplierSetting,
@@ -79,6 +81,17 @@ const routes = [
         path: '/invoiceApply/:id',
         exact: true,
         component: InvoiceApplyManagerDetail
+    },
+    {
+        // 发票管理
+        path: "/invoice",
+        exact: true,
+        component: InvoiceManager
+    },
+    {
+        path: '/invoiceApply/:id',
+        exact: true,
+        component: InvoiceManagerDetail
     },
 
     // 订单信息
@@ -215,6 +228,8 @@ class Container extends React.Component {
                                             <li><Link to="/invoiceTitle"><i className="mdi mdi-chevron-right"/>用户发票信息管理</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/invoiceApply"><i className="mdi mdi-chevron-right"/>开票申请</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>发票管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>

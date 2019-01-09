@@ -31,7 +31,7 @@ class InvoiceApplyManagerDetail extends React.Component {
     }
 
     /**
-     * TAB 未开票订单：显示 申请开票 模态画面
+     * 显示 申请开票 模态画面
      */
     showNewInvoiceModal = (invoiceApplyInfo) => {
         this.props.initNewInvoiceModalData(invoiceApplyInfo.id, invoiceApplyInfo);

@@ -22,9 +22,9 @@ export const saveOffer = () => async (dispatch, getState) => {
             swal('保存失败', '请输入完整的报价信息！', 'warning');
         } else {
             const params = {
-                feePrice: actFreight,
+                totalTransPrice: actFreight,
                 totalInsurePrice: actInsuranceFee,
-                mark: remark
+                remark: remark
             };
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)

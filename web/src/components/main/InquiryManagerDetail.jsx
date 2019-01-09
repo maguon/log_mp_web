@@ -46,7 +46,7 @@ class InquiryManagerDetail extends React.Component {
         let totalInsuranceFee = this.props.inquiryManagerDetailReducer.totalInsuranceFee;
         let actTotalFreight = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_trans_price;
         let actTotalInsuranceFee = this.props.inquiryManagerDetailReducer.inquiryInfo[0].total_insure_price;
-        let remark = this.props.inquiryManagerDetailReducer.inquiryInfo[0].mark;
+        let remark = this.props.inquiryManagerDetailReducer.inquiryInfo[0].remark;
         this.props.initNewOfferModalData(userId, totalFreight, totalInsuranceFee, actTotalFreight, actTotalInsuranceFee, remark);
         $('#newOfferModal').modal('open');
     };
@@ -240,7 +240,7 @@ class InquiryManagerDetail extends React.Component {
                                     协商描述：
                                 </div>
                                 <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
-                                    {inquiryManagerDetailReducer.inquiryInfo[0].mark}
+                                    {inquiryManagerDetailReducer.inquiryInfo[0].remark}
                                 </div>
                                 <div className="col s12 no-padding divider"/>
 

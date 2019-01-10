@@ -1,37 +1,53 @@
 <view class='container'>
+<view  class='head-prompt' >
+ <view class='prompt-state'>询价编号:{{orderlist.id}}</view>
+  <view class='prompt-time'>{{orderlist.created_on}}</view>
+</view>
 <view class='dis-line'></view>
 <view class='dis-head'>
 <view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
 <view class='head-city'>{{orderlist.end_city}}</view>
-<image bindtap='bindCustomer' class='head-customer' src='../../../images/customer.png'></image>
+<view hidden='{{orderlist.status}}' class='head-customer'>待完善信息</view>
+<view hidden='{{!orderlist.status}}' class='head-customer'>已完善</view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view bindtap='service' class='dis-way' hover-class="active">
+<view hidden='{{disabled}}'  bindtap='service' class='dis-way' hover-class="active">
 <image class='way-image' src='../../../images/car.png'></image>
 <view class='way-text'>{{service[orderlist.service_type-1]}}</view>
+<view hidden='{{address}}' class='stay-expect stay-text'>请选择运送地址</view>
+<view hidden='{{!address}}'  class='stay-expect stay-text'>已完善</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+
+<view hidden='{{!disabled}}'  class='dis-way' hover-class="active">
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>{{service[orderlist.service_type-1]}}</view>
+<view class='stay-expect stay-text'>请选择运送地址</view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='dis-content' >
+<view bindtap='perfect' class='dis-content'  hover-class="active" >
 <view class='city'>
 <image class='city-img' src='../../../images/car_02.png'></image>
 <view class='city-text'>运送车辆</view>
-<view class='stay-expect stay-text'>{{orderlist.car_num}}</view>
+<view hidden='{{carflag}}' class='stay-expect stay-text'>请完善车辆信息</view>
+<view hidden='{{!carflag}}' class='stay-expect stay-text'>已完善</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
 </view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='orderItem' wx:for="{{orderItem}}" wx:key='u'>
-<view bindtap='orderItem' data-index='{{index}}' class='dis-content01' hover-class="active">
+<!-- <view hidden='{{disabled}}'  class='orderItem' wx:for="{{orderItem}}" wx:key='u'>
+<view  class='dis-content01' hover-class="active">
 <view class='stay-detail'>
 <view class='tag'>{{index+1}}</view>
-<view class='stay-car'>{{item.vin}}</view>
+<view class='stay-car' bindtap='orderItem' data-index='{{index}}'>{{item.vin}}</view>
+<image bindtap='orderItemDel' data-index='{{index}}' class='no' src='../../../images/no.png'></image>
 </view>
 
-<view class='city'>
+<view class='city' bindtap='orderItem' data-index='{{index}}'>
 <image class='city-img'></image>
 <view class='city-text'>{{carModel[item.model_type]}}</view>
 <image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
@@ -40,59 +56,68 @@
 </view>
 </view>
 <view class='dis-line'></view>
-</view>
+</view> -->
+
 <!--  ---------------------------------------------------------------------- -->
-<view class='dis-add'>
+<!-- 
+<view hidden='{{!disabled}}'  class='orderItem' wx:for="{{orderItem}}" wx:key='u'>
+<view  class='dis-content01' hover-class="active">
+<view class='stay-detail'>
+<view class='tag'>{{index+1}}</view>
+<view class='stay-car' >{{item.vin}}</view>
+
+</view>
+
+<view class='city' >
+<image class='city-img'></image>
+<view class='city-text'>{{carModel[item.model_type]}}</view>
+<image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
+<view class='stay-expect stay-text'>{{item.valuation}} 元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+</view>
+
+ <view hidden='{{disabled}}' class='dis-add'>
 <button  bindtap='perfect' class='add-button'>
 <view class='add-text'>完善车辆信息</view>
 </button>
 </view>
-<view class='sum-line'></view>
-
+<view class='sum-line'></view> --> 
 <!--  ---------------------------------------------------------------------- -->
-
-<!-- <view class='dis-sum'>
+<view class='dis-sum'>
 <view class='sum-text'>预计费用</view>
 <view class='stay-expect'>
-<view class='stay-num sum-text01'>1700.00</view>
-<view class='stay-text'>元</view>
+<view class='stay-num01'>{{orderlist.ora_insure_price}}</view>
+<view class='stay-text01'>元</view>
 </view>
 </view>
-<view class='dis-line'></view> -->
+<view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
 <view class='sum-text'>协商费用</view>
 <view class='stay-expect'>
 <view class='stay-num '>{{orderlist.total_insure_price}}</view>
-<view class='stay-text'>元</view>
+<view class='stay-text01'>元</view>
 </view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='note'>
-<view class='note-text'>留言</view>
-<input bindinput='noteInput'  class='note-input' placeholder='填写留言信息' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<view class='note-text'>留言:</view>
+<input hidden='{{disabled}}' bindinput='noteInput'  class='note-input' placeholder='填写留言信息' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<view hidden='{{!disabled}}' class='note-input01'>{{orderlist.mark}}</view>
 </view>
 <view class='dis-line'></view>
-<!--  ---------------------------------------------------------------------- -->
 
-<view class='dis-orderid'>
-<view class='orderid'>
-<view class='orderid-text'>订单编号：{{orderlist.id}}</view>
-<button bindtap='textPaste' class='orderid-button'>
-<view class='button-text'>复制</view>
-</button>
-</view>
-<view class='create-time'>创建时间：{{orderlist.created_on}}</view>
-<view class='create-time'>协商时间：{{orderlist.updated_on}}</view>
-</view>
 <view class='heigh'></view>
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='dis-cancel' >
 <button class='cancel' bindtap='cancel' hover-class="cancel_btn" >取消订单</button>
-<button  disabled='{{disabled}}' bindtap='submit' class='submit' hover-class="cancel_btn">提交完善信息</button>
+<button hidden='{{disabled}}'  bindtap='submit' class='submit' hover-class="cancel_btn">提交完善信息</button>
+<button hidden='{{!disabled}}' disabled='{{disabled}}' bindtap='submit' class='submit' hover-class="cancel_btn">等待确认中...</button>
 </view>
 
 </view>

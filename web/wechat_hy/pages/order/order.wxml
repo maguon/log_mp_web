@@ -20,6 +20,12 @@
 <view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'>
 <view hidden='{{!item.state}}' bindtap='bindDetail' data-index='{{index}}' data-name='orderlist' class='content' hover-class="active">
 <view class='city'>
+<view  hidden='{{item.status}}' class='num'>询价编号：{{item.id}}</view>
+<view hidden='{{!item.status}}' class='num'>订单编号：{{item.id}}</view>
+<view hidden='{{item.status}}' class='num-time'>{{item.created_on}}</view>
+<view hidden='{{!item.status}}' class='num-time'>{{item.updated_on}}</view>
+</view>
+<view class='city'>
 <image class='city-img' src='../../images/car_04.png'></image>
 <view class='city-text'>{{item.start_city}}</view>
 <image class='city-arrow' src='../../images/arrow_02.png'></image>

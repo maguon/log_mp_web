@@ -2,12 +2,10 @@ page{
   background: #efeff4;
 }
 .transfer{
- height: 350px;
- width: 96%;
+ height: 220px;
+ width: 100%;
  background: white;
  margin-top: 15px;
- margin-left: 2%;
- margin-right:2%;
 }
 .transfer-head{
   height: 50px;
@@ -50,20 +48,19 @@ margin-bottom: 15px;
 }
 /* ---------------------------------------------------------------------- */
 .cost{
-height: 80px;
+position: absolute;
+right: 25px;
+height: 50px;
 display: flex;
 flex-direction: row;
 align-items: center;
-font-size: 18px;
-margin-left: 15px;
-
+font-size: 15px;
+color: rgb(121, 120, 120);
 }
-
+.cost-text{
+}
 .cost-num{
 font-size: 25px;
-position: absolute;
-right: 30px;
-text-align: right;
 }
 .prompt{
   height: 60px;
@@ -82,7 +79,14 @@ text-align: right;
   margin-top: 10px;
   height: 50px;
   width: 100%;
-  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.bankcard01{
+  margin-top: 10px;
+  height: 30px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -112,18 +116,45 @@ text-align: right;
   }
   /* ---------------------------------------------------------------------- */
   .btn-area{
-  position: fixed;
-  left: 1%;
-  right: 1%;
-  bottom: 20px;
   height: 45px;
   width: 90%;
   background: #7a387a;
   color: white;
+  margin-top: 10px;
 }
 button[disabled]{
   background: #c295c1;
 }
 .weui-cell_active{
   background-color:#ececec;
+  }
+
+  .head-time{
+    color: #8a8a8a;
+    font-size: 12px;
+    margin-left: 10px;
+  }
+  .head-text{
+    position: absolute;
+    right: 15px;
+    color: #c295c1;
+    font-size: 12px;
+  }
+  .pay-num{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 15px;
+    margin-left: 15px;
+  }
+  .number{
+    position: absolute;
+    right: 15px;
+    text-align: right;
+  }
+  .pay-number{
+    font-size: 22px;
+    color: #d43286;
   }

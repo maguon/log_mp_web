@@ -18,7 +18,7 @@
 
 <view class='note'>
 <view class='note-text'>VIN</view>
-<input bindinput='noteInput'  class='note-input' placeholder='填写车辆17位识别码' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<input bindinput='noteInput'  class='note-input' placeholder='{{vin}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
 
@@ -26,7 +26,7 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input bindinput='bindValuation' type='number' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  <input bindinput='bindValuation' type='number' class='input' placeholder='{{valuation}}' placeholder-style=' font-size: 15px'></input>
   </view>
 
   <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
@@ -47,6 +47,6 @@
   <button hidden='{{!hidden}}'  bindtap="bindtap" class="btn-area" hover-class="weui-cell_active">确定</button>
 
    <view hidden='{{hidden}}' >
-   <button   bindtap="bindtap" class="btn-area button" hover-class="weui-cell_active">确定</button>
+   <button   bindtap="bindtap" class="btn-area button" hover-class="weui-cell_active">修改</button>
   <button bindtap="bindDelete" class="btn-area area" hover-class="weui-cell_active">删除</button>
  </view>

@@ -10,26 +10,58 @@
 </view>
 <view class='div-line'></view>
 
-<view hidden='{{!hidden}}' class='cost'>
-<view>支付金额(元)</view>
-<input bindinput='costNum' class='cost-num' placeholder='{{totalPrice}}'></input>
+<view  class='cost'>
+<view class='cost-text'>剩余应付金额:</view>
+<view class='cost-num'>{{totalPrice}}</view>
+<view class='cost-text'>元</view>
 </view>
-<view  hidden='{{hidden}}' class='cost'>
-<view>剩余应付金额(元)</view>
-<input bindinput='costNum' class='cost-num' placeholder='{{totalPrice}}'></input>
+</view>
+
+
+<view hidden='{{flag}}' class='transfer'>
+<view  class='bankcard01' >
+<view class='head-time'>支付时间：{{payment.created_on}}</view>
+<view class='head-text'>审核中</view>
 </view>
 <view class='div-line'></view>
 
-<view hidden='{{!hidden}}' class='prompt'>运费到账后，我们会尽快为您安排发运</view>
+<view  class='pay-num'>
+<view >支付金额(元)</view>
+<input class='number' value='{{payment.total_fee}}'></input>
 </view>
-
+<view class='div-line'></view>
 
 <view bindtap='chooseBank' class='bankcard' hover-class="weui-cell_active">
-<image class='card-img' src='../../../../images/bank_card02.png'></image>
+<image class='card-img' src='../../../../../images/bank_card02.png'></image>
 <view hidden='{{hidden}}' class='card-text'>选择/添加银行卡</view>
 <view hidden='{{!hidden}}' class='card-text01'> {{bankMsg.bank}} {{bankMsg.bank_code}} {{bankMsg.account_name}}</view>
-<image class='arrow' src='../../../../images/arrow.png'></image>
+<image class='arrow' src='../../../../../images/arrow.png'></image>
+</view>
+<view class='div-line'></view>
+
+<button   bindtap="bindtap"  class="btn-area" hover-class="weui-cell_active">修改支付信息</button>
 </view>
 
-<button   bindtap="bindtap" disabled='{{disabled}}' class="btn-area" hover-class="weui-cell_active">去付款</button>
 
+
+<view hidden='{{!flag}}' class='transfer'>
+<view  class='bankcard01' >
+<view class='head-time'>支付时间：{{payment.updated_on}}</view>
+<view class='head-text'>已确认</view>
+</view>
+<view class='div-line'></view>
+
+<view  class='pay-num'>
+<view >支付金额:</view>
+<view class='pay-number'>{{payment.total_fee}}</view>
+<view>元</view>
+</view>
+<view class='div-line'></view>
+
+<view bindtap='chooseBank' class='bankcard' hover-class="weui-cell_active">
+<image class='card-img' src='../../../../../images/bank_card02.png'></image>
+<view class='card-text01'> {{payment.bank}} {{payment.bank_code}} {{payment.account_name}}</view>
+</view>
+<view class='div-line'></view>
+
+</view>

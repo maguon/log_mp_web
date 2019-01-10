@@ -1,10 +1,16 @@
 <view class='container'>
+<view  class='head-prompt' >
+ <view class='prompt-state'>询价编号:{{orderlist.id}}</view>
+  <view class='prompt-time'>{{orderlist.created_on}}</view>
+</view>
+
 <view class='dis-line'></view>
 <view class='dis-head'>
 <view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
 <view class='head-city'>{{orderlist.end_city}}</view>
-<view class='delivery'>待发运</view>
+<view class='delivery'>待生成发运需求</view>
+
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
@@ -55,22 +61,9 @@
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
-<view class='dis-orderid'>
-<view class='orderid'>
-<view class='orderid-text'>订单编号：{{orderlist.id}}</view>
-<button bindtap='textPaste' class='orderid-button'>
-<view  class='button-text'>复制</view>
-</button>
-</view>
-<view class='create-time'>创建时间：{{orderlist.created_on}}</view>
-<view class='create-time'>协商时间：{{orderlist.updated_on}}</view>
-</view>
-<view class='heigh'></view>
-<!--  ---------------------------------------------------------------------- -->
-
 <view class='dis-cancel' >
 <button class='cancel' bindtap='cancel' hover-class="cancel_btn" >取消订单</button>
-<button bindtap='payment' disabled='{{false}}' class='submit' hover-class="cancel_btn">微信支付</button>
+<button bindtap='payment' disabled='{{false}}' class='submit' hover-class="cancel_btn">支付</button>
 </view>
 
 </view>

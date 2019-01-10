@@ -246,7 +246,7 @@ Page({
       })
       }else{
         wx.redirectTo({
-          url: '/pages/order/order-inquiry/order-inquiry?id=' + this.data.inquiryId,
+          url: '/pages/order/order-inquiry/order-inquiry?orderId=' + this.data.inquiryId,
         })
       }
     })
@@ -266,7 +266,7 @@ Page({
         })
       } else {
         wx.redirectTo({
-          url: '/pages/order/order-inquiry/order-inquiry?id=' + this.data.inquiryId,
+          url: '/pages/order/order-inquiry/order-inquiry?orderId=' + this.data.inquiryId,
         })
       }
     })

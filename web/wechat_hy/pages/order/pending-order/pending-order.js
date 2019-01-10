@@ -17,6 +17,8 @@ Page({
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
     note:"",
     disabled:false,
+    address:false,
+    carflag:false,
   },
 
 
@@ -27,56 +29,41 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-    this.setData({
-      orderId:e.id,
-    })
+    var  orderId=e.orderId;
+    
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.id, (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       if (res.data.result != '') {
-        for (var i = 0; i < res.data.result.length; i++) {
-          //保留2位小数
-          res.data.result[i].total_insure_price = this.decimal(res.data.result[i].insure_price + res.data.result[i].trans_price);
-          //设置显示
-          if (res.data.result[i].status == 3) {
-            res.data.result[i].state = 0;
-          } else if (res.data.result[i].status == 1){
-            this.setData({
-              disabled:true,
-            })
-          }else {
-            res.data.result[i].state = 1;
-          }
-        }
+        // for (var i = 0; i < res.data.result.length; i++) {
+        //   //保留2位小数
+        //   res.data.result[i].total_insure_price = this.decimal(res.data.result[i].insure_price + res.data.result[i].trans_price);
+         
+        //   //设置显示
+        //   if (res.data.result[i].status == 3) {
+        //     res.data.result[i].state = 0;
+        //   } else if (res.data.result[i].status == 1){
+        //     this.setData({
+        //       disabled:true,
+        //     })
+        //   }else {
+        //     res.data.result[i].state = 1;
+        //   }
+        // }
+        //预计费用
+        res.data.result[0].ora_insure_price = this.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
+        //协商费用
+        res.data.result[0].total_insure_price = this.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
+        //编译时间
+        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type-1,
+          orderId: orderId,
         })
       }
       console.log(res.data.result)
     })
 
-//获取发车地址
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 0, (err, res) => {
-      //获取发车地址
-      for (var i = 0; i < res.data.result.length; i++) {
-        if (res.data.result[i].status == 1) {
-          this.setData({
-            startAddress: res.data.result[i],
-          })
-        }
-      }
-    })
-    //获取收车地址
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 1, (err, res) => {
-        //获取发车地址
-        for (var i = 0; i < res.data.result.length; i++) {
-          if (res.data.result[i].status = 1) {
-            this.setData({
-              endAddress: res.data.result[i],
-            })
-          }
-        }
-    })
   },
 
 
@@ -94,23 +81,42 @@ Page({
       if (res.data.result != '') {
         this.setData({
           orderItem: res.data.result,
+          carflag:true,
         })
       }
     })
+
+    //获取发车地址
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 0, (err, res) => {
+      //获取发车地址
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status == 1) {
+          this.setData({
+            startAddress: res.data.result[i],
+          })
+        }
+      }
+    })
+    //获取收车地址
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 1, (err, res) => {
+      //获取发车地址
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status = 1) {
+          this.setData({
+            endAddress: res.data.result[i],
+          })
+        }
+      }
+    })
+    if(this.data.startAddress==""||this.data.endAddress!=""){
+      this.setData({
+        address:true,
+      })
+    }
    
   },
 
 
-  /**
-    * 跳转
-    */
-orderItem:function(e){
-    var index=e.currentTarget.dataset.index;
-    wx.navigateTo({
-      url:'/pages/order/car-model/car-model?orderId='+this.data.orderId+"&index="+index,
-    })
-   console.log(e)
-  },
 
 
 
@@ -132,12 +138,13 @@ orderItem:function(e){
   /**
     * 服务方式
     */
-  service:function(){
+  service:function(e){
+    console.log(e)
+    var name=e.currentTarget.dataset.name;
   wx.navigateTo({
     url: '/pages/order/transport/transport?orderId='+this.data.orderId,
   })
   },
-
 
 
 
@@ -156,16 +163,8 @@ var note=e.detail.value;
 
   //完善信息
   perfect:function(){
-    // if (this.data.orderItem.length >=this.data.orderlist.car_num){
-    //   wx.showModal({
-    //     content: '已达到您提交的' + this.data.orderlist.car_num+"辆上限",
-    //     showCancel: false,
-    //     confirmColor: "#a744a7",
-    //   });
-    //   return;
-    // }
     wx.navigateTo({
-      url: '/pages/order/car-model/car-model?orderId='+this.data.orderId,
+      url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId+"&name="+"pending",
     })
   },
 
@@ -210,6 +209,31 @@ var note=e.detail.value;
       }
     })
   },
+
+
+
+
+
+
+  /**
+   * 编译时间
+   */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
+
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
+  },
+
 
 
 

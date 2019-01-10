@@ -15,9 +15,11 @@ Page({
     car_index: 0,
     orderId: '',
     orderindex: '',
+    chooseMsg:'',
+    orderItemId:"",
 
-    valuation: '',
-    vin: '',
+    valuation: '请输入车辆估值',
+    vin: '填写车辆17位识别码',
     insurance: 1,
     distance: '',
   },
@@ -31,20 +33,44 @@ Page({
    */
   onLoad: function (e) {
     var userId = app.globalData.userId;
+    var chooseMsg=e.index;
+    var orderId=e.orderId;
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       console.log(res.data.result)
       this.setData({
         orderlist: res.data.result[0],
-        orderId: e.orderId,
+        orderId: orderId,
         distance: res.data.result[0].distance,
-        hidden: true,
+        chooseMsg: chooseMsg,
       })
     })
 
+    if (chooseMsg !=""){
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + orderId, (err, res) => {
+          console.log(res.data.result)
+        var orderItem = res.data.result[chooseMsg];
+        this.setData({
+          orderItemId: orderItem.id,
+          valuation: orderItem.valuation,
+          vin: orderItem.vin,
+          car_index: orderItem.model_type-1,
+          insurance: orderItem.safe_status,
+          checked:orderItem.old_car,
+          hidden: false,
+        })
+      })
+    }else{
+      this.setData({
+        hidden: true,
+      })
+    }
+
+    if (chooseMsg !=undefined){
     wx.setNavigationBarTitle({
       title: '修改车型'
     })
+}
   },
 
 
@@ -111,6 +137,10 @@ Page({
   bindtap: function () {
     var userId = app.globalData.userId;
     var regNum = new RegExp('[0-9]');
+    var chooseMsg = this.data.chooseMsg;
+    var orderItemId = this.data.orderItemId;
+    var orderId=this.data.orderId;
+
     console.log(parseInt(this.data.valuation))
     if (this.data.valuation == '') {
       wx.showModal({
@@ -138,6 +168,22 @@ Page({
       })
       return;
     } else {
+      console.log(chooseMsg)
+      if (chooseMsg !=""){
+        var params = {
+          modelType: this.data.car_index + 1,
+          vin: this.data.vin,
+          oldCar: this.data.checked,
+          valuation: this.data.valuation,
+          // distance: this.data.distance,
+          safeStatus: this.data.insurance,
+        }
+        //发送服务器
+        reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/orderItem/" + orderItemId + "/updateCarType?orderId=" + orderId, params, (err, res) => {
+          wx.navigateBack({})
+        })
+
+      }else{
       var params = {
         vin: this.data.vin,
         modelType: this.data.car_index + 1,
@@ -150,6 +196,7 @@ Page({
       reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + this.data.orderId + "/car", params, (err, res) => {
         wx.navigateBack({})
       })
+      }
     }
   },
 
@@ -168,4 +215,14 @@ Page({
     this.onShow();
   },
 
+
+/**
+ * 删除
+ */
+  bindDelete:function(){
+    var userId = app.globalData.userId;
+    var orderItemId = this.data.orderItemId;
+    reqUtil.httpDel(config.host.apiHost + "/api/user/" + userId + "/orderItem/" + orderItemId);
+    wx.navigateBack({})
+  },
 })

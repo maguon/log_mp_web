@@ -18,29 +18,19 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-    this.setData({
-      orderId: e.id,
-    })
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.id, (err, res) => {
+    var orderId= e.orderId;
+    
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       if (res.data.result != '') {
-        // for (var i = 0; i < res.data.result.length; i++) {
-        //保留2位小数
+        
         res.data.result[0].total_insure_price = (res.data.result[0].insure_price + res.data.result[0].trans_price).toFixed(2);
-        //   //设置显示
-        //   if (res.data.result[i].status == 3) {
-        //     res.data.result[i].state = 0;
-        //   } else if (res.data.result[i].status == 1) {
-        //     this.setData({
-        //       disabled: true,
-        //     })
-        //   } else {
-        //     res.data.result[i].state = 1;
-        //   }
-        // }
+        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type - 1,
+          orderId: orderId,
         })
       }
       console.log(res.data.result)
@@ -62,15 +52,40 @@ Page({
   },
 
 
+  /**
+ * 编译时间
+ */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
+
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
+  },
+
+
+
+
+
+
+
   carMsg: function () {
     wx.navigateTo({
-      url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId,
+      url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId+"&name="+"delivery",
     })
   },
 
   payMsg:function(){
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.total_insure_price,
+      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.total_insure_price,
     })
   },
 

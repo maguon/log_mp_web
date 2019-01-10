@@ -18,6 +18,7 @@ Page({
   endress:false,
   startAddress:[],
   endAddress:[],
+  
   },
 
 
@@ -26,12 +27,13 @@ Page({
    */
   onLoad: function (e) {
     var userId=app.globalData.userId;
-
+   
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
     this.setData({
       startCity: res.data.result[0].start_city,
       endCity: res.data.result[0].end_city,
       service_id: res.data.result[0].service_type,
+      
     })
       console.log(res.data.result)
     })
@@ -50,6 +52,7 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 0, (err, res) => {
       if (res.data.result != '') {
+        console.log(res.data.result)
         //获取发车地址
         for (var i = 0; i < res.data.result.length; i++) {
           if (res.data.result[i].status == 1) {
@@ -61,11 +64,13 @@ Page({
         }
       }
     })
+
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 1, (err, res) => {
+      console.log(res.data.result)
       if (res.data.result != '') {
         //获取发车地址
         for (var i = 0; i < res.data.result.length; i++) {
-          if (res.data.result[i].status = 1) {
+          if (res.data.result[i].status == 1) {
             this.setData({
               endAddress: res.data.result[i],
               endress: true,
@@ -92,7 +97,7 @@ Page({
   endAddress:function(e){
     var index = e.currentTarget.dataset.index;
     wx.navigateTo({
-      url: '/pages/user/addressList/addressList?index='+index,
+      url: '/pages/user/addressList/addressList?index=' + index,
     })
   },
 

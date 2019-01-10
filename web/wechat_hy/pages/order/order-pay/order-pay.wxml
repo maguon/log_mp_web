@@ -28,7 +28,7 @@
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
 <image class='city-img' src='../../../images/money.png' style=' width:25px; height: 25px;'></image>
-<view class='sum-text'>协商费用</view>
+<view class='sum-text'>应付费用</view>
 <view class='stay-expect'>
 <view class='stay-num '>{{orderlist.total_insure_price}}</view>
 <view class='stay-text'>元</view>

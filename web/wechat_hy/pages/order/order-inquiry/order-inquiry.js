@@ -27,11 +27,13 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-    var inquiryId = e.id;
+    var inquiryId = e.orderId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
-      res.data.result[0].fee_price = this.decimal(res.data.result[0].fee_price);
+      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
+
+      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
       this.setData({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
@@ -98,6 +100,24 @@ Page({
   },
 
 
+  /**
+   * 编译时间
+   */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
+
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
+  },
 
 
 

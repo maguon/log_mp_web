@@ -8,14 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    beginCity: '',
-    endCity: '', 
-
+    orderlist:[],
     inquiryId:'',
 
     array: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
-    index: '',
 
     carList:[],
     sumFee: 0,
@@ -37,10 +34,11 @@ Page({
      //获取数据
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId,(err,res)=>{
       console.log(res)
+      //编译时间
+      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+  
       this.setData({
-        beginCity: res.data.result[0].start_city,
-        endCity: res.data.result[0].end_city,
-        index: res.data.result[0].service_type,
+        orderlist: res.data.result[0],
         inquiryId: e.inquiryId,
       })
     })
@@ -48,7 +46,6 @@ Page({
     //获取数据
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + e.inquiryId, (err, res) => {
       console.log(res.data.result)
-      var carList=[];
       var sum=0;
       for (var i = 0; i < res.data.result.length;i++){
         if (res.data.result[i].status==1){
@@ -108,6 +105,22 @@ Page({
 
 
   /**
+* 联系客服
+*/
+  bindCustomer: function () {
+    wx.makePhoneCall({
+      phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
+    })
+  },
+
+
+  /**
    * 继续询价
    */
   Inquiry:function(){
@@ -115,6 +128,28 @@ Page({
       url: '/pages/index/index',
     })
   },
- 
+
+
+
+  /**
+  * 编译时间
+  */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
+
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
+  },
+
+
 
 })

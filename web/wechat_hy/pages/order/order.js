@@ -92,7 +92,10 @@ Page({
         orderState[0].hidden=true;
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
-         res.data.result[i].total_trans_price = this.decimal(res.data.result[i].total_trans_price);
+          res.data.result[i].total_trans_price = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          //编译时间
+          res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+          res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
          //预计费用
           res.data.result[i].fee_price = this.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
           //判断状态
@@ -131,7 +134,12 @@ Page({
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
+               //协商费用
             res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            //编译时间
+            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+             //判断状态
             if (res.data.result[i].status==0){
               res.data.result[i].status=1;
               res.data.result[i].stay = 2;
@@ -169,7 +177,12 @@ Page({
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
+             //协商费用
             res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            //编译时间
+            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+             //判断状态
             if (res.data.result[i].status == 2) {
               res.data.result[i].status = 1;
               res.data.result[i].stay = 4;
@@ -207,12 +220,12 @@ Page({
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
+            //支付费用
             res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
-            // if (res.data.result[i].status == 2) {
-            //   res.data.result[i].status = 1;
-            //   res.data.result[i].stay = 4;
-            //   res.data.result[i].state = 1;
-            // } else 
+            //编译时间
+            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+             //判断状态
             if (res.data.result[i].status == 3) {
               res.data.result[i].status = 1;
               res.data.result[i].stay = 5;
@@ -276,39 +289,55 @@ Page({
   },
   bindDetail:function(e){
     var index = e.currentTarget.dataset.index;
-    var id = this.data.orderlist[index].id;
+    var orderId = this.data.orderlist[index].id;
     console.log(e)
     switch(this.data.index){
     case 0:
         wx.navigateTo({
-          url: '/pages/order/order-inquiry/order-inquiry?id='+id,
+          url: '/pages/order/order-inquiry/order-inquiry?orderId=' + orderId,
         })
        break;
     case 1:
         wx.navigateTo({
-          url: '/pages/order/pending-order/pending-order?id=' + id,
+          url: '/pages/order/pending-order/pending-order?orderId=' + orderId,
         })
         break;
    case 2:
         wx.navigateTo({
-          url: "/pages/order/order-pay/order-pay?id="+ id,
+          url: "/pages/order/delivery-order/delivery-order?orderId=" + orderId,
         })
         break;
    case 3:
         wx.navigateTo({
-          url: '/pages/order/delivery-order/delivery-order?id=' + id,
+          url: '/pages/order/delivery-order/delivery-order?orderId=' + orderId,
         })
         break;
    case 4:
         wx.navigateTo({
-          url: '/pages/order/pending-order/pending-order?id=' + id,
+          url: '/pages/order/pending-order/pending-order?orderId=' + orderId,
         })
         break;
       default: 
     }
-    
   },
+/**
+ * 编译时间
+ */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
 
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+   return time;
+  },
 
 
 

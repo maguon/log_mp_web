@@ -10,14 +10,13 @@ page{
 }
 .carMsg-text{
   font-size: 15px;
-  color: #504e4e;
+  color: #964f96;
   margin-left: 10px;
 }
-.carMsg-num{
-  position: absolute;
-  right: 10px;
-  font-size: 15px;
-  color: #504e4e;
+.dis-line{
+  width: 100%;
+  height: 1px;
+  background: #e8e8e9;
 }
 /* ---------------------------------------------------------------------- */
 .items{
@@ -36,27 +35,32 @@ page{
 .item-vin{
   font-size: 15px;
   color: #8a8a8a;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 .item-v{
   font-size: 15px;
   color: #8a8a8a;
-  margin-left: 40px;
+  position: absolute;
+  right: 20px;
 }
 .item-model{
-width: 90px;
 position: absolute;
-right: 10px;
+right: 20px;
 display: flex;
 flex-direction: row;
+align-items: center;
 }
 .item-car{
   font-size: 15px;
   color: #8a8a8a;
-   margin-left: 5px;
+   margin-left:40px;
 }
 .item-old{
   width: 20px;
+  height: 20px;
+}
+.item-bao{
+ width: 20px;
   height: 20px;
 }
 .car-img{
@@ -74,4 +78,64 @@ flex-direction: row;
   color: #d43286;
   font-size: 20px;
   margin-top: -5px;
+}
+
+.add{
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  right: 20px;
+}
+/* ---------------------------------------------------------------------- */
+.btn{
+  width: 100%;
+  height: 70px;
+  background: #f8f6f8;
+  position: fixed;
+  bottom: 0px;
+}
+.btn-area{
+  position: fixed;
+  left: 1%;
+  right: 1%;
+  bottom: 20px;
+  height: 45px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+}
+.heigh{
+  width: 100%;
+  height: 100px;
+}
+.weui-cell_active{
+  background-color:#ececec;
+  }
+
+  .arrow{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0px;
+  margin-top: 20px;
+}
+
+.prompt-msg{
+  width: 90%;
+  height: 60px;
+
+  background: rgb(245, 228, 228);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  right: 5%;
+  left: 5%;
+}
+
+.prompt-text{
+  font-size: 15px;
+  margin-left: 15px;
+  color: #8a8a8a;
 }

@@ -44,6 +44,7 @@ import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalAction
 import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalActionType';
 import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
+import * as RefuseInvoiceModalActionType  from './modules/RefuseInvoiceModalActionType';
 
 export  {
     LoginActionType,
@@ -91,5 +92,6 @@ export  {
     EditOrderCarModalActionType,
     ConfirmPaymentModalActionType,
     ConfirmRefundModalActionType,
-    RefuseRefundModalActionType
+    RefuseRefundModalActionType,
+    RefuseInvoiceModalActionType
 }

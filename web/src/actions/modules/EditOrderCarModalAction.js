@@ -87,17 +87,15 @@ export const calculateFreight = () => async (dispatch, getState) => {
             oldCar: carFlag,
             serviceType: serviceMode,
             valuation: valuation,
-            insuranceFlag: insuranceFlag
+            safeStatus: insuranceFlag
         };
 
         // 基本url
         let url = apiHost + '/api/transAndInsurePrice';
         let res = await httpUtil.httpPost(url, params);
         if (res.success === true) {
-            if (res.result.length > 0) {
-                freight = res.result[0].trans;
-                insuranceFee = res.result[0].insure;
-            }
+            freight = res.result.trans;
+            insuranceFee = res.result.insure;
         } else if (res.success === false) {
             swal('预计费用取得失败', res.msg, 'warning');
         }

@@ -60,10 +60,8 @@ export const httpAsyncGet = (url, callback) => {
         method: 'GET',
         headers: httpHeaders.headers
     }).then((response) => {
-            let json = response.json()
-            return json
-        }
-    ).then((result) => {
+        return response.json();
+    }).then((result) => {
         callback(null, result);
     }).catch((error) => {
         callback(error, null);
@@ -71,14 +69,12 @@ export const httpAsyncGet = (url, callback) => {
 };
 
 export const httpAsyncPost = (url, params,callback) => {
-    //console.log(httpHeaders.headers);
     fetch('http://'+url, {
         method: 'POST',
         headers: httpHeaders.headers,
         body: JSON.stringify(params)
     }).then((response) => {
-        let json = response.json()
-        return json;
+        return response.json();
     }).then((result)=>{
         callback(null,result);
     }).catch((error)=>{

@@ -123,7 +123,7 @@ class InvoiceApplyManagerDetail extends React.Component {
                     {/* 开票订单 */}
                     {invoiceApplyManagerDetailReducer.invoiceApplyInfo[0].invoiced_status !== sysConst.INVOICE_STATUS[0].value &&
                     <div>
-                        <div className="col s12 no-padding margin-top30 pink-font">开票订单</div>
+                        <div className="col s12 no-padding margin-top40 pink-font">开票订单</div>
                         {/* 分割线 */}
                         <div className="col s12 no-padding"><div className="col s12 margin-top5 divider bold-divider"/></div>
                     </div>}

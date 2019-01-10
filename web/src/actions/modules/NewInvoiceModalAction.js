@@ -89,7 +89,6 @@ export const saveInvoice = () => async (dispatch, getState) => {
                 companyAddress: companyAddress,
                 remark: remark
             };
-            console.log('params',params);
 
             // 基本url
             let url = '';

@@ -309,7 +309,6 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(InvoiceManagerActionType.setInvoiceStartNumber(start))
     },
 
-
     setConditionInvoiceApplyNo: (value) => {
         dispatch(InvoiceManagerActionType.setConditionInvoiceApplyNo(value))
     },

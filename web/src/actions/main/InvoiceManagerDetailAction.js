@@ -1,5 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
-import {InvoiceManagerDetailActionType, NewInvoiceModalActionType} from '../../actionTypes';
+import {InvoiceManagerDetailActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
@@ -21,28 +21,33 @@ export const getInvoiceApplyInfo = (id) => async (dispatch) => {
     }
 };
 
-export const changeInvoiceApplyOrder = () => async (dispatch, getState) => {
+export const confirmInvoice = () => async (dispatch, getState) => {
     try {
         // 发票申请编号
-        const invoiceApplyId = getState().InvoiceApplyManagerDetailReducer.invoiceApplyInfo[0].invoice_apply_id;
-        // 订单编号
-        const invoiceOrderId = getState().InvoiceApplyManagerDetailReducer.invoiceOrderId;
-
-        if (invoiceOrderId === '') {
-            swal('更新失败', '请输入订单编号！', 'warning');
-        } else {
-            // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/controlInvoices/' + invoiceApplyId + '/replaceOrder/' + invoiceOrderId;
-            let res = await httpUtil.httpPut(url, {});
-            if (res.success === true) {
-                swal("更新成功", "", "success");
-                // 保存成功后，重新检索画面数据
-                dispatch(getInvoiceApplyInfo(invoiceApplyId));
-            } else if (res.success === false) {
-                swal('更新失败', res.msg, 'warning');
+        const invoiceApplyId = getState().InvoiceManagerDetailReducer.invoiceApplyInfo[0].invoice_apply_id;
+        swal({
+            title: "确定发票已开出？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#724278',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                // 基本url
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/controlInvoices/' + invoiceApplyId + '/Invoiced';
+                const res = await httpUtil.httpPut(url, {});
+                if (res.success === true) {
+                    swal("开票成功", "", "success");
+                    // 保存成功后，重新检索画面数据
+                    dispatch(getInvoiceApplyInfo(invoiceApplyId));
+                } else if (res.success === false) {
+                    swal('开票失败', res.msg, 'warning');
+                }
             }
-        }
+        });
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

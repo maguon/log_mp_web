@@ -89,7 +89,7 @@ const routes = [
         component: InvoiceManager
     },
     {
-        path: '/invoiceApply/:id',
+        path: '/invoice/:id',
         exact: true,
         component: InvoiceManagerDetail
     },

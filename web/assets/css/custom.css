@@ -1087,7 +1087,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal, #newOrderModal,
-#cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal {
+#cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal, #refuseInvoiceModal {
     max-height: 360px;
 }
 

@@ -316,7 +316,9 @@ export const CUSTOM_REACT_SELECT_STYLE = {
     valueContainer: styles => ({...styles, paddingLeft: '0'})
 };
 
-
+/**
+ * 单选下拉菜单样式（自定义下拉菜单高度，120px 3项目高度）
+ */
 export const CUSTOM_REACT_SELECT_STYLE_FOR_MODAL = {
     control: (styles, {isFocused}) => ({
         ...styles,

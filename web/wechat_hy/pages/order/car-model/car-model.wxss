@@ -147,7 +147,7 @@ font-size: 15px;
   bottom: 20px;
   background: white;
   border: 1px solid #f00e46;
-  color: #f01137;
+  color: #f34d69;
   display: flex;
   flex-direction: row;
   align-items: center;

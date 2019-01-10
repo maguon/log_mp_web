@@ -20,6 +20,7 @@ Page({
     console.log(e)
     this.setData({
       index:e.index,
+      
     })
 
   },
@@ -108,17 +109,16 @@ Page({
     var userId = app.globalData.userId;
     var shipAddressId = addressList[index].id;
     console.log(addressList[index].id)
-    //判断用户点击index设置默认
+   // 判断用户点击index设置默认
     for (var i = 0, len = addressList.length; i < len; ++i) {
       addressList[i].status = i == index;
-      console.log(addressList[index].status)
     }
 
 
 
-
+    console.log(addressList)
     //发送PUT
-    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/userAddress/' + shipAddressId + '/status/'+1, '', (err, res) => {})
+    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/userAddress/' + shipAddressId + '/type/'+this.data.index, '', (err, res) => {})
     //保存
     this.setData({
       addressList: addressList,
@@ -133,7 +133,7 @@ Page({
    */
   useRess: function () {
     wx.navigateBack({
-      url: '/pages/index/print/print',
+      url: '',
     });
   }
 })

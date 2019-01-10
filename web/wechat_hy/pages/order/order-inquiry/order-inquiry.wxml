@@ -1,13 +1,15 @@
 <view class='container '>
-<view hidden='{{orderlist.status}}' class='head-prompt' >
- <view class='prompt-state'>待报价</view>
+<view  class='head-prompt' >
+ <view class='prompt-state'>询价编号:{{orderlist.id}}</view>
+  <view class='prompt-time'>{{orderlist.created_on}}</view>
 </view>
 <view class='dis-line'></view>
 <view class='dis-head'>
 <view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
 <view class='head-city'>{{orderlist.end_city}}</view>
-<image bindtap='bindCustomer' class='head-customer' src='../../../images/customer.png'></image>
+<view hidden='{{orderlist.status}}' class='head-customer'>待报价</view >
+<view hidden='{{!orderlist.status}}' class='head-customer'>已报价</view >
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
@@ -17,39 +19,66 @@
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-
+<view class='dis-way01'>
+<view class='city'>
+<image class='city-img' src='../../../images/car_02.png'></image>
+<view class='city-text'>运送车辆</view>
+<view class='stay-text01'>{{orderlist.car_num}}</view>
+<image hidden='{{orderlist.status}}'  bindtap='addCar' data-name='order-dis' class='add' src='../../../images/add_01.png'></image>
+</view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='items' hidden='{{orderlist.status}}'>
 <view class='dis-content' hover-class="active" wx:for='{{carlist}}' wx:key='u'
 bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
 <view class='city'>
-<image class='city-img' src='../../../images/car_02.png'></image>
 <view class='city-text'>{{carModel[item.model_id-1]}}</view>
-<image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
+<view class='image'>
+<image hidden='{{!item.old_car}}' class='new' src='../../../images/new.png'></image>
+<image hidden='{{item.old_car}}' class='new' src='../../../images/new_01.png'></image>
+<image hidden='{{!item.safe_status}}' class='bao' src='../../../images/bao.png'></image>
+<image hidden='{{item.safe_status}}' class='bao' src='../../../images/bao_01.png'></image>
+</view>
 <image class='arrow'src='../../../images/arrow.png'></image>
-<view class='stay-expect stay-text'>{{item.plan}} 元</view>
 </view>
 
 <view class='stay-detail'>
-<view class='stay-car'>数量:{{item.car_num}}</view>
+<view class='city-text'>估值:{{item.plan}} 元</view>
+<view class='stay-text'>数量:{{item.car_num}}</view>
+</view>
+<view class='stay-detail'>
 <view class='stay-expect'>
-<view class='stay-text'>预计费用:</view>
-<view class='stay-num'>{{item.price}}</view>
-<view class='stay-text'>元</view>
+<view class='stay-text01'>预计费用:{{item.price}}元</view>
 </view>
 </view>
 <view class='dis-line'></view>
 </view>
-
+</view>
 <!--  ---------------------------------------------------------------------- -->
+<view class='items' hidden='{{!orderlist.status}}'>
+<view class='dis-content'  wx:for='{{carlist}}' wx:key='u' data-id="{{index}}" hidden='{{!item.status}}'>
+<view class='city'>
+<view class='city-text'>{{carModel[item.model_id-1]}}</view>
+<view class='image'>
+<image hidden='{{!item.old_car}}' class='new' src='../../../images/new.png'></image>
+<image hidden='{{item.old_car}}' class='new' src='../../../images/new_01.png'></image>
+<image hidden='{{!item.safe_status}}' class='bao' src='../../../images/bao.png'></image>
+<image hidden='{{item.safe_status}}' class='bao' src='../../../images/bao_01.png'></image>
+</view>
+</view>
 
-<view class='dis-sum'>
-<view class='sum-text'>预计总费用</view>
+<view class='stay-detail'>
+<view class='city-text'>估值:{{item.plan}} 元</view>
+<view class='stay-text'>数量:{{item.car_num}}</view>
+</view>
+<view class='stay-detail'>
 <view class='stay-expect'>
-<view class='stay-num'>{{sumFee}}</view>
-<view class='stay-text'>元</view>
+<view class='stay-text01'>预计费用:{{item.price}}元</view>
 </view>
 </view>
-<view class='sum-line'></view>
-
+<view class='dis-line'></view>
+</view>
+</view>
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='dis-prompt'>
@@ -57,53 +86,52 @@ bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
-<view class='dis-add'>
-<button bindtap='addCar' data-name='order-dis' class='add-button'>
-<view class='add-text'>增加车型</view>
-</button>
+<view hidden='{{orderlist.status}}' class='dis-sum'>
+<view class='stay-expect'>
+<view class='sum-text'>预计总费用:</view>
+<view class='stay-num'>{{sumFee}}</view>
+<view class='stay-text02'>元</view>
 </view>
-<view class='dis-line'></view>
+</view>
+
 <!--  ---------------------------------------------------------------------- -->
  <view hidden='{{!orderlist.status}}' class='box'>
- <view class='box-text'>协商费用</view>
- <view class='stay-expect'>
- <view class='stay-num'>{{orderlist.total_trans_price}}</view>
- <view class='stay-text'>元</view>
- </view>
- </view>
- <view class='dis-line'></view>
- <!--  ---------------------------------------------------------------------- -->
- <view hidden='{{!orderlist.status}}' class='box'>
- <view class='box-text'>协商车辆</view>
- <view class='stay-expect'>
- <view class='stay-text'>{{carCount}}辆</view>
- </view>
- </view>
- <view class='dis-line'></view>
- <!--  ---------------------------------------------------------------------- -->
-<view class='dis-orderid'>
-<view class='orderid'>
-<view class='orderid-text'>订单编号：{{orderlist.id}}</view>
-<button bindtap='textPaste' class='orderid-button'>
-<view  class='button-text'>复制</view>
-</button>
-</view>
-<view class='create-time'>创建时间：{{orderlist.created_on}}</view>
-<view hidden='{{!orderlist.status}}' class='create-time'>协商时间：{{orderlist.updated_on}}</view>
 
+<view class='stay-detail'>
+<view class='stay-expect'>
+<view class='stay-text01 stay-del'>预计总费用:{{sumFee}}元</view>
 </view>
-<view class='dis-line'></view>
+</view>
+<view class='stay-detail'>
+ <view class='stay-expect'>
+  <view class='stay-text01'>协商费用:</view>
+ <view class='stay-num'>{{orderlist.total_trans_price}}</view>
+ <view class='stay-text01'>元</view>
+ </view>
+ </view>
+ </view>
 <view class='heigh'></view>
 
 <!--  ---------------------------------------------------------------------- -->
 
-<view class='dis-cancel'>
-<view  bindtap='cancel' class='cancel' hover-class="cancel_btn">
+
+<view hidden='{{orderlist.status}}'  class='dis-cancel'>
+<button  bindtap='cancel' class='cancel' hover-class="cancel_btn">
 <view class='button' >取消订单</view>
+</button>
+
+<button bindtap='bindCustomer' class='dis-inquiry' hover-class="cancel_btn">
+<view class='button'>联系客服</view>
+</button>
 </view>
 
-<view bindtap='bindCustomer' class='dis-inquiry' hover-class="cancel_btn">
+<view hidden='{{!orderlist.status}}'  class='dis-cancel'>
+<button  bindtap='cancel' class='cancel' hover-class="cancel_btn">
+<view class='button' >取消订单</view>
+</button>
+
+<button bindtap='bindCustomer' class='dis-inquiry' hover-class="cancel_btn">
 <view class='button'>重新协商</view>
-</view>
+</button>
 </view>
 </view>

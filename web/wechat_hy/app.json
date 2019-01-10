@@ -1,7 +1,6 @@
 {
   "pages":[
-    "pages/order/order-pay/bank-pay/end-pay/end-pay",
-    "pages/order/order-pay/bank-pay/bank-pay",
+  
     "pages/login/login",
 
     "pages/index/index",
@@ -18,7 +17,8 @@
     "pages/order/delivery-order/delivery-order",
     "pages/order/order-pay/choose/choose",
     "pages/order/order-pay/weixin-pay/weixin-pay",
-  
+    "pages/order/order-pay/bank-pay/end-pay/end-pay",
+    "pages/order/order-pay/bank-pay/bank-pay",
     "pages/order/order-pay/bank-pay/card-msg/card-msg",
     "pages/order/order-pay/bank-pay/add-card/add-card",
     "pages/order/car-msg/car-msg",

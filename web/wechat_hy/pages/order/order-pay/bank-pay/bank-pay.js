@@ -9,7 +9,7 @@ Page({
   data: {
     hidden: false,
     bankMsg: [],
-    cost_num: "",
+    cost_num:0,
     totalPrice: '',
     orderId: '',
   },
@@ -77,11 +77,12 @@ Page({
 
   bindtap: function () {
     var that=this;
-    var totalPrice = that.data.totalPrice;
+    var totalPrice = parseInt(that.data.totalPrice);
     var costNum = that.data.cost_num;
     var userId = app.globalData.userId;
     var orderId = that.data.orderId;
-
+console.log(costNum)
+    console.log(totalPrice)
     if (that.data.hidden == false) {
       wx.showModal({
         content: "请选择您的银行卡",
@@ -89,7 +90,7 @@ Page({
         confirmColor: "#a744a7",
       })
       return;
-    } else if (costNum!=''){
+    } else if (costNum != 0){
       if (costNum < totalPrice) {
         wx.showModal({
           content: "当前支付金额不足应支付费用，确定支付部分费用？",
@@ -111,13 +112,11 @@ Page({
                       totalFee: costNum,
                     }
                     reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", params, (err, res) => {
-                      reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/status/" + 3, "", (err, res) => {
-                       
                       wx.navigateTo({
-                        url: "/pages/order/delivery-order/delivery-order?id=" +orderId,
+                        url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?id=" + orderId + "&fee=" + that.data.totalPrice+"&paymentId="+res.data.id,
                       })
                       })
-                    })
+                  
                   }
                 }
               })
@@ -141,14 +140,11 @@ Page({
               totalFee: totalPrice, 
             }
             reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", param, (err, res) => {
-              reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/status/"+3, "", (err, res) => {
+              console.log(res.data.id);
                 wx.navigateTo({
-                  url: "/pages/order/delivery-order/delivery-order?id=" + orderId,
+                  url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?id=" + orderId + "&fee=" + that.data.totalPrice+"&paymentId="+res.data.id,
                 })
               })
-
-              
-            })
           }
         }
       })

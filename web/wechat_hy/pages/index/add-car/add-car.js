@@ -239,14 +239,12 @@ Page({
     }
   //设置参数
     var params = {
-      vin: "",
       modelId: parseInt(this.data.car_index)+1,
       oldCar: this.data.checked,
       plan: this.data.valuation,
-      fee:this.data.price,
       carNum: this.data.num,
-      safePrice: this.data.valuation * this.data.valuationRate,
       safeStatus: this.data.insurance,
+      serviceType: this.data.service_type,
     }
     //发送服务器
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + this.data.inquiryId+"/inquiryCar", params, (err, res) => {
@@ -256,7 +254,7 @@ Page({
       })
       }else{
         wx.redirectTo({
-          url: '/pages/order/order-inquiry/order-inquiry?id=' + this.data.inquiryId,
+          url: '/pages/order/order-inquiry/order-inquiry?orderId=' + this.data.inquiryId,
         })
       }
     })

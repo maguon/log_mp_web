@@ -1,14 +1,23 @@
+page{
+   background: #f8f6f8;
+}
 .head-prompt{
-  height: 30px;
+  height: 40px;
   width: 100%;
-  background: #c8a0c8;
+  background: #b17bb1;
   display: flex;
-  justify-content: center;
   align-items: center;
 }
 .prompt-state{
   font-size: 12px;
   color: white;
+  margin-left: 10px;
+}
+.prompt-time{
+  font-size: 12px;
+  color: white;
+  position: absolute;
+  right: 20px;
 }
 .dis-head{
   width: 100%; 
@@ -35,8 +44,8 @@
   font-weight: bolder;
 }
 .head-customer{
-  width: 28px;
-  height: 20px;
+  font-size: 12px;
+  color: #cc7da2;
   position: absolute;
   right: 20px;
 }
@@ -46,6 +55,14 @@
   width: 100%;
   height: 50px;
   background: #f8f6f8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.dis-way01{
+  width: 100%;
+  height: 50px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -63,14 +80,16 @@
 /* ---------------------------------------------------------------------- */
 .dis-content{
  width: 100%;
- height: 80px;
+ height: 110px;
+ background: white;
+ margin-top: 2px;
 }
 .arrow{
   width: 20px;
   height: 20px;
   position: absolute;
-  right: 2px;
-  margin-top: 15px;
+  right: 0px;
+  margin-top: 35px;
 }
 .active{
 background-color:#ececec;
@@ -110,7 +129,7 @@ background-color:#ececec;
   flex-direction: row;
   align-content: center;
   position: absolute;
-  right: 30px;
+  right: 15px;
 }
 .stay-car{
   width: 120px;
@@ -119,13 +138,19 @@ background-color:#ececec;
   margin-left: 50px;
 }
 .stay-text{
-  font-size:12px;
+  font-size:15px;
   color: #8a8a8a; 
+  position: absolute;
+  right: 20px;
 }
+.stay-text01{
+  font-size:15px;
+  color: #8a8a8a; 
+  }
 .stay-num{
   color: #d43286;
   font-size: 20px;
-  margin-top: -7px;
+  margin-top: -4px;
 }
 /* ---------------------------------------------------------------------- */
 .dis-sum{
@@ -138,22 +163,19 @@ align-items: center;
 .sum-text{
 font-size: 15px;
 color: #cc7da2;
-margin-left: 15px;
 }
-.sum-line{
-   width: 100%;
-  height: 2px;
-  background: #dfdfe2;
-
-}
+.stay-text02{
+  font-size:15px;
+  color: #cc7da2; 
+  }
 /* ---------------------------------------------------------------------- */
 .dis-prompt{
   width: 100%;
   height: 60px;
-  background:  #f8f6f8;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 2px;
 }
 .prompt-text{
   width: 95%;
@@ -162,32 +184,26 @@ margin-left: 15px;
 }
 /* ---------------------------------------------------------------------- */
 
-.dis-add{
-  width: 100%;
-  height: 60px;
-}
-.add-button{
-  width: 120px;
-  height: 30px;
+.add{
+  width: 25px;
+  height: 25px;
   position: absolute;
-  right: 10px;
-  margin-top: 15px;
-  border: 1px solid #7a387a;
+  right: 20px;
 }
-.add-text{
-  font-size: 15px;
-  color: #7a387a;
-  position: relative;
-  bottom: 5px;
+.stay-del{
+  margin-top: 10px;
+  text-decoration:line-through;
+  font-size: 14px;
+}
+.items{
+  width: 100%;
 }
 /* ---------------------------------------------------------------------- */
 .box{
   width: 100%;
-  height: 40px;
-  background: #f8f6f8;
+  height: 100px;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction:column;
 }
 .box-text{
   font-size: 15px;
@@ -249,7 +265,7 @@ margin-left: 15px;
   position: fixed;
   bottom: 0px;
   background:#f7f5f7; 
-  border-top: 1px solid #dfdfe2;
+  /* border-top: 1px solid #dfdfe2; */
 }
 .cancel{
   width: 50%;
@@ -258,18 +274,40 @@ margin-left: 15px;
   color: #d43286;
   text-align: center;
 }
+.cancel01{
+  width: 100%;
+  height: 45px;
+  font-size: 18px;
+  color: #d43286;
+  text-align: center;
+}
 .dis-inquiry{
 width: 50%;
 height: 45px;
-color: white;
 font-size: 18px;
+color: #d43286;
 text-align: center;
-background: #874087;
+
 }
 
-.button{
-  margin-top: 10px;
-}
 .cancel_btn{
   background-color: #aaa5a5;
+}
+
+.image{
+  height: 50px;
+  position: absolute;
+  right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  }
+.new{
+  width: 20px;
+  height: 20px;
+}
+.bao{
+   width: 21px;
+   height: 21px;
+
 }

@@ -1,28 +1,53 @@
 <!--  ---------------------------------------------------------------------- -->
 <view class='carMsg'>
-<view class='carMsg-text'>运输车辆</view>
-<view class='carMsg-num'>{{count}}</view>
+<view class='carMsg-text'>运输车辆:</view>
+<view class='carMsg-text'>{{count}}</view>
+<image hidden='{{hidden}}'  bindtap='addCar'  data-index='' class='add' src='../../../images/add_01.png'></image>
 </view>
+<view class='dis-line'></view>
 
+<view hidden='{{promptFlag}}' class='prompt-msg'>
+<view class='prompt-text'>请点击右上角添加按钮添加运送车辆详情信息~</view> 
+</view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='items' wx:for="{{orderItem}}"  wx:key='u' >
-<view class='item'>
-<image class='car-img' src='../../../images/car_02.png'></image>
+<view hidden='{{hidden}}' class='items'  wx:for="{{orderItem}}"  wx:key='u' bindtap='modifyCar'  data-index='{{index}}' hover-class="weui-cell_active">
+<view  class='item'>
+<image  class='car-img' src='../../../images/car_02.png'></image>
 <view class='item-vin'>VIN:{{item.vin}}</view>
 <view class='item-model'>
-<view class='item-car'>{{carModel[item.model_type-1]}}</view>
-<image hidden='{{item.old_car}}' class='item-old' src='../../../images/new.png'></image>
+<image hidden='{{!item.old_car}}' class='item-old' src='../../../images/new.png'></image>
+<image hidden='{{item.old_car}}' class='item-old' src='../../../images/new_01.png'></image>
+<image hidden='{{!item.safe_status}}' class='item-bao' src='../../../images/bao.png'></image>
+<image hidden='{{item.safe_status}}' class='item-bao' src='../../../images/bao_01.png'></image>
 </view>
+<image class='arrow'src='../../../images/arrow.png'></image>
 </view>
 
 <view class='item'>
+<view class='item-car'>{{carModel[item.model_type-1]}}</view>
 <view class='item-v'>估值:{{item.valuation}}元</view>
-<view class='item-fee'>
-<view class='item-car'>运输费用:</view>
-<view class='item-money'>0000.00</view>
-<view class='item-car'>元</view>
-</view>
 </view>
 </view>
 
 <!--  ---------------------------------------------------------------------- -->
+<view hidden='{{!hidden}}' class='items'  wx:for="{{orderItem}}"  wx:key='u'>
+<view  class='item'>
+<image  class='car-img' src='../../../images/car_02.png'></image>
+<view class='item-vin'>VIN:{{item.vin}}</view>
+<view class='item-model'>
+<image hidden='{{!item.old_car}}' class='item-old' src='../../../images/new.png'></image>
+<image hidden='{{item.old_car}}' class='item-old' src='../../../images/new_01.png'></image>
+<image hidden='{{!item.safe_status}}' class='item-bao' src='../../../images/bao.png'></image>
+<image hidden='{{item.safe_status}}' class='item-bao' src='../../../images/bao_01.png'></image>
+</view>
+</view>
+<view class='item'>
+<view class='item-car'>{{carModel[item.model_type-1]}}</view>
+<view class='item-v'>估值:{{item.valuation}}元</view>
+</view>
+</view>
+<view class='heigh'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view hidden='{{hidden}}' class='btn'>
+ <button   bindtap="bindtap" class="btn-area" hover-class="weui-cell_active">确定</button>
+ </view>

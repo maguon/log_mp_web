@@ -67,9 +67,10 @@ class InquiryInfoModal extends React.Component {
                         </div>
                     </div>}
 
+                    {inquiryInfoModalReducer.inquiryInfo.length > 0 &&
                     <div className="row margin-bottom10 margin-left5 fz16 pink-font">
-                        协商车辆数：{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryCarArray.length)}
-                    </div>
+                        协商车辆数：{formatUtil.formatNumber(inquiryInfoModalReducer.inquiryInfo[0].car_num)}
+                    </div>}
                     <div className="row">
                         <table className="bordered">
                             <thead className="custom-grey border-top-line">

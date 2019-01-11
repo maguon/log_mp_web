@@ -89,15 +89,15 @@ class InquiryInfoModal extends React.Component {
                             {inquiryInfoModalReducer.inquiryCarArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
-                                        <td className="padding-left10">{commonUtil.getJsonValue(sysConst.CAR_MODEL,item.model_id)}</td>
-                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.old_car)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.plan,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.trans_price,2)}</td>
-                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO,item.safe_status)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.insure_price,2)}</td>
+                                        <td className="padding-left10">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_id)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.plan, 2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.one_trans_price, 2)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.one_insure_price, 2)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.plan_total,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.trans_total + item.insure_price,2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.plan_total, 2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.trans_price + item.insure_price, 2)}</td>
                                     </tr>
                                 )
                             }, this)}

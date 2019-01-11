@@ -96,7 +96,7 @@ class InquiryInfoModal extends React.Component {
                                         <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.one_insure_price, 2)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.plan_total, 2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.plan_total)}</td>
                                         <td className="right-align">{formatUtil.formatNumber(item.trans_price + item.insure_price, 2)}</td>
                                     </tr>
                                 )

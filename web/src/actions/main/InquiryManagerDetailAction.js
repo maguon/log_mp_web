@@ -30,7 +30,7 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryCar?type=0&inquiryId=' + inquiryId;
+            + '/inquiryCar?status=1&inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: InquiryManagerDetailActionType.getInquiryCarList, payload: res.result});
@@ -42,7 +42,7 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
             let totalInsuranceFee = 0;
             res.result.forEach((item) => {
                 totalValuation = totalValuation + item.plan_total;
-                totalFreight = totalFreight + item.trans_total;
+                totalFreight = totalFreight + item.trans_price;
                 totalInsuranceFee = totalInsuranceFee + item.insure_price;
             });
             dispatch({type: InquiryManagerDetailActionType.setTotalValuation, payload: totalValuation});

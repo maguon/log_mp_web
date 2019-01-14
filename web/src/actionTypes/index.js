@@ -2,6 +2,9 @@ import * as HeaderActionType  from './layout/HeaderActionType';
 import * as LoginActionType  from './layout/LoginActionType';
 
 import * as CommonActionType  from './main/CommonActionType';
+import * as UserStatisticActionType  from './main/UserStatisticActionType';
+import * as OrderStatisticActionType  from './main/OrderStatisticActionType';
+
 import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
 import * as OrderManagerActionType  from './main/OrderManagerActionType';
@@ -51,6 +54,9 @@ export  {
     HeaderActionType,
 
     CommonActionType,
+    UserStatisticActionType,
+    OrderStatisticActionType,
+
     UserManagerActionType,
     UserManagerDetailActionType,
     OrderManagerActionType,

@@ -276,6 +276,18 @@ export const INVOICE_STATUS = [
     }
 ];
 
+// 按日统计-日数
+export const STATISTIC_DAYS = [
+    {
+        value: 10,
+        label: "近 10 天"
+    },
+    {
+        value: 30,
+        label: "近 30 天"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,
@@ -305,6 +317,28 @@ export const CUSTOM_REACT_SELECT_STYLE = {
         borderRight: '0',
         background: '#FFFFFF',
         margin: "0 0 20px 0",
+        borderColor: isFocused ? '#26a69a' : '#ACACAC',
+        ':hover': {
+            borderColor: "#26a69a"
+        }
+    }),
+    // 下拉菜单和输入框距离
+    menu: styles => ({ ...styles, marginTop:'1px'}),
+    indicatorSeparator: styles => ({...styles, display: 'none'}),
+    valueContainer: styles => ({...styles, paddingLeft: '0'})
+};
+
+export const STATISTIC_SELECT_STYLE = {
+    control: (styles, {isFocused}) => ({
+        ...styles,
+        height: '18px',
+        borderRadius: '0',
+        boxShadow: '0',
+        borderTop: '0',
+        borderLeft: '0',
+        borderRight: '0',
+        background: '#FFFFFF',
+        margin: "0 0 0 0",
         borderColor: isFocused ? '#26a69a' : '#ACACAC',
         ':hover': {
             borderColor: "#26a69a"

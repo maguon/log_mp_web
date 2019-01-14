@@ -5,6 +5,9 @@ import HeaderReducer from './layout/HeaderReducer';
 import LoginReducer from './layout/LoginReducer';
 
 import CommonReducer from './main/CommonReducer';
+import UserStatisticReducer from './main/UserStatisticReducer';
+import OrderStatisticReducer from './main/OrderStatisticReducer';
+
 import UserManagerReducer from './main/UserManagerReducer';
 import UserManagerDetailReducer from './main/UserManagerDetailReducer';
 import OrderManagerReducer from './main/OrderManagerReducer';
@@ -55,6 +58,9 @@ export default combineReducers({
     HeaderReducer,
 
     CommonReducer,
+    UserStatisticReducer,
+    OrderStatisticReducer,
+
     UserManagerReducer,
     UserManagerDetailReducer,
     OrderManagerReducer,

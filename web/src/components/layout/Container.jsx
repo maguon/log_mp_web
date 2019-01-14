@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 import {
     Panel,
+    UserStatistic,
+    OrderStatistic,
     UserManager,
     UserManagerDetail,
     OrderManager,
@@ -46,6 +48,20 @@ const routes = [
         path: "/panel",
         exact: true,
         component: Panel
+    },
+
+    // 统计
+    {
+        // 用户统计
+        path: "/order_statistic",
+        exact: true,
+        component: OrderStatistic
+    },
+    {
+        // 用户统计
+        path: "/user_statistic",
+        exact: true,
+        component: UserStatistic
     },
 
     // 用户信息
@@ -216,6 +232,22 @@ class Container extends React.Component {
                         <li>
                             <div className="divider"/>
                         </li>
+
+                        <li>
+                            <ul className="collapsible collapsible-accordion">
+                                <li>
+                                    <a className="collapsible-header"><i className="mdi mdi-chart-line"/>统计图</a>
+                                    <div className="collapsible-body">
+                                        <ul>
+                                            <li><Link to="/order_statistic"><i className="mdi mdi-chevron-right"/>订单统计</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/user_statistic"><i className="mdi mdi-chevron-right"/>新增用户</Link></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><div className="divider"/></li>
 
                         <li>
                             <ul className="collapsible collapsible-accordion">

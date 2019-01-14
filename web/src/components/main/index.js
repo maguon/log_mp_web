@@ -1,4 +1,7 @@
 export Panel from "./Panel";
+export UserStatistic from "./UserStatistic";
+export OrderStatistic from "./OrderStatistic";
+
 export UserManager from "./UserManager";
 export UserManagerDetail from "./UserManagerDetail";
 export OrderManager from "./OrderManager";

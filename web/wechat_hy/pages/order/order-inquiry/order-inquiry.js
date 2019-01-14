@@ -48,9 +48,9 @@ Page({
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 1) {
           //设置单价
-          res.data.result[i].price = this.decimal((res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num);
+          res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
           //设置总价
-          sum += (res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num;
+          sum += res.data.result[i].trans_price + res.data.result[i].insure_price;
           ////车辆数
           count += res.data.result[i].car_num;
         }

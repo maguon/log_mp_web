@@ -7,8 +7,9 @@ Page({
   // 页面的初始数据
   data: {
     addressList: [],
+    defAddress:[],
     hidden: false,
-    index:'',
+    orderId:'',
   },
 
 
@@ -20,7 +21,7 @@ Page({
     console.log(e)
     this.setData({
       index:e.index,
-      
+      orderId :e.orderId,
     })
 
   },
@@ -42,8 +43,6 @@ Page({
         })
       } else {
 
-        console.log(res.data.result);
-
         if (res.data.result.length == 1) {
           res.data.result[0].status = 1;
         }
@@ -64,7 +63,7 @@ Page({
    */
   addAddress: function () {
     var addressList = JSON.stringify("");
-    wx.navigateTo({ url: '../address/address?addressList=' + addressList+"&index="+this.data.index});
+    wx.navigateTo({ url: '../address/address?addressList=' + addressList+"&index="+""});
   },
 
 
@@ -97,9 +96,13 @@ Page({
     var addressList = JSON.stringify(this.data.addressList[index]);
     console.log(addressList)
     wx.navigateTo({
-      url: '../address/address?addressList=' + addressList,
+      url: '../address/address?addressList=' + addressList+"&index="+index,
     });
   },
+
+
+
+
   /**
      *单项选择控制
      */
@@ -112,6 +115,7 @@ Page({
    // 判断用户点击index设置默认
     for (var i = 0, len = addressList.length; i < len; ++i) {
       addressList[i].status = i == index;
+   
     }
 
 
@@ -122,7 +126,9 @@ Page({
     //保存
     this.setData({
       addressList: addressList,
+      defAddress: addressList[index],
     });
+
   },
 
 
@@ -132,6 +138,31 @@ Page({
    * 点击跳转
    */
   useRess: function () {
+    var index = this.data.index;
+    var userId = app.globalData.userId;
+    var orderId = this.data.orderId;
+    var defAddress=this.data.defAddress;
+    console.log(defAddress)
+  //判断收发货
+    if(index==0){
+      //发货
+      var params = {
+        sendName: defAddress.user_name,
+        sendPhone: defAddress.phone,
+        sendAddress: defAddress.detail_address
+      }
+    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/sendMsg', params, (err, res) => {
+  })
+    } 
+    if (index == 1){
+      //收货
+      var params = {
+        recvName: defAddress.user_name,
+        recvPhone: defAddress.phone,
+        recvAddress: defAddress.detail_address
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/recvMsg', params, (err, res) => {})
+    }
     wx.navigateBack({
       url: '',
     });

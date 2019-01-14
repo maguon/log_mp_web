@@ -13,9 +13,6 @@ Page({
     orderId: '',
     order: [],
     name: '',
-    goodsList: [
-      { goods_name: "商品二维码" }
-    ]
   },
 
   /**
@@ -24,7 +21,8 @@ Page({
   onLoad: function (e) {
     this.setData({
       orderId: e.orderId,
-      totalPrice: e.fee,
+      // totalPrice: e.fee,
+      totalPrice:"0.01",
     })
   },
   /**
@@ -40,7 +38,7 @@ Page({
    */
   payment: function () {
 
-    var that = this
+    var that = this;
     var openid = app.globalData.openid;
     var userInfo = app.globalData.userInfo;
     var userId = app.globalData.userId;

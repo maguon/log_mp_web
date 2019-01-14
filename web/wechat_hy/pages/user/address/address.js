@@ -12,6 +12,9 @@ Page({
     addressList: [],
     add: "确认添加",
     index:'',
+    name:'请输入收货人姓名',
+    phone:'请输入收货人电话',
+    address:'请输入收货人详细地址',
   },
 
 
@@ -26,6 +29,9 @@ Page({
     if (addressList != "") {
       this.setData({
         addressList: addressList,
+        name: addressList.user_name,
+        phone: addressList.phone,
+        address: addressList.detail_address,
         add: '确定修改',
         index:e.index,
       })
@@ -104,7 +110,7 @@ Page({
           type: that.data.index,
         }
         //发送请求
-        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/userAddress" + that.data.addressList.id + "/address", params, (err, res) => { });
+        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/userAddress/" + that.data.addressList.id + "/address", params, (err, res) => { });
       } else {
         //获取要传递的参数
         var params = {

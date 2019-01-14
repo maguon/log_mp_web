@@ -25,11 +25,13 @@ Page({
     this.setData({
       orderId: e.orderId,
     })
-    if(e.name=="delivery"){
+    console.log(e.name)
+    if (e.name == "delivery"){
       this.setData({
         hidden: true,
       })
     }
+   
   },
 
   /**

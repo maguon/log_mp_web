@@ -64,12 +64,12 @@ Page({
     oldCar: this.data.checked,
     serviceType: parseInt(this.data.service_type)+1,
     valuation: this.data.valuation,
-    insuranceFlag: this.data.insurance,
+    safeStatus: this.data.insurance,
     }
     //计算费用
     reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params,(err, res) => {
       //计算价格
-      var price = this.money(res.data.result[0].trans + res.data.result[0].insure);
+      var price = this.money(res.data.result.trans + res.data.result.insure);
       var sumPrice = this.money(price*this.data.num);
       console.log(res)
       this.setData({

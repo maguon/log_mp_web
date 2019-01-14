@@ -30,25 +30,29 @@ Page({
     console.log(e)
     var userId = app.globalData.userId;
     var  orderId=e.orderId;
-    
+    this.setData({
+      orderId: orderId,
+    })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      if (res.data.result != '') {
-        // for (var i = 0; i < res.data.result.length; i++) {
-        //   //保留2位小数
-        //   res.data.result[i].total_insure_price = this.decimal(res.data.result[i].insure_price + res.data.result[i].trans_price);
-         
-        //   //设置显示
-        //   if (res.data.result[i].status == 3) {
-        //     res.data.result[i].state = 0;
-        //   } else if (res.data.result[i].status == 1){
-        //     this.setData({
-        //       disabled:true,
-        //     })
-        //   }else {
-        //     res.data.result[i].state = 1;
-        //   }
-        // }
+      if (res.data.result != '') {  
+          //设置显示
+          if (res.data.result[0].status == 3) {
+            res.data.result[0].state = 0;
+          } else if (res.data.result[0].status == 1){
+            this.setData({
+              disabled:true,
+            })
+          }else {
+            res.data.result[0].state = 1;
+          }
+          //是否完善地址
+        if (res.data.result[0].recv_name != null && res.data.result[0].send_name != null) {
+          this.setData({
+            address: true,
+          })
+        }
+        
         //预计费用
         res.data.result[0].ora_insure_price = this.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
         //协商费用
@@ -58,7 +62,6 @@ Page({
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type-1,
-          orderId: orderId,
         })
       }
       console.log(res.data.result)
@@ -78,41 +81,13 @@ Page({
     var userId = app.globalData.userId;
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + this.data.orderId, (err, res) => {
       console.log(res.data.result)
-      if (res.data.result != '') {
+      if (res.data.result!= "") {
         this.setData({
           orderItem: res.data.result,
           carflag:true,
         })
       }
     })
-
-    //获取发车地址
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 0, (err, res) => {
-      //获取发车地址
-      for (var i = 0; i < res.data.result.length; i++) {
-        if (res.data.result[i].status == 1) {
-          this.setData({
-            startAddress: res.data.result[i],
-          })
-        }
-      }
-    })
-    //获取收车地址
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type=" + 1, (err, res) => {
-      //获取发车地址
-      for (var i = 0; i < res.data.result.length; i++) {
-        if (res.data.result[i].status = 1) {
-          this.setData({
-            endAddress: res.data.result[i],
-          })
-        }
-      }
-    })
-    if(this.data.startAddress==""||this.data.endAddress!=""){
-      this.setData({
-        address:true,
-      })
-    }
    
   },
 
@@ -163,9 +138,15 @@ var note=e.detail.value;
 
   //完善信息
   perfect:function(){
+    if(this.data.disabled){
+      wx.navigateTo({
+        url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId + "&name=" + "delivery" ,
+      })  
+    }else{
     wx.navigateTo({
-      url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId+"&name="+"pending",
+      url: '/pages/order/car-msg/car-msg?orderId=' + this.data.orderId + "&name=" + "pending",
     })
+    }
   },
 
 
@@ -291,28 +272,19 @@ submit:function(e){
       success(res) {
         //点击确认
         if (res.confirm) {
+        
+          //提交信息到服务器
           var params = {
-            mark: note,
-          }
-          //提交留言
-          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/orderMark", params, (err, res) => { })
-
-          //发送收货地址
-          var param_recv = {
+            remark: note,
             recvName: that.data.startAddress.user_name,
             recvPhone: that.data.startAddress.phone,
             recvAddress: that.data.startAddress.detail_address,
-          }
-          
-          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/receiveInfo", param_recv, (err, res) => { })
-
-          //发送发货信息
-          var param_send = {
             sendName: that.data.endAddress.user_name,
             sendPhone: that.data.endAddress.phone,
             sendAddress: that.data.endAddress.detail_address,
-          }
-          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/sendInfo", param_send, (err, res) => { })
+          } 
+          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/improveInformation", params, (err, res) => { })
+
 
           //修改订单状态
           reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/status/" + 1, "", (err, res) => {

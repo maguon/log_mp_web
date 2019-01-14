@@ -124,7 +124,7 @@ align-items: center;
   width: 90%;
   height: 60px;
 
-  background: rgb(245, 228, 228);
+  background:white;
   margin-top: 20px;
   display: flex;
   flex-direction: row;

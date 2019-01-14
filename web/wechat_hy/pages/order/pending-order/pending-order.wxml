@@ -17,14 +17,15 @@
 <image class='way-image' src='../../../images/car.png'></image>
 <view class='way-text'>{{service[orderlist.service_type-1]}}</view>
 <view hidden='{{address}}' class='stay-expect stay-text'>请选择运送地址</view>
-<view hidden='{{!address}}'  class='stay-expect stay-text'>已完善</view>
+<image hidden='{{!address}}' class='yes' src='../../../images/yes.png'></image>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
 
-<view hidden='{{!disabled}}'  class='dis-way' hover-class="active">
+<view hidden='{{!disabled}}'  class='dis-way'>
 <image class='way-image' src='../../../images/car.png'></image>
 <view class='way-text'>{{service[orderlist.service_type-1]}}</view>
-<view class='stay-expect stay-text'>请选择运送地址</view>
+<view hidden='{{address}}' class='stay-expect stay-text'>请选择运送地址</view>
+<image hidden='{{!address}}' class='yes' src='../../../images/yes.png'></image>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
@@ -33,57 +34,12 @@
 <image class='city-img' src='../../../images/car_02.png'></image>
 <view class='city-text'>运送车辆</view>
 <view hidden='{{carflag}}' class='stay-expect stay-text'>请完善车辆信息</view>
-<view hidden='{{!carflag}}' class='stay-expect stay-text'>已完善</view>
+<image hidden='{{!carflag}}' class='yes' src='../../../images/yes.png'></image>
+<!-- <view hidden='{{!carflag}}' class='stay-expect stay-text'></view> -->
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
 </view>
 <view class='dis-line'></view>
-<!--  ---------------------------------------------------------------------- -->
-<!-- <view hidden='{{disabled}}'  class='orderItem' wx:for="{{orderItem}}" wx:key='u'>
-<view  class='dis-content01' hover-class="active">
-<view class='stay-detail'>
-<view class='tag'>{{index+1}}</view>
-<view class='stay-car' bindtap='orderItem' data-index='{{index}}'>{{item.vin}}</view>
-<image bindtap='orderItemDel' data-index='{{index}}' class='no' src='../../../images/no.png'></image>
-</view>
-
-<view class='city' bindtap='orderItem' data-index='{{index}}'>
-<image class='city-img'></image>
-<view class='city-text'>{{carModel[item.model_type]}}</view>
-<image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
-<image class='car-arrow'src='../../../images/arrow.png'></image>
-<view class='stay-expect stay-text'>{{item.valuation}} 元</view>
-</view>
-</view>
-<view class='dis-line'></view>
-</view> -->
-
-<!--  ---------------------------------------------------------------------- -->
-<!-- 
-<view hidden='{{!disabled}}'  class='orderItem' wx:for="{{orderItem}}" wx:key='u'>
-<view  class='dis-content01' hover-class="active">
-<view class='stay-detail'>
-<view class='tag'>{{index+1}}</view>
-<view class='stay-car' >{{item.vin}}</view>
-
-</view>
-
-<view class='city' >
-<image class='city-img'></image>
-<view class='city-text'>{{carModel[item.model_type]}}</view>
-<image hidden='{{!item.old_car}}' class='city-arrow' src='../../../images/new.png'></image>
-<view class='stay-expect stay-text'>{{item.valuation}} 元</view>
-</view>
-</view>
-<view class='dis-line'></view>
-</view>
-
- <view hidden='{{disabled}}' class='dis-add'>
-<button  bindtap='perfect' class='add-button'>
-<view class='add-text'>完善车辆信息</view>
-</button>
-</view>
-<view class='sum-line'></view> --> 
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
 <view class='sum-text'>预计费用</view>

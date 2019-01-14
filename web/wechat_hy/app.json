@@ -1,6 +1,6 @@
 {
   "pages":[
-  
+ 
     "pages/login/login",
 
     "pages/index/index",
@@ -12,28 +12,33 @@
     "pages/index/citys/citys",
    
     "pages/order/order",
+    "pages/order/car-msg/car-msg",
+    "pages/order/transport/transport",
+    "pages/order/car-model/car-model",
+    "pages/order/submit/submit",
     "pages/order/order-inquiry/order-inquiry",
     "pages/order/pending-order/pending-order",
-    "pages/order/delivery-order/delivery-order",
+    "pages/order/order-pay/order-pay",
     "pages/order/order-pay/choose/choose",
     "pages/order/order-pay/weixin-pay/weixin-pay",
     "pages/order/order-pay/bank-pay/end-pay/end-pay",
     "pages/order/order-pay/bank-pay/bank-pay",
     "pages/order/order-pay/bank-pay/card-msg/card-msg",
     "pages/order/order-pay/bank-pay/add-card/add-card",
-    "pages/order/car-msg/car-msg",
-    "pages/order/order-pay/order-pay",
-    "pages/order/transport/transport",
-    "pages/order/car-model/car-model",
-    "pages/order/submit/submit",
+    "pages/order/order-pay/service-mode/service-mode",
+   
   
     "pages/about/about",
-
+ 
     "pages/user/user",
     "pages/user/bind/bind",
+    "pages/user/order-history/order-history",
+    "pages/user/invoice/invoice",
+    "pages/user/invoice-detail/invoice-detail",
     "pages/user/addressList/addressList",
-    "pages/user/address/address"
-   
+    "pages/user/address/address",
+    "pages/user/set/set"
+
   
   ],
   "window":{

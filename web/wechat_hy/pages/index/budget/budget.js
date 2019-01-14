@@ -50,9 +50,9 @@ Page({
       for (var i = 0; i < res.data.result.length;i++){
         if (res.data.result[i].status==1){
           //设置单价
-          res.data.result[i].price = ((res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num).toFixed(2);
+          res.data.result[i].price = (res.data.result[i].trans_price + res.data.result[i].insure_price).toFixed(2);
           //设置总价
-          sum += (res.data.result[i].trans_price + res.data.result[i].insure_price) * res.data.result[i].car_num;
+          sum +=res.data.result[i].trans_price + res.data.result[i].insure_price;
         }
        
       }

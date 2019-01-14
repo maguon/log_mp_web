@@ -47,12 +47,13 @@ Page({
         number: 0.5,
       }
     ],
-    state:["待报价","已报价","待完善","已完善","待付款","已付款","待发运","已发运","待签收","已签收"],
+    state: ["待报价", "已报价", "待完善", "已完善", "待付款", "已付款", "部分支付","待发运","已发运","待签收","已签收"],
     stateindex:0,
     orderlist:[],
     index:0,
     flag:false,
     loadingHidden:false,
+  
   },
 
 
@@ -92,7 +93,7 @@ Page({
         orderState[0].hidden=true;
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
-          res.data.result[i].total_trans_price = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          res.data.result[i].price = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
           //编译时间
           res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
           res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
@@ -135,7 +136,7 @@ Page({
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
-            res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
@@ -178,7 +179,9 @@ Page({
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
              //协商费用
-            res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            //支付费用
+            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
@@ -187,10 +190,12 @@ Page({
               res.data.result[i].status = 1;
               res.data.result[i].stay = 4;
               res.data.result[i].state = 1;
+              res.data.result[i].payFlag = true;
             } else if (res.data.result[i].status == 3) {
               res.data.result[i].status = 1;
               res.data.result[i].stay = 5;
               res.data.result[i].state = 1;
+              res.data.result[i].payFlag=true;
             } else if (res.data.result[i].status == 8 || res.data.result[i].status != 2 || res.data.result[i].status != 3) {
               res.data.result[i].state = 0;
             } else {
@@ -304,12 +309,12 @@ Page({
         break;
    case 2:
         wx.navigateTo({
-          url: "/pages/order/delivery-order/delivery-order?orderId=" + orderId,
+          url: "/pages/order/order-pay/order-pay?orderId=" + orderId,
         })
         break;
    case 3:
         wx.navigateTo({
-          url: '/pages/order/delivery-order/delivery-order?orderId=' + orderId,
+          url: '/pages/order/order-pay/order-pay?orderId=' + orderId,
         })
         break;
    case 4:

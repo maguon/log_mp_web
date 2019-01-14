@@ -7,9 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name: '',
-    bank_name: '',
-    bank_num: '',
+    name: '请输入持卡人姓名',
+    bank_name: '请输入银行名称',
+    bank_num: '请输入银行卡号',
   },
 
   /**

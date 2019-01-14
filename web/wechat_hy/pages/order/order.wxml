@@ -25,6 +25,7 @@
 <view hidden='{{item.status}}' class='num-time'>{{item.created_on}}</view>
 <view hidden='{{!item.status}}' class='num-time'>{{item.updated_on}}</view>
 </view>
+<!-- <view class='dis-line'></view> -->
 <view class='city'>
 <image class='city-img' src='../../images/car_04.png'></image>
 <view class='city-text'>{{item.start_city}}</view>
@@ -36,13 +37,23 @@
 </view>
 
 <view class='stay-detail'>
-<view class='stay-car'>运送车辆:{{item.car_num}}</view>
+ <view class='stay-car'>运送车辆:{{item.car_num}}</view>
 
-<view hidden='{{!item.status}}' class='stay-expect'>
-<view class='stay-text'>协商费用:</view>
-<view class='stay-num'>{{item.total_trans_price}}</view>
-<view class='stay-text'>元</view>
+ <view hidden='{{!item.status}}'>
+ <view hidden='{{item.payFlag}}' class='stay-expect'>
+ <view class='stay-text'>协商费用:</view>
+ <view class='stay-num'>{{item.price}}</view>
+ <view class='stay-text'>元</view>
+ </view>
+
+<view hidden='{{!item.payFlag}}' class='stay-expect'>
+ <view class='stay-text'>应付金额:</view>
+ <view class='stay-num'>{{item.sumFee}}</view>
+ <view class='stay-text'>元</view>
 </view>
+</view>
+
+
 <view hidden='{{item.status}}'class='stay-expect'>
 <view class='stay-text'>预计费用:</view>
 <view class='stay-num01'>{{item.fee_price}}</view>
@@ -50,7 +61,6 @@
 </view>
 
 </view>
-<view class='line'></view>
 </view>
 </view>
 

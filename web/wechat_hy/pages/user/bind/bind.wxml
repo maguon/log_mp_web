@@ -1,8 +1,10 @@
 <view class='logo-content'>
- <image  hidden='{{avhidden}}' class='logo' src='../../../images/head.png'></image>
+<view class='back-portrait'>
+<image  class='portrait' src='../../../images/icon_02.png'></image>
+</view>
   <image hidden='{{!avhidden}}' class='logo' src='{{avatar}}'></image>
-<view hidden='{{!hidden}}' class="weui-cells__tips">{{wechat_name}}</view>
-<view hidden='{{hidden}}' class="weui-cells__tips">用户昵称</view>
+<view hidden='{{!hidden}}' class="name">{{wechat_name}}</view>
+<view hidden='{{hidden}}' class="name">用户昵称</view>
 </view>
  
  <view class='bind'>

@@ -133,9 +133,14 @@ background-color:#ececec;
   flex-direction: row;
   align-content: center;
   position: absolute;
-  right: 30px;
+  right: 20px;
 }
-
+.yes{
+  width: 35px;
+  height: 30px;
+  position: absolute;
+  right: 20px;
+}
 .stay-car{
   width: 70%;
   height: 40px;

@@ -1,2 +1,56 @@
-<!--pages/user/user.wxml-->
-<text>pages/user/user.wxml</text>
+<view class='head'>
+<view class='back-portrait'>
+<image class='portrait' src='../../images/icon_02.png'></image>
+</view>
+
+<view class='right'>
+<view class='content'>
+<view class='content-name'>打打啊打</view>
+<image class='content-img' src='../../images/icon_01.png'></image>
+<view bindtap='edit' class='content-right'>设置</view>
+</view>
+
+<view class='content'>
+<image class='content-img' src='../../images/phone.png'></image>
+<view class='content-phone'>15840668526</view>
+<view bindtap='bandPhone' class='content-band'>绑定手机</view>
+</view>
+</view>
+</view>
+
+<view bindtap='orderHistory' class='items' hover-class='weui-cell_active'>
+<view class='item-text'>历史订单</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+<view class='period'></view>
+
+<view bindtap='invoice' class='items' hover-class='weui-cell_active'>
+<view class='item-text'>发票管理</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+
+
+<view class='items' hover-class='weui-cell_active'>
+<view class='item-text'>退款管理</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+<view class='period'></view>
+
+<view class='items'hover-class='weui-cell_active'>
+<view class='item-text'>发票抬头管理</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+
+<view class='items' hover-class='weui-cell_active'>
+<view class='item-text'>地址管理</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+<view class='items' hover-class='weui-cell_active'>
+<view class='item-text'>银行卡管理</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+

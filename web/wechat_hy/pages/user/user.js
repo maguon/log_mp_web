@@ -28,39 +28,37 @@ Page({
   onShow: function () {
 
   },
-
+/**
+ * 绑定手机
+ */
+  bandPhone:function(){
+  wx.navigateTo({
+    url: '/pages/user/bind/bind',
+  })
+  },
+/**
+ * 设置
+ */
+  edit:function(){
+    wx.navigateTo({
+      url: '/pages/user/set/set',
+    })
+  },
   /**
-   * 生命周期函数--监听页面隐藏
+   * 历史订单
    */
-  onHide: function () {
-
+  orderHistory:function(){
+    wx.navigateTo({
+      url: '/pages/user/order-history/order-history',
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+/**
+ * 发票管理
+ */
+invoice:function(){
+wx.navigateTo({
+  url: '/pages/user/invoice/invoice',
+})
   }
 })

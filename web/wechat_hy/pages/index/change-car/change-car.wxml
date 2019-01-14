@@ -20,7 +20,7 @@
 <!-- 车辆估值 ---------------------------------------------------------------------- -->
   <view class='valuation' >
   <view class='valuation-item'>
-  <view class='valuation-text'>车辆估值(万)</view>
+  <view class='valuation-text'>车辆估值(元)</view>
   <input  class='input' bindinput='bindValuation' type='number' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
   </view>
 

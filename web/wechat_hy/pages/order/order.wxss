@@ -1,5 +1,5 @@
 page{
-background: rgb(255, 251, 251);
+background: #efeff4;
 }
 .head{
   width: 100%;
@@ -13,6 +13,12 @@ background: rgb(255, 251, 251);
   width: 20%;
   height:80px;
 }
+/* .dis-line{
+  border: 1px solid #f3f3f3;
+  position: absolute;
+  right: 2%;
+  left: 2%;
+} */
 .item{
   width: 100%;
   height:80px;
@@ -50,8 +56,9 @@ background: rgb(255, 251, 251);
 
 .content{
  width: 100%;
- height: 130px;
-
+ height: 120px;
+ background: white;
+ margin-bottom: 5px;
 }
 .state{
   position: absolute;
@@ -68,11 +75,6 @@ background: rgb(255, 251, 251);
 }
 .active{
 background-color:#ececec;
-}
-.line{
-  width: 100%;
-  height: 3px;
-  background: #efeff4;
 }
 
 .city{
@@ -100,7 +102,7 @@ background-color:#ececec;
 
 .stay-detail{
   width: 100%;
-  height: 50px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   align-content: center;

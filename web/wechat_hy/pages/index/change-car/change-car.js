@@ -54,8 +54,9 @@ Page({
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
     //获取数据
-      var price=(res.data.result[index].trans_price + res.data.result[index].insure_price).toFixed(2);
-      var sumPrice = (price*res.data.result[index].car_num).toFixed(2);
+     
+      var sumPrice = (res.data.result[index].trans_price + res.data.result[index].insure_price).toFixed(2);
+      var price = (sumPrice / res.data.result[index].car_num).toFixed(2);
     //同步页面
      this.setData({
        inquiryCarId: res.data.result[index].id,
@@ -82,7 +83,7 @@ Page({
     oldCar: this.data.checked,
     serviceType:parseInt(this.data.service_type)+1,
     valuation: this.data.valuation,
-    insuranceFlag: this.data.insurance,
+    safeStatus: this.data.insurance,
     }
     console.log(this.data.distance+"dis")
     console.log(this.data.car_index+1+"car")
@@ -94,7 +95,7 @@ Page({
     reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params, (err, res) => {
 
     //计算价格
-    var price = (res.data.result[0].trans + res.data.result[0].insure).toFixed(2);
+    var price = (res.data.result.trans + res.data.result.insure).toFixed(2);
     var sumPrice =(price * this.data.num).toFixed(2);
     console.log(res)
     this.setData({
@@ -233,9 +234,7 @@ Page({
       modelId: parseInt(this.data.car_index) + 1,
       oldCar: this.data.checked,
       plan: this.data.valuation,
-      fee: this.data.price,
       carNum: this.data.num,
-      safePrice: this.data.valuation * this.data.valuationRate,
       safeStatus: this.data.insurance,
     }
     //发送服务器
@@ -259,7 +258,7 @@ Page({
     var userId = app.globalData.userId;
     var inquiryCarId=this.data.inquiryCarId;
 
-    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiryCar/" + inquiryCarId +"/status/"+0, "", (err, res) => {
+    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiryCar/" + inquiryCarId +"/status", "", (err, res) => {
       if (this.data.name == "carlist") {
         wx.redirectTo({
           url: '/pages/index/budget/budget?inquiryId=' + this.data.inquiryId,

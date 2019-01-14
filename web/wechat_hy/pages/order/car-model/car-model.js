@@ -171,7 +171,7 @@ Page({
       console.log(chooseMsg)
       if (chooseMsg !=""){
         var params = {
-          modelType: this.data.car_index + 1,
+          modelType: parseInt(this.data.car_index) + 1,
           vin: this.data.vin,
           oldCar: this.data.checked,
           valuation: this.data.valuation,
@@ -186,11 +186,11 @@ Page({
       }else{
       var params = {
         vin: this.data.vin,
-        modelType: this.data.car_index + 1,
+        modelType:parseInt(this.data.car_index) + 1,
         oldCar: this.data.checked,
         valuation: this.data.valuation,
         distance: this.data.distance,
-        insuranceFlag: this.data.insurance,
+        safeStatus: this.data.insurance,
       }
       //发送服务器
       reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + this.data.orderId + "/car", params, (err, res) => {

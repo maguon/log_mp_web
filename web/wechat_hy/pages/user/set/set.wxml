@@ -1,0 +1,10 @@
+<view class='period'></view>
+<view class='content'>
+<image class='content-img' src='../../../images/head.png'></image>
+<view class='replace'>更换头像</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='name'>
+<view class='name-des'>昵称</view>
+<input class='name-text' placeholder='请输入你的昵称' placeholder-style='font-size:15px; color:#8a8a8a;'></input>
+</view>

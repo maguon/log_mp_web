@@ -19,9 +19,11 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-
+    
     var orderId = e.orderId;
-
+    this.setData({
+      orderId: e.orderId,
+    })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       if (res.data.result != '') {
@@ -31,7 +33,6 @@ Page({
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type - 1,
-          orderId: orderId,
         })
       }
       console.log(res.data.result)
@@ -86,7 +87,7 @@ Page({
 
   payMsg: function () {
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.total_insure_price,
+      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId,
     })
   },
 
@@ -94,9 +95,6 @@ Page({
   wx.navigateTo({
     url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.sumFee,
   })
-    // wx.navigateTo({
-    //   url: '/pages/order/order-pay/weixin-pay/weixin-pay?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.total_insure_price,
-    // })
   },
 
 

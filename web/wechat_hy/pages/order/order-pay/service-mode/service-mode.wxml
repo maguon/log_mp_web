@@ -1,0 +1,65 @@
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>{{orderList.start_city}}</view>
+<image class='head-staycar' src='../../../../images/arrow_02.png'></image>
+<view class='head-city'>{{orderList.end_city}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way' hover-class="active">
+<image class='way-image' src='../../../../images/car.png'></image>
+<view class='way-text'>{{service[orderList.service_type]}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view  hidden='{{hidden}}'>
+<view class='ress' >
+<view class='ress-people'>
+<image class='ress-img01' src='../../../../images/head_02.png'></image>
+<view class='people01'>发车人:{{orderList.send_name}}</view>
+
+</view>
+<view class='phone'>电话：{{orderList.send_phone}}</view>
+<view class='address'>地址：{{orderList.send_address}}</view>
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view  class='ress' >
+<view class='ress-people'>
+<image class='ress-img01' src='../../../../images/head_01.png'></image>
+<view class='people01'>收车人:{{orderList.recv_name}}</view>
+</view>
+<view class='phone'>电话：{{orderList.recv_phone}}</view>
+<view class='address'>地址：{{orderList.recv_address}}</view>
+</view>
+
+<view class='ress-line'></view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+<view  hidden='{{!hidden}}'>
+<view class='ress' >
+<view class='ress-people'>
+<image class='ress-img' src='../../../../images/location_01.png'></image>
+<view class='people'>发车地:未完成</view>
+</view>
+
+<view class='phone'>电话：未完成</view>
+<view class='address'>地址：未完成</view>
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='ress'>
+<view class='ress-people'>
+<image class='ress-img' src='../../../../images/location_01.png'></image>
+<view class='people'>提车地:未完成</view>
+</view>
+
+<view class='phone'>电话：未完成</view>
+<view class='address'>地址：未完成</view>
+</view>
+<view class='ress-line'></view>
+ <button class='ress-msg'>物流信息</button>
+
+<view class='null'></view>
+</view>
+<!--  ---------------------------------------------------------------------- -->

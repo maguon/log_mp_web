@@ -14,6 +14,7 @@ Page({
     orderId: '',
     paymentId:"",
     name:'',
+    payText:'去支付',
   },
 
 
@@ -27,7 +28,11 @@ Page({
       name:e.name,
       paymentId: e.paymentId,  
     })
-    
+    if (e.name =="Modify"){
+      this.setData({
+        payText:"确认修改"
+      })
+    }
   },
 
 

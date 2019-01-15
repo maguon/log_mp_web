@@ -1,0 +1,103 @@
+<view class='container'>
+<view class='state'>
+<view class='state-text'>待开票</view>
+</view>
+
+<view  class='content'>
+
+<view class='city'>
+<view  class='num'>订单编号：1111111111111111</view>
+<view  class='num-time'>2018-11-12 11:30:21</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<view class='city-text'>大连</view>
+<image class='city-arrow' src='../../../images/arrow_02.png'></image>
+<view class='city-text'>齐齐哈尔</view>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>上门服务</view>
+<view class='stay-expect'>
+<view class='stay-text'>运送车辆:1</view>
+</view>
+</view>
+
+
+<view class='stay-detail'>
+<view class='stay-car'>运费:1200.00元</view>
+<view class='stay-expect'>
+<view class='stay-text'>保费:100.00元</view>
+</view>
+</view>
+
+<view class='dis-line'></view>
+<view class='city'>
+<view class='stay-expect'>
+<view class='stay-text'>实际支付:</view>
+<view class='stay-num'>3000.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+
+</view>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view class='item' hover-class="active">
+<view class='invoice-head'>发票抬头</view>
+<image class='arrow'src='../../../images/arrow.png'></image>
+</view>
+<view class='line'></view>
+
+<view class='item-tiny' hover-class="active">
+<view class='item-ress'>
+<view class='ress'>发票抬头：</view>
+<view class='ress-text'>营口顺通圣世物流有限公司</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>税<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>号：</view>
+<view class='ress-text'>jhk145443565581558415</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>开户银行：</view>
+<view class='ress-text'>大连自贸区支行</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>银行账户：</view>
+<view class='ress-text'>114525454454414445</view>
+</view>
+
+
+<view class='item-ress'>
+<view class='ress'>企业地址：</view>
+<view class='ress-text'>辽宁省大连市开发区金马路 凯伦国际大厦B座 2608室</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>电话号码：</view>
+<view class='ress-text'>0411-6456788</view>
+</view>
+
+</view>
+<view class='line'></view>
+<view class='note'>
+<view class='note-right'>备注:</view>
+<view class='note-left'>噢噢噢噢噢噢噢噢噢噢</view>
+</view>
+<view class='line'></view>
+<view class='note'>
+<view class='note-left'>申请时间：2018-08-26  11:20:31</view>
+</view>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view class='butList'>
+<button class='undo'>撤销申请</button>
+<button class='again'>重新提交</button>
+</view>
+
+</view>

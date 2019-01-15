@@ -1,83 +1,26 @@
-page{
-background: #efeff4;
-}
-.head{
-  width: 100%;
-  height: 80px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background:linear-gradient(#7a387a,#7a387a);
-}
-.items{
-  width: 20%;
-  height:80px;
-}
-/* .dis-line{
-  border: 1px solid #f3f3f3;
-  position: absolute;
-  right: 2%;
-  left: 2%;
-} */
-.item{
-  width: 100%;
-  height:80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.item-img{
-  width: 30px;
-  height: 28px;
-  margin-left: 2px;
-  margin-top: 10px;
-}
-.item-text{
-  font-size: 12px;
-  margin-top: 10px;
-  color: white;
-}
-.item-point{
-  position: absolute;
-  top: 10px;
-  margin-left: 15px;
-  width: 7px;
-  height: 7px;
-  background: red;
-  border-radius: 50%;
-}
-.divline{
-  width: 100%;
-  height: 4px;
-  margin-top: 11px;
-  background:white;
-}
-/* <!--  ---------------------------------------------------------------------- --> */
 
+page{
+  background: #f8f6f8;
+}
 .content{
  width: 100%;
- height: 120px;
+ height: 160px;
  background: white;
- margin-bottom: 5px;
+ margin-top: 5px;
+
 }
 .state{
   position: absolute;
-  right: 20px;
+  right: 25px;
   font-size: 12px;
   color: rgb(243, 103, 103);
-}
-.state01{
-  position: absolute;
-  right: 20px;
-  font-size: 12px;
-  color: #8a8a8a;
 }
 .arrow{
   width: 20px;
   height: 20px;
   position: absolute;
   right: 1px;
-  margin-top: 5px;
+  margin-top: 25px;
 }
 .active{
 background-color:#ececec;
@@ -118,7 +61,7 @@ background-color:#ececec;
   flex-direction: row;
   align-content: center;
   position: absolute;
-  right: 20px;
+  right: 25px;
 }
 .stay-car{
   width: 120px;
@@ -164,4 +107,10 @@ background-color:#ececec;
   right: 10px;
   color:#8a8a8a;
   font-size: 12px;
+}
+.dis-line{
+  border: 1px solid #f8f8f8;
+  position: absolute;
+  right: 2%;
+  left: 2%;
 }

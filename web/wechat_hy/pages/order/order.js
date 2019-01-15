@@ -47,6 +47,7 @@ Page({
         number: 0.5,
       }
     ],
+    service: ["", "上门服务", "当地自提"],
     state: ["待报价", "已报价", "待完善", "已完善", "待付款", "已付款", "部分支付","待发运","已发运","待签收","已签收"],
     stateindex:0,
     orderlist:[],
@@ -215,8 +216,9 @@ Page({
           })
         }
       })
-
       break;
+
+
     case 3:
       //打开加载 
       this.setData({
@@ -225,16 +227,23 @@ Page({
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
+      
             //支付费用
-            res.data.result[i].total_trans_price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
              //判断状态
-            if (res.data.result[i].status == 3) {
-              res.data.result[i].status = 1;
-              res.data.result[i].stay = 5;
+            if (res.data.result[i].status == 2) {
+              res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
+              res.data.result[i].payFlag = true;
+              res.data.result[i].stateFlag=true;
+            }else if (res.data.result[i].status == 3) {
+              res.data.result[i].status = 1;
+              res.data.result[i].state = 1;
+              res.data.result[i].payFlag = true;
+              res.data.result[i].payFlag = true;
             } else if (res.data.result[i].status == 8 || res.data.result[i].status != 2 || res.data.result[i].status != 3) {
               res.data.result[i].state = 0;
             } else {
@@ -267,6 +276,8 @@ Page({
 
 
 
+
+
 /**
  * 订单导航栏
  */
@@ -292,6 +303,10 @@ Page({
     })
     this.onShow();
   },
+
+
+
+
   bindDetail:function(e){
     var index = e.currentTarget.dataset.index;
     var orderId = this.data.orderlist[index].id;
@@ -325,6 +340,9 @@ Page({
       default: 
     }
   },
+
+
+
 /**
  * 编译时间
  */

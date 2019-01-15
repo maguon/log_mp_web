@@ -19,10 +19,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+ 
     this.setData({
       orderId: e.orderId,
       // totalPrice: e.fee,
-      totalPrice:"0.01",
+      totalPrice:0.01,
     })
   },
   /**
@@ -37,7 +38,7 @@ Page({
    * 支付方法
    */
   payment: function () {
-
+  
     var that = this;
     var openid = app.globalData.openid;
     var userInfo = app.globalData.userInfo;
@@ -45,10 +46,9 @@ Page({
     var orderId = that.data.orderId;
 
     var params = {
-      //用户的openid
+      status: 1,//支付商品的名称
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
-      status: 1,//支付商品的名称
     }
     console.log(app.globalData.openid)
     //发送Post请求
@@ -62,35 +62,30 @@ Page({
         package: 'prepay_id=' + res.data.result[0].prepay_id,
         signType: "MD5",
         paySign: res.data.result[0].paySign,
-        success: (res) => {
-          console.log(that.data.order.order_name)
-          console.log(that.data.order.remark)
-          console.log(that.data.order.prod_count)
-          var param = {
-            productDes: that.data.order.order_name + " " + "(" + that.data.order.remark + ")" + " " + "*" + that.data.order.prod_count,
-            type: 0,
-          }
+        success: (res) => {       
           console.log('支付成功');
-          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/status/"+3, param, (err, res) => {
-            console.log("存取成功");
-          })
+     
           wx.showToast({
             title: '支付成功',
             icon: 'success',
             duration: 2000
           })
-          if (this.data.name == "payment") {
-            wx.navigateBack({
-            })
-          } else if (this.data.name == "order") {
-            wx.navigateBack({
-              delta: 2
-            })
-          } else {
-            wx.navigateBack({
-              delta: 3
-            })
-          }
+          
+          wx.navigateBack({
+          })
+
+          // if (this.data.name == "payment") {
+          //   wx.navigateBack({
+          //   })
+          // } else if (this.data.name == "order") {
+          //   wx.navigateBack({
+          //     delta: 2
+          //   })
+          // } else {
+          //   wx.navigateBack({
+          //     delta: 3
+          //   })
+          // }
         },
         fail: function (err) {
           console.log('支付失败')

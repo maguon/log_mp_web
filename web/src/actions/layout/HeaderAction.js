@@ -1,7 +1,7 @@
 import {HeaderActionType} from '../../actionTypes';
 import {apiHost} from '../../config/HostConfig';
 
-const SysConst = require('../../util/SysConst');
+const sysConst = require('../../util/SysConst');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 
@@ -25,9 +25,21 @@ export const getUserDetail = (params) => async (dispatch) => {
 // export const checkUser = () => {
 // };
 
-export const logout = () => {
-    localUtil.removeSessionStore(SysConst.USER_ID);
-    localUtil.removeSessionStore(SysConst.USER_TYPE);
-    localUtil.removeSessionStore(SysConst.AUTH_TOKEN);
-    window.location.href = '/login.html';
+export const logout = () => async () => {
+    swal({
+        title: "注销账号",
+        text: "是否确认退出登录",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            localUtil.removeSessionStore(sysConst.USER_ID);
+            localUtil.removeSessionStore(sysConst.USER_TYPE);
+            localUtil.removeSessionStore(sysConst.AUTH_TOKEN);
+            window.location.href = '/login.html';
+        }
+    });
 };

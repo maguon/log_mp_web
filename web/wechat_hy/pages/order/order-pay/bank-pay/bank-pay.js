@@ -12,6 +12,8 @@ Page({
     cost_num:0,
     totalPrice: '',
     orderId: '',
+    paymentId:"",
+    name:'',
   },
 
 
@@ -22,7 +24,10 @@ Page({
     this.setData({
       totalPrice: e.fee,
       orderId: e.orderId,
+      name:e.name,
+      paymentId: e.paymentId,  
     })
+    
   },
 
 
@@ -32,6 +37,7 @@ Page({
    */
   onShow: function () {
     var userId = app.globalData.userId;
+
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/inquiryBank", (err, res) => {
 
       console.log(res)
@@ -45,7 +51,7 @@ Page({
         }
       }
     })
-
+    
   },
 
 
@@ -81,8 +87,11 @@ Page({
     var costNum = that.data.cost_num;
     var userId = app.globalData.userId;
     var orderId = that.data.orderId;
-console.log(costNum)
-    console.log(totalPrice)
+    var name=that.data.name;
+    var paymentId = that.data.paymentId; 
+
+
+
     if (that.data.hidden == false) {
       wx.showModal({
         content: "请选择您的银行卡",
@@ -90,14 +99,26 @@ console.log(costNum)
         confirmColor: "#a744a7",
       })
       return;
-    } else if (costNum != 0){
+    } else  if (name == "Modify") {
+        var params = {
+          bank: that.data.bankMsg.bank,
+          bankCode: that.data.bankMsg.bank_code,
+          accountName: that.data.bankMsg.account_name,
+          totalFee: costNum,
+        }
+        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/payment/" + paymentId + "/bankInfo", params, (err, res) => {
+          wx.navigateBack({
+          })
+        })
+    } else if(costNum != 0){
+
       if (costNum < totalPrice) {
         wx.showModal({
           content: "当前支付金额不足应支付费用，确定支付部分费用？",
           confirmColor: "#a744a7",
           success(res) {
             if (res.confirm) {
-
+            //全部支付
               wx.showModal({
                 content: "请线下自行进行银行转账",
                 showCancel: false,
@@ -113,7 +134,7 @@ console.log(costNum)
                     }
                     reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", params, (err, res) => {
                       wx.navigateTo({
-                        url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?id=" + orderId + "&fee=" + that.data.totalPrice+"&paymentId="+res.data.id,
+                        url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId,
                       })
                       })
                   
@@ -126,6 +147,7 @@ console.log(costNum)
         return;
       }
     }else {
+      //部分支付
       wx.showModal({
         content: "请线下自行进行银行转账",
         showCancel: false,
@@ -142,7 +164,7 @@ console.log(costNum)
             reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", param, (err, res) => {
               console.log(res.data.id);
                 wx.navigateTo({
-                  url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?id=" + orderId + "&fee=" + that.data.totalPrice+"&paymentId="+res.data.id,
+                  url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId,
                 })
               })
           }

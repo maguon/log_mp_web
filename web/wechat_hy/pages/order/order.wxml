@@ -31,8 +31,8 @@
 <view class='city-text'>{{item.start_city}}</view>
 <image class='city-arrow' src='../../images/arrow_02.png'></image>
 <view class='city-text'>{{item.end_city}}</view>
-<!-- <view hidden='{{!item.status}}' class='state'>已报价</view> -->
-<view  class='state'>{{state[item.stay]}}</view>
+<view hidden='{{!item.stateFlag}}' class='state01'>{{service[item.service_type]}}</view>
+<view hidden='{{item.stateFlag}}'  class='state'>{{state[item.stay]}}</view>
 <image class='arrow'src='../../images/arrow.png'></image>
 </view>
 

@@ -1,67 +1,46 @@
-<view class='transfer'>
-<view class='transfer-head'>
-<view class='transfer-text'>请将运费汇款至</view>
-<view class='bankname'>中国银行</view>
-</view>
-<view class='div-line'></view>
-<view class='payee-msg'>
-<view class='transfer-num'>6225 34567 8976 658</view>
-<view class='payee'>收款人:李建国</view>
-</view>
-<view class='div-line'></view>
+
 
 <view  class='cost'>
-<view class='cost-text'>剩余应付金额:</view>
-<view class='cost-num'>{{totalPrice}}</view>
-<view class='cost-text'>元</view>
-</view>
+<view class='cost-text'>未支付金额:</view>
+<view class='cost-num'>{{remain}}</view>
+<view class='cost-text01'>元</view>
+<button bindtap='payment' class='cost-but'>支付</button>
 </view>
 
 
-<view hidden='{{flag}}' class='transfer'>
+<view  class='transfer' wx:for="{{payment}}" wx:key="u">
 <view  class='bankcard01' >
-<view class='head-time'>支付时间：{{payment.created_on}}</view>
-<view class='head-text'>审核中</view>
+<view hidden='{{item.status}}'  class='head-time'>支付时间：{{item.created_on}}</view>
+<view hidden='{{!item.status}}' class='head-time'>支付时间：{{item.created_on}}</view>
+<view hidden='{{item.status}}' class='head-text'>审核中</view>
+<view hidden='{{!item.status}}' class='head-text'>已确认</view>
 </view>
 <view class='div-line'></view>
 
 <view  class='pay-num'>
-<view >支付金额(元)</view>
-<input class='number' value='{{payment.total_fee}}'></input>
+<view class='cost-text'>支付金额:</view>
+<view class='cost-num'>{{item.total_fee}}</view>
+<view class='cost-text01'>元</view>
 </view>
 <view class='div-line'></view>
 
-<view bindtap='chooseBank' class='bankcard' hover-class="weui-cell_active">
+<view hidden='{{item.paymentType}}'  class='bankcard'>
 <image class='card-img' src='../../../../../images/bank_card02.png'></image>
-<view hidden='{{hidden}}' class='card-text'>选择/添加银行卡</view>
-<view hidden='{{!hidden}}' class='card-text01'> {{bankMsg.bank}} {{bankMsg.bank_code}} {{bankMsg.account_name}}</view>
-<image class='arrow' src='../../../../../images/arrow.png'></image>
+<view  class='card-text01'> {{item.bank}} {{item.bank_code}} {{item.account_name}}</view>
 </view>
+
+<view  hidden='{{!item.paymentType}}' class='bankcard'>
+<image class='card-img' src='../../../../../images/wx.png'></image>
+<view  class='card-text01'> 微信</view>
+</view>
+
+
 <view class='div-line'></view>
-
-<button   bindtap="bindtap"  class="btn-area" hover-class="weui-cell_active">修改支付信息</button>
+<view hidden='{{item.paymentType}}' class='state'>
+<view  hidden='{{item.status}}'  class='butList'>
+<button   bindtap="bindDel"  data-index='{{index}}' class="btn-area01" hover-class="weui-cell_active">删除</button>
+<button   bindtap="bindModify" data-index='{{index}}' class="btn-area" hover-class="weui-cell_active">修改</button>
 </view>
-
-
-
-<view hidden='{{!flag}}' class='transfer'>
-<view  class='bankcard01' >
-<view class='head-time'>支付时间：{{payment.updated_on}}</view>
-<view class='head-text'>已确认</view>
 </view>
-<view class='div-line'></view>
-
-<view  class='pay-num'>
-<view >支付金额:</view>
-<view class='pay-number'>{{payment.total_fee}}</view>
-<view>元</view>
 </view>
-<view class='div-line'></view>
-
-<view bindtap='chooseBank' class='bankcard' hover-class="weui-cell_active">
-<image class='card-img' src='../../../../../images/bank_card02.png'></image>
-<view class='card-text01'> {{payment.bank}} {{payment.bank_code}} {{payment.account_name}}</view>
-</view>
-<view class='div-line'></view>
-
-</view>
+<view class='null'></view>

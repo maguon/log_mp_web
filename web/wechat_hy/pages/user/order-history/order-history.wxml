@@ -1,0 +1,37 @@
+<!-- <view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'> -->
+<view  class='content' hover-class="active">
+<view class='city'>
+<view  class='num'>订单编号：1111111111111111</view>
+<view  class='num-time'>2018-11-12 11:30:21</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<image class='city-img' src='../../../images/car_04.png'></image>
+<view class='city-text'>大连</view>
+<image class='city-arrow' src='../../../images/arrow_02.png'></image>
+<view class='city-text'>齐齐哈尔</view>
+<view  class='state'>已送达</view>
+<image class='arrow'src='../../../images/arrow.png'></image>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>运送车辆:1</view>
+
+<view class='stay-expect'>
+<view class='stay-text'>订单金额:3000.00元</view>
+<!-- <view class='stay-num'>3000.00</view>
+<view class='stay-text'>元</view> -->
+</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<view class='stay-expect'>
+<view class='stay-text'>实际支付:</view>
+<view class='stay-num'>3000.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+
+</view>
+
+<!-- </view> -->

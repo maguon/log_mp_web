@@ -27,5 +27,5 @@
 <image class='arrow' src='../../../../images/arrow.png'></image>
 </view>
 
-<button   bindtap="bindtap" disabled='{{disabled}}' class="btn-area" hover-class="weui-cell_active">去付款</button>
+<button   bindtap="bindtap" disabled='{{disabled}}' class="btn-area" hover-class="weui-cell_active">{{payText}}</button>
 

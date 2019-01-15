@@ -9,7 +9,7 @@
 <view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
 <view class='head-city'>{{orderlist.end_city}}</view>
-<view class='delivery'>待生成发运需求</view>
+<view class='delivery'>待付款/已支付/部分支付</view>
 
 </view>
 <view class='dis-line'></view>

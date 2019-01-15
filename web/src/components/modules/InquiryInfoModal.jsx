@@ -195,7 +195,7 @@ class InquiryInfoModal extends React.Component {
                                 <div className="row margin-top15 margin-bottom10">
                                     <div className="col s6 pink-font">运送车辆：{formatUtil.formatNumber(commonReducer.orderCarArray.length)}</div>
                                     <div className="col s6 pink-font right-align">
-                                        {commonUtil.getJsonValue(sysConst.LOG_STATUS,inquiryInfoModalReducer.orderInfo[0].log_status)}
+                                        {commonUtil.getJsonValue(sysConst.ORDER_LOG_STATUS,inquiryInfoModalReducer.orderInfo[0].log_status)}
                                     </div>
                                 </div>
                                 <div className="row detail-box">

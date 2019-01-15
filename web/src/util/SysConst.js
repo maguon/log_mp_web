@@ -136,14 +136,22 @@ export const TRANSPORT_MODE = [
     }
 ];
 
-// 物流状态
-export const LOG_STATUS = [
+// 订单物流状态
+export const ORDER_LOG_STATUS = [
     {
         value: 0,
-        label: "未送达"
+        label: "待安排"
     },
     {
         value: 1,
+        label: "待发运"
+    },
+    {
+        value: 2,
+        label: "运输中"
+    },
+    {
+        value: 3,
         label: "已送达"
     }
 ];

@@ -212,7 +212,7 @@ class OrderManager extends React.Component {
                             </div>
                             <div className="input-field col s2">
                                 <Select
-                                    options={sysConst.LOG_STATUS}
+                                    options={sysConst.ORDER_LOG_STATUS}
                                     onChange={changeConditionLogStatus}
                                     value={orderManagerReducer.conditionLogStatus}
                                     isSearchable={false}
@@ -287,7 +287,7 @@ class OrderManager extends React.Component {
                                         <td>{item.user_name}</td>
                                         <td>{item.admin_name}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
-                                        <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.LOG_STATUS, item.log_status)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_PAYMENT_STATUS, item.payment_status)} / {commonUtil.getJsonValue(sysConst.ORDER_LOG_STATUS, item.log_status)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.ORDER_STATUS, item.status)}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/order/' + item.id}}>

@@ -5,6 +5,7 @@ import {fileHost} from '../../config/HostConfig';
 import {
     Panel,
     UserStatistic,
+    InvoiceStatistic,
     OrderStatistic,
     UserManager,
     UserManagerDetail,
@@ -52,10 +53,16 @@ const routes = [
 
     // 统计
     {
-        // 用户统计
+        // 订单统计
         path: "/order_statistic",
         exact: true,
         component: OrderStatistic
+    },
+    {
+        // 发票统计
+        path: "/invoice_statistic",
+        exact: true,
+        component: InvoiceStatistic
     },
     {
         // 用户统计
@@ -240,6 +247,8 @@ class Container extends React.Component {
                                     <div className="collapsible-body">
                                         <ul>
                                             <li><Link to="/order_statistic"><i className="mdi mdi-chevron-right"/>订单统计</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/invoice_statistic"><i className="mdi mdi-chevron-right"/>发票统计</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/user_statistic"><i className="mdi mdi-chevron-right"/>新增用户</Link></li>
                                         </ul>

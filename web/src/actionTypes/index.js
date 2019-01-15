@@ -4,6 +4,7 @@ import * as LoginActionType  from './layout/LoginActionType';
 import * as CommonActionType  from './main/CommonActionType';
 import * as UserStatisticActionType  from './main/UserStatisticActionType';
 import * as OrderStatisticActionType  from './main/OrderStatisticActionType';
+import * as InvoiceStatisticActionType  from './main/InvoiceStatisticActionType';
 
 import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
@@ -56,6 +57,7 @@ export  {
     CommonActionType,
     UserStatisticActionType,
     OrderStatisticActionType,
+    InvoiceStatisticActionType,
 
     UserManagerActionType,
     UserManagerDetailActionType,

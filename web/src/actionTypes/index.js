@@ -2,9 +2,13 @@ import * as HeaderActionType  from './layout/HeaderActionType';
 import * as LoginActionType  from './layout/LoginActionType';
 
 import * as CommonActionType  from './main/CommonActionType';
-import * as UserStatisticActionType  from './main/UserStatisticActionType';
+
 import * as OrderStatisticActionType  from './main/OrderStatisticActionType';
 import * as InvoiceStatisticActionType  from './main/InvoiceStatisticActionType';
+import * as RefundStatisticActionType  from './main/RefundStatisticActionType';
+import * as InquiryStatisticActionType  from './main/InquiryStatisticActionType';
+import * as PaymentStatisticActionType  from './main/PaymentStatisticActionType';
+import * as UserStatisticActionType  from './main/UserStatisticActionType';
 
 import * as UserManagerActionType  from './main/UserManagerActionType';
 import * as UserManagerDetailActionType  from './main/UserManagerDetailActionType';
@@ -55,9 +59,12 @@ export  {
     HeaderActionType,
 
     CommonActionType,
-    UserStatisticActionType,
     OrderStatisticActionType,
     InvoiceStatisticActionType,
+    RefundStatisticActionType,
+    InquiryStatisticActionType,
+    PaymentStatisticActionType,
+    UserStatisticActionType,
 
     UserManagerActionType,
     UserManagerDetailActionType,

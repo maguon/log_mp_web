@@ -25,9 +25,9 @@ class OrderStatistic extends React.Component {
         this.props.setMonthEnd(formatUtil.formatDate(new Date(), 'yyyyMM'));
         // 初期化 统计日数（暂定10）
         this.props.changeDaySize(sysConst.STATISTIC_DAYS[0]);
-        // 消息发送-按月统计
+        // 按月统计
         this.props.getOrderStatByMonth();
-        // 消息发送-按日统计
+        // 按日统计
         this.props.getOrderStatByDay();
 
         // 初期化 month-picker 组件

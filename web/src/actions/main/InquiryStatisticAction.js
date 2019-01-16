@@ -5,72 +5,85 @@ const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-export const getUserStatByMonth = () => async (dispatch, getState) => {
+export const getInquiryStatByMonth = () => async (dispatch, getState) => {
     try {
         // 统计开始月份
         let monthStart = $('#monthStart').val();
         if (monthStart === "" || monthStart === undefined) {
-            monthStart = getState().UserStatisticReducer.monthStart;
+            monthStart = getState().InquiryStatisticReducer.monthStart;
         }
         // 统计结束月份
         let monthEnd = $('#monthEnd').val();
         if (monthEnd === "" || monthEnd === undefined) {
-            monthEnd = getState().UserStatisticReducer.monthEnd;
+            monthEnd = getState().InquiryStatisticReducer.monthEnd;
         }
+
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/statisticsNewUserByMonth?startMonth=' + monthStart + '&endMonth=' + monthEnd;
+            + '/statisticsInquiryCountByMonth?startMonth=' + monthStart + '&endMonth=' + monthEnd;
         let res = await httpUtil.httpGet(url);
         if (res.success === true) {
             // 初始化 x轴数据 月份
             let xAxisData = [];
-            // 初始化 y轴数据 新增用户-按月统计
-            let yAxisData = [{name: '新增用户', data: []}];
+            // 初始化 y轴数据 按月统计
+            let yAxisMoneyData = [];
+
+            // 询价次数
+            let allInquiryData = {name: '询价次数', data: []};
             for (let i = res.result.length -1; i >= 0; i--) {
                 // x轴月份
                 xAxisData.push(res.result[i].y_month);
-                yAxisData[0].data.push(Math.ceil(res.result[i].user_counts));
+                allInquiryData.data.push(Math.ceil(res.result[i].inquiry_counts));
             }
-            dispatch(showMonthChart(xAxisData, yAxisData));
+            yAxisMoneyData.push(allInquiryData);
+
+            dispatch(showMonthChart(xAxisData, yAxisMoneyData));
         } else if (res.success === false) {
-            swal('获取新增用户按月统计信息失败', res.msg, 'warning');
+            swal('获取询价按月统计信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const getUserStatByDay = () => async (dispatch, getState) => {
+export const getInquiryStatByDay = () => async (dispatch, getState) => {
     try {
-        let daySize = getState().UserStatisticReducer.daySize.value;
+        let daySize = getState().InquiryStatisticReducer.daySize.value;
+
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/statisticsNewUserByDay?selectDays=' + daySize;
+            + '/statisticsInquiryCountByDay?selectDays=' + daySize;
         let res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            // 初始化 x轴数据 日期
+            // 初始化 x轴数据 月份
             let xAxisData = [];
-            // 初始化 y轴数据 新增用户-按日统计
-            let yAxisData = [{name: '新增用户', data: []}];
+            // 初始化 y轴数据 按日统计
+            let yAxisMoneyData = [];
+
+            // 询价次数
+            let allInquiryData = {name: '询价次数', data: []};
             for (let i = res.result.length -1; i >= 0; i--) {
                 // x轴月份
                 xAxisData.push(res.result[i].id);
-                yAxisData[0].data.push(Math.ceil(res.result[i].user_counts));
+                allInquiryData.data.push(Math.ceil(res.result[i].inquiry_counts));
             }
-            dispatch(showDayChart(xAxisData, yAxisData));
+            yAxisMoneyData.push(allInquiryData);
+
+            // 订单金额 统计
+            dispatch(showDayChart(xAxisData, yAxisMoneyData));
         } else if (res.success === false) {
-            swal('获取新增用户按日统计信息失败', res.msg, 'warning');
+            swal('获取询价按日统计信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-const highChartOptions = (xAxisData, yAxisData) => {
+const highChartOptions = (title, xAxisData, yAxisData) => {
     return {
         // bar: 条形图，line：折线图，column：柱状图
         chart: {
-            type: 'column',
+            type: 'line',
         },
         title: {
             text: null
@@ -81,7 +94,7 @@ const highChartOptions = (xAxisData, yAxisData) => {
         },
         yAxis: {
             title: {
-                text: '',
+                text: title,
                 // 可用的值有 "low"，"middle" 和 "high"，分别表示于最小值对齐、居中对齐、与最大值对齐。 默认是：middle.
                 align: 'middle'
             }
@@ -106,12 +119,12 @@ const highChartOptions = (xAxisData, yAxisData) => {
     };
 };
 
+// 初始化图表 订单金额统计
 export const showMonthChart = (xAxisData, yAxisData) => () => {
-    // 初始化图表
-    Highcharts.chart('month-chart', highChartOptions(xAxisData, yAxisData));
+    Highcharts.chart('inquiry-month-chart', highChartOptions('', xAxisData, yAxisData));
 };
 
+// 初始化图表 订单笔数统计
 export const showDayChart = (xAxisData, yAxisData) => () => {
-    // 初始化图表
-    Highcharts.chart('day-chart', highChartOptions(xAxisData, yAxisData));
+    Highcharts.chart('inquiry-day-chart', highChartOptions('', xAxisData, yAxisData));
 };

@@ -1,7 +1,11 @@
 export Panel from "./Panel";
-export UserStatistic from "./UserStatistic";
+
 export OrderStatistic from "./OrderStatistic";
 export InvoiceStatistic from "./InvoiceStatistic";
+export RefundStatistic from "./RefundStatistic";
+export InquiryStatistic from "./InquiryStatistic";
+export PaymentStatistic from "./PaymentStatistic";
+export UserStatistic from "./UserStatistic";
 
 export UserManager from "./UserManager";
 export UserManagerDetail from "./UserManagerDetail";

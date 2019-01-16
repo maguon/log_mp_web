@@ -5,9 +5,13 @@ import HeaderReducer from './layout/HeaderReducer';
 import LoginReducer from './layout/LoginReducer';
 
 import CommonReducer from './main/CommonReducer';
-import UserStatisticReducer from './main/UserStatisticReducer';
+
 import OrderStatisticReducer from './main/OrderStatisticReducer';
 import InvoiceStatisticReducer from './main/InvoiceStatisticReducer';
+import RefundStatisticReducer from './main/RefundStatisticReducer';
+import InquiryStatisticReducer from './main/InquiryStatisticReducer';
+import PaymentStatisticReducer from './main/PaymentStatisticReducer';
+import UserStatisticReducer from './main/UserStatisticReducer';
 
 import UserManagerReducer from './main/UserManagerReducer';
 import UserManagerDetailReducer from './main/UserManagerDetailReducer';
@@ -59,9 +63,12 @@ export default combineReducers({
     HeaderReducer,
 
     CommonReducer,
-    UserStatisticReducer,
     OrderStatisticReducer,
     InvoiceStatisticReducer,
+    RefundStatisticReducer,
+    InquiryStatisticReducer,
+    PaymentStatisticReducer,
+    UserStatisticReducer,
 
     UserManagerReducer,
     UserManagerDetailReducer,

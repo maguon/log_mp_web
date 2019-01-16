@@ -4,9 +4,13 @@ import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 import {
     Panel,
-    UserStatistic,
-    InvoiceStatistic,
     OrderStatistic,
+    InvoiceStatistic,
+    RefundStatistic,
+    InquiryStatistic,
+    UserStatistic,
+    PaymentStatistic,
+
     UserManager,
     UserManagerDetail,
     OrderManager,
@@ -65,10 +69,28 @@ const routes = [
         component: InvoiceStatistic
     },
     {
+        // 退款统计
+        path: "/refund_statistic",
+        exact: true,
+        component: RefundStatistic
+    },
+    {
+        // 询价统计
+        path: "/inquiry_statistic",
+        exact: true,
+        component: InquiryStatistic
+    },
+    {
         // 用户统计
         path: "/user_statistic",
         exact: true,
         component: UserStatistic
+    },
+    {
+        // 支付统计
+        path: "/payment_statistic",
+        exact: true,
+        component: PaymentStatistic
     },
 
     // 用户信息
@@ -250,7 +272,13 @@ class Container extends React.Component {
                                             <li><div className="divider"/></li>
                                             <li><Link to="/invoice_statistic"><i className="mdi mdi-chevron-right"/>发票统计</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/user_statistic"><i className="mdi mdi-chevron-right"/>新增用户</Link></li>
+                                            <li><Link to="/refund_statistic"><i className="mdi mdi-chevron-right"/>退款统计</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/inquiry_statistic"><i className="mdi mdi-chevron-right"/>询价统计</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/user_statistic"><i className="mdi mdi-chevron-right"/>用户统计</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/payment_statistic"><i className="mdi mdi-chevron-right"/>支付统计</Link></li>
                                         </ul>
                                     </div>
                                 </li>

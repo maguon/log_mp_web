@@ -967,7 +967,7 @@ table.striped > tbody > tr:nth-child(odd) {
 .confirm-icon {
     position: absolute;
     right: 12px;
-    bottom: 10px;
+    bottom: 20px;
 }
 
 /** 日期控件 图标 样式 */
@@ -976,6 +976,13 @@ table.striped > tbody > tr:nth-child(odd) {
     right: 12px;
     bottom: 30px;
 }
+
+.date-icon {
+    position: absolute;
+    right: 12px;
+    bottom: 10px;
+}
+
 /** 自定义-全画面按钮/图标样式 end */
 
 

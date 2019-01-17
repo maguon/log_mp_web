@@ -51,14 +51,14 @@ class PaymentStatistic extends React.Component {
 
                             <div className="col s3 position-relative">
                                 <input type="text" className="margin-bottom0" readOnly id="monthStart" value={paymentStatisticReducer.monthStart}/>
-                                <i className="mdi mdi-table-large confirm-icon"/>
+                                <i className="mdi mdi-table-large date-icon"/>
                             </div>
 
                             <div className="col s1 center"><p>至</p></div>
 
                             <div className="col s3 position-relative">
                                 <input type="text" className="margin-bottom0" readOnly id="monthEnd" value={paymentStatisticReducer.monthEnd}/>
-                                <i className="mdi mdi-table-large confirm-icon"/>
+                                <i className="mdi mdi-table-large date-icon"/>
                             </div>
                             <div className="col s1 center padding-top10">
                                 <i className="mdi mdi-magnify fz24 pointer" onClick={getPaymentStatByMonth}/>

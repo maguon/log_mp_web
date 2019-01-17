@@ -1,4 +1,6 @@
-// pages/order/order-pay/payment/payment.js
+const reqUtil = require('../../../../utils/ReqUtil.js')
+const config = require('../../../../config.js');
+const app = getApp();
 Page({
 
   /**
@@ -9,6 +11,9 @@ Page({
     name:"",
     orderId:'',
     fee:'',
+    remainFee:0,
+    paidFee:0,
+    param:'',
   },
 
   /**
@@ -19,6 +24,25 @@ Page({
     this.setData({
       orderId: e.orderId,
       fee:e.fee,
+      param: e.param,
+    })
+
+    var userId = app.globalData.userId;
+
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + e.orderId, (err, res) => {
+      console.log(res.data.result)
+      if (res.data.result!=''){
+        this.setData({
+          remainFee: this.decimal(res.data.result[0].unpaid_price),
+          paidFee: this.decimal(e.fee - res.data.result[0].unpaid_price),
+        })
+      }else{
+        this.setData({
+          remainFee: e.fee,
+        })
+      }
+      
+
     })
     
   },
@@ -43,11 +67,11 @@ Page({
     var name=this.data.name;
     if (name == '' || name == "weixin") {
       wx.navigateTo({
-        url: "/pages/order/order-pay/weixin-pay/weixin-pay?orderId="+this.data.orderId+"&fee="+this.data.fee,
+        url: "/pages/order/order-pay/weixin-pay/weixin-pay?orderId=" + this.data.orderId + "&fee=" + this.data.remainFee + "&param=" + this.data.param,
       })
     } else if (name == "bank"){
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + this.data.orderId + "&fee=" + this.data.fee,
+      url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + this.data.orderId + "&fee=" + this.data.remainFee + "&name=" + "" +"&paymentId="+"",
     })
     }
   },
@@ -73,15 +97,15 @@ Page({
   },
 
 
-  // /**
-  //   * 保留小数
-  //   */
-  // decimal: function (e) {
-  //   //钱数小数点后二位设定
-  //   var total_price = Number(e);
-  //   var money = total_price.toFixed(2);
-  //   return money;
-  // },
+  /**
+    * 保留小数
+    */
+  decimal: function (e) {
+    //钱数小数点后二位设定
+    var total_price = Number(e);
+    var money = total_price.toFixed(2);
+    return money;
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

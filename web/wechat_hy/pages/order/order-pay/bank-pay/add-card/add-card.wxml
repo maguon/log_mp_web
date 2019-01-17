@@ -5,24 +5,39 @@
 
 <view  wx:for="{{bankList}}" wx:key='u'>
 
-<view  class='bank'>
- <view class='bank-msg' bindtap='bankChoose' data-index='{{index}}'>
-
-<icon class="weui-icon-checkbox_circle" type="circle" size="18" wx:if="{{!item.status}}"></icon>
-<icon class="weui-icon-checkbox_success" type="success" size="18" wx:if="{{item.status}}"></icon>
- <image class='bank-img' src='../../../../../images/bank_card.png'></image>
- <view class='bank-name'>{{item.bank}}</view>
+<view hidden='{{item.status}}' class='bank'>
+ <view class='bank-msg' >
+ <view class='bank-left' bindtap='bankChoose' data-index='{{index}}'>
+ <image  class='bank-img' src='../../../../../images/bank_card.png'></image>
+ <view  class='bank-name'>{{item.bank}}</view>
+ </view>
  <image bindtap='bankDel' data-id='{{index}}' hover-class='active' class='bank-sure' src='../../../../../images/no.png'></image>
- 
  </view>
 
 <view class='bank-msg'>
-<view bindtap='bankChoose' data-index='{{index}}' class='bank-num'>{{item.bank_code}}</view>
+ <view bindtap='bankChoose' data-index='{{index}}' class='bank-num'>{{item.bank_code}}     </view>
 <view class='name'>{{item.account_name}}</view>
 </view>
 
 </view>
 
+
+<view hidden='{{!item.status}}' class='bank01'>
+ <view class='bank-msg' bindtap='bankChoose' data-index='{{index}}'>
+<!-- <icon class="weui-icon-checkbox_circle" type="circle" size="18" wx:if="{{!item.status}}"></icon>
+<icon class="weui-icon-checkbox_success" type="success" size="18" wx:if="{{item.status}}"></icon> -->
+ <image class='bank-img' src='../../../../../images/bank_card02.png'></image>
+ <view class='bank-name color'>{{item.bank}}</view>
+ <view  class='bank-state'>设为默认</view>
+ <image bindtap='bankDel' data-id='{{index}}' hover-class='active' class='bank-sure' src='../../../../../images/no_01.png'></image>
+ </view>
+
+<view class='bank-msg'>
+ <view bindtap='bankChoose' data-index='{{index}}' class='bank-num color'>{{item.bank_code}}     </view>
+<view class='name color'>{{item.account_name}}</view>
+</view>
+
+</view>
 </view>
 
 <view class='null'></view>

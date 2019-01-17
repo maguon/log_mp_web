@@ -11,7 +11,10 @@ Page({
     payment:[],
     cost_num: "",
     orderId: '',
-    remain:'',
+    remain:0,
+    refund:0,
+    sumFee:0,
+    pagFlag:false,
   },
 
 
@@ -22,6 +25,7 @@ Page({
     console.log(e)
     this.setData({
       orderId: e.orderId,
+      sumFee:e.fee,
     })
   },
 
@@ -33,14 +37,20 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     var orderId=this.data.orderId;
+    var sumFee=this.data.sumFee;
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + orderId, (err, res) => {
+      var refundSum=0;
       console.log(res.data.result)
-
+      if (res.data.result!=''){
       for( var i=0;i<res.data.result.length;i++){
         //微信 银行支付判断
-        if (res.data.result[i].paymentType==2){
-          res.data.result[i].paymentType=0;
+        if (res.data.result[i].payment_type==2){
+          res.data.result[i].payment_type=0;
+        }
+        if (res.data.result[i].type==0){
+          refundSum+= res.data.result[i].total_fee;
+          res.data.result[i].status=1;
         }
       //保留小数
       res.data.result[i].total_fee = this.decimal(res.data.result[i].total_fee);
@@ -50,9 +60,17 @@ Page({
       }
     this.setData({
       payment:res.data.result,
-      remain: res.data.result[0].unpaid_price,
+      remain: this.decimal(sumFee-res.data.result[0].unpaid_price),
+      refund:refundSum,
     })
-   
+    //支付按钮显示
+        if (res.data.result[0].unpaid_price==0){
+          this.setData({
+          pagFlag:true,
+          })
+        }
+
+  }
     })
   },
 
@@ -73,10 +91,8 @@ Page({
   },
 
   payment: function () {
-
-    console.log("000000000")
     wx.navigateTo({
-      url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.remain,
+      url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.sumFee +"&param="+"order",
     })
   },
   // chooseBank: function () {

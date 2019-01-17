@@ -138,7 +138,7 @@ Page({
     var userCode = e.detail.value;
     console.log(userCode)
     //判断用户输入
-    if (e.detail.value.length != 6) {
+    if (e.detail.value.length != 4) {
       this.setData({
         bntFlag: true
       });

@@ -62,5 +62,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  orderHistory:function(){
+    wx.navigateTo({
+      url: "/pages/order/order-pay/order-pay",
+    })
   }
 })

@@ -13,12 +13,15 @@ background: #efeff4;
   width: 20%;
   height:80px;
 }
-/* .dis-line{
-  border: 1px solid #f3f3f3;
-  position: absolute;
-  right: 2%;
-  left: 2%;
-} */
+.prompt{
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  font-size: 15px;
+  color: #d1689e;
+  line-height: 40px;
+  font-weight:bolder;
+}
 .item{
   width: 100%;
   height:80px;

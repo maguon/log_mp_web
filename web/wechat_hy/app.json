@@ -1,6 +1,6 @@
 {
   "pages":[
- 
+
     "pages/login/login",
 
     "pages/index/index",
@@ -12,6 +12,8 @@
     "pages/index/citys/citys",
    
     "pages/order/order",
+    "pages/order/refund/refund",
+    "pages/order/refund/pay-msg/pay-msg",
     "pages/order/car-msg/car-msg",
     "pages/order/transport/transport",
     "pages/order/car-model/car-model",
@@ -32,14 +34,17 @@
  
     "pages/user/user",
     "pages/user/bind/bind",
+    "pages/user/refund/refund",
+    "pages/user/refund/ref-detail/ref-detail",
     "pages/user/order-history/order-history",
     "pages/user/invoice/invoice",
+    "pages/user/invoice/msg-list/msg-list",
+    "pages/user/invoice/msg-Add/msg-Add",
+    "pages/user/invoice/apply/apply",
     "pages/user/invoice-detail/invoice-detail",
-    "pages/user/addressList/addressList",
     "pages/user/address/address",
+    "pages/user/addressList/addressList",
     "pages/user/set/set"
-
-  
   ],
   "window":{
     "backgroundTextStyle":"light",

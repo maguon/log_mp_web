@@ -1,0 +1,62 @@
+<view class='container'>
+<view  class='head-prompt' >
+ <view class='prompt-state'>订单编号:344241551</view>
+  <view class='prompt-time'>2018-08-26 11:20:31</view>
+</view>
+
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>大连</view>
+<image class='head-staycar' src='../../../../images/arrow_02.png'></image>
+<view class='head-city'>沈阳</view>
+<view class='delivery'>未支付</view>
+
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view bindtap='carMsg' class='dis-content' hover-class="active">
+<view class='city'>
+<view class='city-text'>上门服务</view>
+<view class='right-text'>运输车辆：3</view>
+</view>
+<view class='city'>
+<view class='city-text'>运费：1200.00元</view>
+<view class='right-text'>保费：100.00元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-sum'>
+<view class='stay-expect'>
+<view class='stay-text'>实际支付：</view>
+<view class='stay-num'>1500.00</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view bindtap='payMsg' class='dis' hover-class="active">
+<view class='city'>
+<view class='sum-text'>选择发票抬头</view>
+<view class='right-text01'>营口顺通盛世物流有限公司</view>
+<image class='arrow' src='../../../../images/arrow.png'></image>
+</view>
+</view>
+<view class='dis-line'></view>
+
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>备注：</view>
+<input hidden='{{disabled}}' bindinput='noteInput'  class='note-input' placeholder='填写留言信息' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<view hidden='{{!disabled}}' class='note-input01'>{{orderlist.mark}}</view>
+</view>
+<view class='dis-line'></view>
+
+
+<!--  ---------------------------------------------------------------------- -->
+
+
+<button bindtap='payment'  class='dis-cancel01' hover-class="cancel_btn">提交申请</button>
+</view>

@@ -1,4 +1,4 @@
-<view class='container'>
+<!-- <view class='container'> -->
 <view class='state'>
 <view class='state-text'>待开票</view>
 </view>
@@ -89,10 +89,17 @@
 <view class='note-left'>噢噢噢噢噢噢噢噢噢噢</view>
 </view>
 <view class='line'></view>
-<view class='note'>
+<view class='note note01'>
 <view class='note-left'>申请时间：2018-08-26  11:20:31</view>
 </view>
 
+<view class='note'>
+<view class='note-left'>拒绝原因：虽然知道为什么就是想拒绝你 没有办法的事情，有能耐你打我打</view>
+</view>
+
+<view class='note note01'>
+<view class='note-left'>处理时间：2018-08-26  11:20:31</view>
+</view>
 <!-- -------------------------------------------------------------------------------------------- -->
 
 <view class='butList'>
@@ -100,4 +107,4 @@
 <button class='again'>重新提交</button>
 </view>
 
-</view>
+<!-- </view> -->

@@ -1,0 +1,70 @@
+
+<view class='add'>
+<view class='add-text'>新增发票抬头信息</view>
+<image bindtap='addAddress'  class='arrow' src='../../../../../images/add_02.png'></image>
+</view>
+
+<!-- <view  wx:for="{{addressList}}" wx:key='u'> -->
+<view bindtap="radioChange" data-index="{{index}}" class="label" hover-class='weui-cell_active_btn'>    
+    
+
+         <view class='default'>
+         <image hidden='{{item.status}}' class='arc' src='.././../../../images/arc.png'></image>
+           <image hidden='{{!item.status}}' class='arc01' src='.././../../../images/arc_01.png'></image>
+         <view class='city'>营口顺通圣世物流有限公司</view>
+             <view hidden='{{!item.status}}' class='default-item'>默认</view>
+             <view hidden='{{item.status}}' class='default-item-two'>设为默认</view>
+         </view>
+         <view class='div-line'></view>
+
+<view class='item-ress'>
+<view class='ress'>发票抬头：</view>
+<view class='ress-text'>营口顺通圣世物流有限公司</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>税<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>号：</view>
+<view class='ress-text'>jhk145443565581558415</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>开户银行：</view>
+<view class='ress-text'>大连自贸区支行</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>银行账户：</view>
+<view class='ress-text'>114525454454414445</view>
+</view>
+
+
+<view class='item-ress01'>
+<view class='ress'>企业地址：</view>
+<view class='ress-text'>辽宁省大连市开发区金马路 凯伦国际大厦B座 2608室</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>电话号码：</view>
+<view class='ress-text'>0411-6456788</view>
+</view>
+
+          <view class='div-line'></view>
+
+           <view class='check'>
+            <view class='default-redact'data-id="{{index}}" bindtap="editorAddress">编辑</view>
+             <view class="default-redact" data-id="{{index}}" bindtap="delAddress">删除</view>
+          </view>
+ 
+  
+  </view>
+  <!-- </view> -->
+<view class='null'></view>
+
+<view class="btnGroup">
+ <button bindtap='useRess' class="btn" hover-class="weui-cell_active_btn">确定</button>
+</view>
+
+
+
+<!-- <icon class="weui-icon-checkbox_circle" type="circle" size="18" wx:if="{{!item.status}}"></icon>
+<icon class="weui-icon-checkbox_success" type="success" size="18" wx:if="{{item.status}}"></icon> -->

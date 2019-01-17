@@ -32,7 +32,9 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/inquiryBank", (err, res) => {
-
+     for(var i=0;i<res.data.result.length;i++){
+       res.data.result[i].bank_code=this.bankNum(res.data.result[i].bank_code);
+     }
      
       this.setData({
         bankList: res.data.result,
@@ -41,6 +43,12 @@ Page({
   },
 
 
+
+  bankNum: function (e) {
+    console.log(e)
+    var mphone = e.substring(0, 4) + ' **** **** ' + e.substring(14);
+    return mphone;
+  },
 
 
   //选择银行
@@ -60,12 +68,21 @@ Page({
   //删除
   bankDel: function (e) {
   console.log(e)
+  var that =this;
     var index = e.currentTarget.dataset.id;
     var banklist = this.data.bankList[index];
     var userId=app.globalData.userId;
 
+    wx.showModal({
+      content: "确定要删除该银行卡信息？",
+      confirmColor: "#a744a7",
+      success(res) {
+        if (res.confirm) {
     reqUtil.httpDel(config.host.apiHost + "/api/user/" + userId + "/inquiryBank/" + banklist.id);
-    this.onShow();
+        that.onShow();
+      }
+      }
+    })
   },
 
   useRess:function(){

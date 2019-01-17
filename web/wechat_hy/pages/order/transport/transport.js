@@ -10,11 +10,15 @@ Page({
   data: {
   service: ["","上门服务", "当地自提"],
 
+ startRess: [],
+  endRess: [],
   hidden:false,
   startress:false,
   endress:false,
   orderList:[],
   orderId:'',
+
+  logFlag:false,
   },
 
 
@@ -22,8 +26,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    var userId = app.globalData.userId;
     this.setData({
       orderId: e.orderId,
+    })
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
+      
+      this.setData({
+        orderList: res.data.result[0],
+      })
     })
   },
 
@@ -41,23 +53,30 @@ Page({
    */
   onShow: function () {
     var userId = app.globalData.userId;
-    var orderId=this.data.orderId;
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      if (res.data.result[0].recv_name != null){
-        this.setData({
-          endress:true,
-        })
-      }
-      if (res.data.result[0].send_name != null) {
-        this.setData({
-          startress: true,
-        })
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/userAddress?type=" + 0, (err, res) => {
+      var startRess = [];
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status == 1) {
+          startRess = res.data.result[i];
+        }
       }
       this.setData({
-        orderList: res.data.result[0],
+        startRess: startRess,
+        startress: true,
       })
-
+    })
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/userAddress?type=" + 1, (err, res) => {
+      var endRess = [];
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status == 1) {
+          endRess = res.data.result[i];
+        }
+      }
+      this.setData({
+        endRess: endRess,
+        endress: true,
+      })
     })
   },
 
@@ -84,7 +103,32 @@ Page({
   },
 
 
+
+
   bindAdd:function(){
+    var userId = app.globalData.userId;
+    var startRess=this.data.startRess;
+    var endRess = this.data.endRess;
+    var orderId=this.data.orderId;
+
+      //发货
+      var params = {
+        sendName: startRess.user_name,
+        sendPhone: startRess.phone,
+        sendAddress: startRess.detail_address
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/sendMsg', params, (err, res) => {
+      })
+    
+  
+      //收货
+      var params = {
+        recvName: endRess.user_name,
+        recvPhone: endRess .phone,
+        recvAddress: endRess.detail_address
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/recvMsg', params, (err, res) => { })
+    
    wx.navigateBack({})
   },
   

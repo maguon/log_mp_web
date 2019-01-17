@@ -139,7 +139,7 @@ Page({
                     }
                     reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", params, (err, res) => {
                       wx.navigateTo({
-                        url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId,
+                        url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId + "&fee=" + totalPrice,
                       })
                       })
                   
@@ -169,7 +169,7 @@ Page({
             reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/bankPayment", param, (err, res) => {
               console.log(res.data.id);
                 wx.navigateTo({
-                  url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId,
+                  url: "/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=" + orderId + "&fee=" + totalPrice,
                 })
               })
           }

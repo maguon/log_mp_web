@@ -36,6 +36,11 @@
 <view class='ress-line'></view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
+<view hidden='{{!logFlag}}' class='note'>
+<button  bindtap='refund' class='refund'>物流信息</button>
+</view>
+
+<!--  ---------------------------------------------------------------------- -->
 <view  hidden='{{!hidden}}'>
 <view class='ress' >
 <view class='ress-people'>

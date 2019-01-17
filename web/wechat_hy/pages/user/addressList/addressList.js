@@ -7,8 +7,6 @@ Page({
   // 页面的初始数据
   data: {
     addressList: [],
-    defAddress:[],
-    hidden: false,
     orderId:'',
   },
 
@@ -35,22 +33,13 @@ Page({
     //获取userid
     var userId = app.globalData.userId;
     //发送get请求
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type="+index, (err, res) => {
-      console.log(res)
-      if (res.data.result == "") {
-        this.setData({
-          hidden: true,
-        })
-      } else {
-
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type="+index, (err, res) => {   
         if (res.data.result.length == 1) {
           res.data.result[0].status = 1;
         }
         this.setData({
-          hidden: false,
           addressList: res.data.result,
-        })
-      }
+        }) 
     })
   },
 
@@ -63,7 +52,7 @@ Page({
    */
   addAddress: function () {
     var addressList = JSON.stringify("");
-    wx.navigateTo({ url: '../address/address?addressList=' + addressList+"&index="+""});
+    wx.navigateTo({ url: '../address/address?addressList=' + addressList + "&index=" + this.data.index});
   },
 
 
@@ -96,7 +85,7 @@ Page({
     var addressList = JSON.stringify(this.data.addressList[index]);
     console.log(addressList)
     wx.navigateTo({
-      url: '../address/address?addressList=' + addressList+"&index="+index,
+      url: '../address/address?addressList=' + addressList+"&index="+this.data.index,
     });
   },
 
@@ -126,7 +115,6 @@ Page({
     //保存
     this.setData({
       addressList: addressList,
-      defAddress: addressList[index],
     });
 
   },
@@ -138,31 +126,6 @@ Page({
    * 点击跳转
    */
   useRess: function () {
-    var index = this.data.index;
-    var userId = app.globalData.userId;
-    var orderId = this.data.orderId;
-    var defAddress=this.data.defAddress;
-    console.log(defAddress)
-  //判断收发货
-    if(index==0){
-      //发货
-      var params = {
-        sendName: defAddress.user_name,
-        sendPhone: defAddress.phone,
-        sendAddress: defAddress.detail_address
-      }
-    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/sendMsg', params, (err, res) => {
-  })
-    } 
-    if (index == 1){
-      //收货
-      var params = {
-        recvName: defAddress.user_name,
-        recvPhone: defAddress.phone,
-        recvAddress: defAddress.detail_address
-      }
-      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/recvMsg', params, (err, res) => {})
-    }
     wx.navigateBack({
       url: '',
     });

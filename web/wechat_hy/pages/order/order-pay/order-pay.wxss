@@ -151,7 +151,7 @@ background-color:#ececec;
 }
 .stay-text01{
   font-size:15px;
-  color: #8a8a8a; 
+  color: #d43286;
   position: absolute;
   right: 30px;
 }
@@ -191,7 +191,7 @@ margin-left: 12px;
   align-items: center;
 }
 .note-text{
-  width: 12%;
+  width: 16%;
   font-size: 15px;
   margin-left: 15px;
   color: #8a8a8a;
@@ -201,6 +201,38 @@ margin-left: 12px;
   right: 10px;
   font-size: 15px;
    color: #8a8a8a;
+}
+/* <!-- ---------------------------------------------------------------------- --> */
+.butlist{
+  width: 96%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+.refund{
+
+  height: 25px;
+  font-size: 12px;
+  line-height: 25px;
+  text-align: center;
+  color: #8a8a8a;
+  background: white;
+  border:  1px solid #8a8a8a;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.in-refund{
+  height: 25px;
+  font-size: 12px;
+  line-height: 25px;
+  text-align: center;
+  color:#d43286;
+  background: white;
+  border:  1px solid #d43286;
+   margin-left: 5px;
+  margin-right: 5px;
 }
 /* ---------------------------------------------------------------------- */
 
@@ -235,6 +267,18 @@ margin-left: 12px;
   bottom: 0px;
   background:#f7f5f7; 
 }
+.dis-cancel01{
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0px;
+  font-size: 18px;
+  color:white;
+  background: #7a387a;
+}
 .cancel{
   width: 50%;
   font-size: 18px;
@@ -247,6 +291,7 @@ margin-left: 12px;
   color:white;
   background: #7a387a;
 }
+
 button[disabled]{
   background-color: #aaa5a5 !important; 
 }
@@ -255,7 +300,9 @@ button[disabled]{
 }
 
 
-
+.bottom{
+  width: 100%;
+}
 
 .delivery{
   font-size: 12px;

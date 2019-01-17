@@ -10,7 +10,14 @@ Page({
    */
   data: {
     orderId: '',
+    sumFee:0,
     service: ["上门服务", "当地自提"],
+    state:["未支付","部分支付","已支付"],
+    lagstate: ["待安排", "待发运", "执行中","已送达"],
+
+    completeFlag: false,
+    partFlag:false,  
+    refundFlag:false,
   },
 
   /**
@@ -26,15 +33,28 @@ Page({
     })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      if (res.data.result != '') {
-
+        //应付费用
         res.data.result[0].sumFee = (res.data.result[0].total_trans_price + res.data.result[0].total_insure_price).toFixed(2);
+        //编译时间
         res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+     if (res.data.result[0].payment_status == 1) {
+        this.setData({
+          partFlag: true,
+          refundFlag:true,
+        })
+      } else if (res.data.result[0].payment_status == 2) {
+        this.setData({
+          completeFlag: true,
+          refundFlag: true,
+        })
+      } 
+
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type - 1,
+          sumFee:res.data.result[0].sumFee,
         })
-      }
+      
       console.log(res.data.result)
     })
   },
@@ -87,13 +107,13 @@ Page({
 
   payMsg: function () {
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId,
+      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId+"&fee="+this.data.sumFee,
     })
   },
 
   payment: function () {
   wx.navigateTo({
-    url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.sumFee,
+    url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.orderlist.sumFee +"&param="+"pagment",
   })
   },
 

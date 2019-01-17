@@ -15,11 +15,6 @@ Page({
      //系数相关
     array:["上门服务","当地自提"],
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车","大型商务车"],
-    // unitPrice: 1.2,
-    // valuationRate: 0.05,
-    // ratio: [0.9,1.0,1.1,1.0,1.1],
-    // new_old: [0.8,1.0],
-    // fee:[500,0],
     checked: 1,
     insurance:1,
     index:'',

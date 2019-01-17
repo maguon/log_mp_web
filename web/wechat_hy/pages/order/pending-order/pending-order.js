@@ -10,8 +10,7 @@ Page({
   data: {
     orderlist:[],
     orderItem:[],
-    startAddress:[],
-    endAddress:[],
+
     orderId:'',
     service: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
@@ -29,44 +28,9 @@ Page({
   onLoad: function (e) {
     console.log(e)
     var userId = app.globalData.userId;
-    var  orderId=e.orderId;
     this.setData({
-      orderId: orderId,
+      orderId:e.orderId,
     })
-
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      if (res.data.result != '') {  
-          //设置显示
-          if (res.data.result[0].status == 3) {
-            res.data.result[0].state = 0;
-          } else if (res.data.result[0].status == 1){
-            this.setData({
-              disabled:true,
-            })
-          }else {
-            res.data.result[0].state = 1;
-          }
-          //是否完善地址
-        if (res.data.result[0].recv_name != null && res.data.result[0].send_name != null) {
-          this.setData({
-            address: true,
-          })
-        }
-        
-        //预计费用
-        res.data.result[0].ora_insure_price = this.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
-        //协商费用
-        res.data.result[0].total_insure_price = this.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
-        //编译时间
-        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
-        this.setData({
-          orderlist: res.data.result[0],
-          service_type: res.data.result[0].service_type-1,
-        })
-      }
-      console.log(res.data.result)
-    })
-
   },
 
 
@@ -79,6 +43,43 @@ Page({
    */
   onShow: function () {
     var userId = app.globalData.userId;
+    var orderId = this.data.orderId;
+
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
+      if (res.data.result != '') {
+        // 状态设置显示
+        if (res.data.result[0].status == 3) {
+          res.data.result[0].state = 0;
+        } else if (res.data.result[0].status == 1) {
+          this.setData({
+            disabled: true,
+          })
+        } else {
+          res.data.result[0].state = 1;
+        }
+        //是否完善地址
+        if (res.data.result[0].recv_name != null && res.data.result[0].send_name != null) {
+          this.setData({
+            address: true,
+          })
+        }
+
+        //预计费用
+        res.data.result[0].ora_insure_price = this.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
+        //协商费用
+        res.data.result[0].total_insure_price = this.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
+        //编译时间
+        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+        this.setData({
+          orderlist: res.data.result[0],
+          service_type: res.data.result[0].service_type - 1,
+        })
+      }
+      console.log(res.data.result)
+    })
+
+
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + this.data.orderId, (err, res) => {
       console.log(res.data.result)
       if (res.data.result!= "") {
@@ -238,17 +239,15 @@ var note=e.detail.value;
 
 //提交完善信息
 submit:function(e){
- var start_address=this.data.startAddress;
- var end_address=this.data.endAddress;
+  var address = this.data.address;
  var orderitem=this.data.orderItem;
  var service = this.data.service;
  var service_type=this.data.service_type;
- var car_num= this.data.orderlist.car_num;
  var orderId=this.data.orderId;
  var userId=app.globalData.userId;
  var note=this.data.note;
 
-  if (start_address==''|| end_address==''){
+  if (!address){
     wx.showModal({
       content: "请您添加" +service[service_type]+"中运输地址详情" ,
       showCancel: false,
@@ -263,7 +262,6 @@ submit:function(e){
     });
     return;
   }else{
-    console.log(this.data.startAddress)
     var that=this;
     wx.showModal({
       title: '确定已完善所有信息？',
@@ -276,14 +274,8 @@ submit:function(e){
           //提交信息到服务器
           var params = {
             remark: note,
-            recvName: that.data.startAddress.user_name,
-            recvPhone: that.data.startAddress.phone,
-            recvAddress: that.data.startAddress.detail_address,
-            sendName: that.data.endAddress.user_name,
-            sendPhone: that.data.endAddress.phone,
-            sendAddress: that.data.endAddress.detail_address,
           } 
-          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/improveInformation", params, (err, res) => { })
+          reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/remark", params, (err, res) => { })
 
 
           //修改订单状态

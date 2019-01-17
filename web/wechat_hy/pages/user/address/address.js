@@ -12,9 +12,10 @@ Page({
     addressList: [],
     add: "确认添加",
     index:'',
-    name:'请输入收货人姓名',
-    phone:'请输入收货人电话',
-    address:'请输入收货人详细地址',
+    city:"请输入城市",
+    name:'请输入姓名',
+    phone:'请输入电话',
+    address:'请输入详细地址',
   },
 
 
@@ -43,6 +44,14 @@ Page({
     }
   },
 
+
+  city:function(e){
+    console.log(e.detail.value)
+    var city = e.detail.value;
+    this.setData({
+      city: city,
+    })
+  },
 
 
   addName: function (e) {
@@ -81,12 +90,10 @@ Page({
     var that = this;
     var warn = '';
     var flag = true;
+    var city = that.data.city;
     var name = that.data.name;
     var phone = that.data.phone;
     var address = that.data.address;
-    console.log(phone)
-    console.log(name)
-    console.log(address)
     var len = phone.length;
     var userId = app.globalData.userId;
 
@@ -106,7 +113,7 @@ Page({
           userName: name,
           phone: phone,
           detailAddress: address,
-          address:"",
+          address:city,
           type: that.data.index,
         }
         //发送请求
@@ -114,12 +121,13 @@ Page({
       } else {
         //获取要传递的参数
         var params = {
+          address: city,
           userName: name,
-          phone: phone,
           detailAddress: address,
-          address: "",
+          phone: phone,
           type:that.data.index,
         }
+
         //发送Post请求
         reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/userAddress", params, (err, res) => { })
       }

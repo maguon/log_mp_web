@@ -60,5 +60,26 @@ invoice:function(){
 wx.navigateTo({
   url: '/pages/user/invoice/invoice',
 })
+  },
+
+  refund:function(){
+    wx.navigateTo({
+      url: '/pages/user/refund/refund',
+    })
+  },
+  invoiceHead:function(){
+    wx.navigateTo({
+      url: "/pages/user/invoice/msg-list/msg-list",
+    })
+  },
+  address:function(){
+    wx.navigateTo({
+      url: "/pages/user/addressList/addressList",
+    })
+  },
+  bankCard:function(){
+    wx.navigateTo({
+      url: "/pages/order/order-pay/bank-pay/add-card/add-card",
+    })
   }
 })

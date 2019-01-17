@@ -29,7 +29,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+   
   },
 
 
@@ -51,14 +51,23 @@ Page({
     }
     this.setData({
       invoiceList:invoice,
+      index: index,
     })
     
   },
 
   bindtap:function(){
-   wx.navigateTo({
-     url: '/pages/user/invoice-detail/invoice-detail',
-   })
+  var index=this.data.index;
+
+    if (index){
+      wx.navigateTo({
+        url: '/pages/user/invoice/apply/apply',
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/user/invoice-detail/invoice-detail',
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面隐藏

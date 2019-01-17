@@ -1,20 +1,30 @@
 
 <view class="wraper">
 
+<view  bindtap='addAddress'  class="listItems">
+<view class="tag">*</view>
+<view class="list-left">城市</view>
+<input class="listRight" type="text" bindinput='city' placeholder='{{city}}'  name="city"/>
+</view>
+
 <view class="listItems">
-<text class="listLeft">收车人</text>
+<view class="tag">*</view>
+<view class="list-left">联系人</view>
 <input class="listRight" type="text" bindinput='addName' placeholder='{{name}}'  name="consignee"/>
 </view>
 
 <view class="listItems">
-<text class="listLeft">手机号</text>
+<view class="tag">*</view>
+<view class="list-left">电话</view>
 <input class="listRight" type="number" bindinput='userPhone' placeholder='{{phone}}'  name="mobile"/>
 </view>
-<text class="text">收货地址</text>
-<view class="item">
-<text class="listLeft"></text>
-<textarea  class="textarea" type="text" bindinput='addRess' placeholder='{{address}}'  name="address"> </textarea>
+
+<view class="listItems">
+<view class="tag">*</view>
+<view class="list-left">地址</view>
+<input class="listRight" type="number" bindinput='addRess' placeholder='{{address}}'  name="address"/>
 </view>
+
 
 <view class="btnGroup">
  <button bindtap='saveAddress' class="btn" hover-class="weui-cell_active">{{add}}</button>

@@ -1,0 +1,82 @@
+page{
+  background: #f8f6f8;
+}
+.items{
+  width: 100%;
+  height: 120px;
+  background: white;
+  margin-top: 10px;
+}
+.item{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-left{
+  font-size: 12px;
+  color: #8a8a8a;
+  margin-left: 15px;
+}
+.div-line{
+  border: 1px solid #f8f6f8;
+}
+.cost{
+  margin-left: 15px;
+  font-size: 15px;
+}
+.num{
+  font-size: 18px;
+  color: #d43286;
+}
+.yuan{
+   font-size: 15px;
+}
+.weui-cell_active{
+  background-color:#ececec;
+  }
+.item-img{
+  width: 25px;
+  height: 25px;
+  margin-left: 15px;
+}
+.item-img01{
+  width: 20px;
+  height: 20px;
+ position: absolute;
+ right: 10px;
+}
+.item-img02{
+  width: 18px;
+  height: 18px;
+ position: absolute;
+ right: 10px;
+}
+.cost01{
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+
+.butlist{
+  position: fixed;
+  bottom: 0px;
+  height: 70px;
+  width: 100%;
+
+}
+.btn-area{
+  position: fixed;
+  left: 1%;
+  right: 1%;
+  bottom: 20px;
+  height: 45px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+}
+
+.weui-cell_active{
+  background-color:#ececec;
+  }

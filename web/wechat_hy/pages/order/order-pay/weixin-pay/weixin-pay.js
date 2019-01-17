@@ -12,7 +12,7 @@ Page({
     totalPrice: 0,
     orderId: '',
     order: [],
-    name: '',
+    param: '',
   },
 
   /**
@@ -22,8 +22,8 @@ Page({
  
     this.setData({
       orderId: e.orderId,
-      // totalPrice: e.fee,
-      totalPrice:0.01,
+      totalPrice: e.fee,
+      param: e.param,
     })
   },
   /**
@@ -46,7 +46,6 @@ Page({
     var orderId = that.data.orderId;
 
     var params = {
-      status: 1,//支付商品的名称
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
     }
@@ -55,7 +54,6 @@ Page({
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/wechatPayment", params, (err, res) => {
       console.log(res.data.result)
 
-      //out_trade_no=res.data['out_trade_no'];
       wx.requestPayment({
         timeStamp: res.data.result[0].timeStamp + "",
         nonceStr: res.data.result[0].nonce_str,
@@ -71,21 +69,17 @@ Page({
             duration: 2000
           })
           
+          //支付完成跳转页面
+          if (this.data.param == "payment") {
           wx.navigateBack({
-          })
-
-          // if (this.data.name == "payment") {
-          //   wx.navigateBack({
-          //   })
-          // } else if (this.data.name == "order") {
-          //   wx.navigateBack({
-          //     delta: 2
-          //   })
-          // } else {
-          //   wx.navigateBack({
-          //     delta: 3
-          //   })
-          // }
+              delta: 2
+            })
+          } else if (this.data.param == "order") {
+            wx.navigateBack({
+              delta: 3
+            })
+          } 
+          
         },
         fail: function (err) {
           console.log('支付失败')

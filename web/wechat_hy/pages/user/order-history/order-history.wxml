@@ -1,5 +1,5 @@
 <!-- <view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'> -->
-<view  class='content' hover-class="active">
+<view bindtap='orderHistory' class='content' hover-class="active">
 <view class='city'>
 <view  class='num'>订单编号：1111111111111111</view>
 <view  class='num-time'>2018-11-12 11:30:21</view>

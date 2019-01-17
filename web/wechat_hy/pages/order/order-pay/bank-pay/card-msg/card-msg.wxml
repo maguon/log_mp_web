@@ -2,18 +2,21 @@
 <view class="wraper">
 
 <view class="listItems">
-<text class="listLeft">持卡人</text>
-<input bindblur='addName' class="listRight" type="text" bindinput='addName' placeholder='{{name}}'  name="consignee"/>
+<view class="tag">*</view>
+<text class="list-left">持卡人</text>
+<input bindinput='addName' class="listRight" type="text"  placeholder='{{name}}'  name="consignee"/>
 </view>
 
 <view class="listItems">
-<text class="listLeft">银行名称</text>
-<input bindblur='bankName' class="listRight" type="number" bindinput='userPhone' placeholder='{{bank_name}}'  name="mobile"/>
+<view class="tag">*</view>
+<text class="list-left">银行名称</text>
+<input bindinput='bankName' class="listRight" type="number"  placeholder='{{bank_name}}'  name="mobile"/>
 </view>
 
 <view class="listItems">
-<text class="listLeft">银行卡号</text>
-<input bindblur='addNumber' type='number' class="listRight" type="number" bindinput='userPhone' placeholder='{{bank_num}}'name="mobile"/>
+<view class="tag">*</view>
+<text class="list-left">银行卡号</text>
+<input bindinput='addNumber' type='number' class="listRight"   placeholder='{{bank_num}}'name="mobile"/>
 </view>
 
 <view class='prompt'>此信息只作为转账审核凭证，不具线上转账功能</view>

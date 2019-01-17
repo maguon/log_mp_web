@@ -40,20 +40,20 @@ Page({
         number: 0.5,
       },
       {
-        name: "待签收",
+        name: "运输中",
         url: '../../images/closed.png',
         hidden: false,
         status: false,
         number: 0.5,
       }
     ],
-    service: ["", "上门服务", "当地自提"],
-    state: ["待报价", "已报价", "待完善", "已完善", "待付款", "已付款", "部分支付","待发运","已发运","待签收","已签收"],
+    state: ["待报价", "已报价", "待完善", "已完善", "未付款", "部分支付","已付款", "待安排","待发运","运输中","已送达"],
     stateindex:0,
     orderlist:[],
     index:0,
     flag:false,
     loadingHidden:false,
+    prompt:false,
   
   },
 
@@ -86,7 +86,8 @@ Page({
     case 0:
       //打开加载 
       this.setData({
-        loadingHidden: false
+        loadingHidden: false,
+        prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry", (err, res) => {
         console.log(res.data.result)
@@ -100,7 +101,7 @@ Page({
           res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
          //预计费用
           res.data.result[i].fee_price = this.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
-          //判断状态
+          //判断显示状态
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
             res.data.result[i].state = 1;
@@ -109,9 +110,7 @@ Page({
             res.data.result[i].state = 1;
           } else if (res.data.result[i].status == 3) {
             res.data.result[i].state = 0;
-          } else {
-            res.data.result[i].state = 1;
-          }
+          } 
         }         
         this.setData({
           loadingHidden:true,
@@ -131,7 +130,8 @@ Page({
     case 1:
       //打开加载 
       this.setData({
-        loadingHidden: false
+        loadingHidden: false,
+        prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
@@ -141,7 +141,7 @@ Page({
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-             //判断状态
+             //判断显示状态
             if (res.data.result[i].status==0){
               res.data.result[i].status=1;
               res.data.result[i].stay = 2;
@@ -150,11 +150,10 @@ Page({
               res.data.result[i].status = 1;
               res.data.result[i].stay = 3;
               res.data.result[i].state = 1;
-            } else if (res.data.result[i].status == 8 || res.data.result[i].status != 0 || res.data.result[i].status != 1 ) {
+              //判断删除状态
+            } else if (res.data.result[i].status == 8) {
               res.data.result[i].state = 0;
-            } else {
-              res.data.result[i].state = 1;
-            }
+            } 
           }
         console.log(res.data.result)
           this.setData({
@@ -174,35 +173,36 @@ Page({
     case 2:
       //打开加载 
       this.setData({
-        loadingHidden: false
+        loadingHidden: false,
+        prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
-             //协商费用
-            res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
             //支付费用
             res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-             //判断状态
+             //判断显示状态
             if (res.data.result[i].status == 2) {
               res.data.result[i].status = 1;
-              res.data.result[i].stay = 4;
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            } else if (res.data.result[i].status == 3) {
-              res.data.result[i].status = 1;
-              res.data.result[i].stay = 5;
-              res.data.result[i].state = 1;
-              res.data.result[i].payFlag=true;
-            } else if (res.data.result[i].status == 8 || res.data.result[i].status != 2 || res.data.result[i].status != 3) {
+              //判断删除状态
+            }else  if (res.data.result[i].status == 8) {
               res.data.result[i].state = 0;
-            } else {
-              res.data.result[i].state = 1;
-            }
+            } 
+           //判断支付状态
+            if (res.data.result[i].payment_status == 0) {
+              res.data.result[i].stay = 4;
+            } else if (res.data.result[i].payment_status == 1) {
+              res.data.result[i].stay = 5;
+            } else if (res.data.result[i].payment_status == 2) {
+              res.data.result[i].stay = 6;
+            } 
           }
+
           console.log(res.data.result)
           this.setData({
             orderState: orderState,
@@ -222,7 +222,8 @@ Page({
     case 3:
       //打开加载 
       this.setData({
-        loadingHidden: false
+        loadingHidden: false,
+        prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
         if (res.data.result != '') {
@@ -233,22 +234,21 @@ Page({
             //编译时间
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-             //判断状态
-            if (res.data.result[i].status == 2) {
+             //判断显示状态
+            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-              res.data.result[i].stateFlag=true;
-            }else if (res.data.result[i].status == 3) {
-              res.data.result[i].status = 1;
-              res.data.result[i].state = 1;
-              res.data.result[i].payFlag = true;
-              res.data.result[i].payFlag = true;
-            } else if (res.data.result[i].status == 8 || res.data.result[i].status != 2 || res.data.result[i].status != 3) {
+            //判断删除状态
+            }else  if (res.data.result[i].status == 8) {
               res.data.result[i].state = 0;
-            } else {
-              res.data.result[i].state = 1;
-            }
+            } 
+            //判断物流状态 
+            if (res.data.result[i].log_status == 0) {
+              res.data.result[i].stay = 7;
+            } else if (res.data.result[i].log_status == 1) {
+              res.data.result[i].stay = 8;
+            } 
           }
           console.log(res.data.result)
           this.setData({
@@ -266,11 +266,48 @@ Page({
 
       break;
     case 4:
+      //打开加载 
+      this.setData({
+        loadingHidden: false,
+        prompt:true,
+      })
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+        if (res.data.result != '') {
+          for (var i = 0; i < res.data.result.length; i++) {
 
+            //支付费用
+            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            //编译时间
+            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+            //判断显示状态
+            if (res.data.result[i].status == 4) {
+              res.data.result[i].status = 1;           
+              res.data.result[i].state = 1;
+              res.data.result[i].payFlag = true;
+            } else if (res.data.result[i].status == 8) {
+              res.data.result[i].state = 0;
+            } 
+            //判断执行状态
+            if (res.data.result[i].log_status == 2) {
+              res.data.result[i].stay = 9;
+            }
+          }
+          console.log(res.data.result)
+          this.setData({
+            orderState: orderState,
+            orderlist: res.data.result,
+            loadingHidden: true
+          })
+        } else {
+          this.setData({
+            flag: true,
+            loadingHidden: true
+          })
+        }
+      })
       break;
-    default:
-    
-  }
+   }
   },
 
 

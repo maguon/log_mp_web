@@ -11,6 +11,7 @@ Page({
     service: ["", "上门服务", "当地自提"],
     orderList: [],
     hidden:false,
+    logFlag: false,
   },
 
 
@@ -28,6 +29,12 @@ Page({
       } else if (res.data.result[0].service_type == 2){
         this.setData({
           hidden: true,
+        })
+      }
+
+      if (res.data.result[0].log_status == 2) {
+        this.setData({
+          logFlag: true,
         })
       }
     })

@@ -11,6 +11,16 @@ page{
   border-radius: 2%;
   background: #864c86;
 }
+.bank01{
+  height: 100px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 2%;
+  background: white;
+  border: 1px solid #864c86;
+}
 .bank-msg{
   height: 50px;
   width: 100%;
@@ -28,6 +38,21 @@ page{
   font-size: 15px;
   color: white;
   margin-left: 10px;
+}
+.bank-left{
+  width: 80%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.bank-state{
+  border:1px solid  #864c86;
+  border-radius: 5px;
+  position: absolute;
+  right: 50px;
+  color: #864c86;
+  font-size: 12px;
 }
 .name{
   font-size: 15px;
@@ -48,7 +73,9 @@ page{
   position: absolute;
   right: 20px;
 }
-
+.color{
+  color: #864c86;
+}
 /* ---------------------------------------------------------------------- */
 .add{
   height: 40px;

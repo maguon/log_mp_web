@@ -16,7 +16,8 @@
 </view>
 
 <view class='stay-detail'>
-<view class='stay-car'>运送车辆:1</view>
+<view hidden='{{true}}' class='stay-car'>运送车辆:1</view>
+<view hidden='{{!true}}' class='stay-car'>订单金额:1200.00元</view>
 
 <view class='stay-expect'>
 <view class='stay-text'>支付金额:</view>

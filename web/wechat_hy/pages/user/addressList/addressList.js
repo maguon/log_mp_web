@@ -8,6 +8,8 @@ Page({
   data: {
     addressList: [],
     orderId:'',
+    list: [{ name: "收车地址", hidden:0, }, { name: "发车地址", hidden:1}],
+    flag:false,
   },
 
 
@@ -21,6 +23,12 @@ Page({
       index:e.index,
       orderId :e.orderId,
     })
+    if (e.index==""){
+     this.setData({
+      flag: true,
+      index:0,
+      })
+    }
 
   },
 
@@ -41,6 +49,8 @@ Page({
           addressList: res.data.result,
         }) 
     })
+   
+
   },
 
 
@@ -57,6 +67,25 @@ Page({
 
 
 
+
+send:function(e){
+  var list = this.data.list;
+  var index = e.currentTarget.dataset.index;
+
+  //判断用户点击
+  for (var i = 0; i < list.length; i++) {
+    if (index == i) {
+      list[i].hidden = 0;
+    } else {
+      list[i].hidden = 1;
+    }
+  }
+  this.setData({
+    list:list,
+    index: index,
+  })
+  this.onShow();
+},
 
 
   /**
@@ -106,9 +135,6 @@ Page({
       addressList[i].status = i == index;
    
     }
-
-
-
     console.log(addressList)
     //发送PUT
     reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/userAddress/' + shipAddressId + '/type/'+this.data.index, '', (err, res) => {})

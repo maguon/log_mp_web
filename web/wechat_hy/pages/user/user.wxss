@@ -9,6 +9,12 @@ background: #f8f6f8;
   flex-direction: row;
   align-items: center;
 }
+.userinfo-avatar{
+  width: 150rpx;
+  height: 150rpx;
+  margin-left: 15px;
+  border-radius: 50%;
+}
 .back-portrait{
   width: 80px;
   height: 80px;

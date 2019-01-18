@@ -29,7 +29,6 @@ Page({
   //用户输入
   addName: function (e) {
     var name = e.detail.value;
-    console.log(e.detail.value)
     this.setData({
       name: name,
     })
@@ -37,7 +36,6 @@ Page({
   //用户输入
   bankName: function (e) {
     var bank_name = e.detail.value;
-    console.log(e.detail.value)
     this.setData({
       bank_name: bank_name,
     })
@@ -45,7 +43,6 @@ Page({
   //用户输入
   addNumber: function (e) {
     var bank_num = e.detail.value;
-    console.log(e.detail.value)
     this.setData({
       bank_num: bank_num,
     })
@@ -56,9 +53,6 @@ Page({
     var name = that.data.name;
     var bankName = that.data.bank_name;
     var bankNum = that.data.bank_num;
-    console.log(bankName)
-    console.log(name)
-    console.log(bankNum)
     var len = bankNum.length;
     var userId = app.globalData.userId;
 

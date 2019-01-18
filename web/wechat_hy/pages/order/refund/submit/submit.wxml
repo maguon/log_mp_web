@@ -1,0 +1,8 @@
+ <view class="icon-box">
+   <icon class='icon' type="success" size="100"></icon>
+      <view class="title">退款申请已提交</view>
+        <view class="desc">客服会在24小时之内对您的申请进行处理请耐心等待</view>
+      
+<!-- 按键 ---------------------------------------------------------------------- -->
+ </view>
+ 

@@ -18,6 +18,9 @@ Page({
     completeFlag: false,
     partFlag:false,  
     refundFlag:false,
+
+    delFlag:false,
+    invoiceFlag:false,
   },
 
   /**
@@ -30,6 +33,7 @@ Page({
     var orderId = e.orderId;
     this.setData({
       orderId: e.orderId,
+      name:e.name,
     })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
@@ -48,6 +52,14 @@ Page({
           refundFlag: true,
         })
       } 
+
+      if(e.name==""){
+        this.setData({
+          completeFlag: true,
+          invoiceFlag:true,
+          delFlag:true,
+        })
+      }
 
         this.setData({
           orderlist: res.data.result[0],
@@ -74,6 +86,32 @@ Page({
   },
 
 
+  //取消订单
+ del: function () {
+    var userId = app.globalData.userId;
+
+    wx.showModal({
+      content: '确定要删除订单吗？',
+      confirmColor: "#a744a7",
+      success(res) {
+        if (res.confirm) {
+          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + this.data.orderId + "/cancel", "", (err, res) => { })
+        }
+      }
+    })
+  },
+
+
+  refund:function(){
+  wx.navigateTo({
+    url: "/pages/order/refund/refund?orderId=" + this.data.orderId + "&name=" + "refund" + "&paymentId=" + "",
+  })
+  },
+
+
+  invoice:function(){
+
+  },
   /**
  * 编译时间
  */
@@ -179,6 +217,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+
     wx.switchTab({
       url: '/pages/order/order',
     })

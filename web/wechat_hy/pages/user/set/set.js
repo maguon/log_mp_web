@@ -1,66 +1,76 @@
-// pages/user/set/set.js
+// pages/order/order.js
+const app = getApp()
+const config = require('../../../config.js');
+const reqUtil = require('../../../utils/ReqUtil.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    imgUrl:"",
+    name:'',
+    imgFlag:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: function (e) {
+    if(e.url!=""){
+      this.setData({
+        imgFlag:true,
+        imgUrl:e.url,
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  name:function(e){
+   console.log(e)
+   var name=e.detail.value;
+   this.setData({
+     name:name,
+   })
   },
+  chooseHead:function(){
+    var that=this;
+    wx.chooseImage({
+      count:1,
+      sizeType:['original','compressed'],
+      sourceType: ['album', 'camera'],
+      success: function(res) {
+        var tempFilePaths=res.tempFilePaths[0]
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+        console.log(tempFilePaths)
+        that.setData({
+          imgUrl: tempFilePaths,
+          imgFlag:true
+        })
+      },
+    })
   },
+  add:function(){
+    var userId = app.globalData.userId;
+    var name=this.data.name;
+    var imgUrl = this.data.imgUrl;
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+    var params={
+      userName:name,
+      gender:"",
+      birth:"",
+      avatar:imgUrl,
+    }
 
+    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId +"/userInfo",params, (err, res) => {
+      wx.navigateBack({
+        
+      })
+    })
+    
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

@@ -64,7 +64,7 @@ page{
   bottom: 0px;
   height: 70px;
   width: 100%;
-
+ background: #f8f6f8;
 }
 .btn-area{
   position: fixed;
@@ -79,4 +79,9 @@ page{
 
 .weui-cell_active{
   background-color:#ececec;
+  }
+
+  .null{
+    width: 100%;
+    height: 200px;
   }

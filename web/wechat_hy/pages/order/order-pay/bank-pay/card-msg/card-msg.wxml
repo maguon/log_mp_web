@@ -3,19 +3,19 @@
 
 <view class="listItems">
 <view class="tag">*</view>
-<text class="list-left">持卡人</text>
+<text class="list-left">持卡人:</text>
 <input bindinput='addName' class="listRight" type="text"  placeholder='{{name}}'  name="consignee"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
-<text class="list-left">银行名称</text>
-<input bindinput='bankName' class="listRight" type="number"  placeholder='{{bank_name}}'  name="mobile"/>
+<text class="list-left">银行名称:</text>
+<input bindinput='bankName' class="listRight" type="text"  placeholder='{{bank_name}}'  name="mobile"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
-<text class="list-left">银行卡号</text>
+<text class="list-left">银行卡号:</text>
 <input bindinput='addNumber' type='number' class="listRight"   placeholder='{{bank_num}}'name="mobile"/>
 </view>
 

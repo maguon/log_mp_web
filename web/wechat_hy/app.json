@@ -13,6 +13,7 @@
    
     "pages/order/order",
     "pages/order/refund/refund",
+    "pages/order/refund/submit/submit",
     "pages/order/refund/pay-msg/pay-msg",
     "pages/order/car-msg/car-msg",
     "pages/order/transport/transport",

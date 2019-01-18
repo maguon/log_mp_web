@@ -86,7 +86,7 @@ background-color:#ececec;
 .remark{
   width: 90%;
   height: 60px;
-  font-size: 12px;
+  font-size: 15px;
   margin: 10px 15px 10px 15px;
 }
 .prompt{

@@ -4,48 +4,48 @@
 <image bindtap='addAddress'  class='arrow' src='../../../../../images/add_02.png'></image>
 </view>
 
-<!-- <view  wx:for="{{addressList}}" wx:key='u'> -->
+<view  wx:for="{{invList}}" wx:key='u'>
 <view bindtap="radioChange" data-index="{{index}}" class="label" hover-class='weui-cell_active_btn'>    
     
 
          <view class='default'>
          <image hidden='{{item.status}}' class='arc' src='.././../../../images/arc.png'></image>
            <image hidden='{{!item.status}}' class='arc01' src='.././../../../images/arc_01.png'></image>
-         <view class='city'>营口顺通圣世物流有限公司</view>
+         <view class='city'>{{item.company_name}}</view>
              <view hidden='{{!item.status}}' class='default-item'>默认</view>
              <view hidden='{{item.status}}' class='default-item-two'>设为默认</view>
          </view>
          <view class='div-line'></view>
 
-<view class='item-ress'>
+<!-- <view class='item-ress'>
 <view class='ress'>发票抬头：</view>
-<view class='ress-text'>营口顺通圣世物流有限公司</view>
-</view>
+<view class='ress-text'>{{item.company_name}}</view>
+</view> -->
 
 <view class='item-ress'>
 <view class='ress'>税<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>号：</view>
-<view class='ress-text'>jhk145443565581558415</view>
+<view class='ress-text'>{{item.tax_number}}</view>
 </view>
 
 <view class='item-ress'>
 <view class='ress'>开户银行：</view>
-<view class='ress-text'>大连自贸区支行</view>
+<view class='ress-text'>{{item.bank}}</view>
 </view>
 
 <view class='item-ress'>
 <view class='ress'>银行账户：</view>
-<view class='ress-text'>114525454454414445</view>
+<view class='ress-text'>{{item.bank_code}}</view>
 </view>
 
 
 <view class='item-ress01'>
 <view class='ress'>企业地址：</view>
-<view class='ress-text'>辽宁省大连市开发区金马路 凯伦国际大厦B座 2608室</view>
+<view class='ress-text'>{{item.company_address}}</view>
 </view>
 
 <view class='item-ress'>
 <view class='ress'>电话号码：</view>
-<view class='ress-text'>0411-6456788</view>
+<view class='ress-text'>{{item.company_phone}}</view>
 </view>
 
           <view class='div-line'></view>
@@ -57,7 +57,7 @@
  
   
   </view>
-  <!-- </view> -->
+  </view>
 <view class='null'></view>
 
 <view class="btnGroup">

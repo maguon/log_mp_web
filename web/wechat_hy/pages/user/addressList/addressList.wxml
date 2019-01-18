@@ -4,6 +4,15 @@
 <image bindtap='addAddress'  class='arrow' src='../../../../../images/add_02.png'></image>
 </view>
 
+<view class='choose' >
+<view hidden='{{!flag}}' class='choose-item' bindtap='send' data-index='{{index}}'  wx:for="{{list}}" wx:key="u">
+<button hidden='{{item.hidden}}'  class='goods'>{{item.name}}</button>
+<button hidden='{{!item.hidden}}'  class='send' >{{item.name}}</button>
+</view>
+</view>
+
+
+
 <view  wx:for="{{addressList}}" wx:key='u'>
 <view bindtap="radioChange" data-index="{{index}}" class="label" hover-class='weui-cell_active_btn'>    
     
@@ -32,7 +41,7 @@
   </view>
 <view class='null'></view>
 
-<view class="btnGroup">
+<view hidden='{{flag}}' class="btnGroup">
  <button bindtap='useRess' class="btn" hover-class="weui-cell_active_btn">确定</button>
 </view>
 

@@ -17,6 +17,38 @@ flex-direction: column;
   flex-direction: row;
   align-items: center;
 }
+.choose{
+height: 40px;
+width:100%;
+background: white;
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+margin-top: 2px;
+}
+.choose-item{
+  width: 50%;
+}
+.goods{
+  width: 80%;
+height: 30px;
+color: white;
+font-size: 15px;
+line-height: 30px;
+margin-left: 20px;
+background: #874086;
+}
+.send{
+    width: 80%;
+height: 30px;
+margin-left: 20px;
+color: #df70b5;
+font-size: 15px;
+line-height: 30px;
+background: white;
+border: 1px solid #df70b5;
+}
 .city{
   font-size: 15px;
   margin-left: 15px;

@@ -1,5 +1,5 @@
 <view class='dis-line'></view>
-<view  class='dis-content dis'>
+<view  hidden='{{!hidden}}' class='dis-content dis'>
 <view class='city'>
 <view class='city-text01'>退款编号：12345678</view>
 <view class='item-text'>2018-12-13 11:22:45</view>
@@ -7,37 +7,37 @@
 </view>
 
 <view class='content'>
- <view class='item'>大连</view>
+ <view class='item'>{{orderlist.start_city}}</view>
  <image class='item-img' src='../../../images/arrow_02.png'></image>
-  <view class='item'>沈阳</view>
+  <view class='item'>{{orderlist.end_city}}</view>
 </view>
 
-<view  class='dis-content' hover-class="active">
+<view bindtap='choose' class='dis-content' hover-class="active">
 <view class='city'>
 <view class='city-text'>选择一笔支付</view>
-<view class='stay-text01'>微信</view>
+<view class='stay-text01'>{{orderPay}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
 </view>
 <view class='dis-line'></view>
 <view  class='dis-content'>
 <view class='city'>
-<view class='city-text'>退款金额（元）</view>
-<input class='city-input' type="number" placeholder='请输入退款金额' placeholder-style='font-size:15px;'></input>
+<view class='city-text'>申请金额（元）</view>
+<input bindinput='apply'  class='city-input' type="number" placeholder='请输入退款金额' placeholder-style='font-size:15px;'></input>
 </view>
 </view>
 <view class='dis-line'></view>
 
 
-<textarea class='remark' placeholder='请填写退款原因' placeholder-style='font-size:12px;'/>
+<textarea bindinput='why' class='remark' placeholder='请填写退款原因' placeholder-style='font-size:15px;'/>
 <view class='dis-line01'></view>
 
 <view class='prompt'>退款金额将原路返回所选择的支付账号</view>
 
 <view class='butlist'>
-    <button hidden='{{true}}'  bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">提交申请</button>
+    <button hidden='{{butFlag}}'  bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">提交申请</button>
 
-    <view hidden='{{!true}}' class='list'>
+    <view hidden='{{!butFlag}}' class='list'>
     <button class='chexiao'>撤销申请</button>
     <button class='xiugai'>修改申请</button>
     </view>

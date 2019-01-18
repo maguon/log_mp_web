@@ -1,18 +1,19 @@
 <view class='head'>
-<view class='back-portrait'>
-<image class='portrait' src='../../images/icon_02.png'></image>
+<view hidden='{{headFlag}}' class='back-portrait'>
+<image  class='portrait' src='../../images/icon_02.png'></image>
 </view>
+ <image hidden='{{!headFlag}}'class="userinfo-avatar" src="{{user.avatar}}" mode="cover"></image>
 
 <view class='right'>
 <view class='content'>
-<view class='content-name'>打打啊打</view>
+<view class='content-name'>{{user.user_name}}</view>
 <image class='content-img' src='../../images/icon_01.png'></image>
 <view bindtap='edit' class='content-right'>设置</view>
 </view>
 
 <view class='content'>
 <image class='content-img' src='../../images/phone.png'></image>
-<view class='content-phone'>15840668526</view>
+<view class='content-phone'>{{user.phone}}</view>
 <view bindtap='bandPhone' class='content-band'>绑定手机</view>
 </view>
 </view>

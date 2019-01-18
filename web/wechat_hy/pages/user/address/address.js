@@ -30,6 +30,7 @@ Page({
     if (addressList != "") {
       this.setData({
         addressList: addressList,
+        city: addressList.address,
         name: addressList.user_name,
         phone: addressList.phone,
         address: addressList.detail_address,

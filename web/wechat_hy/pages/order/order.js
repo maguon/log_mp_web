@@ -361,12 +361,12 @@ Page({
         break;
    case 2:
         wx.navigateTo({
-          url: "/pages/order/order-pay/order-pay?orderId=" + orderId,
+          url: "/pages/order/order-pay/order-pay?orderId=" + orderId+"&name="+"order",
         })
         break;
    case 3:
         wx.navigateTo({
-          url: '/pages/order/order-pay/order-pay?orderId=' + orderId,
+          url: '/pages/order/order-pay/order-pay?orderId=' + orderId+"&name="+"order",
         })
         break;
    case 4:
@@ -411,4 +411,41 @@ Page({
     return money;
   },
   
+
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var that = this;
+    // 显示加载图标
+    wx.showLoading({
+      title: '玩命加载中',
+    })
+    // 页数+1
+    page = page + 1;
+    wx.request({
+      url: 'https://xxx/?page=' + page,
+      method: "GET",
+      // 请求头部
+      header: {
+        'content-type': 'application/text'
+      },
+      success: function (res) {
+        // 回调函数
+        var moment_list = that.data.moment;
+
+        for (var i = 0; i < res.data.data.length; i++) {
+          moment_list.push(res.data.data[i]);
+        }
+        // 设置数据
+        that.setData({
+          moment: that.data.moment
+        })
+        // 隐藏加载框
+        wx.hideLoading();
+      }
+    })
+
+  },
 })

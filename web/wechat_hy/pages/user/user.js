@@ -1,31 +1,38 @@
-// pages/user/user.js
+// pages/order/order.js
+const app = getApp()
+const config = require('../../config.js');
+const reqUtil = require('../../utils/ReqUtil.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    user:[],
+    headFlag:false,
+    url:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+   
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var userId = app.globalData.userId;
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
+      //目的城市 城市ID
+      this.setData({
+        user: res.data.result[0],
+        url:res.data.result[0].avatar,
+        headFlag: true,
+      })
+    })
 
   },
 /**
@@ -41,7 +48,7 @@ Page({
  */
   edit:function(){
     wx.navigateTo({
-      url: '/pages/user/set/set',
+      url: '/pages/user/set/set?url='+this.data.url,
     })
   },
   /**
@@ -74,7 +81,7 @@ wx.navigateTo({
   },
   address:function(){
     wx.navigateTo({
-      url: "/pages/user/addressList/addressList",
+      url: "/pages/user/addressList/addressList?index="+""+"&orderId="+"",
     })
   },
   bankCard:function(){

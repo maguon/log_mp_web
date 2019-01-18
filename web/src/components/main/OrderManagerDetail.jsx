@@ -600,7 +600,7 @@ class OrderManagerDetail extends React.Component {
                             {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
                             (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
                                 orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
-                            <div>
+                            <div className="row margin-top10 margin-left40 margin-right50">
                                 <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].admin_mark}</div>
                                 <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
                             </div>}

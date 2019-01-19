@@ -21,6 +21,7 @@
 </view>
 <!--  ---------------------------------------------------------------------- -->
  <view hidden='{{!prompt}}' class='prompt'>已送达的订单请到个人里面的历史订单中查看</view>
+ <view class='null'></view>
 <view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'>
 <view hidden='{{!item.state}}' bindtap='bindDetail' data-index='{{index}}' data-name='orderlist' class='content' hover-class="active">
 <view class='city'>

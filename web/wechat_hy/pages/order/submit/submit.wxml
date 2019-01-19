@@ -7,7 +7,7 @@
 <!-- 按键 ---------------------------------------------------------------------- -->
 
         <button bindtap="bindInquiry" class="area" hover-class="weui-cell_active">
-       <text class='text'>继续询价</text>
+       <text class='text'>确定</text>
        </button>
  </view>
  

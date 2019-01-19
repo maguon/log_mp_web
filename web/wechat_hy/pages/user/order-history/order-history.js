@@ -10,6 +10,7 @@ Page({
   data: {
     orderlist:[],
     flag:false,
+    size:2,
   },
 
   /**
@@ -17,8 +18,8 @@ Page({
    */
   onLoad: function (options) {
     var userId = app.globalData.userId;
-
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+    
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?status=" + 9 + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
       if (res.data.result != '') {
         for (var i = 0; i < res.data.result.length; i++) {
           //支付费用
@@ -26,28 +27,51 @@ Page({
           //编译时间
           res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
           res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-          //判断显示状态
-          if (res.data.result[i].status==9) {
-            res.data.result[i].state = 1;
-            this.setData({
-              flag: true,
-            })
-            //判断删除状态
-          } else if (res.data.result[i].status == 8) {
-            res.data.result[i].state = 0;
-          }
+          res.data.result[i].state = 1;
         }
         console.log(res.data.result)
         this.setData({
           orderlist: res.data.result,
-          loadingHidden: true
+          loadingHidden: true,
+          flag: true,
         })
       } else {
         this.setData({
-          flag: true,
+          flag: false,
         })
       }
     })
+
+    // reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+    //   if (res.data.result != '') {
+    //     for (var i = 0; i < res.data.result.length; i++) {
+    //       //支付费用
+    //       res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+    //       //编译时间
+    //       res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+    //       res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+    //       //判断显示状态
+    //       if (res.data.result[i].status==9) {
+    //         res.data.result[i].state = 1;
+    //         this.setData({
+    //           flag: true,
+    //         })
+    //         //判断删除状态
+    //       } else if (res.data.result[i].status == 8) {
+    //         res.data.result[i].state = 0;
+    //       }
+    //     }
+    //     console.log(res.data.result)
+    //     this.setData({
+    //       orderlist: res.data.result,
+    //       loadingHidden: true
+    //     })
+    //   } else {
+    //     this.setData({
+    //       flag: true,
+    //     })
+    //   }
+    // })
 
   },
 
@@ -69,7 +93,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+ 
   },
 
   /**
@@ -90,7 +114,13 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    var size = this.data.size;
+    var new_size = size + 1;
 
+    this.setData({
+      size: new_size,
+    })
+    this.onLoad();
   },
 
   /**

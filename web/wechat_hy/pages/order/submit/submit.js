@@ -10,7 +10,7 @@ Page({
 
   bindInquiry:function(){
     wx.switchTab({
-      url: '/pages/index/index',
+      url: "/pages/order/order",
     })
   },
 })

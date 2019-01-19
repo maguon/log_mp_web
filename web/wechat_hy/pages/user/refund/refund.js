@@ -9,6 +9,7 @@ Page({
    */
   data: {
     refund:[],
+    // size:2,
     state:["已拒绝","已退款","待处理"],
     hidden:false,
   },
@@ -110,13 +111,18 @@ Page({
   onPullDownRefresh: function () {
 
   },
+  // /**
+  //    * 页面上拉触底事件的处理函数
+  //    */
+  // onReachBottom: function () {
+  //   var size = this.data.size;
+  //   var new_size = size + 1;
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
+  //   this.setData({
+  //     size: new_size,
+  //   })
+  //   this.onLoad();
+  // },
 
   /**
    * 用户点击右上角分享

@@ -14,6 +14,7 @@ Page({
   payment_state: ["未支付", "部分支付", "已支付"],
 
   invoice:[],
+  size:4,
   index:0,
   hidden:false,
   carFlag:false
@@ -41,7 +42,8 @@ Page({
     var index = this.data.index;
     if (index==0){   
       //发送get请求
-      reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoicesList", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoicesList?start=" + 0 +"&size="+this.data.size, (err, res) => {
+        console.log(res.data.result)
        for(var i=0;i<res.data.result.length;i++){
          res.data.result[i].sumfee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
          res.data.result[i].real_payment_price = this.decimal(res.data.result[i].real_payment_price)
@@ -58,7 +60,8 @@ Page({
       })
     } else if (index == 1){
       //发送get请求
-      reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/noInvoiceOrderList", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/noInvoiceOrderList?start=" + 0 +"&size="+this.data.size, (err, res) => {
+        console.log(res.data.result)
         for (var i = 0; i < res.data.result.length; i++) {
           res.data.result[i].sumfee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
           res.data.result[i].real_payment_price = this.decimal(res.data.result[i].real_payment_price)
@@ -152,5 +155,20 @@ Page({
       })
     }
   },
+
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+    var size = this.data.size;
+    var new_size = size + 1;
+
+    this.setData({
+      size: new_size,
+    })
+    this.onShow();
+  },
+
   
 })

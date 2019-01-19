@@ -7,7 +7,7 @@
 </view>
 <view class='name'>
 <view class='name-des'>昵称</view>
-<input bindinput='name' class='name-text' placeholder='请输入你的昵称' placeholder-style='font-size:15px; color:#8a8a8a;'></input>
+<input bindinput='name' class='name-text' placeholder='{{name}}' placeholder-style='font-size:15px; color:#8a8a8a;'></input>
 </view>
 
 <button bindtap='add' class="btn" hover-class="weui-cell_active">确定</button>

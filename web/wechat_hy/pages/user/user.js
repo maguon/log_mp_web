@@ -11,6 +11,7 @@ Page({
     user:[],
     headFlag:false,
     url:"",
+    name:"",
   },
 
   /**
@@ -30,6 +31,7 @@ Page({
       this.setData({
         user: res.data.result[0],
         url:res.data.result[0].avatar,
+        name: res.data.result[0].user_name,
         headFlag: true,
       })
     })
@@ -48,7 +50,7 @@ Page({
  */
   edit:function(){
     wx.navigateTo({
-      url: '/pages/user/set/set?url='+this.data.url,
+      url: '/pages/user/set/set?url='+this.data.url+"&name="+this.data.name,
     })
   },
   /**
@@ -76,7 +78,7 @@ wx.navigateTo({
   },
   invoiceHead:function(){
     wx.navigateTo({
-      url: "/pages/user/invoice/msg-list/msg-list",
+      url: "/pages/user/invoice/msg-list/msg-list?applyId="+"",
     })
   },
   address:function(){

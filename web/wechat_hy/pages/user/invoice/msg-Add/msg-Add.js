@@ -23,26 +23,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    // var invList = JSON.parse(e.invList);
-    // console.log(invList)
-    // if (addressList != "") {
-    //   this.setData({
-    //     invList: invList,
-    //     invoice: invList.invoice,
-    //     bank: invList.bank,
-    //     bankNum: invList.bankNum,
-    //     ein: invList.ein,
-    //     phone: invList.phone,
-    //     address: invList.address,
-    //     add: '确定修改',
-    //     index: e.index,
-    //   })
-    // } else {
-    //   this.setData({
-    //     invList: invList,
-    //     index: e.index,
-    //   })
-    // }
+    var invList = JSON.parse(e.invList);
+    console.log(invList)
+    if (invList!= "") {
+      this.setData({
+        invList: invList,
+        invoice: invList.company_name,
+        bank: invList.bank,
+        bankNum: invList.bank_code,
+        ein: invList.tax_number,
+        phone: invList.company_phone,
+        address: invList.company_address,
+        add: '确定修改',
+
+      })
+    } else {
+      this.setData({
+        invList: invList,
+      })
+    }
   },
 
   /**
@@ -133,18 +132,18 @@ Page({
       warn = "请输入公司地址";
     }else {
       flag = false;
-      // if (that.data.invList!= "") {
-      //   var params = {
-      //     companyName: invoice,
-      //     taxNumber: ein,
-      //     companyAddress: address,
-      //     bank: bank,
-      //     bankCode: bankNum,
-      //     companyPhone: phone,
-      //   }
-      //   //发送请求
-      //   reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/userAddress/" + that.data.invList.id + "/address", params, (err, res) => { });
-      // } else {
+      if (that.data.invList!= "") {
+        var params = {
+          companyName: invoice,
+          taxNumber: ein,
+          companyAddress: address,
+          bank: bank,
+          bankCode: bankNum,
+          companyPhone: phone,
+        }
+        //发送请求
+        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + that.data.invList.id, params, (err, res) => { });
+      } else {
         //获取要传递的参数
         var params = {
           companyName: invoice,
@@ -157,7 +156,7 @@ Page({
 
         //发送Post请求
         reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/invoice", params, (err, res) => { })
-      // }
+       }
       //跳转地址管理界面
       wx.navigateBack({
       })

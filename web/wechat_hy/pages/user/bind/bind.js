@@ -45,7 +45,7 @@ Page({
       if (res.data.result[0].wechat_name != '' && res.data.result[0].wechat_name!= null) {
         this.setData({
           hidden: true,
-          wechat_name: res.data.result[0].wechat_name,
+          wechat_name: res.data.result[0].user_name,
         })
       } else {
         this.setData({

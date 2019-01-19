@@ -14,13 +14,24 @@ Page({
     service: ["上门服务", "当地自提"],
     state:["未支付","部分支付","已支付"],
     lagstate: ["待安排", "待发运", "执行中","已送达"],
+    invoicelist:[],
+    refundlist:[],
 
     completeFlag: false,
     partFlag:false,  
-    refundFlag:false,
 
-    delFlag:false,
+
+    delFlag: false,
+
+    refundFlag:false,
+    ref_Flag: false,
+    refFlag: false,
+    norefFlag: false,
+
     invoiceFlag:false,
+    vin_Flag:false,
+    vinFlag:false,
+    novinFlag: false,
   },
 
   /**
@@ -28,47 +39,12 @@ Page({
    */
   onLoad: function (e) {
     console.log(e)
-    var userId = app.globalData.userId;
-    
-    var orderId = e.orderId;
     this.setData({
       orderId: e.orderId,
       name:e.name,
     })
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-        //应付费用
-        res.data.result[0].sumFee = (res.data.result[0].total_trans_price + res.data.result[0].total_insure_price).toFixed(2);
-        //编译时间
-        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
-     if (res.data.result[0].payment_status == 1) {
-        this.setData({
-          partFlag: true,
-          refundFlag:true,
-        })
-      } else if (res.data.result[0].payment_status == 2) {
-        this.setData({
-          completeFlag: true,
-          refundFlag: true,
-        })
-      } 
 
-      if(e.name==""){
-        this.setData({
-          completeFlag: true,
-          invoiceFlag:true,
-          delFlag:true,
-        })
-      }
-
-        this.setData({
-          orderlist: res.data.result[0],
-          service_type: res.data.result[0].service_type - 1,
-          sumFee:res.data.result[0].sumFee,
-        })
-      
-      console.log(res.data.result)
-    })
   },
 
   /**
@@ -82,7 +58,117 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var userId = app.globalData.userId;
+    var orderId = this.data.orderId;
+    var name = this.data.name;
 
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
+      //应付费用
+      res.data.result[0].sumFee = (res.data.result[0].total_trans_price + res.data.result[0].total_insure_price).toFixed(2);
+      //编译时间
+      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+      if (res.data.result[0].payment_status == 1) {
+        this.setData({
+          partFlag: true,
+          refundFlag: true,
+        })
+      } else if (res.data.result[0].payment_status == 2) {
+        this.setData({
+          completeFlag: true,
+          refundFlag: true,
+        })
+      }
+
+
+   
+      if (name == "") {
+        this.setData({
+          refundFlag: true,
+          completeFlag: true,
+          invoiceFlag: true,
+          delFlag: true,
+        })
+      }
+
+      this.setData({
+        orderlist: res.data.result[0],
+        service_type: res.data.result[0].service_type - 1,
+        sumFee: res.data.result[0].sumFee,
+      })
+
+      console.log(res.data.result)
+    })
+
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId, (err, res) => {
+      if (res.data.result != "") {
+        //申请中
+        if (res.data.result[0].status==2){
+          this.setData({
+            refundFlag: false,
+            ref_Flag:true,
+            refFlag: false,
+            norefFlag:false,
+          })
+          //已退款
+        } else if(res.data.result[0].status == 1){
+          this.setData({
+            refundFlag: false,
+            ref_Flag: false,
+            refFlag: true, 
+            norefFlag: false,
+          })
+          //已拒绝
+        } else if (res.data.result[0].status == 0) {
+          this.setData({
+            refundFlag:false,
+            ref_Flag: false,
+            refFlag: false,
+            norefFlag: true,
+          })
+        }
+      this.setData({
+        refundlist: res.data.result[0],
+      })
+
+      }
+    })
+
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/invoicesList?orderId=" + orderId, (err, res) => {
+      if (res.data.result != "") {
+        //申请中
+        if (res.data.result[0].invoiced_status==0) {
+          this.setData({
+            invoiceFlag: false,
+            vin_Flag: true,
+            vinFlag: false,
+            novinFlag: false,
+          })
+        //已开票
+        } else if (res.data.result[0].invoiced_status == 1) {
+          this.setData({
+            invoiceFlag: false,
+            vin_Flag: false,
+            vinFlag: true,
+            novinFlag: false,
+          })
+          //已拒绝
+        } else if (res.data.result[0].invoiced_status == 2) {
+          this.setData({
+            invoiceFlag: false,
+            vin_Flag: false,
+            vinFlag: false,
+            novinFlag: true,
+          })
+        }
+        this.setData({
+          invoicelist: res.data.result[0],
+        })
+
+
+      }
+    })
   },
 
 
@@ -102,6 +188,10 @@ Page({
   },
 
 
+
+
+
+//退款
   refund:function(){
   wx.navigateTo({
     url: "/pages/order/refund/refund?orderId=" + this.data.orderId + "&name=" + "refund" + "&paymentId=" + "",
@@ -109,9 +199,34 @@ Page({
   },
 
 
-  invoice:function(){
+ //处理完成
+ isRefund:function(){
+   var orderId = this.data.orderId;
+   var paymentId = this.data.refundlist.payment_id;
+   var refundId = this.data.refundlist.id;
+   wx.navigateTo({
+     url: "/pages/user/refund/ref-detail/ref-detail?orderId=" + orderId + "&paymentId=" + paymentId + "&refundId=" + refundId,
+   })
+ },
 
+//开票
+invoice:function(){
+  var orderId = this.data.orderId;
+  wx.navigateTo({
+  url: "/pages/user/invoice/apply/apply?orderId=" + orderId,
+  })
   },
+
+ //处理完成
+isInvoice: function () {
+    var orderId = this.data.orderId;
+    wx.navigateTo({
+      url: "/pages/user/invoice-detail/invoice-detail?orderId=" + orderId,
+    })
+  },
+ 
+
+
   /**
  * 编译时间
  */

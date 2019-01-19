@@ -1,17 +1,56 @@
-// pages/user/invoice-detail/invoice-detail.js
+const config = require('../../../config.js');
+const reqUtil = require('../../../utils/ReqUtil.js')
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    state: ["待开票", "已开票", "已拒绝"],
+    service: ["", "上门服务", "当地自提"],
+    orderlist:[],
+    invoice:[],
+    orderId:"",
+    remark:'',
+    
+   
+    refuseFlag: false,
+    invoiceFlag: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (e) {
+  this.setData({
+    orderId: e.orderId,
+  })
+    var userId = app.globalData.userId;
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
+
+      var sumfee = this.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
+      //保留小数
+      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price)
+      res.data.result[0].total_insure_price = this.decimal(res.data.result[0].total_insure_price)
+
+
+      //编译时间
+      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = this.getTime(res.data.result[0].updated_on)
+
+
+
+      this.setData({
+        sumfee: sumfee,
+        orderlist: res.data.result[0],
+      })
+    })
+    
+   
+
 
   },
 
@@ -26,41 +65,126 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var userId = app.globalData.userId;
+    var orderId = this.data.orderId;
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/invoicesList?orderId=" + orderId, (err, res) => {
+
+      res.data.result[0].apply_time = this.getTime(res.data.result[0].apply_time)
+      res.data.result[0].invoiced_time = this.getTime(res.data.result[0].invoiced_time)
+
+      if (res.data.result[0].invoiced_status == 1) {
+        this.setData({
+          invoiceFlag: true,
+        })
+      } else if (res.data.result[0].invoiced_status == 2) {
+        this.setData({
+          refuseFlag: true,
+          invoiceFlag: false,
+        })
+      }
+
+      this.setData({
+        invoice: res.data.result[0],
+      })
+    })
+
 
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
+
+  choose:function(){
+    var applyId = this.data.invoice.invoice_apply_id;
+    wx.navigateTo({
+      url: "/pages/user/invoice/msg-list/msg-list?applyId=" + applyId,
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+note:function(e){
+  var remark = e.detail.value;
+  this.setData({
+    remark: remark,
+  })
+},
 
-  },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
+undo:function(){
+  var userId = app.globalData.userId;
+  var applyId = this.data.invoice.invoice_apply_id;
+  wx.showModal({
+    content: '确定撤销发票申请',
+    confirmColor: "#a744a7",
+    success(res) {
+      if (res.confirm) {
+  reqUtil.httpDel(config.host.apiHost + "/api/user/" + userId + "/controlInvoices/" +applyId+"/revokeInvoice")
 
-  },
+        wx.navigateBack({
+        })
+      }
+    }
+  })
+},
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
 
-  },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
+again:function(){
+  var userId = app.globalData.userId;
+  var applyId = this.data.invoice.invoice_apply_id;
+  var remark = this.data.remark;
 
+  var params = {
+    title: invoice.title,
+    taxNumber: invoice.tax_number,
+    companyPhone: invoice.company_phone,
+    bank: invoice.bank,
+    bankCode: invoice.bank_code,
+    companyAddress: invoice.company_address,
+    remark: remark
   }
+  reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/controlInvoices/" + applyId + "/invoiceMsg", params,(err, res) => {
+    wx.showToast({
+      title: '开票申请已重新提交',
+      icon: 'success',
+      duration: 2000
+    })
+    wx.navigateBack({
+
+    })
+  })
+},
+
+
+
+
+
+  /**
+   * 保留小数
+   */
+  decimal: function (e) {
+    //钱数小数点后二位设定
+    var total_price = Number(e);
+    var money = total_price.toFixed(2);
+    return money;
+  },
+
+
+  /**
+ * 编译时间
+ */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
+
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
+  },
 })

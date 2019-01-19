@@ -47,16 +47,15 @@
 <view class='ress'>电话号码：</view>
 <view class='ress-text'>{{item.company_phone}}</view>
 </view>
-
-          <view class='div-line'></view>
-
-           <view class='check'>
-            <view class='default-redact'data-id="{{index}}" bindtap="editorAddress">编辑</view>
-             <view class="default-redact" data-id="{{index}}" bindtap="delAddress">删除</view>
-          </view>
- 
   
   </view>
+
+   <view class='div-line'></view>
+
+           <view class='check'>
+            <view bindtap="editor" class='default-redact'data-id="{{index}}"  >编辑</view>
+             <view bindtap="del" class="default-redact" data-id="{{index}}" >删除</view>
+          </view>
   </view>
 <view class='null'></view>
 

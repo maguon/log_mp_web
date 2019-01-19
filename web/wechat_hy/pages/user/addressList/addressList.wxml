@@ -4,8 +4,8 @@
 <image bindtap='addAddress'  class='arrow' src='../../../../../images/add_02.png'></image>
 </view>
 
-<view class='choose' >
-<view hidden='{{!flag}}' class='choose-item' bindtap='send' data-index='{{index}}'  wx:for="{{list}}" wx:key="u">
+<view hidden='{{!flag}}' class='choose' >
+<view  class='choose-item' bindtap='send' data-index='{{index}}'  wx:for="{{list}}" wx:key="u">
 <button hidden='{{item.hidden}}'  class='goods'>{{item.name}}</button>
 <button hidden='{{!item.hidden}}'  class='send' >{{item.name}}</button>
 </view>

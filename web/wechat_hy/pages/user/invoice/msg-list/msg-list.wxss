@@ -4,7 +4,7 @@ page{
 
 .label{
 width: 94%;
-height:240px;
+height:180px;
 background: white;
 margin: 10px 3% 0px 3%;
 display: flex;
@@ -77,16 +77,19 @@ font-size: 15px;
 
 .check{
   height: 40px;
-  width: 100%;
+  width: 94%;
   display: flex;
+  background: white;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+  margin: 0px 3% 0px 3%;
 }
 
 .default-redact{
   font-size: 12px;
   text-align: center;
+  margin-right: 5px;
   width: 15%;
   height: 20px;
   color: #874086;

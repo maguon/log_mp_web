@@ -80,6 +80,33 @@ Page({
   var userId=app.globalData.userId;
   var orderState = this.data.orderState;
 
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry", (err, res) => {
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status == 0 ||res.data.result[i].status == 1 || res.data.result[i].status == 2) {
+          orderState[0].hidden=true;
+        }
+      }
+      this.setData({
+        orderState: orderState,
+      })
+    })
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      for (var i = 0; i < res.data.result.length; i++) {
+        if (res.data.result[i].status == 0 || res.data.result[i].status == 1 ) {
+          orderState[1].hidden = true;
+        } else if (res.data.result[i].status == 2 || res.data.result[i].status == 3 ){
+          orderState[2].hidden = true;
+          orderState[3].hidden = true;
+        } else if (res.data.result[i].status == 4 ) {
+          orderState[4].hidden = true;
+        }
+      }
+      this.setData({
+        orderState: orderState,
+      })
+    })
+
+
  
 
   switch(index){
@@ -92,7 +119,6 @@ Page({
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry", (err, res) => {
         console.log(res.data.result)
         if (res.data.result!=[]){
-        orderState[0].hidden=true;
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
           res.data.result[i].price = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
@@ -105,16 +131,17 @@ Page({
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
             res.data.result[i].state = 1;
+      
           } else if (res.data.result[i].status == 1 || res.data.result[i].status == 2) {
             res.data.result[i].stay = 1;
             res.data.result[i].state = 1;
+       
           } else if (res.data.result[i].status == 3) {
             res.data.result[i].state = 0;
           } 
         }         
         this.setData({
           loadingHidden:true,
-          orderState: orderState,
           orderlist:res.data.result,
           flag: false,
         })
@@ -146,10 +173,12 @@ Page({
               res.data.result[i].status=1;
               res.data.result[i].stay = 2;
               res.data.result[i].state = 1;
+        
             } else if (res.data.result[i].status == 1){
               res.data.result[i].status = 1;
               res.data.result[i].stay = 3;
               res.data.result[i].state = 1;
+            
               //判断删除状态
             } else if (res.data.result[i].status == 8) {
               res.data.result[i].state = 0;
@@ -157,7 +186,6 @@ Page({
           }
         console.log(res.data.result)
           this.setData({
-            orderState: orderState,
             orderlist: res.data.result,
             loadingHidden:true
           })
@@ -185,7 +213,7 @@ Page({
             res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
              //判断显示状态
-            if (res.data.result[i].status == 2) {
+            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
@@ -205,7 +233,6 @@ Page({
 
           console.log(res.data.result)
           this.setData({
-            orderState: orderState,
             orderlist: res.data.result,
             loadingHidden: true
           })
@@ -252,7 +279,6 @@ Page({
           }
           console.log(res.data.result)
           this.setData({
-            orderState: orderState,
             orderlist: res.data.result,
             loadingHidden: true
           })
@@ -295,7 +321,6 @@ Page({
           }
           console.log(res.data.result)
           this.setData({
-            orderState: orderState,
             orderlist: res.data.result,
             loadingHidden: true
           })
@@ -413,39 +438,39 @@ Page({
   
 
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    var that = this;
-    // 显示加载图标
-    wx.showLoading({
-      title: '玩命加载中',
-    })
-    // 页数+1
-    page = page + 1;
-    wx.request({
-      url: 'https://xxx/?page=' + page,
-      method: "GET",
-      // 请求头部
-      header: {
-        'content-type': 'application/text'
-      },
-      success: function (res) {
-        // 回调函数
-        var moment_list = that.data.moment;
+  // /**
+  //  * 页面上拉触底事件的处理函数
+  //  */
+  // onReachBottom: function () {
+  //   var that = this;
+  //   // 显示加载图标
+  //   wx.showLoading({
+  //     title: '玩命加载中',
+  //   })
+  //   // 页数+1
+  //   page = page + 1;
+  //   wx.request({
+  //     url: 'https://xxx/?page=' + page,
+  //     method: "GET",
+  //     // 请求头部
+  //     header: {
+  //       'content-type': 'application/text'
+  //     },
+  //     success: function (res) {
+  //       // 回调函数
+  //       var moment_list = that.data.moment;
 
-        for (var i = 0; i < res.data.data.length; i++) {
-          moment_list.push(res.data.data[i]);
-        }
-        // 设置数据
-        that.setData({
-          moment: that.data.moment
-        })
-        // 隐藏加载框
-        wx.hideLoading();
-      }
-    })
+  //       for (var i = 0; i < res.data.data.length; i++) {
+  //         moment_list.push(res.data.data[i]);
+  //       }
+  //       // 设置数据
+  //       that.setData({
+  //         moment: that.data.moment
+  //       })
+  //       // 隐藏加载框
+  //       wx.hideLoading();
+  //     }
+  //   })
 
-  },
+  // },
 })

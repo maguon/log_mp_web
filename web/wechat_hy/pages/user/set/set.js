@@ -9,7 +9,7 @@ Page({
    */
   data: {
     imgUrl:"",
-    name:'',
+    name:'请输入您的昵称',
     imgFlag:false,
   },
 
@@ -21,6 +21,12 @@ Page({
       this.setData({
         imgFlag:true,
         imgUrl:e.url,
+      })
+    }
+
+    if (e.name != null || e.name != ""){
+      this.setData({
+       name:e.name,
       })
     }
   },

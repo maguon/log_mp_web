@@ -92,13 +92,23 @@ send:function(e){
      * 删除item
      */
   delAddress: function (e) {
+   var that=this;
     var index = e.currentTarget.dataset.id;
     var userId = app.globalData.userId;
-    var addressList = this.data.addressList[index];
+    var addressList = that.data.addressList[index];
+
+    wx.showModal({
+      content: '确定要删除地址吗？',
+      confirmColor: "#a744a7",
+      success(res) {
+        if (res.confirm) {
     //发送请求
     reqUtil.httpDel(config.host.apiHost + '/api/user/' + userId + "/userAddress/" + addressList.id);
     //更新信息
-    this.onShow();
+    that.onShow();
+        }
+      }
+    })
   },
 
 

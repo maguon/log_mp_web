@@ -12,7 +12,7 @@
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view  hidden='{{hidden}}'>
+
 <view hidden='{{!startress}}'bindtap='startAddress' data-index='{{0}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_02.png'></image>
@@ -51,7 +51,7 @@
 <image class='arrow01' src='../../../images/arrow.png'></image>
 </view>
 <view class='ress-line'></view>
-</view>
+
 
 
 <!--  ---------------------------------------------------------------------- -->

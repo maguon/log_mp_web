@@ -12,7 +12,6 @@
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view  hidden='{{hidden}}'>
 <view class='ress' >
 <view class='ress-people'>
 <image class='ress-img01' src='../../../../images/head_02.png'></image>
@@ -34,7 +33,7 @@
 </view>
 
 <view class='ress-line'></view>
-</view>
+
 <!--  ---------------------------------------------------------------------- -->
 <view hidden='{{!logFlag}}' class='note'>
 <button  bindtap='refund' class='refund'>物流信息</button>
@@ -55,7 +54,7 @@
 <!--  ---------------------------------------------------------------------- -->
 <view class='ress'>
 <view class='ress-people'>
-<image class='ress-img' src='../../../../images/location_01.png'></image>
+<image class='ress-img' src='../../../../images/location.png'></image>
 <view class='people'>提车地:未完成</view>
 </view>
 

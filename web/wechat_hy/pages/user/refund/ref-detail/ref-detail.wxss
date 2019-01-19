@@ -230,7 +230,9 @@ margin-left: 15px;
   justify-content: center;
 
 }
-
+.ref{
+  width: 100%;
+}
 .undo{
 width: 40%;
 height: 40px;
@@ -264,7 +266,7 @@ justify-content: center;
   border: 1px solid #f8f6f8;
 }
 .stay-text01{
-  font-size:15px;
+  font-size:12px;
   color: #8a8a8a;
   position: absolute;
   right: 20px;

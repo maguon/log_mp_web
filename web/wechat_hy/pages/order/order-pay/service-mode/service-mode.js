@@ -28,6 +28,7 @@ Page({
       })
       } else if (res.data.result[0].service_type == 2){
         this.setData({
+          orderList: res.data.result[0],
           hidden: true,
         })
       }

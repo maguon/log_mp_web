@@ -51,7 +51,7 @@ Page({
   choose:function(){
     var orderId = this.data.orderId;
     wx.navigateTo({
-      url: "/pages/order/refund/pay-msg/pay-msg?orderId=" + orderId,
+      url: "/pages/order/refund/pay-msg/pay-msg?orderId=" + orderId + "&name=" + "order" +"&refundId="+"",
     })
   },
   /**

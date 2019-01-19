@@ -11,6 +11,8 @@ Page({
     orderId:'',
     payment:[],
     paymentId:"",
+    refundId:"",
+    name:"",
   },
 
   /**
@@ -19,6 +21,8 @@ Page({
   onLoad: function (e) {
   this.setData({
   orderId: e.orderId,
+  name:e.name,
+ refundId: e.refundId,
  })
   },
 
@@ -45,9 +49,11 @@ Page({
           if (res.data.result[i].payment_type == 2) {
             res.data.result[i].payment_type = 0;
           }
-          if (res.data.result[i].type == 0) {
-            res.data.result[i].state = 0;
+          //完成的支付显示
+          if (res.data.result[i].type == 1 && res.data.result[i].status == 1) {
+            res.data.result[i].state = true;
           }
+         
           //保留小数
           res.data.result[i].total_fee = this.decimal(res.data.result[i].total_fee);
           //编译时间
@@ -124,9 +130,39 @@ Page({
     return time;
   },
 
+
+
+
   bindAdd:function(){
+    var name=this.data.name;
+    var userId = app.globalData.userId;
+    var paymentId = this.data.paymentId;
+    var orderId = this.data.orderId;
+    var refundId = this.data.refundId;
+
+
+    if(name=="order"){
     wx.redirectTo({
       url: "/pages/order/refund/refund?orderId=" + this.data.orderId + "&paymentId=" +this.data.paymentId + "&name=" + "",
     })
-  }
+    } else if (name == "user") {
+
+      var remark = this.data.remark;
+      var applyfee = this.data.applyfee;
+
+      var params = {
+        paymentId: paymentId,
+        applyFee: 0,
+        applyReason: ""
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/refundApply/" + refundId, params, (err, res) => {
+      })
+      wx.redirectTo({
+        url: "/pages/user/refund/ref-detail/ref-detail?orderId=" + this.data.orderId + "&paymentId=" + this.data.paymentId + "&refundId=" + refundId,
+      })
+    }
+  },
+
+
+
 })

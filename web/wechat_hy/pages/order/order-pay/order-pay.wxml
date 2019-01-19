@@ -62,12 +62,18 @@
 
 <!--  ---------------------------------------------------------------------- -->
 <view class='butlist'>
-<button hidden='{{delFlag}}' bindtap='del' class='refund' hover-class="cancel_btn">删除</button>
-<button hidden='{{refundFlag}}' bindtap='refund' class='refund' hover-class="cancel_btn">退款</button>
-<button hidden='{{invoiceFlag}}' bindtap='invoice' class='refund' hover-class="cancel_btn">开票</button>
-<button hidden='{{!refundFlag}}' bindtap='in-refund' class='in-refund' hover-class="cancel_btn">退款处理中</button>
-<button hidden='{{!invoiceFlag}}' bindtap='in-invoice' class='in-refund' hover-class="cancel_btn">开票申请中</button>
+<button hidden='{{!delFlag}}' bindtap='del' class='refund' hover-class="cancel_btn">删除</button>
+
+<button hidden='{{!refundFlag}}' bindtap='refund' class='refund' hover-class="cancel_btn">退款</button>
+<button hidden='{{!ref_Flag}}'  class='in-refund'>退款处理中...</button>
+<button hidden='{{!refFlag}}' bindtap='isRefund' class='refund' hover-class="cancel_btn">已退款</button>
+<button hidden='{{!norefFlag}}' bindtap='isRefund' class='refund' hover-class="cancel_btn">退款拒绝</button>
+
+<button hidden='{{!invoiceFlag}}' bindtap='invoice' class='refund' hover-class="cancel_btn">开票</button>
+<button hidden='{{!vin_Flag}}' class='in-refund'>开票申请中...</button>
 </view>
+<button hidden='{{!invFlag}}' bindtap='isInvoice' class='refund' hover-class="cancel_btn">已开票</button>
+<button hidden='{{!noinvFlag}}' bindtap='isInvoice' class='refund' hover-class="cancel_btn">开票拒绝</button>
 
 <!--  ---------------------------------------------------------------------- -->
 <view hidden='{{completeFlag}}' class='bottom'>

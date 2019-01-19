@@ -30,9 +30,9 @@ Page({
     this.setData({
       orderId: e.orderId,
     })
-
+    console.log("000000000000000")
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
-      
+      console.log(res.data.result)
       this.setData({
         orderList: res.data.result[0],
       })

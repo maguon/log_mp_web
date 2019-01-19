@@ -1,4 +1,6 @@
-<view bindtap='radioChange' data-index='{{index}}' class="items"  wx:for="{{payment}}" wx:key="u" hover-class='weui-cell_active' hidden="{{item.state}}">
+
+
+<view bindtap='radioChange' data-index='{{index}}' class="items"  wx:for="{{payment}}" wx:key="u" hover-class='weui-cell_active' hidden="{{!item.state}}">
 
 <view class='item'>
 <view class='item-left'>支付时间：{{item.created_on}}</view>

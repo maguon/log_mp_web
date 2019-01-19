@@ -1,17 +1,50 @@
-// pages/user/invoice/apply/apply.js
+const config = require('../../../../config.js');
+const reqUtil = require('../../../../utils/ReqUtil.js')
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    state: ["未支付", "部分支付", "已支付"],
+    service: ["", "上门服务", "当地自提"],
+    orderId:"",
+    sumfee:'',
+    remark :'',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function (e) {
+    this.setData({
+      orderId: e.orderId,
+    })
+    var userId = app.globalData.userId;
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
+
+      var sumfee = this.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
+      //保留小数
+      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price)
+      res.data.result[0].total_insure_price = this.decimal(res.data.result[0].total_insure_price)
+
+
+      //编译时间
+      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = this.getTime(res.data.result[0].updated_on)
+
+
+
+      this.setData({
+        sumfee: sumfee,
+        orderlist: res.data.result[0],
+      })
+    })
+
+
+
 
   },
 
@@ -26,46 +59,96 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    //获取userid
+    var userId = app.globalData.userId;
+    //发送get请求
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoice", (err, res) => {
+      var list=[];
+   for(var i=1;i<res.data.result.length;i++){
+     if(res.data.result[i].status==1){
+       list=res.data.result[i];
+     }
+   }
+      this.setData({
+        invList: list,
+      })
+    })
+  },
+
+
+  noteInput:function(e){
+    var remark = e.detail.value;
+    this.setData({
+      remark:remark,
+    })
 
   },
+
+
+
+
 
   /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+    * 保留小数
+    */
+  decimal: function (e) {
+    //钱数小数点后二位设定
+    var total_price = Number(e);
+    var money = total_price.toFixed(2);
+    return money;
   },
 
+  bindtap:function(){
+    var userId = app.globalData.userId;
+    var orderId=this.data.orderId;
+    var remark = this.data.remark;
+    var invList = this.data.invList;
+    
+    var params = {
+      title: invList.company_name,
+      taxNumber: invList.tax_number,
+      companyPhone: invListe.company_phone,
+      bank: invList.bank,
+      bankCode: invList.bank_code,
+      companyAddress: invList.company_address,
+      remark: remark
+    }
+    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/invoiceApply", params, (err, res) => {
+      wx.showToast({
+        title: '开票申请已提交',
+        icon: 'success',
+        duration: 2000
+      })
+      wx.navigateBack({
+
+      })
+    })
+
+  },
   /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
+ * 编译时间
+ */
+  getTime: function (e) {
+    var t = new Date(e);
+    var Minutes = t.getMinutes();
+    var Seconds = t.getSeconds();
+    if (Minutes < 10) {
+      Minutes = "0" + Minutes;
+    }
+    if (Seconds < 10) {
+      Seconds = "0" + Seconds;
+    }
 
+    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
+    var time = olddata.replace(/-/g, "/");
+    return time;
   },
+ 
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
 
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   payMsg:function(){
     wx.navigateTo({
-      url: '/pages/user/invoice/msg-list/msg-list',
+      url: '/pages/user/invoice/msg-list/msg-list?applyId=' + "",
     })
   },
 })

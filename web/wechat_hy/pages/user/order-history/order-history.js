@@ -10,7 +10,7 @@ Page({
   data: {
     orderlist:[],
     flag:false,
-    size:2,
+    size:6,
   },
 
   /**
@@ -23,10 +23,10 @@ Page({
       if (res.data.result != '') {
         for (var i = 0; i < res.data.result.length; i++) {
           //支付费用
-          res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
           //编译时间
-          res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-          res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
           res.data.result[i].state = 1;
         }
         console.log(res.data.result)
@@ -46,10 +46,10 @@ Page({
     //   if (res.data.result != '') {
     //     for (var i = 0; i < res.data.result.length; i++) {
     //       //支付费用
-    //       res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+    //       res.data.result[i].sumFee =  config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
     //       //编译时间
-    //       res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-    //       res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+    //       res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+    //       res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
     //       //判断显示状态
     //       if (res.data.result[i].status==9) {
     //         res.data.result[i].state = 1;
@@ -115,7 +115,7 @@ Page({
    */
   onReachBottom: function () {
     var size = this.data.size;
-    var new_size = size + 1;
+    var new_size = size + 6;
 
     this.setData({
       size: new_size,
@@ -129,34 +129,8 @@ Page({
   onShareAppMessage: function () {
 
   },
-  /**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
-  /**
-     * 保留小数
-     */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
-
+  
+  
   orderHistory:function(e){
     var index = e.currentTarget.dataset.index;
     var orderId = this.data.orderlist[index].id;

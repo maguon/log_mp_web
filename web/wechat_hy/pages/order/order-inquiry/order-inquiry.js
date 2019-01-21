@@ -31,9 +31,9 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
-      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
+      res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
 
-      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
       this.setData({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
@@ -48,7 +48,7 @@ Page({
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 1) {
           //设置单价
-          res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+          res.data.result[i].price = config.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
           //设置总价
           sum += res.data.result[i].trans_price + res.data.result[i].insure_price;
           ////车辆数
@@ -58,7 +58,7 @@ Page({
       //更新显示
       this.setData({
         carlist: res.data.result,
-        sumFee: this.decimal(sum),
+        sumFee: config.decimal(sum),
         carCount: count,
       })
     })
@@ -87,37 +87,6 @@ Page({
   },
 
 
-
-
-  /**
-     * 保留小数
-     */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
-
-
-  /**
-   * 编译时间
-   */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
 
 
 

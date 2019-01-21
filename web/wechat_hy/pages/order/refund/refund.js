@@ -17,6 +17,7 @@ Page({
    butFlag:false,
     applyfee:"",
     remark:"",
+    fee:"",
   },
 
   /**
@@ -74,6 +75,7 @@ Page({
 
           this.setData({
             orderPay: "支付金额:" +fee+"元",
+            fee: res.data.result[0].total_fee,
           })
       })
     }
@@ -98,7 +100,19 @@ Page({
     var orderId = that.data.orderId;
     var paymentId = that.data.paymentId;
     var remark=that.data.remark;
+    var fee= that.data.fee;
+    var applyFee = that.data.applyFee;
 
+
+    if (applyFee > fee){
+
+      wx.showModal({
+        content: '申请金额已大于支付金额',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+    }else{
     //获取要传递的参数
     var params={
       mark: that.data.remark,
@@ -111,5 +125,6 @@ Page({
   wx.navigateTo({
     url: "/pages/order/refund/submit/submit?orderId=" + orderId,
   })
+  }
   }
 })

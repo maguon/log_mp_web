@@ -25,15 +25,15 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + e.orderId, (err, res) => {
 
-      var sumfee = this.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
+      var sumfee = config.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
       //保留小数
-      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price)
-      res.data.result[0].total_insure_price = this.decimal(res.data.result[0].total_insure_price)
+      res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
+      res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
 
 
       //编译时间
-      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on)
-      res.data.result[0].updated_on = this.getTime(res.data.result[0].updated_on)
+      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
 
 
 
@@ -88,16 +88,6 @@ Page({
 
 
 
-  /**
-    * 保留小数
-    */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
-
   bindtap:function(){
     var userId = app.globalData.userId;
     var orderId=this.data.orderId;
@@ -124,24 +114,6 @@ Page({
       })
     })
 
-  },
-  /**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
   },
  
 

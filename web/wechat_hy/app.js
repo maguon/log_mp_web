@@ -7,7 +7,7 @@ App({
   globalData: {
     userInfo: null,
     openid: '',
-    userId: 10004,
+    userId: "",
     accessToken: '',
     session_key: '',
     trainBeginCity: '',
@@ -35,7 +35,7 @@ App({
 
           //保存openid 到全局
           that.globalData.openid = res.data.result.openid;
-          console.log(res.data.result)
+          console.log(res.data.result.openid+"1111111111")
           that.globalData.session_key = res.data.result.session_key;
           //判断加载数据完成后执行login-onload
           if (this.userInfoReadyCallback) {

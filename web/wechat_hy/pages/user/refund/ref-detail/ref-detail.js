@@ -17,6 +17,7 @@ Page({
     orderId:'',
     refundId:'',
     sumfee:'',
+    fee:"",
 
     state: ["已拒绝", "已退款", "待处理"],
     service:["","上门服务","当地自提"],
@@ -64,6 +65,7 @@ Page({
       if (res.data.result!=""){
       this.setData({
         payment: res.data.result[0] ,
+        fee: res.data.result[0].total_fee,
       })
       }
     })
@@ -71,16 +73,16 @@ Page({
 
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      console.log(res.data.result[0])
-      var sumfee = this.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
+      console.log(res.data.result)
+      var sumfee = config.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
       //保留小数
-      res.data.result[0].total_trans_price = this.decimal(res.data.result[0].total_trans_price)
-      res.data.result[0].total_insure_price = this.decimal(res.data.result[0].total_insure_price)
+      res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
+      res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
 
 
       //编译时间
-      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on)
-      res.data.result[0].updated_on = this.getTime(res.data.result[0].updated_on)
+      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
 
 
 
@@ -93,11 +95,11 @@ Page({
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId + "&refundApplyId=" + refundId, (err, res) => {
       console.log(res.data.result)
       //保留小数
-      res.data.result[0].apply_fee = this.decimal(res.data.result[0].apply_fee)
-      res.data.result[0].refund_fee = this.decimal(res.data.result[0].refund_fee)
+      res.data.result[0].apply_fee = config.decimal(res.data.result[0].apply_fee)
+      res.data.result[0].refund_fee = config.decimal(res.data.result[0].refund_fee)
       //编译时间
-      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on)
-      res.data.result[0].updated_on = this.getTime(res.data.result[0].updated_on)
+      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
       //退款金额显示
       if (res.data.result[0].status == 1) {
         this.setData({
@@ -171,7 +173,7 @@ Page({
     var refundId = this.data.refundId;
 
     wx.showModal({
-      content: '确定撤销发票申请',
+      content: '确定撤销退款申请',
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
@@ -193,7 +195,18 @@ Page({
     var refundId = this.data.refund.id;
     var remark = this.data.remark;
     var applyfee = this.data.applyfee;
+    var fee = this.data.fee;
 
+
+    if (applyfee>fee){
+      wx.showModal({
+        content: '申请金额已大于支付金额',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+
+    }else{
     var params = {
       paymentId: paymentId,
       applyFee: applyfee,
@@ -204,49 +217,18 @@ Page({
         title: '申请已重新提交',
         icon: 'success',
         duration: 2000,
-        success(res) {
-        if(res.confirm){
-          wx.navigateBack({
-
-       })
-        }
-        }
       })
-      // wx.navigateBack({
 
-      // })
+      setTimeout(function () {
+        wx.navigateBack({ })
+      }, 2000)
+    }
    
   },
 
-  /**
-  * 保留小数
-  */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
 
 
-  /**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
+ 
 
   /**
   * 生命周期函数--监听页面卸载

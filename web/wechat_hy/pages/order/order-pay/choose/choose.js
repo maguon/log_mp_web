@@ -33,8 +33,8 @@ Page({
       console.log(res.data.result)
       if (res.data.result!=''){
         this.setData({
-          remainFee: this.decimal(res.data.result[0].unpaid_price),
-          paidFee: this.decimal(e.fee - res.data.result[0].unpaid_price),
+          remainFee: config.decimal(res.data.result[0].unpaid_price),
+          paidFee: config.decimal(e.fee - res.data.result[0].unpaid_price),
         })
       }else{
         this.setData({
@@ -97,15 +97,7 @@ Page({
   },
 
 
-  /**
-    * 保留小数
-    */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */

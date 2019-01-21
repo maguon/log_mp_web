@@ -68,7 +68,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     var invList = this.data.invList;
     var id = this.data.invList[index].id;
-    reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + id + "/status/" + 1, "", (err, res) => {
+    reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + id + "/defaultInvoice", "", (err, res) => {
       this.onShow();
       // wx.navigateBack({})
     });

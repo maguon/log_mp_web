@@ -9,7 +9,7 @@ Page({
    */
   data: {
     refund:[],
-    // size:2,
+    size:8,
     state:["已拒绝","已退款","待处理"],
     hidden:false,
   },
@@ -21,15 +21,15 @@ Page({
     var userId = app.globalData.userId;
 
 
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply", (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?start=" + 0 +"&size="+this.data.size, (err, res) => {
       console.log(res.data.result)
       for (var i = 1; i < res.data.result.length;i++){
         //保留小数
-        res.data.result[i].apply_fee = this.decimal(res.data.result[i].apply_fee)
-        res.data.result[i].refund_fee = this.decimal(res.data.result[i].refund_fee)
+        res.data.result[i].apply_fee = config.decimal(res.data.result[i].apply_fee)
+        res.data.result[i].refund_fee = config.decimal(res.data.result[i].refund_fee)
         //编译时间
-        res.data.result[i].created_on = this.getTime(res.data.result[i].created_on)
-        res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on)
+        res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
+        res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on)
         //退款金额显示
         if (res.data.result[i].status==1){
           res.data.result[i].hidden=true;
@@ -59,36 +59,7 @@ Page({
   },
 
 
-  /**
-   * 保留小数
-   */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
-
-
-  /**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
-
+ 
 
 
   /**
@@ -111,18 +82,18 @@ Page({
   onPullDownRefresh: function () {
 
   },
-  // /**
-  //    * 页面上拉触底事件的处理函数
-  //    */
-  // onReachBottom: function () {
-  //   var size = this.data.size;
-  //   var new_size = size + 1;
+  /**
+     * 页面上拉触底事件的处理函数
+     */
+  onReachBottom: function () {
+    var size = this.data.size;
+    var new_size = size + 8;
 
-  //   this.setData({
-  //     size: new_size,
-  //   })
-  //   this.onLoad();
-  // },
+    this.setData({
+      size: new_size,
+    })
+    this.onLoad();
+  },
 
   /**
    * 用户点击右上角分享

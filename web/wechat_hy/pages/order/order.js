@@ -54,6 +54,7 @@ Page({
     flag:false,
     loadingHidden:false,
     prompt:false,
+    size:6,
   
   },
 
@@ -116,17 +117,17 @@ Page({
         loadingHidden: false,
         prompt: false,
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1,2"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
-        if (res.data.result!=[]){
+        if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
-          res.data.result[i].price = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          res.data.result[i].price = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
           //编译时间
-          res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-          res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
          //预计费用
-          res.data.result[i].fee_price = this.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
+          res.data.result[i].fee_price = config.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
           //判断显示状态
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
@@ -143,7 +144,6 @@ Page({
         this.setData({
           loadingHidden:true,
           orderlist:res.data.result,
-          flag: false,
         })
         }else{
           this.setData({
@@ -154,20 +154,24 @@ Page({
         console.log(res.data.result)
       })
       break;
+
+
     case 1:
       //打开加载 
       this.setData({
         loadingHidden: false,
         prompt: false,
+    
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "0,1" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+        console.log(res.data.result)
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
-            res.data.result[i].price = this.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            res.data.result[i].price = config.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
             //编译时间
-            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
+            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
              //判断显示状态
             if (res.data.result[i].status==0){
               res.data.result[i].status=1;
@@ -180,9 +184,10 @@ Page({
               res.data.result[i].state = 1;
             
               //判断删除状态
-            } else if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
             } 
+            // else if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
           }
         console.log(res.data.result)
           this.setData({
@@ -203,24 +208,25 @@ Page({
       this.setData({
         loadingHidden: false,
         prompt: false,
+     
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList" + "2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
             //支付费用
-            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-             //判断显示状态
-            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
-              res.data.result[i].status = 1;
+            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            //  //判断显示状态
+            // if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+              // res.data.result[i].status = 1;
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
               //判断删除状态
-            }else  if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
-            } 
+            // }else  if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
            //判断支付状态
             if (res.data.result[i].payment_status == 0) {
               res.data.result[i].stay = 4;
@@ -251,25 +257,26 @@ Page({
       this.setData({
         loadingHidden: false,
         prompt: false,
+    
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
       
             //支付费用
-            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-             //判断显示状态
-            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            //  //判断显示状态
+            // if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            //判断删除状态
-            }else  if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
-            } 
+            // //判断删除状态
+            // }else  if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
             //判断物流状态 
             if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 7;
@@ -296,24 +303,25 @@ Page({
       this.setData({
         loadingHidden: false,
         prompt:true,
+     
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList" + "4" + "&start=" + 0 +"&size="+this.data.size,(err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
 
             //支付费用
-            res.data.result[i].sumFee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-            //判断显示状态
-            if (res.data.result[i].status == 4) {
+            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            // //判断显示状态
+            // if (res.data.result[i].status == 4) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            } else if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
-            } 
+            // } else if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
             //判断执行状态
             if (res.data.result[i].log_status == 2) {
               res.data.result[i].stay = 9;
@@ -362,11 +370,24 @@ Page({
     that.setData({
       orderState: orderState,
       index:index,
+      size:6,
     })
     this.onShow();
   },
 
 
+  /**
+     * 页面上拉触底事件的处理函数
+     */
+  onReachBottom: function () {
+    var size = this.data.size;
+    var new_size = size +6;
+
+    this.setData({
+      size: new_size,
+    })
+    this.onShow();
+  },
 
 
   bindDetail:function(e){
@@ -405,37 +426,7 @@ Page({
 
 
 
-/**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
 
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-   return time;
-  },
-
-
-
-  /**
-   * 保留小数
-   */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
-  
 
 
   // /**

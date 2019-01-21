@@ -35,7 +35,7 @@ Page({
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId,(err,res)=>{
       console.log(res)
       //编译时间
-      res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
   
       this.setData({
         orderlist: res.data.result[0],
@@ -131,24 +131,6 @@ Page({
 
 
 
-  /**
-  * 编译时间
-  */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
 
 
 

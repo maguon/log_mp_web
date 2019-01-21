@@ -55,10 +55,10 @@ Page({
           }
          
           //保留小数
-          res.data.result[i].total_fee = this.decimal(res.data.result[i].total_fee);
+          res.data.result[i].total_fee = config.decimal(res.data.result[i].total_fee);
           //编译时间
-          res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-          res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
           // res.data.result[i].bank_code = this.bankNum(res.data.result[i].bank_code);
         }
         this.setData({
@@ -93,15 +93,6 @@ Page({
   },
 
 
-  /**
-    * 保留小数
-    */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
 
   bankNum: function (e) {
     console.log(e)
@@ -111,25 +102,7 @@ Page({
 
 
 
-  /**
-* 编译时间
-*/
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
-
+  
 
 
 
@@ -148,11 +121,11 @@ Page({
     } else if (name == "user") {
 
       var remark = this.data.remark;
-      var applyfee = this.data.applyfee;
+      var applyfee = this.data.payment.total_fee;
 
       var params = {
         paymentId: paymentId,
-        applyFee: 0,
+        applyFee: applyfee,
         applyReason: ""
       }
       reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/refundApply/" + refundId, params, (err, res) => {

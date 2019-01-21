@@ -66,11 +66,11 @@ Page({
         }
 
         //预计费用
-        res.data.result[0].ora_insure_price = this.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
+        res.data.result[0].ora_insure_price = config.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
         //协商费用
-        res.data.result[0].total_insure_price = this.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
+        res.data.result[0].total_insure_price = config.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
         //编译时间
-        res.data.result[0].created_on = this.getTime(res.data.result[0].created_on);
+        res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type - 1,
@@ -93,18 +93,6 @@ Page({
   },
 
 
-
-
-
-  /**
-    * 保留小数
-    */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
 
 
 
@@ -197,25 +185,7 @@ var note=e.detail.value;
 
 
 
-  /**
-   * 编译时间
-   */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
-
+  
 
 
 

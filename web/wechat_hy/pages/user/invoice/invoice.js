@@ -14,7 +14,7 @@ Page({
   payment_state: ["未支付", "部分支付", "已支付"],
 
   invoice:[],
-  size:4,
+  size:6,
   index:0,
   hidden:false,
   carFlag:false
@@ -45,12 +45,12 @@ Page({
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoicesList?start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
        for(var i=0;i<res.data.result.length;i++){
-         res.data.result[i].sumfee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
-         res.data.result[i].real_payment_price = this.decimal(res.data.result[i].real_payment_price)
+         res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
+         res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
 
-         res.data.result[i].apply_time = this.getTime(res.data.result[i].apply_time)
-         res.data.result[i].created_on = this.getTime(res.data.result[i].created_on)
-         res.data.result[i].invoiced_time = this.getTime(res.data.result[i].invoiced_time)
+         res.data.result[i].apply_time = config.getTime(res.data.result[i].apply_time)
+         res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
+         res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
 
        }
         this.setData({
@@ -63,12 +63,12 @@ Page({
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/noInvoiceOrderList?start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
         for (var i = 0; i < res.data.result.length; i++) {
-          res.data.result[i].sumfee = this.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
-          res.data.result[i].real_payment_price = this.decimal(res.data.result[i].real_payment_price)
+          res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
+          res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
 
-          res.data.result[i].apply_time = this.getTime(res.data.result[i].apply_time)
-          res.data.result[i].created_on = this.getTime(res.data.result[i].created_on)
-          res.data.result[i].invoiced_time = this.getTime(res.data.result[i].invoiced_time)
+          res.data.result[i].apply_time = config.getTime(res.data.result[i].apply_time)
+          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
+          res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
 
         }
         this.setData({
@@ -81,35 +81,8 @@ Page({
    
   },
 
-  /**
-   * 保留小数
-   */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
 
 
-  /**
- * 编译时间
- */
-  getTime: function (e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
 
 
 /**
@@ -162,7 +135,7 @@ Page({
    */
   onReachBottom: function () {
     var size = this.data.size;
-    var new_size = size + 1;
+    var new_size = size + 6;
 
     this.setData({
       size: new_size,

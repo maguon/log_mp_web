@@ -68,6 +68,9 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
+      if (app.globalData.openid==""){
+        app.onLaunch();
+      }
       //插入登录的用户的相关信息到数据库
       var params = {
         wechatId: app.globalData.openid,
@@ -75,6 +78,7 @@ Page({
         gender: e.detail.userInfo.gender,
         avatar: e.detail.userInfo.avatarUrl,
       }
+
       reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
 
         app.globalData.userId = res.data.result.userId;
@@ -84,10 +88,6 @@ Page({
         console.log(res.data.result.userId);
         console.log("插入小程序登录用户信息成功！");
       })
-      // //授权成功后，跳转进入小程序首页
-      // wx.switchTab({
-      //   url: '/pages/index/index'
-      // })
     } else {
       //用户按了拒绝按钮
       wx.showModal({

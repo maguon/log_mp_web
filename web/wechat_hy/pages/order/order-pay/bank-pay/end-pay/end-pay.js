@@ -53,14 +53,14 @@ Page({
           res.data.result[i].status=1;
         }
       //保留小数
-      res.data.result[i].total_fee = this.decimal(res.data.result[i].total_fee);
+        res.data.result[i].total_fee = config.decimal(res.data.result[i].total_fee);
       //编译时间
-      res.data.result[i].updated_on = this.getTime(res.data.result[i].updated_on);
-      res.data.result[i].created_on = this.getTime(res.data.result[i].created_on);
+        res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+        res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
       }
     this.setData({
       payment:res.data.result,
-      remain: this.decimal(sumFee-res.data.result[0].unpaid_price),
+      remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
       refund:refundSum,
     })
     //支付按钮显示
@@ -74,15 +74,6 @@ Page({
     })
   },
 
-  /**
-    * 保留小数
-    */
-  decimal: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
-  },
 
   bankNum: function (e) {
     console.log(e)
@@ -153,24 +144,6 @@ wx.navigateTo({
 
 
 
-  /**
-* 编译时间
-*/
-  getTime: function(e) {
-    var t = new Date(e);
-    var Minutes = t.getMinutes();
-    var Seconds = t.getSeconds();
-    if (Minutes < 10) {
-      Minutes = "0" + Minutes;
-    }
-    if (Seconds < 10) {
-      Seconds = "0" + Seconds;
-    }
-
-    var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ' + t.getHours() + ':' + Minutes + ':' + Seconds;
-    var time = olddata.replace(/-/g, "/");
-    return time;
-  },
 
 
 })

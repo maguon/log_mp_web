@@ -40,7 +40,7 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     //发送请求
-    reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + 10004, (err, res) => {
+    reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
       console.log(res)
       if (res.data.result[0].wechat_name != '' && res.data.result[0].wechat_name!= null) {
         this.setData({

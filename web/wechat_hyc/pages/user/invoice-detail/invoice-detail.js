@@ -148,9 +148,9 @@ again:function(){
       icon: 'success',
       duration: 2000
     })
-    wx.navigateBack({
-
-    })
+    setTimeout(function () {
+      wx.navigateBack({})
+    }, 2000)
   })
 },
 

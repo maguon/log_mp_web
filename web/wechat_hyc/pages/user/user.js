@@ -12,6 +12,7 @@ Page({
     headFlag:false,
     url:"",
     name:"",
+    phone:"未绑定手机",
   },
 
   /**
@@ -27,6 +28,11 @@ Page({
     var userId = app.globalData.userId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
+      if (res.data.result[0].phone != "" && res.data.result[0].phone != null){
+        this.setData({
+          phone: res.data.result[0].phone,
+        })
+      }
       //目的城市 城市ID
       this.setData({
         user: res.data.result[0],

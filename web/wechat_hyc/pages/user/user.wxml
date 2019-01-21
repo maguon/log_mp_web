@@ -13,7 +13,7 @@
 
 <view class='content'>
 <image class='content-img' src='../../images/phone.png'></image>
-<view class='content-phone'>{{user.phone}}</view>
+<view class='content-phone'>{{phone}}</view>
 <view bindtap='bandPhone' class='content-band'>绑定手机</view>
 </view>
 </view>

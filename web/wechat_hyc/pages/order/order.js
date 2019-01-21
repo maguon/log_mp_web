@@ -142,6 +142,7 @@ Page({
           } 
         }         
         this.setData({
+          flag: false,
           loadingHidden:true,
           orderlist:res.data.result,
         })
@@ -191,6 +192,7 @@ Page({
           }
         console.log(res.data.result)
           this.setData({
+            flag: false,
             orderlist: res.data.result,
             loadingHidden:true
           })
@@ -239,6 +241,7 @@ Page({
 
           console.log(res.data.result)
           this.setData({
+            flag: false,
             orderlist: res.data.result,
             loadingHidden: true
           })
@@ -286,6 +289,7 @@ Page({
           }
           console.log(res.data.result)
           this.setData({
+            flag: false,
             orderlist: res.data.result,
             loadingHidden: true
           })
@@ -329,6 +333,7 @@ Page({
           }
           console.log(res.data.result)
           this.setData({
+            flag: false,
             orderlist: res.data.result,
             loadingHidden: true
           })

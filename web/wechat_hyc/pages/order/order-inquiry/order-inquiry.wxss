@@ -285,7 +285,8 @@ color: #cc7da2;
 width: 50%;
 height: 45px;
 font-size: 18px;
-color: #d43286;
+color: white;
+background: #7a387a;
 text-align: center;
 
 }

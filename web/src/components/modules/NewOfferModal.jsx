@@ -68,7 +68,7 @@ class NewOfferModal extends React.Component {
                         <Input s={4} label="协商保费(元)" className="right-align" type="number" value={newOfferModalReducer.actInsuranceFee} onChange={this.changeActInsuranceFee}/>
                         <div className="col input-field s4">
                             <div className="col s12 custom-label-field grey-text right-align">
-                                协商总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(parseInt(newOfferModalReducer.actFreight) + parseInt(newOfferModalReducer.actInsuranceFee),2)}</span> 元
+                                协商总费用：<span className="fz16 pink-font">{formatUtil.formatNumber(parseFloat(newOfferModalReducer.actFreight) + parseFloat(newOfferModalReducer.actInsuranceFee),2)}</span> 元
                             </div>
                         </div>
                     </div>

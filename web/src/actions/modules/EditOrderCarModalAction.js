@@ -15,8 +15,17 @@ export const initOrderCarData = (pageType, orderItem) => async (dispatch) => {
         dispatch({type: EditOrderCarModalActionType.setOrderItemId, payload: orderItem.id});
         // vin
         dispatch({type: EditOrderCarModalActionType.setVin, payload: orderItem.vin});
+        // 品牌
+        dispatch({type: EditOrderCarModalActionType.setCarBrand, payload: orderItem.brand});
+        // 型号
+        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: orderItem.brand_type});
         // 车型
-        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: {value: orderItem.model_type,label: commonUtil.getJsonValue(sysConst.CAR_MODEL,orderItem.model_type)}});
+        dispatch({type: EditOrderCarModalActionType.setCarGrade,
+            payload: {
+                value: orderItem.model_type,
+                label: commonUtil.getJsonValue(sysConst.CAR_MODEL, orderItem.model_type)
+            }
+        });
         // 是否新车 如果是1，则为true 选中，否则
         dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: orderItem.old_car === 1});
         // 是否购买保险 如果是1，则为true 选中，否则
@@ -34,8 +43,12 @@ export const initOrderCarData = (pageType, orderItem) => async (dispatch) => {
     } else {
         // vin
         dispatch({type: EditOrderCarModalActionType.setVin, payload: ''});
+        // 品牌
+        dispatch({type: EditOrderCarModalActionType.setCarBrand, payload: ''});
+        // 型号
+        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: ''});
         // 车型
-        dispatch({type: EditOrderCarModalActionType.setCarModel, payload: null});
+        dispatch({type: EditOrderCarModalActionType.setCarGrade, payload: null});
         // 是否新车
         dispatch({type: EditOrderCarModalActionType.setCarFlag, payload: true});
         // 是否购买保险
@@ -120,8 +133,12 @@ export const saveOrderCar = () => async (dispatch, getState) => {
         const orderItemId = getState().EditOrderCarModalReducer.orderItemId;
         // VIN
         const vin = getState().EditOrderCarModalReducer.vin;
-        // 车型
+        // 品牌
+        const carBrand = getState().EditOrderCarModalReducer.carBrand;
+        // 型号
         const carModel = getState().EditOrderCarModalReducer.carModel;
+        // 车型
+        const carGrade = getState().EditOrderCarModalReducer.carGrade;
         // 是否新车
         const carFlag = getState().EditOrderCarModalReducer.carFlag;
         // 是否购买保险
@@ -138,8 +155,10 @@ export const saveOrderCar = () => async (dispatch, getState) => {
         } else {
             const params = {
                 vin: vin,
+                brand: carBrand,
+                brandType: carModel,
                 serviceType: serviceType,
-                modelType: carModel.value,
+                modelType: carGrade.value,
                 oldCar: carFlag ? 1 : 0,
                 safeStatus: insuranceFlag ? 1 : 0,
                 valuation: valuation,

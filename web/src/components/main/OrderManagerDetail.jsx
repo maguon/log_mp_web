@@ -317,12 +317,14 @@ class OrderManagerDetail extends React.Component {
                                         <tr className="grey-text text-darken-2">
                                             <th className="padding-left10">VIN</th>
                                             <th className="center">车型</th>
-                                            <th className="center">是否新车</th>
-                                            <th className="right-align">估值 ( 元 )</th>
-                                            <th className="center">是否保险</th>
-                                            <th className="right-align width-150">实际运费 ( 元 )</th>
-                                            <th className="right-align width-200">实际保费 ( 元 )</th>
-                                            <th className="right-align">实际费用 ( 元 )</th>
+                                            <th className="center">品牌</th>
+                                            <th className="center">型号</th>
+                                            <th className="center">新车</th>
+                                            <th className="right-align">估值</th>
+                                            <th className="center">保险</th>
+                                            <th className="right-align width-150">实际运费</th>
+                                            <th className="right-align width-200">实际保费</th>
+                                            <th className="right-align">实际费用</th>
                                             {/* 内部订单，并且是：待完善信息 状态时，显示 */}
                                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
                                             orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value &&
@@ -335,6 +337,8 @@ class OrderManagerDetail extends React.Component {
                                                 <tr className="grey-text text-darken-1">
                                                     <td className="padding-left10">{item.vin}</td>
                                                     <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
+                                                    <td className="center">{item.brand}</td>
+                                                    <td className="center">{item.brand_type}</td>
                                                     <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
                                                     <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
                                                     {/* 是否保险 */}

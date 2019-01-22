@@ -11,8 +11,12 @@ const initialState = {
     orderItemId: '',
     // vin
     vin: '',
-    // 车型
+    // 品牌
+    carBrand: null,
+    // 型号
     carModel: null,
+    // 车型
+    carGrade: null,
     // 是否新车
     carFlag: true,
     // 估值
@@ -54,10 +58,22 @@ export default handleActions({
             vin: action.payload
         }
     },
+    [EditOrderCarModalActionType.setCarBrand]: (state, action) => {
+        return {
+            ...state,
+            carBrand: action.payload
+        }
+    },
     [EditOrderCarModalActionType.setCarModel]: (state, action) => {
         return {
             ...state,
             carModel: action.payload
+        }
+    },
+    [EditOrderCarModalActionType.setCarGrade]: (state, action) => {
+        return {
+            ...state,
+            carGrade: action.payload
         }
     },
     [EditOrderCarModalActionType.setCarFlag]: (state, action) => {

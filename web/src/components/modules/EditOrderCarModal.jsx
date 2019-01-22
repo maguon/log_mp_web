@@ -36,6 +36,20 @@ class EditOrderCarModal extends React.Component {
     };
 
     /**
+     * 改变品牌
+     */
+    changeCarBrand = (event) => {
+        this.props.changeCarBrand(event.target.value);
+    };
+
+    /**
+     * 改变型号
+     */
+    changeCarModel = (event) => {
+        this.props.changeCarModel(event.target.value);
+    };
+
+    /**
      * 改变估值
      */
     changeValuation = (event) => {
@@ -74,7 +88,7 @@ class EditOrderCarModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {editOrderCarModalReducer, commonReducer, changeCarModel, saveOrderCar, closeModal} = this.props;
+        const {editOrderCarModalReducer, changeCarGrade, saveOrderCar, closeModal} = this.props;
         return (
             <div id="editOrderCarModal" className="modal modal-fixed-footer row">
 
@@ -99,7 +113,9 @@ class EditOrderCarModal extends React.Component {
 
                     {/** 第一行 */}
                     <div className="row margin-top20 margin-bottom10">
-                        <Input s={12} label="VIN" maxLength="17" value={editOrderCarModalReducer.vin} onChange={this.changeVin}/>
+                        <Input s={4} label="VIN" maxLength="17" value={editOrderCarModalReducer.vin} onChange={this.changeVin}/>
+                        <Input s={4} label="品牌" maxLength="20" value={editOrderCarModalReducer.carBrand} onChange={this.changeCarBrand}/>
+                        <Input s={4} label="型号" maxLength="20" value={editOrderCarModalReducer.carModel} onChange={this.changeCarModel}/>
                     </div>
 
                     {/** 第二行 */}
@@ -107,8 +123,8 @@ class EditOrderCarModal extends React.Component {
                         <div className="input-field col s4">
                             <Select
                                 options={sysConst.CAR_MODEL}
-                                onChange={changeCarModel}
-                                value={editOrderCarModalReducer.carModel}
+                                onChange={changeCarGrade}
+                                value={editOrderCarModalReducer.carGrade}
                                 isSearchable={false}
                                 placeholder={"请选择"}
                                 styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -172,8 +188,7 @@ class EditOrderCarModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        editOrderCarModalReducer: state.EditOrderCarModalReducer,
-        commonReducer: state.CommonReducer
+        editOrderCarModalReducer: state.EditOrderCarModalReducer
     }
 };
 
@@ -184,8 +199,14 @@ const mapDispatchToProps = (dispatch) => ({
     changeVin: (value) => {
         dispatch(EditOrderCarModalActionType.setVin(value));
     },
-    changeCarModel: (carModel) => {
-        dispatch(EditOrderCarModalActionType.setCarModel(carModel));
+    changeCarBrand: (value) => {
+        dispatch(EditOrderCarModalActionType.setCarBrand(value));
+    },
+    changeCarModel: (value) => {
+        dispatch(EditOrderCarModalActionType.setCarModel(value));
+    },
+    changeCarGrade: (carModel) => {
+        dispatch(EditOrderCarModalActionType.setCarGrade(carModel));
         dispatch(editOrderCarModalAction.calculateFreight());
     },
     changeCarFlag: (carFlag) => {

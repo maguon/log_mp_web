@@ -2,6 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
 import {NewOrderModalActionType} from "../../actionTypes";
+import {Redirect} from 'react-router-dom';
 
 const newOrderModalAction = require('../../actions/modules/NewOrderModalAction');
 const sysConst = require('../../util/SysConst');
@@ -27,6 +28,9 @@ class NewOrderModal extends React.Component {
      */
     render() {
         const {newOrderModalReducer, commonReducer, changeStartCity, changeEndCity, changeServiceType, closeModal, saveOrder} = this.props;
+        if (newOrderModalReducer.newOrderId !== '') {
+            return <Redirect push to={{pathname: '/order/' + newOrderModalReducer.newOrderId}}/>;
+        }
         return (
             <div id="newOrderModal" className="modal modal-fixed-footer row">
 
@@ -95,7 +99,8 @@ class NewOrderModal extends React.Component {
                 {/** Modal固定底部：取消/确定按钮 */}
                 <div className="modal-footer">
                     <button type="button" className="btn close-btn" onClick={closeModal}>取消</button>
-                    <button type="button" className={`btn confirm-btn margin-left20 ${newOrderModalReducer.errorRouteFlg ? "disabled" : ""}`} onClick={saveOrder}>确定</button>
+                    <button type="button" className={`btn confirm-btn margin-left20 ${newOrderModalReducer.errorRouteFlg ? "disabled" : ""}`}
+                            onClick={saveOrder}>确定</button>
                 </div>
             </div>
         );
@@ -128,7 +133,9 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(NewOrderModalActionType.setServiceType(value))
     },
     saveOrder: () => {
-        dispatch(newOrderModalAction.saveOrder())
+        // 设置保存成功后的订单编号，默认值：空
+        dispatch(NewOrderModalActionType.setNewOrderId(''));
+        dispatch(newOrderModalAction.saveOrder());
     },
     closeModal: () => {
         $('#newOrderModal').modal('close');

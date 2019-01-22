@@ -7,6 +7,7 @@ import {
     InquiryInfoModalActionType,
     EditUserAddressModalActionType,
     EditOrderCarModalActionType,
+    NewOrderModalActionType,
     CancelOrderModalActionType
 } from '../../actionTypes';
 import {
@@ -43,6 +44,8 @@ class OrderManagerDetail extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
+        // 清空创建的订单编号
+        this.props.clearNewOrderId();
         // 取得用户信息
         this.props.getOrderInfo();
 
@@ -448,6 +451,7 @@ class OrderManagerDetail extends React.Component {
 
                             {/* 客户备注 (仅外部订单 显示)*/}
                             {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                             orderManagerDetailReducer.orderInfo[0].remark !== null && orderManagerDetailReducer.orderInfo[0].remark !== '' &&
                             <div className="row margin-top40 margin-left50 margin-right50">
                                 <div className="col s12 pink-font">
                                     <i className="mdi mdi-square-edit-outline fz20"/>
@@ -455,38 +459,20 @@ class OrderManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
-                                {/* 客户备注 详情 */}
-                                {orderManagerDetailReducer.orderInfo[0].mark !== null && orderManagerDetailReducer.orderInfo[0].mark !== '' &&
                                 <div>
                                     <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].mark}</div>
                                     <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
-                                </div>}
+                                </div>
                             </div>}
 
                             {/* 客服备注 */}
-                            <div className="row margin-top40 margin-left50 margin-right50">
-                                <div className="col s12 pink-font">
-                                    <i className="mdi mdi-square-edit-outline fz20"/>
-                                    <span className="margin-left10 fz16">客服备注</span>
-                                </div>
-                                <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
-                                {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
-                                {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
-                                (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
-                                    orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
-                                <div>
-                                    <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].admin_mark}</div>
-                                    <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
-                                </div>}
-                            </div>
-
-                            {/* 客服备注 已取消/已完成 以外状态时，可以编辑 */}
-                            {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
-                                orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
                             <div className="row margin-top40 margin-left50 margin-right50 position-relative">
-                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
-                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>
-                            </div>}
+                                <Input s={12} label="客服备注" value={orderManagerDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
+                                {/* 客服备注 已取消/已完成 以外状态时，可以编辑 */}
+                                {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
+                                    orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderRemark}/>}
+                            </div>
 
                             {/** 取消订单 按钮 */}
                             {(orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[0].value || orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value
@@ -596,22 +582,14 @@ class OrderManagerDetail extends React.Component {
                                 )
                             },this)}
 
-                            {/* 客服备注 已取消/已完成 状态时，直接显示详情 */}
-                            {orderManagerDetailReducer.orderInfo[0].admin_mark !== null && orderManagerDetailReducer.orderInfo[0].admin_mark !== '' &&
-                            (orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[5].value ||
-                                orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[6].value) &&
-                            <div className="row margin-top10 margin-left40 margin-right50">
-                                <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].admin_mark}</div>
-                                <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
-                            </div>}
-
-                            {/* 支付备注 已取消/已完成 以外状态时，可以编辑 */}
-                            {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
-                                orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
+                            {/* 支付备注 */}
                             <div className="row margin-top10 margin-left40 margin-right50 position-relative">
-                                <Input s={12} label="备注" value={orderManagerDetailReducer.orderPaymentRemark} onChange={this.changeOrderPaymentRemark}/>
-                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderPaymentRemark}/>
-                            </div>}
+                                <Input s={12} label="支付备注" value={orderManagerDetailReducer.orderPaymentRemark} onChange={this.changeOrderPaymentRemark}/>
+                                {/* 支付备注 已取消/已完成 以外状态时，可以编辑 */}
+                                {(orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[5].value &&
+                                    orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value) &&
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveOrderPaymentRemark}/>}
+                            </div>
 
                             {/* 第三部分：退款申请 */}
                             <div className="row margin-top40 margin-left50 margin-right50">
@@ -819,6 +797,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(InquiryInfoModalActionType.setPrePage('order'));
         dispatch(inquiryInfoModalAction.getInquiryInfo(inquiryId, userId));
         dispatch(inquiryInfoModalAction.getInquiryCarList(inquiryId, userId));
+    },
+    // 清除内部订单编号
+    clearNewOrderId: () => {
+        dispatch(NewOrderModalActionType.setNewOrderId(''));
     },
 
     // TAB1：订单信息

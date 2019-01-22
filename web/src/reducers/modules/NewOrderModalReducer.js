@@ -10,7 +10,9 @@ const initialState = {
     // 服务方式
     serviceType: '',
     // 错误路线标记
-    errorRouteFlg: false
+    errorRouteFlg: false,
+    // 保存成功后的订单编号
+    newOrderId: ''
 };
 
 export default handleActions({
@@ -36,6 +38,12 @@ export default handleActions({
         return {
             ...state,
             errorRouteFlg: action.payload
+        }
+    },
+    [NewOrderModalActionType.setNewOrderId]: (state, action) => {
+        return {
+            ...state,
+            newOrderId: action.payload
         }
     }
 }, initialState)

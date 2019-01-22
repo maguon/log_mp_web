@@ -1,7 +1,7 @@
 import {apiHost} from '../../config/HostConfig';
 import {NewOrderModalActionType} from "../../actionTypes";
 
-const orderManagerAction = require('../../actions/main/OrderManagerAction');
+const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -31,7 +31,6 @@ export const calculateMileage = () => async (dispatch, getState) => {
     }
 };
 
-
 export const saveOrder = () => async (dispatch, getState) => {
     try {
         // 起始城市
@@ -57,8 +56,7 @@ export const saveOrder = () => async (dispatch, getState) => {
             if (res.success === true) {
                 $('#newOrderModal').modal('close');
                 swal("保存成功", "", "success");
-                // 保存成功后，重新检索画面数据
-                dispatch(orderManagerAction.getOrderList());
+                dispatch({type: NewOrderModalActionType.setNewOrderId, payload: res.id});
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }

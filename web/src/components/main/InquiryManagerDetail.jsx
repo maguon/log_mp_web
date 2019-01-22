@@ -84,7 +84,10 @@ class InquiryManagerDetail extends React.Component {
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">询价管理 - 询价详情</span>
+                        <span className="page-title margin-left30">
+                            询价管理 - 询价详情
+                            {inquiryManagerDetailReducer.inquiryInfo.length > 0 && <span> - {inquiryManagerDetailReducer.inquiryInfo[0].id}</span>}
+                        </span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -106,7 +109,7 @@ class InquiryManagerDetail extends React.Component {
 
                                 <div className="margin-top15">
                                     <i className="mdi mdi-account fz20 pink-font"/>
-                                    <span className="margin-left10">{inquiryManagerDetailReducer.inquiryInfo[0].user_name} ( ID：{inquiryManagerDetailReducer.inquiryInfo[0].user_id} )</span>
+                                    <span className="margin-left10">{inquiryManagerDetailReducer.inquiryInfo[0].user_name}</span>
 
                                     <i className="mdi mdi-cellphone margin-left30 fz20 pink-font"/>
                                     <span className="margin-left10">{inquiryManagerDetailReducer.inquiryInfo[0].phone}</span>
@@ -144,7 +147,7 @@ class InquiryManagerDetail extends React.Component {
                         </div>
                         <div className="row detail-box">
                             <table className="bordered">
-                                <thead className="custom-grey border-top-line">
+                                <thead className="custom-grey">
                                 <tr className="grey-text text-darken-2">
                                     <th className="padding-left10">车型</th>
                                     <th className="center">是否新车</th>

@@ -205,6 +205,7 @@ class InquiryManager extends React.Component {
                         <table className="bordered striped">
                             <thead className="custom-dark-grey table-top-line">
                             <tr className="grey-text text-darken-2">
+                                <th>询价编号</th>
                                 <th>线路</th>
                                 <th>车辆数</th>
                                 <th className="center">服务方式</th>
@@ -222,6 +223,7 @@ class InquiryManager extends React.Component {
                             {inquiryManagerReducer.inquiryArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
+                                        <td>{item.id}</td>
                                         <td>{item.start_city} - {item.end_city}</td>
                                         <td>{formatUtil.formatNumber(item.car_num)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,item.service_type)}</td>
@@ -242,7 +244,7 @@ class InquiryManager extends React.Component {
                             })}
                             { inquiryManagerReducer.inquiryArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="11">暂无数据</td>
+                                    <td className="no-data-tr" colSpan="12">暂无数据</td>
                                 </tr>
                             }
                             </tbody>

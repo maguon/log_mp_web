@@ -1,7 +1,6 @@
 import {apiHost} from '../../config/HostConfig';
 import {NewOrderModalActionType} from "../../actionTypes";
 
-const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');

@@ -85,15 +85,15 @@ class NewInvoiceModal extends React.Component {
                 <div className="modal-title center-align white-text">申请开票</div>
 
                 {/** Modal主体 */}
-                <div className="modal-content white grey-text text-darken-2">
-                    <div className="row margin-bottom10">
+                <div className="modal-content padding-bottom0 padding-top15 white grey-text text-darken-2">
+                    <div className="row margin-bottom0">
                         <Input s={12} label={<span><span className="must-input">*</span>发票抬头</span>} maxLength="50" value={newInvoiceModalReducer.invoiceTitle} onChange={this.changeInvoiceTitle}/>
                         <Input s={6} label={<span><span className="must-input">*</span>税号</span>} maxLength="20" value={newInvoiceModalReducer.companyTax} onChange={this.changeCompanyTax}/>
                         <Input s={6} label="电话号码" maxLength="20" value={newInvoiceModalReducer.companyPhone} onChange={this.changeCompanyPhone}/>
                         <Input s={6} label="开户银行" maxLength="30" value={newInvoiceModalReducer.bank} onChange={this.changeBank}/>
                         <Input s={6} label="银行账号" maxLength="30" value={newInvoiceModalReducer.bankNum} onChange={this.changeBankNum}/>
                         <Input s={12} label="单位地址" maxLength="100" value={newInvoiceModalReducer.companyAddress} onChange={this.changeCompanyAddress}/>
-                        <Input s={12} label="备注" maxLength="200" value={newInvoiceModalReducer.remark} onChange={this.changeRemark}/>
+                        <Input s={12} label="备注" maxLength="200" className="margin-bottom0" value={newInvoiceModalReducer.remark} onChange={this.changeRemark}/>
                     </div>
                 </div>
 

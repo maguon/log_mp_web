@@ -63,7 +63,7 @@ class InquiryModal extends React.Component {
                 <div className="modal-content white">
 
                     {/** 第一行 */}
-                    <div className="row margin-top30">
+                    <div className="row margin-top10">
                         <div className="input-field col s6">
                             <Select
                                 options={commonReducer.cityList}
@@ -91,9 +91,15 @@ class InquiryModal extends React.Component {
                             <label className="active">终到城市</label>
                         </div>
                         <div className="input-field col s2 right-align">
+                            {!inquiryModalReducer.errorRouteFlg &&
                             <div className="input-field col s12" style={{paddingLeft: 0, paddingRight: 0}}>
                                 <span className="red-font margin-left5 fz18">{inquiryModalReducer.mileage}</span>公里
-                            </div>
+                            </div>}
+
+                            {inquiryModalReducer.errorRouteFlg &&
+                            <div className="input-field col s12 red-text" style={{paddingLeft: 0, paddingRight: 0}}>
+                                未开通线路
+                            </div>}
                         </div>
                     </div>
 
@@ -150,39 +156,37 @@ class InquiryModal extends React.Component {
 
                     {/** 第四行：是否保险，预计保费 */}
                     <div className="row">
-                        <div className="col s6">
-                            预计保费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.insuranceFee, 2)}</span>元
+                        <div className="col s7">
+                            预计保费 / 预计运费(元)：<span className="red-font margin-left5 fz18">
+                            {formatUtil.formatNumber(inquiryModalReducer.insuranceFee, 2)} / {formatUtil.formatNumber(inquiryModalReducer.freight, 2)}</span>
                         </div>
 
-                        <div className="col s6 right-align">
-                            预计运费：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight, 2)}</span>元
-                        </div>
-                    </div>
-                    <div className="row col s12"><div className="col s12 dotted-line"/></div>
-
-                    {/** 最终行：提示信息 */}
-                    <div className="row margin-bottom0">
-                        <div className="row input-field col s12">
-                            <div className="col left-align" style={{width: '4%'}}>
-                                {inquiryModalReducer.errorRouteFlg &&
-                                <div className="bold red-text">
-                                    <span className="mdi mdi-alert-circle red-text fz30"/>
-                                </div>
-                                }
-                            </div>
-                            <div className="col left-align" style={{width: '60%', marginTop: '12px'}}>
-                                {inquiryModalReducer.errorRouteFlg &&
-                                <div className="bold red-text">
-                                    当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置
-                                </div>
-                                }
-                            </div>
-
-                            <div className="col right-align no-padding" style={{width: '36%', marginTop: '12px'}}>
-                                预计总费用：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight + inquiryModalReducer.insuranceFee, 2)}</span>元
-                            </div>
+                        <div className="col s5 right-align">
+                            预计总费用(元)：<span className="red-font margin-left5 fz18">{formatUtil.formatNumber(inquiryModalReducer.freight + inquiryModalReducer.insuranceFee, 2)}</span>
                         </div>
                     </div>
+                    {/*<div className="row col s12"><div className="col s12 dotted-line"/></div>*/}
+
+                    {/*/!** 最终行：提示信息 *!/*/}
+                    {/*<div className="row margin-bottom0">*/}
+                        {/*<div className="row input-field col s12">*/}
+                            {/*<div className="col left-align" style={{width: '4%'}}>*/}
+                                {/*{inquiryModalReducer.errorRouteFlg &&*/}
+                                {/*<div className="bold red-text">*/}
+                                    {/*<span className="mdi mdi-alert-circle red-text fz30"/>*/}
+                                {/*</div>*/}
+                                {/*}*/}
+                            {/*</div>*/}
+                            {/**/}
+                            {/*<div className="col left-align" style={{width: '60%', marginTop: '12px'}}>*/}
+                                {/*{inquiryModalReducer.errorRouteFlg &&*/}
+                                {/*<div className="bold red-text">*/}
+                                    {/*当前线路暂未开通，请重新选择线路或到线路设置中对该线路进行设置*/}
+                                {/*</div>}*/}
+                            {/*</div>*/}
+
+                        {/*</div>*/}
+                    {/*</div>*/}
                 </div>
 
                 {/** Modal固定底部：取消确定按钮 */}

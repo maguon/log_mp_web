@@ -662,6 +662,10 @@ table.striped > tbody > tr:nth-child(odd) {
     padding-top: 20px !important;
 }
 
+.padding-bottom0 {
+    padding-bottom: 0 !important;
+}
+
 .padding-bottom5 {
     padding-bottom: 5px !important;
 }
@@ -1072,11 +1076,11 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #editOrderCarModal{
-    max-height: 680px;
+    max-height: 550px;
 }
 
 #inquiryModal{
-    max-height: 638px;
+    max-height: 538px;
 }
 
 #newInvoiceModal{

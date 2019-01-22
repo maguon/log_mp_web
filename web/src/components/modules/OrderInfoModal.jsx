@@ -124,7 +124,7 @@ class OrderInfoModal extends React.Component {
                             <div className="col s12 no-padding"><div className="col s12 dotted-line"/></div>
                             <div className="col s12 margin-top15 margin-bottom15">收货人：{commonReducer.orderInfo[0].recv_name} {commonReducer.orderInfo[0].recv_phone} {commonReducer.orderInfo[0].recv_address}</div>
                             <div className="col s12 no-padding"><div className="col s12 divider bold-divider"/></div>
-                            <div className="col s12 margin-top15 margin-bottom15">客户备注：{commonReducer.orderInfo[0].mark}</div>
+                            <div className="col s12 margin-top15 margin-bottom15">客户备注：{commonReducer.orderInfo[0].remark}</div>
                             <div className="col s12 no-padding"><div className="col s12 dotted-line"/></div>
                             <div className="col s12 margin-top15">客服备注：{commonReducer.orderInfo[0].admin_mark}</div>
                         </div>

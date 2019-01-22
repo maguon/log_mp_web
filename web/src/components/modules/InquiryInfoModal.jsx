@@ -262,7 +262,7 @@ class InquiryInfoModal extends React.Component {
                                 <div className="row divider margin-bottom10 bold-divider"/>
 
                                 <div className="row margin-bottom10 grey-text text-darken-2">
-                                    <div className="col s12">备注：{inquiryInfoModalReducer.orderInfo[0].mark}</div>
+                                    <div className="col s12">备注：{inquiryInfoModalReducer.orderInfo[0].remark}</div>
                                 </div>
                             </div>}
                         </div>}

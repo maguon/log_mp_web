@@ -460,7 +460,7 @@ class OrderManagerDetail extends React.Component {
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
                                 <div>
-                                    <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].mark}</div>
+                                    <div className="col s12 margin-top10">{orderManagerDetailReducer.orderInfo[0].remark}</div>
                                     <div className="col s12"><div className="col s12 margin-top10 divider"/></div>
                                 </div>
                             </div>}

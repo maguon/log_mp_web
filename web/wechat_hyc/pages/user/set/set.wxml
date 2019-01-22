@@ -1,0 +1,13 @@
+<view class='period'></view>
+<view bindtap='chooseHead' class='content' hover-class='active'>
+<image hidden='{{imgFlag}}' class='content-img' src='../../../images/head.png'></image>
+<image hidden='{{!imgFlag}}' class='content-img' src='{{imgUrl}}'></image>
+<view class='replace'>更换头像</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='name'>
+<view class='name-des'>昵称</view>
+<input bindinput='name' class='name-text' placeholder='{{name}}' placeholder-style='font-size:15px; color:#8a8a8a;'></input>
+</view>
+
+<button bindtap='add' class="btn" hover-class="weui-cell_active">确定</button>

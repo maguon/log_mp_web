@@ -1,0 +1,32 @@
+
+
+<view bindtap='radioChange' data-index='{{index}}' class="items"  wx:for="{{payment}}" wx:key="u" hover-class='weui-cell_active' hidden="{{!item.state}}">
+
+<view class='item'>
+<view class='item-left'>支付时间：{{item.created_on}}</view>
+<image hidden='{{item.stat}}' class='item-img02' src='../../../../images/arc.png'></image>
+<image hidden='{{!item.stat}}' class='item-img01' src='../../../../images/arc_01.png'></image>
+</view>
+<view class='div-line'></view>
+
+<view class='item'>
+<view class='cost'>支付金额:</view>
+<view class='num'>-{{item.total_fee}}</view>
+<view class='yuan'>元</view>
+</view>
+<view class='div-line'></view>
+
+<view hidden='{{!item.payment_type}}' class='item'>
+<image class='item-img' src='../../../../images/wx.png'></image>
+<view class='cost'>微信</view>
+</view>
+
+<view hidden='{{item.payment_type}}' class='item'>
+<image class='item-img' src='../../../../images/bank_card02.png'></image>
+<view class='cost01'>{{item.bank}} {{item.bank_code}} {{item.account_name}}</view>
+</view>
+</view>
+<view class='null'></view>
+<view class='butlist'>
+    <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
+    </view>

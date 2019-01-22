@@ -1,0 +1,27 @@
+
+
+<view bindtap='bindtap' data-index='{{index}}' class='content' hover-class="active" wx:for="{{refund}}" wx:key="u">
+<view class='city'>
+<view class='city-text'>{{item.route_start}}</view>
+<image class='city-arrow' src='../../../images/arrow_02.png'></image>
+<view class='city-text'>{{item.route_end}}</view>
+<view  class='state'>{{state[item.status]}}</view>
+<image class='arrow'src='../../../images/arrow.png'></image>
+</view>
+
+<view class='stay-detail'>
+
+<view  class='stay-car'>申请金额:{{item.apply_fee}}元</view>
+
+<view hidden='{{!item.hidden}}' class='stay-expect'>
+<view class='stay-text'>退款金额:</view>
+<view class='stay-num'>{{item.refund_fee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='city'>
+<view  class='num'>订单编号：{{item.order_id}}</view>
+<view  class='num-time'>申请时间：{{item.created_on}}</view>
+</view>
+<view class='line'></view>
+</view>

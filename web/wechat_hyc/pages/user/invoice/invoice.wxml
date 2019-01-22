@@ -1,0 +1,34 @@
+<view class='head'>
+<view bindtap='chooseInvoice' data-index='{{index}}' class='invoice' wx:for="{{invoiceList}}" wx:key="u">
+<view hidden='{{item.hidden}}' class='invoice-order'>{{item.name}}</view>
+<view hidden='{{!item.hidden}}' class='invoice-no'>{{item.name}}</view>
+</view>
+</view>
+
+
+<view bindtap='bindtap' data-index='{{index}}'  wx:for="{{invoice}}"  wx:key="u" class='content' hover-class="active">
+<view class='city'>
+<view class='city-text'>{{item.route_start}}</view>
+<image class='city-arrow' src='../../../images/arrow_02.png'></image>
+<view class='city-text'>{{item.route_end}}</view>
+<view hidden='{{carFlag}}' class='state'>{{state[item.invoiced_status]}}</view>
+<view hidden='{{!carFlag}}'  class='state'>{{payment_state[item.payment_status]}}</view>
+<image class='arrow'src='../../../images/arrow.png'></image>
+</view>
+
+<view class='stay-detail'>
+<view hidden='{{carFlag}}' class='stay-car'>运送车辆:{{item.car_num}}</view>
+<view hidden='{{!carFlag}}' class='stay-car'>订单金额:{{item.sumfee}}元</view>
+
+<view class='stay-expect'>
+<view class='stay-text'>支付金额:</view>
+<view class='stay-num'>{{item.real_payment_price}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='city'>
+<view  class='num'>订单编号：{{item.id}}</view>
+<view  class='num-time'>申请时间：{{item.apply_time}}</view>
+</view>
+<view class='line'></view>
+</view>

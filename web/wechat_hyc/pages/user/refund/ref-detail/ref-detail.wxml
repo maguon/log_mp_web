@@ -1,0 +1,117 @@
+<view class='state'>
+<view class='state-text'>{{state[refund.status]}}</view>
+</view>
+
+<view  class='content'>
+
+<view class='city'>
+<view  class='num'>订单编号：{{orderlist.id}}</view>
+<view  class='num-time'>{{orderlist.created_on}}</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<view class='city-text'>{{orderlist.start_city}}</view>
+<image class='city-arrow' src='../../../../images/arrow_02.png'></image>
+<view class='city-text'>{{orderlist.end_city}}</view>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>{{service[orderlist.service_type]}}</view>
+<view class='stay-expect'>
+<view class='stay-text'>运送车辆:{{orderlist.car_num}}</view>
+</view>
+</view>
+
+
+<view class='stay-detail'>
+<view class='stay-car'>运费:{{orderlist.total_trans_price}}元</view>
+<view class='stay-expect'>
+<view class='stay-text'>保费:{{orderlist.total_insure_price}}元</view>
+</view>
+</view>
+
+<view class='dis-line'></view>
+<view class='city'>
+<view class='stay-expect'>
+<view class='stay-text'>实际支付:</view>
+<view class='stay-num'>{{sumfee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+
+</view>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view bindtap='choose' hidden='{{refundFlag}}' class='dis-content' hover-class="weui-cell_active">
+<view class='city'>
+<view class='city-text'>选择一笔支付</view>
+<view hidden='{{!refund.payment_type}}' class='stay-text01'>微信</view>
+<view hidden='{{refund.payment_type}}' class='stay-text01'>{{payment.bank}} {{payment.bank_code}} {{payment.account_name}}</view>
+<image class='arrow' src='../../../../images/arrow.png'></image>
+</view>
+</view>
+
+<view hidden='{{!refundFlag}}' class='dis-content'>
+<view hidden='{{refund.payment_type}}' class='stay-bank'>{{payment.bank}} {{payment.bank_code}} {{payment.account_name}}</view>
+<view hidden='{{!refund.payment_type}}' class='stay-bank'>微信</view>
+</view>
+
+<view class='line'></view>
+
+<view hidden='{{refundFlag}}' class='dis-content'>
+<view class='city'>
+<view class='city-text'>退款金额（元）</view>
+<input bindinput='apply' class='city-input' type="number" placeholder='{{refund.apply_fee}}' placeholder-style='font-size:15px;'></input>
+</view>
+</view>
+
+<view hidden='{{!refundFlag}}' class='dis-content'>
+<view class='stay-bank'>申请金额：{{refund.apply_fee}}元</view>
+</view>
+
+<view class='line'></view>
+
+<view hidden='{{refundFlag}}' class='remark-text'>
+<textarea bindinput='why' class='remark' placeholder='{{refund.apply_reason}}' placeholder-style='font-size:14px;'/>
+</view>
+
+<view hidden='{{!refundFlag}}' class='dis-refund'>
+<view class='stay-bank01'>退款原因：</view>
+<view class='refund'>{{remark}}</view>
+</view>
+
+<view class='line'></view>
+<view class='note'>
+<view class='note-left'>申请时间：{{refund.created_on}}</view>
+</view>
+
+<view hidden='{{refundFlag}}' class='prompt'>退款金额将原路返回所选择的支付账号</view>
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view hidden='{{refundFlag}}' class='butList'>
+<button bindtap='undo' class='undo' >撤销申请</button>
+<button bindtap='again' class='again' hover-class='weui-cell_active'>修改申请</button>
+</view>
+
+<view class='null'></view>
+
+<view hidden='{{!refuseFlag}}' class='dis-refund'>
+<view class='stay-bank01'>拒绝原因：</view>
+<view class='refund'>{{refund.refuse_reason}}</view>
+</view>
+
+<view hidden='{{refuseFlag}}' class='ref'>
+<view hidden='{{!refundFlag}}' class='dis-content'>
+<view class='stay-expect'>
+<view class='stay-text'>实际退款:</view>
+<view class='stay-num'>{{refund.refund_fee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+</view>
+
+<view class='line'></view>
+<view hidden='{{!refundFlag}}' class='note'>
+<view class='note-left'>处理时间{{refund.updated_on}}</view>
+</view>

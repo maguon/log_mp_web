@@ -1,0 +1,87 @@
+<view class='dis-line'></view>
+<view class='dis-head'>
+<view class='head-city'>{{orderList.start_city}}</view>
+<image class='head-staycar' src='../../../images/arrow_02.png'></image>
+<view class='head-city'>{{orderList.end_city}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='dis-way' hover-class="active">
+<image class='way-image' src='../../../images/car.png'></image>
+<view class='way-text'>{{service[orderList.service_type]}}</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view hidden='{{!startress}}'bindtap='startAddress' data-index='{{0}}' class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img01' src='../../../images/head_02.png'></image>
+<view class='people01'>发车人:{{startRess.user_name}}</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='phone'>电话：{{startRess.phone}}</view>
+<view class='address'>地址：{{startRess.detail_address}}</view>
+</view>
+
+<view hidden='{{startress}}' bindtap='startAddress' data-index='{{0}}'  class='ress01' hover-class="weui-cell_active">
+<view class='choose'>
+<image class='choose-img' src='../../../images/add.png'></image>
+<view class='choose-ress'>选择发车地址</view>
+</view>
+<image class='arrow01' src='../../../images/arrow.png'></image>
+
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view hidden='{{!endress}}' bindtap='endAddress' data-index='{{1}}' class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img01' src='../../../images/head_01.png'></image>
+<view class='people01'>收车人:{{endRess.user_name}}</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+<view class='phone'>电话：{{endRess.phone}}</view>
+<view class='address'>地址：{{endRess.detail_address}}</view>
+</view>
+
+<view hidden='{{endress}}' bindtap='endAddress'data-index='{{1}}'  class='ress01' hover-class="weui-cell_active">
+<view class='choose'>
+<image class='choose-img' src='../../../images/add.png'></image>
+<view class="choose-ress">选择收车地址</view>
+</view>
+<image class='arrow01' src='../../../images/arrow.png'></image>
+</view>
+<view class='ress-line'></view>
+
+
+
+<!--  ---------------------------------------------------------------------- -->
+<view  hidden='{{!hidden}}'>
+<view class='ress' >
+<view class='ress-people'>
+<image class='ress-img' src='../../../images/location_01.png'></image>
+<view class='people'>发车地:大连鑫隆物流仓库</view>
+</view>
+
+<view class='phone'>电话：15840668526</view>
+<view class='address'>地址：辽宁省 大连市 开发区 金马路342号 凯伦国际大厦B座 2608室</view>
+</view>
+<view class='ress-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='ress'>
+<view class='ress-people'>
+<image class='ress-img' src='../../../images/location_01.png'></image>
+<view class='people'>提车地:沈阳鑫隆物流仓库</view>
+</view>
+
+<view class='phone'>电话：15840668526</view>
+<view class='address'>地址：辽宁省 大连市 开发区 金马路342号 凯伦国际大厦B座 2608室</view>
+</view>
+<view class='ress-line'></view>
+ <button class='ress-msg'>物流信息</button>
+
+<view class='null'></view>
+</view>
+<!--  ---------------------------------------------------------------------- -->
+<view class='butlist'>
+    <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
+    </view>

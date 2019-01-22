@@ -1,0 +1,120 @@
+<!-- <view class='container'> -->
+<view class='state'>
+<view class='state-text'>{{state[invoice.invoiced_status]}}</view>
+</view>
+
+<view  class='content'>
+
+<view class='city'>
+<view  class='num'>订单编号：{{orderlist.id}}</view>
+<view  class='num-time'>{{orderlist.created_on}}</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<view class='city-text'>{{orderlist.start_city}}</view>
+<image class='city-arrow' src='../../../images/arrow_02.png'></image>
+<view class='city-text'>{{orderlist.end_city}}</view>
+</view>
+
+<view class='stay-detail'>
+<view class='stay-car'>{{service[orderlist.service_type]}}</view>
+<view class='stay-expect'>
+<view class='stay-text'>运送车辆:{{orderlist.car_num}}</view>
+</view>
+</view>
+
+
+<view class='stay-detail'>
+<view class='stay-car'>运费:{{orderlist.total_trans_price}}元</view>
+<view class='stay-expect'>
+<view class='stay-text'>保费:{{orderlist.total_insure_price}}元</view>
+</view>
+</view>
+
+<view class='dis-line'></view>
+<view class='city'>
+<view class='stay-expect'>
+<view class='stay-text'>实际支付:</view>
+<view class='stay-num'>{{sumfee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+
+</view>
+
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view  hidden="{{invoiceFlag}}" bindtap='choose'  class='item' hover-class="active">
+<view class='invoice-head'>选择发票信息</view>
+<image class='arrow'src='../../../images/arrow.png'></image>
+</view>
+
+<view hidden="{{!invoiceFlag}}" bindtap='choose'  class='item'>
+<view class='invoice-head'>选择发票信息</view>
+</view>
+
+
+<view class='line'></view>
+
+<view class='item-tiny' hover-class="active">
+<view class='item-ress'>
+<view class='ress'>发票抬头：</view>
+<view class='ress-text'>{{invoice.company_name}}</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>税<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>号：</view>
+<view class='ress-text'>{{invoice.tax_number}}</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>开户银行：</view>
+<view class='ress-text'>{{invoice.bank}}</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>银行账户：</view>
+<view class='ress-text'>{{invoice.bank_code}}</view>
+</view>
+
+
+<view class='item-ress'>
+<view class='ress'>企业地址：</view>
+<view class='ress-text'>{{invoice.company_address}}</view>
+</view>
+
+<view class='item-ress'>
+<view class='ress'>电话号码：</view>
+<view class='ress-text'>{{invoice.company_phone}}</view>
+</view>
+
+</view>
+<view hidden='{{invoiceFlag}}' class='line'></view>
+<view class='note'>
+<view class='note-right'>备注:</view>
+<view class='note-left'>{{invoice.remark}}</view>
+</view>
+<view hidden='{{!invoiceFlag}}' class='note'>
+<view class='note-right'>备注:</view>
+<input bindinput='note' class="note-left" placeholder='{{invoice.remark}}'></input>
+</view>
+<view class='line'></view>
+<view class='note note01'>
+<view class='note-left'>申请时间：{{invoice.apply_time}}</view>
+</view>
+
+<view hidden='{{!refuseFlag}}' class='note'>
+<view class='note-left'>拒绝原因：{{invoice.refuse_reason}}</view>
+</view>
+
+<view hidden='{{!invoiceFlag}}' class='note note01'>
+<view class='note-left'>处理时间：{{invoice.invoiced_time}}</view>
+</view>
+<!-- -------------------------------------------------------------------------------------------- -->
+
+<view hidden='{{invoiceFlag}}' class='butList'>
+<button bindtap='undo' class='undo'>撤销申请</button>
+<button bindtap='again' class='again'>重新提交</button>
+</view>
+
+<!-- </view> -->

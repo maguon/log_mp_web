@@ -1,5 +1,7 @@
-import * as HeaderActionType  from './layout/HeaderActionType';
 import * as LoginActionType  from './layout/LoginActionType';
+import * as HeaderActionType  from './layout/HeaderActionType';
+import * as InquiryModalActionType  from './modules/InquiryModalActionType';
+import * as EditLoginUserModalActionType  from './modules/EditLoginUserModalActionType';
 
 import * as CommonActionType  from './main/CommonActionType';
 
@@ -30,10 +32,11 @@ import * as SupplierSettingActionType  from './main/SupplierSettingActionType';
 import * as SupplierSettingDetailActionType  from './main/SupplierSettingDetailActionType';
 import * as LogSiteSettingActionType  from './main/LogSiteSettingActionType';
 import * as LogSiteSettingDetailActionType  from './main/LogSiteSettingDetailActionType';
+import * as DepartmentSettingActionType  from './main/DepartmentSettingActionType';
 import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionType';
 import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
 
-import * as InquiryModalActionType  from './modules/InquiryModalActionType';
+
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
 import * as NewSupplierBankModalActionType  from './modules/NewSupplierBankModalActionType';
@@ -57,6 +60,8 @@ import * as RefuseInvoiceModalActionType  from './modules/RefuseInvoiceModalActi
 export  {
     LoginActionType,
     HeaderActionType,
+    InquiryModalActionType,
+    EditLoginUserModalActionType,
 
     CommonActionType,
     OrderStatisticActionType,
@@ -86,10 +91,10 @@ export  {
     SupplierSettingDetailActionType,
     LogSiteSettingActionType,
     LogSiteSettingDetailActionType,
+    DepartmentSettingActionType,
     RefundApplyManagerActionType,
     RefundApplyManagerDetailActionType,
 
-    InquiryModalActionType,
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
     NewSupplierBankModalActionType,

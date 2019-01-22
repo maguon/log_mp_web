@@ -30,3 +30,4 @@ export SupplierSetting from "./SupplierSetting";
 export SupplierSettingDetail from "./SupplierSettingDetail";
 export LogSiteSetting from "./LogSiteSetting";
 export LogSiteSettingDetail from "./LogSiteSettingDetail";
+export DepartmentSetting from "./DepartmentSetting";

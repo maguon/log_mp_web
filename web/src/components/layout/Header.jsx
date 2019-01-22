@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {InquiryModal} from '../modules/index';
+import {InquiryModal, EditLoginUserModal} from '../modules/index';
 
 const localUtil = require('../../util/LocalUtil');
 const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
 const commonAction = require('../../actions/main/CommonAction');
 const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
+const editLoginUserModalAction = require('../../actions/modules/EditLoginUserModalAction');
 const sysConst = require('../../util/SysConst');
 
 /**
@@ -46,7 +47,7 @@ class Header extends React.Component {
      */
     render() {
         //
-        const {openInquiryModal, logout} = this.props;
+        const {openInquiryModal, openEditLoginUserModal, logout} = this.props;
         return (
             <div>
                 <nav>
@@ -69,12 +70,17 @@ class Header extends React.Component {
                                     <i className="mdi mdi-home-currency-usd mdi-36px modal-trigger" data-target="inquiryModal" onClick={openInquiryModal}/>
                                 </a>
                             </li>
-                            <li><a className="right-align"><i className="mdi mdi-account mdi-36px"/></a></li>
+                            <li>
+                                <a className="right-align">
+                                    <i className="mdi mdi-account mdi-36px modal-trigger" data-target="editLoginUserModal" onClick={openEditLoginUserModal}/>
+                                </a>
+                            </li>
                             <li><a><i className="mdi mdi-exit-to-app mdi-36px" onClick={logout}/></a></li>
                         </ul>
                     </div>
                 </nav>
                 <InquiryModal/>
+                <EditLoginUserModal/>
             </div>
         )
     }
@@ -87,13 +93,20 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+    // 取得登录用户基本信息
     getUserDetail: (userId) => {
         dispatch(headerAction.getUserDetail({userId: userId}))
     },
+    // 询价
     openInquiryModal: () => {
         dispatch(commonAction.getCityList());
         dispatch(inquiryModalAction.initInquiryModal());
     },
+    // 修改密码
+    openEditLoginUserModal: () => {
+        dispatch(editLoginUserModalAction.initEditLoginUserModal());
+    },
+    // 退出
     logout: () => {
         dispatch(headerAction.logout())
     }

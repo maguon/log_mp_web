@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux'
 import {reducer as reduxFormReducer} from 'redux-form';
 
-import HeaderReducer from './layout/HeaderReducer';
 import LoginReducer from './layout/LoginReducer';
+import HeaderReducer from './layout/HeaderReducer';
+import InquiryModalReducer from './modules/InquiryModalReducer';
+import EditLoginUserModalReducer from './modules/EditLoginUserModalReducer';
 
 import CommonReducer from './main/CommonReducer';
 
@@ -33,10 +35,10 @@ import SupplierSettingReducer from './main/SupplierSettingReducer';
 import SupplierSettingDetailReducer from './main/SupplierSettingDetailReducer';
 import LogSiteSettingReducer from './main/LogSiteSettingReducer';
 import LogSiteSettingDetailReducer from './main/LogSiteSettingDetailReducer';
+import DepartmentSettingReducer from './main/DepartmentSettingReducer';
 import RefundApplyManagerReducer from './main/RefundApplyManagerReducer';
 import RefundApplyManagerDetailReducer from './main/RefundApplyManagerDetailReducer';
 
-import InquiryModalReducer from './modules/InquiryModalReducer';
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
 import NewSupplierBankModalReducer from './modules/NewSupplierBankModalReducer';
@@ -61,6 +63,8 @@ export default combineReducers({
     form: reduxFormReducer,
     LoginReducer,
     HeaderReducer,
+    InquiryModalReducer,
+    EditLoginUserModalReducer,
 
     CommonReducer,
     OrderStatisticReducer,
@@ -90,10 +94,10 @@ export default combineReducers({
     SupplierSettingDetailReducer,
     LogSiteSettingReducer,
     LogSiteSettingDetailReducer,
+    DepartmentSettingReducer,
     RefundApplyManagerReducer,
     RefundApplyManagerDetailReducer,
 
-    InquiryModalReducer,
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
     NewSupplierBankModalReducer,

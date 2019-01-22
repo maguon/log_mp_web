@@ -15,8 +15,10 @@ export const getOrderInfo = (id) => async (dispatch) => {
         if (res.success === true) {
             dispatch({type: OrderManagerDetailActionType.getOrderInfo, payload: res.result});
             if (res.result.length > 0) {
-                dispatch({type: OrderManagerDetailActionType.setOrderRemark, payload: res.result[0].admin_mark});
-                dispatch({type: OrderManagerDetailActionType.setOrderPaymentRemark, payload: res.result[0].payment_remark});
+                let orderRemark = res.result[0].admin_mark === null ? '' : res.result[0].admin_mark;
+                let orderPaymentRemark = res.result[0].payment_remark === null ? '' : res.result[0].payment_remark;
+                dispatch({type: OrderManagerDetailActionType.setOrderRemark, payload: orderRemark});
+                dispatch({type: OrderManagerDetailActionType.setOrderPaymentRemark, payload: orderPaymentRemark});
             }
         } else if (res.success === false) {
             swal('获取订单信息失败', res.msg, 'warning');

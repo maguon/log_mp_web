@@ -76,13 +76,13 @@ class InquiryInfoModal extends React.Component {
                             <thead className="custom-grey border-top-line">
                             <tr className="grey-text text-darken-2">
                                 <th className="padding-left10">车型</th>
-                                <th className="center">是否新车</th>
-                                <th className="right-align">估值单价 ( 元 )</th>
-                                <th className="right-align">预计运费单价 ( 元 )</th>
-                                <th className="center">是否保险</th>
-                                <th className="right-align">保险单价 ( 元 )</th>
+                                <th className="center">新车</th>
+                                <th className="right-align">估值单价</th>
+                                <th className="right-align">预计运费单价</th>
+                                <th className="center">保险</th>
+                                <th className="right-align">保险单价</th>
                                 <th className="right-align">数量</th>
-                                <th className="right-align">估值总额 ( 元 )</th>
+                                <th className="right-align">估值总额</th>
                                 <th className="right-align padding-right10">预计费用</th>
                             </tr>
                             </thead>
@@ -204,12 +204,12 @@ class InquiryInfoModal extends React.Component {
                                         <tr className="grey-text text-darken-2">
                                             <th className="padding-left10">VIN</th>
                                             <th className="center">车型</th>
-                                            <th className="center">是否新车</th>
-                                            <th className="right-align">估值 ( 元 )</th>
-                                            <th className="center">是否保险</th>
-                                            <th className="right-align">实际运费 ( 元 )</th>
-                                            <th className="right-align">实际保费 ( 元 )</th>
-                                            <th className="right-align padding-right10">实际费用 ( 元 )</th>
+                                            <th className="center">新车</th>
+                                            <th className="right-align">估值</th>
+                                            <th className="center">保险</th>
+                                            <th className="right-align">实际运费</th>
+                                            <th className="right-align">实际保费</th>
+                                            <th className="right-align padding-right10">实际费用</th>
                                         </tr>
                                         </thead>
                                         <tbody>

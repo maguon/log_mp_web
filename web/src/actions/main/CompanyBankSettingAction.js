@@ -22,11 +22,11 @@ export const getCompanyBankList = () => async (dispatch, getState) => {
 export const addCompanyBank = () => async (dispatch, getState) => {
     try {
         // 银行
-        const companyBank = getState().CompanyBankSettingReducer.companyBank;
+        const companyBank = getState().CompanyBankSettingReducer.companyBank.trim();
         // 卡号
-        const companyBankCode = getState().CompanyBankSettingReducer.companyBankCode;
+        const companyBankCode = getState().CompanyBankSettingReducer.companyBankCode.trim();
         // 收款人
-        const companyBankUser = getState().CompanyBankSettingReducer.companyBankUser;
+        const companyBankUser = getState().CompanyBankSettingReducer.companyBankUser.trim();
 
         if (companyBank === '' || companyBankCode === '' || companyBankUser === '') {
             swal('添加失败', '请输入完整的公司银行账户信息！', 'warning');
@@ -56,9 +56,9 @@ export const addCompanyBank = () => async (dispatch, getState) => {
     }
 };
 
-export const changeCompanyBankStatus = (id, status) => async (dispatch, getState) => {
+export const changeCompanyBankStatus = (id, status) => async (dispatch) => {
     swal({
-        title: "确认修改？",
+        title: status === 0 ? "确定停用该账户？" : "确定启用该账户",
         text: "",
         type: "warning",
         showCancelButton: true,
@@ -70,10 +70,8 @@ export const changeCompanyBankStatus = (id, status) => async (dispatch, getState
             // 状态
             let newStatus = 0;
             if (status === 0) {
-                // 启用
                 newStatus = 1
             } else {
-                // 停用
                 newStatus = 0
             }
             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/companyBank/' + id + '/status/' + newStatus;

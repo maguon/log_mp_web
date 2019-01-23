@@ -56,6 +56,7 @@ import CancelOrderModalReducer from './modules/CancelOrderModalReducer';
 import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
 import EditOrderCarModalReducer from './modules/EditOrderCarModalReducer';
 import EditCompanyBankModalReducer from './modules/EditCompanyBankModalReducer';
+import EditDepartmentModalReducer from './modules/EditDepartmentModalReducer';
 import ConfirmPaymentModalReducer from './modules/ConfirmPaymentModalReducer';
 import ConfirmRefundModalReducer from './modules/ConfirmRefundModalReducer';
 import RefuseRefundModalReducer from './modules/RefuseRefundModalReducer';
@@ -117,6 +118,7 @@ export default combineReducers({
     EditUserAddressModalReducer,
     EditOrderCarModalReducer,
     EditCompanyBankModalReducer,
+    EditDepartmentModalReducer,
     ConfirmPaymentModalReducer,
     ConfirmRefundModalReducer,
     RefuseRefundModalReducer,

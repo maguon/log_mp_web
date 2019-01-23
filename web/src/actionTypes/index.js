@@ -53,6 +53,7 @@ import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionTy
 import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
 import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalActionType';
 import * as EditCompanyBankModalActionType  from './modules/EditCompanyBankModalActionType';
+import * as EditDepartmentModalActionType  from './modules/EditDepartmentModalActionType';
 import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalActionType';
 import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
@@ -113,6 +114,7 @@ export  {
     EditUserAddressModalActionType,
     EditOrderCarModalActionType,
     EditCompanyBankModalActionType,
+    EditDepartmentModalActionType,
     ConfirmPaymentModalActionType,
     ConfirmRefundModalActionType,
     RefuseRefundModalActionType,

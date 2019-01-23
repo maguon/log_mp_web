@@ -1,17 +1,13 @@
 import React from 'react';
-import Select from 'react-select';
 import {connect} from 'react-redux';
-import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {LogSiteSettingActionType, NewLogSiteModalActionType} from '../../actionTypes';
-import {NewLogSiteModal} from '../modules/index';
+import {DepartmentSettingActionType} from '../../actionTypes';
+import {EditDepartmentModal} from '../modules/index';
 
-const logSiteSettingAction = require('../../actions/main/LogSiteSettingAction');
-const newLogSiteModalAction = require('../../actions/modules/NewLogSiteModalAction');
-const commonAction = require('../../actions/main/CommonAction');
-const sysConst = require('../../util/SysConst');
+const departmentSettingAction = require('../../actions/main/DepartmentSettingAction');
+const editDepartmentModalAction = require('../../actions/modules/EditDepartmentModalAction');
 
-class LogSiteSetting extends React.Component {
+class DepartmentSetting extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -24,114 +20,83 @@ class LogSiteSetting extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
-        if (!this.props.fromDetail) {
-            this.props.setConditionLogSiteName('');
-            this.props.changeConditionLogSiteCity(null);
-        }
-        this.props.getLogSiteSettingList();
+        this.props.setDepartmentName('');
+        this.props.getDepartmentList();
     }
 
     /**
-     * 更新 检索条件：收发货地点名称
+     * 更新 追加内容：部门名称
      */
-    changeConditionLogSiteName = (event) => {
-        this.props.setConditionLogSiteName(event.target.value);
+    changeDepartmentName = (event) => {
+        this.props.setDepartmentName(event.target.value);
     };
 
     /**
-     * 显示 增加收发货地点
+     * 显示 修改账户信息
      */
-    showNewLogSiteModal = () => {
-        this.props.initModalData();
-        $('#newLogSiteModal').modal('open');
+    showEditDepartmentModal = (departmentInfo) => {
+        this.props.initDepartmentModalData(departmentInfo);
+        $('#editDepartmentModal').modal('open');
     };
 
     render() {
-        const {logSiteSettingReducer, commonReducer, changeConditionLogSiteCity, getLogSiteSettingList} = this.props;
+        const {departmentSettingReducer, addDepartment, changeStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
                 <div className="row">
                     <div className="input-field col s12 page-title">
-                        <span className="margin-left10">收发货地点</span>
+                        <span className="margin-left10">部门管理</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
 
-                {/* 上部分：检索条件输入区域 */}
+                {/* 上部分：新建数据 输入区域 */}
                 <div className="row z-depth-1 margin-left50 margin-right50 detail-box">
                     <div className="col s10 margin-top20 search-condition-box">
-                        {/* 查询条件：所在城市 */}
-                        <div className="input-field col s6">
-                            <Select
-                                options={commonReducer.cityList}
-                                onChange={changeConditionLogSiteCity}
-                                value={logSiteSettingReducer.conditionLogSiteCity}
-                                isSearchable={true}
-                                placeholder={"请选择"}
-                                styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
-                                isClearable={true}
-                            />
-                            <label className="active">所在城市</label>
-                        </div>
-
-                        {/* 查询条件：收发货地点名称 */}
-                        <Input s={6} label="收发货地点名称" value={logSiteSettingReducer.conditionLogSiteName} onChange={this.changeConditionLogSiteName}/>
-                    </div>
-
-                    {/* 查询按钮 */}
-                    <div className="col s1">
-                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top20 query-btn" onClick={getLogSiteSettingList}>
-                            <i className="mdi mdi-magnify"/>
-                        </a>
+                        <Input s={12} label="部门" maxLength="20" value={departmentSettingReducer.departmentName} onChange={this.changeDepartmentName}/>
                     </div>
 
                     {/* 追加按钮 */}
-                    <div className="col s1">
-                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top20 add-btn" onClick={this.showNewLogSiteModal}>
+                    <div className="col s2 right-align">
+                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top20 add-btn" onClick={addDepartment}>
                             <i className="mdi mdi-plus"/>
                         </a>
                     </div>
                 </div>
 
                 {/* 下部分：检索结果显示区域 */}
-                {logSiteSettingReducer.logSiteArray.length > 0 &&
+                {departmentSettingReducer.departmentArray.length > 0 &&
                 <div className="row margin-left40 margin-right40">
-                    {logSiteSettingReducer.logSiteArray.map(function (item) {
+                    {departmentSettingReducer.departmentArray.map(function (item) {
                         return (
-                            <div className="col s4 margin-top20 position-relative">
-                                <div className="row white z-depth-1 detail-box height150">
+                            <div className="col s4 margin-top15 position-relative">
+                                <div className="row white z-depth-1 detail-box">
 
-                                    {/* 明细上部分：地点名称 */}
-                                    <div className="col s12 custom-purple white-text fz16" >
+                                    {/* 明细上部分：名称 */}
+                                    <div className={`col s12 white-text fz16 ${item.status === 0 ? "custom-purple" : "grey"}`}>
+                                        <div className="col s9 context-ellipsis fz18 margin-top10 margin-bottom10">{item.department_name}</div>
 
-                                        <div className="col s12 context-ellipsis fz18 margin-top10 margin-bottom10">{item.name}</div>
-
-                                        {/* 明细右侧：编辑按钮 */}
-                                        <Link to={{pathname: '/log_site_setting/' + item.id}}>
-                                            <a className="btn btn-floating waves-effect waves-light custom-pink position-absolute middle-btn">
-                                                <i className="mdi mdi-pencil white-text lighten-1"/>
-                                            </a>
-                                        </Link>
+                                        <div className="col s3 margin-top10 fz20 right-align">
+                                            <i className="mdi mdi-pencil pointer white-text lighten-1" onClick={() => {this.showEditDepartmentModal(item)}}/>
+                                        </div>
                                     </div>
 
-                                    <div className="col s12 padding-top10 padding-bottom10 fz14 purple-font">
-                                        <div className="col s12 margin-top5 padding-right0">
-                                            <div className="col s-percent-20 no-padding">所属城市：</div>
-                                            <div className="col s-percent-80 no-padding bold-font">{item.city_name}</div>
-
-                                        </div>
-                                        <div className="col s12 margin-top10 padding-right0">
-                                            <div className="col s-percent-20 no-padding">详细地址：</div>
-                                            <div className="col s-percent-80 no-padding grey-text word-wrap">{item.address}</div>
-                                        </div>
+                                    <div className="col s12 padding-top15 padding-bottom15 right-align">
+                                        {/* 状态：开关 */}
+                                        <span className="switch">
+                                            <label>
+                                              <input type="checkbox" checked={item.status === 0} onClick={() => {changeStatus(item.id, item.status)}}/>
+                                              <span className="lever"/>
+                                            </label>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
                         )
                     },this)}
                 </div>}
-                <NewLogSiteModal/>
+                <EditDepartmentModal/>
             </div>
         )
     }
@@ -139,32 +104,26 @@ class LogSiteSetting extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        logSiteSettingReducer: state.LogSiteSettingReducer,
-        commonReducer: state.CommonReducer
+        departmentSettingReducer: state.DepartmentSettingReducer
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getLogSiteSettingList: () => {
-        dispatch(commonAction.getCityList());
-        dispatch(logSiteSettingAction.getLogSiteSettingList())
+    getDepartmentList: () => {
+        dispatch(departmentSettingAction.getDepartmentList())
     },
-    setConditionLogSiteName: (value) => {
-        dispatch(LogSiteSettingActionType.setConditionLogSiteName(value))
+    setDepartmentName: (value) => {
+        dispatch(DepartmentSettingActionType.setDepartmentName(value))
     },
-    changeConditionLogSiteCity: (value) => {
-        dispatch(LogSiteSettingActionType.setConditionLogSiteCity(value))
+    addDepartment: () => {
+        dispatch(departmentSettingAction.addDepartment())
     },
-    initModalData: () => {
-        dispatch(commonAction.getCityList());
-        dispatch(newLogSiteModalAction.showMap());
-        dispatch(NewLogSiteModalActionType.setLogSiteName(''));
-        dispatch(NewLogSiteModalActionType.setLogSiteCity(''));
-        dispatch(NewLogSiteModalActionType.setLogSiteAddress(''));
-        dispatch(NewLogSiteModalActionType.setLogSiteRemark(''));
-        dispatch(NewLogSiteModalActionType.setLogSiteLon(''));
-        dispatch(NewLogSiteModalActionType.setLogSiteLat(''));
+    changeStatus: (id, status) => {
+        dispatch(departmentSettingAction.changeDepartmentStatus(id, status))
+    },
+    initDepartmentModalData: (departmentInfo) => {
+        dispatch(editDepartmentModalAction.initEditDepartmentModal(departmentInfo));
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogSiteSetting)
+export default connect(mapStateToProps, mapDispatchToProps)(DepartmentSetting)

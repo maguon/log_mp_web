@@ -33,9 +33,9 @@ import * as SupplierSettingDetailActionType  from './main/SupplierSettingDetailA
 import * as LogSiteSettingActionType  from './main/LogSiteSettingActionType';
 import * as LogSiteSettingDetailActionType  from './main/LogSiteSettingDetailActionType';
 import * as DepartmentSettingActionType  from './main/DepartmentSettingActionType';
+import * as CompanyBankSettingActionType  from './main/CompanyBankSettingActionType';
 import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionType';
 import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
-
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -52,6 +52,7 @@ import * as CancelInquiryModalActionType  from './modules/CancelInquiryModalActi
 import * as CancelOrderModalActionType  from './modules/CancelOrderModalActionType';
 import * as EditUserAddressModalActionType  from './modules/EditUserAddressModalActionType';
 import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalActionType';
+import * as EditCompanyBankModalActionType  from './modules/EditCompanyBankModalActionType';
 import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalActionType';
 import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
@@ -92,6 +93,7 @@ export  {
     LogSiteSettingActionType,
     LogSiteSettingDetailActionType,
     DepartmentSettingActionType,
+    CompanyBankSettingActionType,
     RefundApplyManagerActionType,
     RefundApplyManagerDetailActionType,
 
@@ -110,6 +112,7 @@ export  {
     CancelOrderModalActionType,
     EditUserAddressModalActionType,
     EditOrderCarModalActionType,
+    EditCompanyBankModalActionType,
     ConfirmPaymentModalActionType,
     ConfirmRefundModalActionType,
     RefuseRefundModalActionType,

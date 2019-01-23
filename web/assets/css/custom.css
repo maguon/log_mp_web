@@ -208,7 +208,7 @@ body {
 
 /** Material switch 组件 样式 */
 .switch label input[type=checkbox]:checked + .lever {
-    background-color: #724278
+    background-color: #D483B8
 }
 
 .switch label input[type=checkbox]:checked + .lever:after {
@@ -1087,7 +1087,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 580px;
 }
 
-#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal {
+#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal, #editCompanyBankModal {
     max-height: 456px;
 }
 

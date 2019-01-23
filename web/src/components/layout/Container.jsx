@@ -32,7 +32,9 @@ import {
     SupplierSetting,
     SupplierSettingDetail,
     LogSiteSetting,
-    LogSiteSettingDetail
+    LogSiteSettingDetail,
+    CompanyBankSetting,
+    DepartmentSetting,
 } from '../main/index';
 
 const routes = [
@@ -222,6 +224,18 @@ const routes = [
         exact: true,
         component: LogSiteSettingDetail
     },
+    {
+        // 公司银行账户管理
+        path: "/company_bank_setting",
+        exact: true,
+        component: CompanyBankSetting
+    },
+    {
+        // 部门管理
+        path: "/department_setting",
+        exact: true,
+        component: DepartmentSetting
+    },
 ];
 
 class Container extends React.Component {
@@ -258,9 +272,7 @@ class Container extends React.Component {
                                 <i className="mdi mdi-cards-variant"/>面板
                             </Link>
                         </li>
-                        <li>
-                            <div className="divider"/>
-                        </li>
+                        <li><div className="divider"/></li>
 
                         <li>
                             <ul className="collapsible collapsible-accordion">
@@ -304,10 +316,7 @@ class Container extends React.Component {
                                 </li>
                             </ul>
                         </li>
-
-                        <li>
-                            <div className="divider"/>
-                        </li>
+                        <li><div className="divider"/></li>
 
                         <li>
                             <ul className="collapsible collapsible-accordion">
@@ -327,9 +336,7 @@ class Container extends React.Component {
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <div className="divider"/>
-                        </li>
+                        <li><div className="divider"/></li>
 
                         <li>
                             <ul className="collapsible collapsible-accordion">
@@ -344,13 +351,15 @@ class Container extends React.Component {
                                             <li><Link to="/supplier_setting"><i className="mdi mdi-chevron-right"/>供应商</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/log_site_setting"><i className="mdi mdi-chevron-right"/>收发货地点</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/company_bank_setting"><i className="mdi mdi-chevron-right"/>公司银行账户管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/department_setting"><i className="mdi mdi-chevron-right"/>部门管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>
                             </ul>
                         </li>
-
-
                     </ul>
                     {routes.map((route, index) => (
                         // Render more <Route>s with the same paths as

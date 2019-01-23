@@ -99,7 +99,7 @@ class LogSiteSetting extends React.Component {
                 <div className="row margin-left40 margin-right40">
                     {logSiteSettingReducer.logSiteArray.map(function (item) {
                         return (
-                            <div className="col s4 margin-top20 position-relative">
+                            <div className="col s4 margin-top15 position-relative">
                                 <div className="row white z-depth-1 detail-box height150">
 
                                     {/* 明细上部分：地点名称 */}

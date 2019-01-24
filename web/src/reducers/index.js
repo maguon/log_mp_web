@@ -39,6 +39,8 @@ import DepartmentSettingReducer from './main/DepartmentSettingReducer';
 import CompanyBankSettingReducer from './main/CompanyBankSettingReducer';
 import RefundApplyManagerReducer from './main/RefundApplyManagerReducer';
 import RefundApplyManagerDetailReducer from './main/RefundApplyManagerDetailReducer';
+import AdminUserSettingReducer from './main/AdminUserSettingReducer';
+import AdminUserSettingDetailReducer from './main/AdminUserSettingDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -61,6 +63,7 @@ import ConfirmPaymentModalReducer from './modules/ConfirmPaymentModalReducer';
 import ConfirmRefundModalReducer from './modules/ConfirmRefundModalReducer';
 import RefuseRefundModalReducer from './modules/RefuseRefundModalReducer';
 import RefuseInvoiceModalReducer from './modules/RefuseInvoiceModalReducer';
+import NewAdminModalReducer from './modules/NewAdminModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -101,6 +104,8 @@ export default combineReducers({
     CompanyBankSettingReducer,
     RefundApplyManagerReducer,
     RefundApplyManagerDetailReducer,
+    AdminUserSettingReducer,
+    AdminUserSettingDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
@@ -122,5 +127,6 @@ export default combineReducers({
     ConfirmPaymentModalReducer,
     ConfirmRefundModalReducer,
     RefuseRefundModalReducer,
-    RefuseInvoiceModalReducer
+    RefuseInvoiceModalReducer,
+    NewAdminModalReducer
 })

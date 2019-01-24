@@ -31,16 +31,16 @@ class DepartmentSetting extends React.Component {
         this.props.setDepartmentName(event.target.value);
     };
 
-    /**
-     * 显示 修改账户信息
-     */
-    showEditDepartmentModal = (departmentInfo) => {
-        this.props.initDepartmentModalData(departmentInfo);
-        $('#editDepartmentModal').modal('open');
-    };
+    // /**
+    //  * 显示 修改账户信息
+    //  */
+    // showEditDepartmentModal = (departmentInfo) => {
+    //     this.props.initDepartmentModalData(departmentInfo);
+    //     $('#editDepartmentModal').modal('open');
+    // };
 
     render() {
-        const {departmentSettingReducer, addDepartment, changeStatus} = this.props;
+        const {departmentSettingReducer, addDepartment} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -82,15 +82,15 @@ class DepartmentSetting extends React.Component {
                                         </div>
                                     </div>
 
-                                    <div className="col s12 padding-top15 padding-bottom15 right-align">
-                                        {/* 状态：开关 */}
-                                        <span className="switch">
-                                            <label>
-                                              <input type="checkbox" checked={item.status === 0} onClick={() => {changeStatus(item.id, item.status)}}/>
-                                              <span className="lever"/>
-                                            </label>
-                                        </span>
-                                    </div>
+                                    {/*<div className="col s12 padding-top15 padding-bottom15 right-align">*/}
+                                        {/*/!* 状态：开关 *!/*/}
+                                        {/*<span className="switch">*/}
+                                            {/*<label>*/}
+                                              {/*<input type="checkbox" checked={item.status === 0} onClick={() => {changeStatus(item.id, item.status)}}/>*/}
+                                              {/*<span className="lever"/>*/}
+                                            {/*</label>*/}
+                                        {/*</span>*/}
+                                    {/*</div>*/}
                                 </div>
                             </div>
                         )
@@ -118,12 +118,12 @@ const mapDispatchToProps = (dispatch) => ({
     addDepartment: () => {
         dispatch(departmentSettingAction.addDepartment())
     },
-    changeStatus: (id, status) => {
-        dispatch(departmentSettingAction.changeDepartmentStatus(id, status))
-    },
-    initDepartmentModalData: (departmentInfo) => {
-        dispatch(editDepartmentModalAction.initEditDepartmentModal(departmentInfo));
-    }
+    // changeStatus: (id, status) => {
+    //     dispatch(departmentSettingAction.changeDepartmentStatus(id, status))
+    // },
+    // initDepartmentModalData: (departmentInfo) => {
+    //     dispatch(editDepartmentModalAction.initEditDepartmentModal(departmentInfo));
+    // }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DepartmentSetting)

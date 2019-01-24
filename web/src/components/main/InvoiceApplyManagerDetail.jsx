@@ -52,7 +52,7 @@ class InvoiceApplyManagerDetail extends React.Component {
                 {/* 标题部分 */}
                 <div className="row margin-bottom0">
                     <div className="input-field col s12">
-                        <Link to={{pathname: '/invoiceApply', state: {fromDetail: true}}}>
+                        <Link to={{pathname: '/invoice_apply', state: {fromDetail: true}}}>
                             <a className="btn-floating btn waves-effect custom-blue waves-light fz15">
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>

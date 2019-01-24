@@ -1087,12 +1087,12 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 580px;
 }
 
-#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal, #editCompanyBankModal {
+#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal, #editCompanyBankModal, #newAdminModal {
     max-height: 456px;
 }
 
 #routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal, #newOrderModal,
-#cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal, #refuseInvoiceModal {
+#cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal, #refuseInvoiceModal, #editDepartmentModal {
     max-height: 360px;
 }
 

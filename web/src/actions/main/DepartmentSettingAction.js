@@ -49,32 +49,32 @@ export const addDepartment = () => async (dispatch, getState) => {
     }
 };
 
-export const changeDepartmentStatus = (id, status) => async (dispatch) => {
-    swal({
-        title: status === 0 ? "确定停用该部门？" : "确定启用该部门",
-        text: "",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#724278',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-    }).then(async function (isConfirm) {
-        if (isConfirm && isConfirm.value === true) {
-            // 状态
-            let newStatus = 0;
-            if (status === 0) {
-                newStatus = 1
-            } else {
-                newStatus = 0
-            }
-            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/department/' + id + '/status/' + newStatus;
-            const res = await httpUtil.httpPut(url, {});
-            if (res.success === true) {
-                swal("修改成功", "", "success");
-                dispatch(getDepartmentList());
-            } else if (res.success === false) {
-                swal('修改失败', res.msg, 'warning');
-            }
-        }
-    });
-};
+// export const changeDepartmentStatus = (id, status) => async (dispatch) => {
+//     swal({
+//         title: status === 0 ? "确定停用该部门？" : "确定启用该部门",
+//         text: "",
+//         type: "warning",
+//         showCancelButton: true,
+//         confirmButtonColor: '#724278',
+//         confirmButtonText: '确定',
+//         cancelButtonText: '取消'
+//     }).then(async function (isConfirm) {
+//         if (isConfirm && isConfirm.value === true) {
+//             // 状态
+//             let newStatus = 0;
+//             if (status === 0) {
+//                 newStatus = 1
+//             } else {
+//                 newStatus = 0
+//             }
+//             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/department/' + id + '/status/' + newStatus;
+//             const res = await httpUtil.httpPut(url, {});
+//             if (res.success === true) {
+//                 swal("修改成功", "", "success");
+//                 dispatch(getDepartmentList());
+//             } else if (res.success === false) {
+//                 swal('修改失败', res.msg, 'warning');
+//             }
+//         }
+//     });
+// };

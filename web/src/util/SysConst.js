@@ -296,6 +296,18 @@ export const STATISTIC_DAYS = [
     }
 ];
 
+// 可用/停用 标记
+export const USE_FLAG = [
+    {
+        value: 0,
+        label: "停用"
+    },
+    {
+        value: 1,
+        label: "可用"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

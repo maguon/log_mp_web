@@ -4,6 +4,9 @@ import {CommonActionType} from '../../actionTypes';
 const initialState = {
     // 城市列表
     cityList: [],
+    // 部门列表
+    departmentList: [],
+
     // 订单信息
     orderInfo: [],
     // 订单信息：运送车辆列表
@@ -32,6 +35,16 @@ export default handleActions({
         return {
             ...state,
             cityList: cityList
+        }
+    },
+    [CommonActionType.getDepartmentList]: (state, action) => {
+        let departmentList = [];
+        action.payload.forEach((value) => {
+            departmentList.push({value: value.id, label: value.department_name})
+        });
+        return {
+            ...state,
+            departmentList: departmentList
         }
     },
     [CommonActionType.getOrderInfo]: (state, action) => {
@@ -83,4 +96,3 @@ export default handleActions({
         }
     }
 }, initialState)
-

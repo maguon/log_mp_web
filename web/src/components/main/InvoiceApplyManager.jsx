@@ -291,7 +291,7 @@ class InvoiceApplyManager extends React.Component {
                                                 {commonUtil.getJsonValue(sysConst.INVOICE_STATUS, item.invoiced_status)}
                                             </td>
                                             <td className="operation center">
-                                                <Link to={{pathname: '/invoiceApply/' + item.invoice_apply_id}}>
+                                                <Link to={{pathname: '/invoice_apply/' + item.invoice_apply_id}}>
                                                     <i className="mdi mdi-table-search purple-font"/>
                                                 </Link>
                                             </td>

@@ -36,6 +36,8 @@ import * as DepartmentSettingActionType  from './main/DepartmentSettingActionTyp
 import * as CompanyBankSettingActionType  from './main/CompanyBankSettingActionType';
 import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionType';
 import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
+import * as AdminUserSettingActionType  from './main/AdminUserSettingActionType';
+import * as AdminUserSettingDetailActionType  from './main/AdminUserSettingDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -58,6 +60,7 @@ import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalAc
 import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
 import * as RefuseInvoiceModalActionType  from './modules/RefuseInvoiceModalActionType';
+import * as NewAdminModalActionType  from './modules/NewAdminModalActionType';
 
 export  {
     LoginActionType,
@@ -97,6 +100,8 @@ export  {
     CompanyBankSettingActionType,
     RefundApplyManagerActionType,
     RefundApplyManagerDetailActionType,
+    AdminUserSettingActionType,
+    AdminUserSettingDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -118,5 +123,6 @@ export  {
     ConfirmPaymentModalActionType,
     ConfirmRefundModalActionType,
     RefuseRefundModalActionType,
-    RefuseInvoiceModalActionType
+    RefuseInvoiceModalActionType,
+    NewAdminModalActionType
 }

@@ -1,5 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
-import {CommonActionType, PaymentManagerDetailActionType} from '../../actionTypes';
+import {CommonActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
@@ -13,6 +13,21 @@ export const getCityList = () => async (dispatch) => {
             dispatch({type: CommonActionType.getCityList, payload: res.result})
         } else if (res.success === false) {
             swal('获取城市信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+export const getDepartmentList = () => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/department?status=0';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getDepartmentList, payload: res.result})
+        } else if (res.success === false) {
+            swal('获取部门列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

@@ -32,3 +32,5 @@ export LogSiteSetting from "./LogSiteSetting";
 export LogSiteSettingDetail from "./LogSiteSettingDetail";
 export DepartmentSetting from "./DepartmentSetting";
 export CompanyBankSetting from "./CompanyBankSetting";
+export AdminUserSetting from "./AdminUserSetting";
+export AdminUserSettingDetail from "./AdminUserSettingDetail";

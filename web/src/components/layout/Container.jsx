@@ -35,6 +35,7 @@ import {
     LogSiteSettingDetail,
     CompanyBankSetting,
     DepartmentSetting,
+    AdminUserSetting,
 } from '../main/index';
 
 const routes = [
@@ -109,23 +110,23 @@ const routes = [
     },
     {
         // 用户发票信息管理
-        path: "/invoiceTitle",
+        path: "/invoice_title",
         exact: true,
         component: InvoiceTitleManager
     },
     {
-        path: '/invoiceTitle/:id',
+        path: '/invoice_title/:id',
         exact: true,
         component: InvoiceTitleManagerDetail
     },
     {
         // 开票申请
-        path: "/invoiceApply",
+        path: "/invoice_apply",
         exact: true,
         component: InvoiceApplyManager
     },
     {
-        path: '/invoiceApply/:id',
+        path: '/invoice_apply/:id',
         exact: true,
         component: InvoiceApplyManagerDetail
     },
@@ -236,6 +237,12 @@ const routes = [
         exact: true,
         component: DepartmentSetting
     },
+    {
+        // 员工管理
+        path: "/admin_user_setting",
+        exact: true,
+        component: AdminUserSetting
+    },
 ];
 
 class Container extends React.Component {
@@ -306,9 +313,9 @@ class Container extends React.Component {
                                         <ul>
                                             <li><Link to="/user"><i className="mdi mdi-chevron-right"/>用户管理</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/invoiceTitle"><i className="mdi mdi-chevron-right"/>用户发票信息管理</Link></li>
+                                            <li><Link to="/invoice_title"><i className="mdi mdi-chevron-right"/>用户发票信息管理</Link></li>
                                             <li><div className="divider"/></li>
-                                            <li><Link to="/invoiceApply"><i className="mdi mdi-chevron-right"/>开票申请</Link></li>
+                                            <li><Link to="/invoice_apply"><i className="mdi mdi-chevron-right"/>开票申请</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>发票管理</Link></li>
                                         </ul>
@@ -355,6 +362,8 @@ class Container extends React.Component {
                                             <li><Link to="/company_bank_setting"><i className="mdi mdi-chevron-right"/>公司银行账户管理</Link></li>
                                             <li><div className="divider"/></li>
                                             <li><Link to="/department_setting"><i className="mdi mdi-chevron-right"/>部门管理</Link></li>
+                                            <li><div className="divider"/></li>
+                                            <li><Link to="/admin_user_setting"><i className="mdi mdi-chevron-right"/>员工管理</Link></li>
                                         </ul>
                                     </div>
                                 </li>

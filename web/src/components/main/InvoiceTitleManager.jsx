@@ -142,7 +142,7 @@ class InvoiceTitleManager extends React.Component {
                                         <td>{item.company_phone}</td>
                                         <td>{item.user_name}</td>
                                         <td className="operation center">
-                                            <Link to={{pathname: '/invoiceTitle/' + item.id}}>
+                                            <Link to={{pathname: '/invoice_title/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>

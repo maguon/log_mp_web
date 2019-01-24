@@ -119,7 +119,7 @@ class SupplierSetting extends React.Component {
                                 </div>
                                 <div className="col s1 right-align padding-right20">
                                     <Link to={{pathname: '/supplier_setting/' + item.id}}>
-                                        <i className="mdi mdi-chevron-right fz20 grey-text text-darken-1"/>
+                                        <i className="mdi mdi-pencil fz20 pink-font"/>
                                     </Link>
                                 </div>
                             </div>

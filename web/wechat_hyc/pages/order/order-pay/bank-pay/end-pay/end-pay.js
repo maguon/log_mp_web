@@ -15,6 +15,7 @@ Page({
     refund:0,
     sumFee:0,
     pagFlag:false,
+    refundFlag:false,
   },
 
 
@@ -35,41 +36,55 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this;
     var userId = app.globalData.userId;
-    var orderId=this.data.orderId;
-    var sumFee=this.data.sumFee;
+    var orderId = that.data.orderId;
+    var sumFee = that.data.sumFee;
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + orderId, (err, res) => {
-      var refundSum=0;
+     
       console.log(res.data.result)
       if (res.data.result!=''){
+        var refundSum = 0;
       for( var i=0;i<res.data.result.length;i++){
         //微信 银行支付判断
         if (res.data.result[i].payment_type==2){
           res.data.result[i].payment_type=0;
         }
         if (res.data.result[i].type==0){
-          refundSum+= res.data.result[i].total_fee;
+          refundSum += res.data.result[i].total_fee;
           res.data.result[i].status=1;
         }
+       
       //保留小数
         res.data.result[i].total_fee = config.decimal(res.data.result[i].total_fee);
       //编译时间
         res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
         res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
       }
-    this.setData({
+
+        if (refundSum==0){
+          that.setData({
+            refundFlag: true,
+          })
+        }
+        that.setData({
       payment:res.data.result,
       remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
       refund:refundSum,
     })
     //支付按钮显示
         if (res.data.result[0].unpaid_price==0){
-          this.setData({
+          that.setData({
           pagFlag:true,
           })
         }
 
+  }else{
+     that.setData({
+        refundFlag: true,
+     })
+        
   }
     })
   },
@@ -134,10 +149,10 @@ Page({
 bindModify:function(e){
   var index = e.currentTarget.dataset.index;
   var orderId=this.data.orderId;
-  var fee= this.data.payment[index].total_fee;
+  var fee = this.data.payment[index].unpaid_price;
   var paymentId = this.data.payment[index].id;
 wx.navigateTo({
-  url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + orderId + '&fee=' + fee + '&name=' + "Modify" + "&paymentId=" + paymentId ,
+  url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + orderId + '&fee=' + fee + '&name=' + "Modify" + "&paymentId=" + paymentId + "&param=" + "" ,
 })
 
 },

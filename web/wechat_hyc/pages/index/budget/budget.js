@@ -8,16 +8,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    orderlist:[],
-    inquiryId:'',
+    arr:[],
+    carMsg:[],
 
     array: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
 
-    carList:[],
+    car_num:0,
     sumFee: 0,
+    loadingHidden: false,
   },
-
 
 
 
@@ -25,42 +25,90 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (e) {
+  onLoad:function(e){
+    var carMsgList = JSON.parse(e.carMsg);
+    var arr = JSON.parse(e.arr);
+
+    this.setData({
+       loadingHidden: true,
+       arr: arr,
+       carMsg: carMsgList,
+     })
+ },
+
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onShow: function (e) {
+    var that=this;
     var userId = app.globalData.userId;
+    var name=app.globalData.name;
+    var carMsg = that.data.carMsg;
+    var car_num=0;
+    var sumFee=0;
 
-    console.log(e.inquiryId)
-    console.log(userId)
 
-     //获取数据
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId,(err,res)=>{
-      console.log(res)
-      //编译时间
-      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
-  
-      this.setData({
-        orderlist: res.data.result[0],
-        inquiryId: e.inquiryId,
-      })
-    })
+    if(name=="index"){
+    var params={
+      distance: carMsg[0].distance,
+      modelType: carMsg[0].modelType+1,
+      oldCar: carMsg[0].oldCar,
+      serviceType: carMsg[0].serviceType+1,
+      valuation: parseInt(carMsg[0].valuation),
+      safeStatus: carMsg[0].safeStatus
+    }
+   
+    reqUtil.httpPost(config.host.apiHost +"/api/transAndInsurePrice",params,(err,res)=>{
 
-    //获取数据
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + e.inquiryId, (err, res) => {
-      console.log(res.data.result)
-      var sum=0;
-      for (var i = 0; i < res.data.result.length;i++){
-        if (res.data.result[i].status==1){
-          //设置单价
-          res.data.result[i].price = (res.data.result[i].trans_price + res.data.result[i].insure_price).toFixed(2);
-          //设置总价
-          sum +=res.data.result[i].trans_price + res.data.result[i].insure_price;
-        }
-       
+      carMsg[0].price = parseFloat(res.data.result.trans)+parseFloat(res.data.result.insure);
+      carMsg[0].sumPrice = carMsg[0].price;
+    
+      for (var i = 0; i < carMsg.length; i++) {
+        car_num += carMsg[i].carNum;
+        sumFee += carMsg[i].sumPrice;
       }
-      this.setData({
-        carList: res.data.result,
-        sumFee: sum.toFixed(2),
+
+
+  console.log(res.data.result)
+  console.log(carMsg)
+
+
+      that.setData({
+        carMsg: carMsg,
+        car_num: car_num,
+        sumFee: sumFee.toFixed(2),
+        loadingHidden: false,
       })
-    })
+    }) 
+    }else{
+
+      wx.getStorage({
+        key: "addCar",
+        success(res) {
+          console.log(res.data)
+
+          that.setData({
+            arr: res.data.arr,
+            carMsg: res.data.carMsg,
+          })
+
+          for (var i = 0; i < res.data.carMsg.length; i++) {
+            car_num += parseInt(res.data.carMsg[i].carNum);
+            sumFee += res.data.carMsg[i].sumPrice;
+          }
+
+          that.setData({
+            car_num: car_num,
+            sumFee: sumFee.toFixed(2),
+            loadingHidden: false,
+          })
+
+        }
+      });
+    }
+
+
   },
 
 
@@ -70,10 +118,14 @@ Page({
    */
   bindcarList:function(e){
   console.log(e)
-  var id=e.currentTarget.dataset.id;
+  var index=e.currentTarget.dataset.index;
   var name = e.currentTarget.dataset.name;
-    wx.redirectTo({
-      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId+"&name="+name,
+  var carMsg = this.data.carMsg;
+    
+    var carMsg = JSON.stringify(this.data.carMsg);
+    var arr = JSON.stringify(this.data.arr);
+    wx.navigateTo({
+      url: "/pages/index/change-car/change-car?index=" + index + "&arr=" + arr+ "&carMsg=" + carMsg ,
     })
   },
 
@@ -84,9 +136,12 @@ Page({
    * 添加车辆
    */
   addCar:function(e){
+    console.log(this.data.carMsg)
     var name = e.currentTarget.dataset.name;
-    wx.redirectTo({
-      url: "/pages/index/add-car/add-car?inquiryId=" + this.data.inquiryId + "&name=" + name,
+    var carMsg = JSON.stringify(this.data.carMsg);
+    var arr= JSON.stringify(this.data.arr);
+    wx.navigateTo({
+      url: "/pages/index/add-car/add-car?carMsg=" + carMsg + "&arr=" + arr,
     })
   },
 
@@ -96,11 +151,42 @@ Page({
   /**
    * 客服协商
    */
-  bindInquiry:function(e){
-    wx.redirectTo({
-      url: '/pages/index/submit/submit',
+bindInquiry:function(e){
+  var userId=app.globalData.userId;
+  var arr=this.data.arr;
+  var carMsg = this.data.carMsg;
+    
+
+  
+  for(var i=0;i<carMsg.length;i++){
+    carMsg[i].modelId= carMsg[i].modelType+1;
+    carMsg[i].plan = carMsg[i].valuation;
+  }
+    console.log(carMsg)
+
+    var params={
+      routeId: arr.routeId,
+      serviceType: arr.serviceType+1,
+      carInfo:carMsg,
+      inquiryName: "",
+      startCity: arr.startCity,
+      endCity: arr.endCity,
+      startId: arr.startId,
+      endId: arr.endId,
+      distance: arr.distance,
+    }
+    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId +"/inquiry",params,(err,res)=>{
+      wx.redirectTo({
+        url: '/pages/index/submit/submit',
+      })
+
+      wx.setStorage({
+        key: "addCar",
+        data: "",
+      });
+
     })
-  },
+},
 
 
 
@@ -108,15 +194,7 @@ Page({
 * 联系客服
 */
   bindCustomer: function () {
-    wx.makePhoneCall({
-      phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
-      success: function () {
-        console.log("拨打电话成功！")
-      },
-      fail: function () {
-        console.log("拨打电话失败！")
-      }
-    })
+    config.bindCustomer();
   },
 
 

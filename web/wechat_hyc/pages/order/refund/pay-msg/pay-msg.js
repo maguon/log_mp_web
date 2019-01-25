@@ -78,8 +78,32 @@ Page({
     var payment = this.data.payment;
     var userId = app.globalData.userId;
     var paymentId = payment[index].id;
-    console.log(payment[index].id)
-    console.log(index)
+
+    var name = this.data.name;
+    var orderId = this.data.orderId;
+    var refundId = this.data.refundId;
+
+    if (name == "order") {
+      wx.redirectTo({
+        url: "/pages/order/refund/refund?orderId=" + orderId + "&paymentId=" + paymentId + "&name=" + "",
+      })
+    } else if (name == "user") {
+
+      var remark = this.data.remark;
+      var applyfee = this.data.payment.total_fee;
+
+      var params = {
+        paymentId: paymentId,
+        applyFee: applyfee,
+        applyReason: ""
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/refundApply/" + refundId, params, (err, res) => {
+      })
+      wx.redirectTo({
+        url: "/pages/user/refund/ref-detail/ref-detail?orderId=" + orderId + "&paymentId=" + paymentId + "&refundId=" + refundId,
+      })
+    }
+
     // 判断用户点击index设置默认
     for (var i = 0, len = payment.length; i < len; ++i) {
      payment[i].stat = i == index;
@@ -106,35 +130,35 @@ Page({
 
 
 
-  bindAdd:function(){
-    var name=this.data.name;
-    var userId = app.globalData.userId;
-    var paymentId = this.data.paymentId;
-    var orderId = this.data.orderId;
-    var refundId = this.data.refundId;
+  // bindAdd:function(){
+  //   var name=this.data.name;
+  //   var userId = app.globalData.userId;
+  //   var paymentId = this.data.paymentId;
+  //   var orderId = this.data.orderId;
+  //   var refundId = this.data.refundId;
 
 
-    if(name=="order"){
-    wx.redirectTo({
-      url: "/pages/order/refund/refund?orderId=" + this.data.orderId + "&paymentId=" +this.data.paymentId + "&name=" + "",
-    })
-    } else if (name == "user") {
+  //   if(name=="order"){
+  //   wx.redirectTo({
+  //     url: "/pages/order/refund/refund?orderId=" + this.data.orderId + "&paymentId=" +this.data.paymentId + "&name=" + "",
+  //   })
+  //   } else if (name == "user") {
 
-      var remark = this.data.remark;
-      var applyfee = this.data.payment.total_fee;
+  //     var remark = this.data.remark;
+  //     var applyfee = this.data.payment.total_fee;
 
-      var params = {
-        paymentId: paymentId,
-        applyFee: applyfee,
-        applyReason: ""
-      }
-      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/refundApply/" + refundId, params, (err, res) => {
-      })
-      wx.redirectTo({
-        url: "/pages/user/refund/ref-detail/ref-detail?orderId=" + this.data.orderId + "&paymentId=" + this.data.paymentId + "&refundId=" + refundId,
-      })
-    }
-  },
+  //     var params = {
+  //       paymentId: paymentId,
+  //       applyFee: applyfee,
+  //       applyReason: ""
+  //     }
+  //     reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/refundApply/" + refundId, params, (err, res) => {
+  //     })
+  //     wx.redirectTo({
+  //       url: "/pages/user/refund/ref-detail/ref-detail?orderId=" + this.data.orderId + "&paymentId=" + this.data.paymentId + "&refundId=" + refundId,
+  //     })
+  //   }
+  // },
 
 
 

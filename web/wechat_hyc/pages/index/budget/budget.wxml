@@ -1,22 +1,22 @@
 
 <view class='container'>
-<view  class='head-prompt' >
+<!-- <view  class='head-prompt' >
  <view class='prompt-state'>询价编号:{{orderlist.id}}</view>
   <view class='prompt-time'>{{orderlist.created_on}}</view>
-</view>
-
+</view> -->
+ <loading hidden="{{!loadingHidden}}">加载中</loading>
 <view class='dis-line'></view>
 <view class='dis-head'>
-<view class='head-city'>{{orderlist.start_city}}</view>
+<view class='head-city'>{{arr.startCity}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
-<view class='head-city'>{{orderlist.end_city}}</view>
+<view class='head-city'>{{arr.endCity}}</view>
 <image bindtap='bindCustomer' class='head-customer' src='../../../images/customer.png'></image>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-way'>
 <image class='way-image' src='../../../images/car.png'></image>
-<view class='way-text'>{{array[orderlist.service_type-1]}}</view>
+<view class='way-text'>{{array[arr.serviceType]}}</view>
 </view>
 <view class='dis-line'></view>
 <!-- 内容 ---------------------------------------------------------------------- -->
@@ -24,28 +24,28 @@
 <view class='city'>
 <image class='city-img' src='../../../images/car_02.png'></image>
 <view class='city-text'>运送车辆</view>
-<view class='stay-text01'>{{orderlist.car_num}}</view>
-<image hidden='{{orderlist.status}}'  bindtap='addCar' data-name='budget' class='add' src='../../../images/add_01.png'></image>
+<view class='stay-text01'>{{car_num}}</view>
+<image hidden='{{orderlist.status}}'  bindtap='addCar' class='add' src='../../../images/add_01.png'></image>
 </view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='dis-content' hover-class="active" wx:for='{{carList}}' wx:key='u'
-bindtap='bindcarList'data-name='carlist' data-id="{{index}}" hidden='{{!item.status}}'>
+<view class='dis-content' hover-class="active" wx:for='{{carMsg}}' wx:key='u'
+bindtap='bindcarList' data-index="{{index}}">
 <view class='city'>
-<view class='city-text'>{{carModel[item.model_id-1]}}</view>
+<view class='city-text'>{{carModel[item.modelType]}}</view>
 <view class='image'>
-<image hidden='{{!item.old_car}}' class='new' src='../../../images/new.png'></image>
-<image hidden='{{item.old_car}}' class='new' src='../../../images/new_01.png'></image>
-<image hidden='{{!item.safe_status}}' class='bao' src='../../../images/bao.png'></image>
-<image hidden='{{item.safe_status}}' class='bao' src='../../../images/bao_01.png'></image>
+<image hidden='{{!item.oldCar}}' class='new' src='../../../images/new.png'></image>
+<image hidden='{{item.oldCar}}' class='new' src='../../../images/new_01.png'></image>
+<image hidden='{{!item.safeStatus}}' class='bao' src='../../../images/bao.png'></image>
+<image hidden='{{item.safeStatus}}' class='bao' src='../../../images/bao_01.png'></image>
 </view>
 <image class='arrow'src='../../../images/arrow.png'></image>
 </view>
 
 <view class='stay-detail'>
-<view class='city-text'>估值:{{item.plan}} 元</view>
-<view class='stay-text'>数量:{{item.car_num}}</view>
+<view class='city-text'>估值:{{item.valuation}} 元</view>
+<view class='stay-text'>数量:  {{item.carNum}}</view>
 </view>
 <view class='stay-detail'>
 <view class='stay-expect'>

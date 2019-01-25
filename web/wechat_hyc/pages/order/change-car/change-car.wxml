@@ -1,17 +1,17 @@
 <view class='dis-line'></view>
 <view class='dis-head'>
-<view class='head-city'>{{arr.startCity}}</view>
+<view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
-<view class='head-city'>{{arr.endCity}}</view>
+<view class='head-city'>{{orderlist.end_city}}</view>
 </view>
 <view class='dis-line'></view>
 
 <!-- 车型 ---------------------------------------------------------------------- -->
   <view  class="weui-cell_access" hover-class="weui-cell_active">
-  <picker bindchange="bindModels" value="{{car_index}}" range="{{carList}}">
+  <picker bindchange="bindModels" value="{{car_index}}" range="{{carModel}}">
       <view class='content'>
           <view class='weui-cell__bd' >选择车型</view>
-          <view class="weui-cell__bd01">{{carList[modelType]}} </view>
+          <view class="weui-cell__bd01">{{carModel[modelType]}} </view>
           <image class='arrow' src='../../../images/arrow.png'></image>
       </view>
      </picker>
@@ -21,10 +21,10 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input bindinput='bindValuation' type='digit' class='input' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px'></input>
+  <input  class='input' bindinput='bindValuation' type='digit' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
   </view>
 
-  <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">
+  <view  class="weui-cell__hd weui-check__hd_in-checkbox" bindtap="checkboxChange">
   <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
   <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
    <view class="right-text">新车</view>
@@ -47,10 +47,10 @@
  </view>
 </view>
  <view class='dis-line'></view>
- <!-- 车辆保险 ---------------------------------------------------------------------- -->
+  <!-- 车辆保险 ---------------------------------------------------------------------- -->
 <view class="insurance">
 <view class="insurance-text">车辆保险</view>
-<switch bindtap='insuranceChange' class='insurance-checked' checked='{{insurance}}'></switch>
+<switch  class='insurance-checked' bindtap='insuranceChange' checked='{{insurance}}'></switch>
 </view>
  <view class='dis-line'></view>
 <!-- 预计费用 ---------------------------------------------------------------------- -->
@@ -64,5 +64,5 @@
 <view class='sum-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
-    <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
-
+    <button   bindtap="bindtap" class="btn-area" hover-class="weui-cell_active">确定</button>
+ <button bindtap="bindDelete" class="btn-area area" hover-class="weui-cell_active">删除</button>

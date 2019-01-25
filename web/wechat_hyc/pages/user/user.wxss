@@ -60,6 +60,18 @@ margin-left: 20px;
    flex-direction: column;
  }
  .content-band{
+ height: 20px;
+ width: 70px;
+ text-align: center;
+ background: #7a387a;
+line-height: 20px;
+ font-size: 10px;
+ color: #c4b4c4;
+ border: 1px solid #c4b4c4;
+ position: absolute;
+ right: 15px;
+ }
+  .content-band01{
  height: 15px;
  width: 50px;
  text-align: center;
@@ -100,4 +112,11 @@ border-bottom: 1px solid #e6e3e3;
 height: 10px;
 width: 100%;
 border-bottom: 1px solid #e6e3e3;
+}
+.text{
+  color: #e64095;
+  font-size: 15px;
+  position: fixed;
+  right: 15px;
+  bottom: 10px;
 }

@@ -62,6 +62,11 @@ Page({
       this.onShow();
       // wx.navigateBack({})
     });
+ setTimeout(function(){
+   wx.navigateBack({
+   })
+ },500)
+
   },
 
 
@@ -69,7 +74,7 @@ Page({
   bankDel: function (e) {
   console.log(e)
   var that =this;
-    var index = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
     var banklist = this.data.bankList[index];
     var userId=app.globalData.userId;
 
@@ -85,10 +90,10 @@ Page({
     })
   },
 
-  useRess:function(){
-    wx.navigateBack({
-    })
-  },
+  // useRess:function(){
+  //   wx.navigateBack({
+  //   })
+  // },
 
   //添加银行卡
   addCard: function () {

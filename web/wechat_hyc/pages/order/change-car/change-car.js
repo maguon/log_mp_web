@@ -8,17 +8,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    carMsg:[],
-    arr:[],
+    orderlist: [],
+    inquiryId: '',
 
     array: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
+
     price: '',
     num: '',
     valuation: '',
     modelType: 0,
     sumPrice: '',
     serviceType: '',
+    inquiryCarId: '',
     distance: '',
 
     checked: 0,
@@ -34,30 +36,37 @@ Page({
    */
   onLoad: function (e) {
     var userId = app.globalData.userId;
-    var arr = JSON.parse(e.arr);
-    var carMsg = JSON.parse(e.carMsg);
-    console.log(carMsg)
-
     this.setData({
-      carMsg: carMsg,
-      arr:arr,
       index: e.index,
+      inquiryId: e.inquiryId,
     })
-    //询价
-  
-    var index=this.data.index;
-    this.setData({
-      distance: this.data.carMsg[index].distance,
-      num: this.data.carMsg[index].carNum,
-      valuation: this.data.carMsg[index].valuation,
-      modelType: this.data.carMsg[index].modelType,
-      checked: this.data.carMsg[index].oldCar,
-      price: (this.data.carMsg[index].price / this.data.carMsg[index].carNum).toFixed(2),
-      sumPrice: this.data.carMsg[index].price,
-      insurance: this.data.carMsg[index].safeStatus,
-      serviceType: this.data.carMsg[index].serviceType,
-    })
-    //待协商
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId, (err, res) => {
+        this.setData({
+          orderlist: res.data.result[0],
+          serviceType: res.data.result[0].service_type,
+          distance: res.data.result[0].distance,
+        })
+      })
+
+      //读取数据
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + e.inquiryId, (err, res) => {
+        var index=this.data.index;
+        console.log(res)
+        //获取数据
+        var sumPrice = (res.data.result[e.index].trans_price + res.data.result[e.index].insure_price).toFixed(2);
+        var price = (sumPrice / res.data.result[e.index].car_num).toFixed(2);
+        //同步页面
+        this.setData({
+          inquiryCarId: res.data.result[index].id,
+          price: price,
+          num: res.data.result[index].car_num,
+          valuation: res.data.result[index].plan,
+          modelType: res.data.result[index].model_id - 1,
+          checked: res.data.result[index].old_car,
+          sumPrice: sumPrice,
+          insurance: res.data.result[index].safe_status,
+        })
+      })
     
   },
 
@@ -103,7 +112,7 @@ Page({
       })
       this.cost();
     }
-  
+
   },
   insuranceChange: function () {
     if (this.data.insurance == 1) {
@@ -117,7 +126,7 @@ Page({
       })
       this.cost();
     }
-    
+
   },
 
 
@@ -191,10 +200,16 @@ Page({
       distance: this.data.distance,
       modelType: parseInt(this.data.modelType) + 1,
       oldCar: this.data.checked,
-      serviceType: parseInt(this.data.serviceType) + 1,
+      serviceType: parseInt(this.data.serviceType) ,
       valuation: this.data.valuation,
       safeStatus: this.data.insurance,
     }
+    console.log(this.data.distance)
+    console.log(this.data.checked)
+    console.log(parseInt(this.data.modelType) + 1)
+    console.log(parseInt(this.data.serviceType) )
+    console.log(this.data.valuation)
+    console.log(this.data.insurance)
 
     reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params, (err, res) => {
 
@@ -215,64 +230,39 @@ Page({
    * 点击确定
    */
   bindtap: function () {
-    var carMsg = this.data.carMsg;
+    var userId = app.globalData.userId;
+    var inquiryCarId = this.data.inquiryCarId;
     var index = this.data.index;
-  
 
-      carMsg[index].modelType=parseInt(this.data.modelType);
-      carMsg[index].oldCar=this.data.checked;
-      carMsg[index].valuation=parseInt(this.data.valuation);
-      carMsg[index].carNum= parseInt(this.data.num);
-      carMsg[index].safeStatus=this.data.insurance;
-      carMsg[index].serviceType=parseInt(this.data.serviceType);
-      carMsg[index].price = this.data.sumPrice;
-      carMsg[index].sumPrice=parseFloat(this.data.sumPrice);
-
-    app.globalData.name = "addCar";
-
-    wx.setStorage({
-      key: "addCar",
-      data: {
-        carMsg: carMsg,
-        arr: this.data.arr,
+      var params = {
+        modelId: parseInt(this.data.modelType) + 1,
+        oldCar: this.data.checked,
+        plan: this.data.valuation,
+        carNum: this.data.num,
+        safeStatus: this.data.insurance,
       }
-    });
-    wx.navigateBack({
+      //发送服务器
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiryCar/" + inquiryCarId + "/inquiryCarInfo", params, (err, res) => {
 
-    })
-      // var carMsgList = JSON.stringify(carMsg)
-      // var arr = JSON.stringify(this.data.arr);
-      // wx.redirectTo({
-      //   url: '/pages/index/budget/budget?carMsg=' + carMsgList+"&arr="+arr,
-      // })
+        wx.navigateBack({
+          
+        })
+      })
     
   },
 
 
 
   //删除
-  bindDelete:function(){
-    var carMsg = this.data.carMsg;
+  bindDelete: function () {
+    var userId = app.globalData.userId;
+    var inquiryCarId = this.data.inquiryCarId;
     var index = this.data.index;
-    carMsg.splice(index, 1);
 
-    app.globalData.name = "addCar";
-
-    wx.setStorage({
-      key: "addCar",
-      data: {
-        carMsg:carMsg,
-        arr: this.data.arr,
-      }
-    });
-    wx.navigateBack({
-
-    })
-    // var carMsgList = JSON.stringify(carMsg)
-    //   var arr = JSON.stringify(this.data.arr);
-    // wx.redirectTo({
-    //   url: '/pages/index/budget/budget?carMsg=' + carMsgList + "&arr=" + arr,
-    // })
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiryCar/" + inquiryCarId + "/status", "", (err, res) => {
+        wx.navigateBack({   
+        })
+      })
     
   },
 
@@ -283,10 +273,6 @@ Page({
    */
   onUnload: function () {
 
-    // var carMsg = JSON.stringify(this.data.carMsg);
-    // var arr = JSON.stringify(this.data.arr);
-    // wx.redirectTo({
-    //   url: '/pages/index/budget/budget?carMsg=' + carMsg + "&arr=" + arr,
-    // })
+
   },
 })

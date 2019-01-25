@@ -4,19 +4,19 @@
 <view class="listItems">
 <view class="tag">*</view>
 <text class="list-left">持卡人:</text>
-<input bindinput='addName' class="listRight" type="text"  placeholder='{{name}}'  name="consignee"/>
+<input bindinput='addName' class="listRight" type="text"  placeholder='请输入持卡人姓名' value='{{name}}' name="consignee"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <text class="list-left">银行名称:</text>
-<input bindinput='bankName' class="listRight" type="text"  placeholder='{{bank_name}}'  name="mobile"/>
+<input bindinput='bankName' class="listRight" type="text"  placeholder='请输入银行名称' value='{{bank_name}}'  name="mobile"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <text class="list-left">银行卡号:</text>
-<input bindinput='addNumber' type='number' class="listRight"   placeholder='{{bank_num}}'name="mobile"/>
+<input bindinput='addNumber' type='number' class="listRight"   placeholder='请输入银行账号' value='{{bank_num}}' name="mobile"/>
 </view>
 
 <view class='prompt'>此信息只作为转账审核凭证，不具线上转账功能</view>

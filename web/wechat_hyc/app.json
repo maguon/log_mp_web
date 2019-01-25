@@ -12,6 +12,8 @@
     "pages/index/citys/citys",
    
     "pages/order/order",
+    "pages/order/change-car/change-car",
+    "pages/order/add-car/add-car",
     "pages/order/refund/refund",
     "pages/order/refund/submit/submit",
     "pages/order/refund/pay-msg/pay-msg",

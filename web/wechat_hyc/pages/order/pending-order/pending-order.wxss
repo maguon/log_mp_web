@@ -136,8 +136,8 @@ background-color:#ececec;
   right: 20px;
 }
 .yes{
-  width: 35px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   position: absolute;
   right: 20px;
 }

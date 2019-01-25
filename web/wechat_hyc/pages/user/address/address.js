@@ -11,11 +11,9 @@ Page({
   data: {
     addressList: [],
     add: "确认添加",
-    index:'',
-    city:"请输入城市",
-    name:'请输入姓名',
-    phone:'请输入电话',
-    address:'请输入详细地址',
+    name:'',
+    phone:'',
+    address:'',
   },
 
 
@@ -35,12 +33,10 @@ Page({
         phone: addressList.phone,
         address: addressList.detail_address,
         add: '确定修改',
-        index:e.index,
       })
     } else {
       this.setData({
         addressList: addressList,
-        index: e.index,
       })
     }
   },
@@ -115,26 +111,29 @@ Page({
           phone: phone,
           detailAddress: address,
           address:city,
-          type: that.data.index,
         }
         //发送请求
-        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/userAddress/" + that.data.addressList.id + "/address", params, (err, res) => { });
+        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/userAddress/" + that.data.addressList.id + "/address", params, (err, res) => {  
+          wx.navigateBack({
+          })
+          });
       } else {
         //获取要传递的参数
         var params = {
-          address: city,
+          address: "",
           userName: name,
           detailAddress: address,
           phone: phone,
-          type:that.data.index,
         }
 
         //发送Post请求
-        reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/userAddress", params, (err, res) => { })
+        reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/userAddress", params, (err, res) => {
+          //跳转地址管理界面
+          wx.navigateBack({
+          })
+         })
       }
-      //跳转地址管理界面
-      wx.navigateBack({
-      })
+     
     }
     //输入错误弹窗提示
     if (flag == true) {

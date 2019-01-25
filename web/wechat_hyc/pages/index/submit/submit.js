@@ -1,4 +1,8 @@
-// pages/index/submit/submit.js
+//index.js
+//获取应用实例
+const app = getApp()
+const config = require('../../../config.js');
+const reqUtil = require('../../../utils/ReqUtil.js')
 Page({
 
   /**
@@ -27,15 +31,7 @@ Page({
    * 联系客服
    */
   bindCustomer: function () {
-    wx.makePhoneCall({
-      phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
-      success: function () {
-        console.log("拨打电话成功！")
-      },
-      fail: function () {
-        console.log("拨打电话失败！")
-      }
-    })
+    config.bindCustomer();
   },
   /**
    * 继续询价

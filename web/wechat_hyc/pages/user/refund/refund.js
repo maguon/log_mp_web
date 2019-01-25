@@ -23,7 +23,7 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?start=" + 0 +"&size="+this.data.size, (err, res) => {
       console.log(res.data.result)
-      for (var i = 1; i < res.data.result.length;i++){
+      for (var i = 0; i < res.data.result.length;i++){
         //保留小数
         res.data.result[i].apply_fee = config.decimal(res.data.result[i].apply_fee)
         res.data.result[i].refund_fee = config.decimal(res.data.result[i].refund_fee)

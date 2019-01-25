@@ -20,6 +20,8 @@ Page({
 
     valuation: '请输入车辆估值',
     vin: '填写车辆17位识别码',
+    model:"请输入车辆品牌",
+    brand:"请输入车辆型号",
     insurance: 1,
     distance: '',
   },
@@ -65,8 +67,8 @@ Page({
         hidden: true,
       })
     }
-
-    if (chooseMsg !=undefined){
+    console.log(chooseMsg )
+    if (chooseMsg !=""){
     wx.setNavigationBarTitle({
       title: '修改车型'
     })
@@ -100,8 +102,18 @@ Page({
   },
 
 
+  brandInput:function(e){
+    this.setData({
+      brand: e.detail.value,
+    })
+  },
 
 
+  modelInput:function(e){
+    this.setData({
+      model: e.detail.value,
+    })
+},
   /**
    * 估值
    */
@@ -160,6 +172,18 @@ Page({
         showCancel: false,
       })
       return;
+    } else if (this.data.brand== "") {
+      wx.showModal({
+        content: '请填写车辆品牌',
+        showCancel: false,
+      })
+      return;
+    } else if (this.data.model== "") {
+      wx.showModal({
+        content: '请填写车辆型号',
+        showCancel: false,
+      })
+      return;
     } else if (this.data.valuation != parseInt(this.data.valuation)) {
       wx.showModal({
         content: '估值格式填写不正确',
@@ -171,6 +195,8 @@ Page({
       console.log(chooseMsg)
       if (chooseMsg !=""){
         var params = {
+          brand: this.data.brand,
+          brandType: this.data.model,
           modelType: parseInt(this.data.car_index) + 1,
           vin: this.data.vin,
           oldCar: this.data.checked,
@@ -185,6 +211,8 @@ Page({
 
       }else{
       var params = {
+        brand: this.data.brand,
+        brandType: this.data.model,
         vin: this.data.vin,
         modelType:parseInt(this.data.car_index) + 1,
         oldCar: this.data.checked,

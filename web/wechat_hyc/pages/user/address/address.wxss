@@ -21,7 +21,7 @@ background: #efeff4;
   color: red;
 }
 .listRight{
-  width: 65%;
+  width: 80%;
  position: absolute;
  right: 10px;
  font-size: 15px;

@@ -7,14 +7,15 @@
 <view class='right'>
 <view class='content'>
 <view class='content-name'>{{user.user_name}}</view>
-<image class='content-img' src='../../images/icon_01.png'></image>
+<!-- <image class='content-img' src='../../images/icon_01.png'></image> -->
 <view bindtap='edit' class='content-right'>设置</view>
 </view>
 
 <view class='content'>
 <image class='content-img' src='../../images/phone.png'></image>
 <view class='content-phone'>{{phone}}</view>
-<view bindtap='bandPhone' class='content-band'>绑定手机</view>
+ <button hidden='{{hidden}}' class='content-band' open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber">绑定手机</button>
+  <view hidden='{{!hidden}}' bindtap='bandPhone' class='content-band01'>换绑手机</view>
 </view>
 </view>
 </view>
@@ -54,4 +55,4 @@
 <image class='item-img' src='../../images/arrow.png'></image>
 </view>
 
-
+<view class='text'>version：0.0.3</view>

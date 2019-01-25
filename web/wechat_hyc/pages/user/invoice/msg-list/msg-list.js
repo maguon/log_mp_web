@@ -10,16 +10,19 @@ Page({
   data: {
     invList: [],
     applyId:"",
+    hidden: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    if (e.applyId!=""){
  this.setData({
    applyId: e.applyId,
+   hidden:true,
  })
-
+    }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -38,40 +41,38 @@ Page({
     })
   },
 
-  // /**
-  //     *单项选择控制
-  //     */
-  // radioChange: function (e) {
-  //   var index = e.currentTarget.dataset.index;
-  //   var invList = this.data.invList;
-  //   var userId = app.globalData.userId;
-  //   var shipAddressId = invList[index].id;
-  //   console.log(invList[index].id)
-  //   // 判断用户点击index设置默认
-  //   for (var i = 0, len = invList.length; i < len; ++i) {
-  //     invList[i].status = i == index;
 
-  //   }
-
-  //   //发送PUT
-  //   reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/invoice/' + shipAddressId + '/status/' + this.data.index, '', (err, res) => { })
-  //   //保存
-  //   this.setData({
-  //     invList: invList,
-  //   });
-
-  // },
   //选择银行
   radioChange: function (e) {
 
-    var userId = app.globalData.userId;
-    var index = e.currentTarget.dataset.index;
-    var invList = this.data.invList;
-    var id = this.data.invList[index].id;
+ 
     reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + id + "/defaultInvoice", "", (err, res) => {
       this.onShow();
       // wx.navigateBack({})
     });
+
+    if (applyId != "") {
+      var params = {
+        title: invList.company_name,
+        taxNumber: invList.tax_number,
+        companyPhone: invList.company_phone,
+        bank: invList.bank,
+        bankCode: invList.bank_code,
+        companyAddress: invList.company_address,
+        remark: ""
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/controlInvoices/" + applyId + "/invoiceMsg", params, (err, res) => {
+        setTimeout(function () {
+          wx.navigateBack({
+          })
+        }, 500)
+      })
+    } else {
+      setTimeout(function () {
+        wx.navigateBack({
+        })
+      }, 500)
+    }
   },
 
 
@@ -80,13 +81,37 @@ Page({
 
 
   editor:function(e){
-    var index = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
-    var invList = JSON.stringify(this.data.invList[index]);
-    console.log(invList)
-    wx.navigateTo({
-      url: '/pages/user/invoice/msg-Add/msg-Add?invList=' + invList,
-    });
+    var invList = this.data.invList;
+    var id = this.data.invList[index].id;
+    var applyId = this.data.applyId;
+    var invLists = JSON.stringify(this.data.invList[index]);
+
+
+    if (applyId != "") {
+  
+      var params = {
+        title: invList.company_name,
+        taxNumber: invList.tax_number,
+        companyPhone: invList.company_phone,
+        bank: invList.bank,
+        bankCode: invList.bank_code,
+        companyAddress: invList.company_address,
+        remark: ""
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/controlInvoices/" + applyId + "/invoiceMsg", params, (err, res) => {
+        setTimeout(function () {
+          wx.navigateBack({
+          })
+        }, 500)
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/user/invoice/msg-Add/msg-Add?invList=' + invLists,
+      });
+    }
+   
   },
 
 
@@ -96,7 +121,7 @@ Page({
 
   del:function(e){
     var that=this;
-    var index = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
     var invList = that.data.invList[index];
 
@@ -128,31 +153,4 @@ Page({
 
 
 
-
-
-  
-  useRess:function(){
-   var applyId = this.data.applyId;
-   var userId = app.globalData.userId;
-   var invList = this.data.invList;
-
-    if (applyId !=""){
-      var params = {
-        title: invList.company_name,
-        taxNumber: invList.tax_number,
-        companyPhone: invList.company_phone,
-        bank: invList.bank,
-        bankCode: invList.bank_code,
-        companyAddress: invList.company_address,
-        remark: ""
-      }
-      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/controlInvoices/" + applyId + "/invoiceMsg", params, (err, res) => {
-        wx.navigateBack({
-        })
-       })
-    }else{
-      wx.navigateBack({
-      })
-    }
-  }
 })

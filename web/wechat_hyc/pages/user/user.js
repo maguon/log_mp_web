@@ -13,6 +13,7 @@ Page({
     url:"",
     name:"",
     phone:"未绑定手机",
+    hidden:false,
   },
 
   /**
@@ -31,6 +32,11 @@ Page({
       if (res.data.result[0].phone != "" && res.data.result[0].phone != null){
         this.setData({
           phone: res.data.result[0].phone,
+          hidden: true,
+        })
+      }else{
+        this.setData({
+          hidden: false,
         })
       }
       //目的城市 城市ID
@@ -51,6 +57,47 @@ Page({
     url: '/pages/user/bind/bind',
   })
   },
+  /**
+   * getPhoneNumber 信息
+   */
+  getPhoneNumber: function (e) {
+    console.log(e)
+    console.log(app.globalData.session_key)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData)
+    var userId = app.globalData.userId;
+    var that = this;
+    var session_key = app.globalData.session_key;
+    var iv = e.detail.iv;
+    var encryptedData = e.detail.encryptedData;
+
+
+    if (e.detail.errMsg != 'getPhoneNumber:ok') {
+      wx.navigateTo({
+        url: '/pages/user/bind/bind',
+      })
+    } else {
+      var params={
+        sessionKey: session_key,
+        iv: iv,
+        encryptedData: encryptedData
+      }
+      reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/wechatBindPhone",params,(err,res)=>{
+        wx.showModal({
+          title: '提示',
+          showCancel: false,
+          content: '您已成功绑定',
+          success: function (res) {
+            that.onShow();
+          }
+        })
+      })   
+    }
+  },
+
+
+
+
 /**
  * 设置
  */

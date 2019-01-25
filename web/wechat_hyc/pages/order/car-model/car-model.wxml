@@ -21,12 +21,26 @@
 <input bindinput='noteInput'  class='note-input' placeholder='{{vin}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>品牌</view>
+<input bindinput='brandInput'  class='note-input' placeholder='{{brand}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+
+<view class='note'>
+<view class='note-text'>型号</view>
+<input bindinput='modelInput'  class='note-input' placeholder='{{model}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+</view>
+<view class='dis-line'></view>
 
 <!-- 车辆估值 ---------------------------------------------------------------------- -->
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input bindinput='bindValuation' type='number' class='input' placeholder='{{valuation}}' placeholder-style=' font-size: 15px'></input>
+  <input bindinput='bindValuation' type='digit' class='input' placeholder='{{valuation}}' placeholder-style=' font-size: 15px'></input>
   </view>
 
   <view bindtap="checkboxChange" class="weui-cell__hd weui-check__hd_in-checkbox">

@@ -151,10 +151,9 @@ background-color:#ececec;
   text-decoration: blink;
 }
 .stay-num01{
-  color: #d43286;
+  color: #8a8a8a;
   font-size: 18px;
   margin-top: 5px;
-    text-decoration:line-through;
 }
 
 .content-text{

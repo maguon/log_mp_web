@@ -235,9 +235,6 @@ Page({
   */
   onUnload: function () {
 
-    wx.navigateBack({
-      
-    })
   },
 
 })

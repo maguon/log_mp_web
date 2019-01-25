@@ -12,6 +12,7 @@ App({
     session_key: '',
     trainBeginCity: '',
     trainEndCity: '',
+    name:"",
   },
 
 

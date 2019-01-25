@@ -45,6 +45,7 @@ Page({
     var userId = app.globalData.userId;
     var orderId = that.data.orderId;
 
+    //支付完成跳转页面
     var params = {
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
@@ -70,11 +71,11 @@ Page({
           })
           
           //支付完成跳转页面
-          if (this.data.param == "payment") {
+          if (that.data.param == "pagment") {
           wx.navigateBack({
               delta: 2
             })
-          } else if (this.data.param == "order") {
+          } else if (that.data.param == "order") {
             wx.navigateBack({
               delta: 3
             })
@@ -93,12 +94,6 @@ Page({
       })
     })
 
-  },
-  money: function (e) {
-    //钱数小数点后二位设定
-    var total_price = Number(e);
-    var money = total_price.toFixed(2);
-    return money;
   },
 
 

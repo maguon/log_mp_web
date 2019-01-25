@@ -19,15 +19,18 @@ Page({
     inquiryId: '',
   },
 
-
+  onLoad: function (e) {
+    this.setData({
+      inquiryId : e.orderId,
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (e) {
-    console.log(e)
+  onShow: function () {
     var userId = app.globalData.userId;
-    var inquiryId = e.orderId;
+    var inquiryId = this.data.inquiryId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
       console.log(res)
@@ -37,7 +40,6 @@ Page({
       this.setData({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
-        inquiryId: inquiryId,
       })
     })
 
@@ -66,26 +68,6 @@ Page({
 
 
 
-  /**
-   * 复制成功
-   */
-  textPaste: function () {
-    wx.showToast({
-      title: '复制成功',
-    })
-    wx.setClipboardData({
-      data: this.data.inquiryId,
-      success: function (res) {
-        wx.getClipboardData({
-          //这个api是把拿到的数据放到电脑系统中的
-          success: function (res) {
-            console.log(res.data) // data
-          }
-        })
-      }
-    })
-  },
-
 
 
 
@@ -94,15 +76,7 @@ Page({
  * 联系客服
  */
   bindCustomer: function () {
-    wx.makePhoneCall({
-      phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
-      success: function () {
-        console.log("拨打电话成功！")
-      },
-      fail: function () {
-        console.log("拨打电话失败！")
-      }
-    })
+    config.bindCustomer();
   },
 
 
@@ -113,10 +87,9 @@ Page({
    */
   bindcarList: function (e) {
     console.log(e)
-    var id = e.currentTarget.dataset.id;
-    var name = e.currentTarget.dataset.name;
+    var index = e.currentTarget.dataset.index;
     wx.navigateTo({
-      url: "/pages/index/change-car/change-car?id=" + id + "&inquiryId=" + this.data.inquiryId + "&name=" + name,
+      url: "/pages/order/change-car/change-car?index=" + index + "&inquiryId=" + this.data.inquiryId,
     })
   },
 
@@ -128,10 +101,8 @@ Page({
     * 添加车辆
     */
   addCar: function (e) {
-    var name = e.currentTarget.dataset.name;
-    console.log(e)
     wx.navigateTo({
-      url: "/pages/index/add-car/add-car?inquiryId=" + this.data.inquiryId + "&name=" + name,
+      url: "/pages/order/add-car/add-car?inquiryId=" + this.data.inquiryId,
     })
   },
 

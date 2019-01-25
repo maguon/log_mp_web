@@ -71,6 +71,11 @@ Page({
       if (app.globalData.openid==""){
         app.onLaunch();
       }
+      if (e.detail.userInfo.gender==2){
+        e.detail.userInfo.gender == 0;
+      }
+
+      console.log(e.detail.userInfo.gender)
       //插入登录的用户的相关信息到数据库
       var params = {
         wechatId: app.globalData.openid,

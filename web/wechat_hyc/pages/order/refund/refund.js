@@ -100,8 +100,8 @@ Page({
     var orderId = that.data.orderId;
     var paymentId = that.data.paymentId;
     var remark=that.data.remark;
-    var fee= that.data.fee;
-    var applyFee = that.data.applyFee;
+    var fee= parseInt(that.data.fee);
+    var applyFee =parseInt(that.data.applyFee);
 
 
     if (applyFee > fee){

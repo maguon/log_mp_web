@@ -3,6 +3,7 @@ page{
 }
 .transfer{
  width: 100%;
+ margin-top: 10px;
 }
 .transfer-head{
   height: 50px;
@@ -127,13 +128,18 @@ color: #d43286;
    background: white;
 }
 .bankcard01{
-  margin-top: 2px;
   height: 30px;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
    background: white;
+}
+.arrow01{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0px;
 }
 .card-img{
   width: 25px;
@@ -155,6 +161,12 @@ color: #d43286;
   position: absolute;
   right: 5px;
 }
+.bank-sure{
+  height:10px;
+  width: 10px;
+  position: absolute;
+  right: 20px;
+}
 .weui-cell_active{
   background-color:#ececec;
   }
@@ -169,7 +181,7 @@ color: #d43286;
   }
   .btn-area{
   height: 20px;
-  width: 17%;
+  width: 60px;
   border: 1px solid #7a387a;
   color: #7a387a;
   font-size: 12px;
@@ -179,7 +191,7 @@ color: #d43286;
 }
 .btn-area01{
   height: 20px;
-  width: 17%;
+  width: 60px;
   border: 1px solid #d43286;
   color: #d43286;
   font-size: 12px;

@@ -64,17 +64,22 @@ Page({
 
 
   bindtap:function(){
-    var name=this.data.name;
+    var that=this;
+    var name = that.data.name;
     if (name == '' || name == "weixin") {
       wx.navigateTo({
-        url: "/pages/order/order-pay/weixin-pay/weixin-pay?orderId=" + this.data.orderId + "&fee=" + this.data.remainFee + "&param=" + this.data.param,
+        url: "/pages/order/order-pay/weixin-pay/weixin-pay?orderId=" + that.data.orderId + "&fee=" + that.data.remainFee + "&param=" + that.data.param,
       })
     } else if (name == "bank"){
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + this.data.orderId + "&fee=" + this.data.remainFee + "&name=" + "" +"&paymentId="+"",
+      url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + that.data.orderId + "&fee=" + that.data.remainFee + "&name=" + "" + "&paymentId=" + ""+"&param=" + that.data.param,
     })
     }
   },
+
+
+
+
   /**
     * 选择新车
     */

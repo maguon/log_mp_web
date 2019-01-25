@@ -12,8 +12,9 @@
 <view class='cost-text01'>已支付:</view>
 <view class='cost-num'>{{remain}}</view>
 <view class='yuan'>元</view>
+
 </view>
-<view class='order-cost'> 
+<view hidden='{{refundFlag}}' class='order-cost'> 
 <view class='cost-text01'>已退款:</view>
 <view class='cost-num'>{{refund}}</view>
 <view class='yuan'>元</view>
@@ -25,35 +26,26 @@
 </view>
 
 
-<view  class='transfer' wx:for="{{payment}}" wx:key="u">
-<view  hidden='{{!item.type}}'  class='bankcard01' >
-<view hidden='{{item.status}}'  class='head-time'>支付时间：{{item.created_on}}</view>
-<view hidden='{{!item.status}}' class='head-time'>支付时间：{{item.created_on}}</view>
-<view hidden='{{item.status}}' class='head-text'>审核中</view>
-<view hidden='{{!item.status}}' class='head-text'>已确认</view>
-</view>
-
-<view hidden='{{item.type}}'  class='bankcard01' >
-<view  class='head-time'>退款时间：{{item.created_on}}</view>
-<view hidden='{{item.status}}' class='head-text'>审核中</view>
-<view hidden='{{!item.status}}' class='head-text'>已确认</view>
-</view>
+<view  class='transfer' wx:for="{{payment}}" wx:key="u" hover-class='weui-cell_active'>
 
 <view hidden='{{!item.type}}'  class='pay-num'>
 <view class='cost-text'>支付金额:</view>
 <view class='cost-num'>-{{item.total_fee}}</view>
 <view class='yuan01'>元</view>
+ <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
 </view>
 
 <view hidden='{{item.type}}'  class='pay-num'>
 <view class='cost-text'>退款金额:</view>
 <view class='cost-num'>+{{item.total_fee}}</view>
 <view class='yuan01'>元</view>
+ <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
 </view>
 
-<view hidden='{{item.payment_type}}'  class='bankcard'>
+<view hidden='{{item.payment_type}}' bindtap="bindModify" data-index='{{index}}' class='bankcard'>
 <image class='card-img' src='../../../../../images/bank_card02.png'></image>
 <view  class='card-text01'> {{item.bank}} {{item.bank_code}} {{item.account_name}}</view>
+<image   class='arrow01' src='../../../../../images/arrow.png'></image>
 </view>
 
 <view  hidden='{{!item.payment_type}}' class='bankcard'>
@@ -62,14 +54,26 @@
 </view>
 
 
-<view hidden='{{!item.type}}'class='state'>
+<view  hidden='{{!item.type}}'  class='bankcard01' >
+<view hidden='{{item.status}}'  class='head-time'>支付时间：{{item.created_on}}</view>
+<view hidden='{{!item.status}}' class='head-time'>支付时间：{{item.created_on}}</view>
+<view hidden='{{item.status}}' class='head-text'>审核中</view>
+<view hidden='{{!item.status}}' class='head-text'>已确认</view>
+</view>
+<view hidden='{{item.type}}'  class='bankcard01' >
+<view  class='head-time'>退款时间：{{item.created_on}}</view>
+<view hidden='{{item.status}}' class='head-text'>审核中</view>
+<view hidden='{{!item.status}}' class='head-text'>已确认</view>
+</view>
+
+<!-- <view hidden='{{!item.type}}'class='state'>
 <view hidden='{{item.payment_type}}' class='state'>
 <view  hidden='{{item.status}}'  class='butList'>
 <button   bindtap="bindDel"  data-index='{{index}}' class="btn-area01" hover-class="weui-cell_active">删除</button>
 <button   bindtap="bindModify" data-index='{{index}}' class="btn-area" hover-class="weui-cell_active">修改</button>
 </view>
 </view>
-</view>
+</view> -->
 </view>
 
 

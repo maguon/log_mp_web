@@ -81,11 +81,18 @@ Page({
   var userId=app.globalData.userId;
   var orderState = this.data.orderState;
 
+   //判断红点显示
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry", (err, res) => {
+      var count=0;
       for (var i = 0; i < res.data.result.length; i++) {
-        if (res.data.result[i].status == 0 ||res.data.result[i].status == 1 || res.data.result[i].status == 2) {
-          orderState[0].hidden=true;
+        if (res.data.result[i].status == 0 ||res.data.result[i].status == 1 ) {
+          count++;
         }
+      }
+      if (count == 0){
+        orderState[0].hidden = false;
+      }else{
+        orderState[0].hidden = true;
       }
       this.setData({
         orderState: orderState,
@@ -95,8 +102,9 @@ Page({
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 0 || res.data.result[i].status == 1 ) {
           orderState[1].hidden = true;
-        } else if (res.data.result[i].status == 2 || res.data.result[i].status == 3 ){
+        } else if (res.data.result[i].status == 2 && res.data.result[i].payment_status != 2 ){
           orderState[2].hidden = true;
+        } else if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
           orderState[3].hidden = true;
         } else if (res.data.result[i].status == 4 ) {
           orderState[4].hidden = true;
@@ -109,7 +117,7 @@ Page({
 
 
  
-
+//内容显示
   switch(index){
     case 0:
       //打开加载 
@@ -133,7 +141,7 @@ Page({
             res.data.result[i].stay = 0;
             res.data.result[i].state = 1;
       
-          } else if (res.data.result[i].status == 1 || res.data.result[i].status == 2) {
+          } else if (res.data.result[i].status == 1) {
             res.data.result[i].stay = 1;
             res.data.result[i].state = 1;
        
@@ -186,9 +194,9 @@ Page({
             
               //判断删除状态
             } 
-            // else if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
+            else if (res.data.result[i].status == 8) {
+              res.data.result[i].state = 0;
+            } 
           }
         console.log(res.data.result)
           this.setData({
@@ -221,14 +229,14 @@ Page({
             res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
             //  //判断显示状态
-            // if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
-              // res.data.result[i].status = 1;
+            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+              res.data.result[i].status = 1;
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
               //判断删除状态
-            // }else  if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
+            }else  if (res.data.result[i].status == 8) {
+              res.data.result[i].state = 0;
+            } 
            //判断支付状态
             if (res.data.result[i].payment_status == 0) {
               res.data.result[i].stay = 4;
@@ -236,6 +244,7 @@ Page({
               res.data.result[i].stay = 5;
             } else if (res.data.result[i].payment_status == 2) {
               res.data.result[i].stay = 6;
+              res.data.result[i].state = 0;
             } 
           }
 
@@ -272,14 +281,14 @@ Page({
             res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
             //  //判断显示状态
-            // if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            // //判断删除状态
-            // }else  if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
+            //判断删除状态
+            }else  if (res.data.result[i].status == 8) {
+              res.data.result[i].state = 0;
+            } 
             //判断物流状态 
             if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 7;
@@ -306,7 +315,7 @@ Page({
       //打开加载 
       this.setData({
         loadingHidden: false,
-        prompt:true,
+        prompt:false,
      
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList" + "4" + "&start=" + 0 +"&size="+this.data.size,(err, res) => {
@@ -319,13 +328,13 @@ Page({
             res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
             // //判断显示状态
-            // if (res.data.result[i].status == 4) {
+            if (res.data.result[i].status == 4) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            // } else if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
+            } else if (res.data.result[i].status == 8) {
+              res.data.result[i].state = 0;
+            } 
             //判断执行状态
             if (res.data.result[i].log_status == 2) {
               res.data.result[i].stay = 9;

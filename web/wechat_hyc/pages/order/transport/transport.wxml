@@ -16,37 +16,36 @@
 <view hidden='{{!startress}}'bindtap='startAddress' data-index='{{0}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_02.png'></image>
-<view class='people01'>发车人:{{startRess.user_name}}</view>
+<view class='people01'>发车人:{{orderList.send_name}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
-<view class='phone'>电话：{{startRess.phone}}</view>
-<view class='address'>地址：{{startRess.detail_address}}</view>
+<view class='phone'>电话：{{orderList.send_phone}}</view>
+<view class='address'>地址：{{orderList.send_address}}</view>
 </view>
 
 <view hidden='{{startress}}' bindtap='startAddress' data-index='{{0}}'  class='ress01' hover-class="weui-cell_active">
 <view class='choose'>
-<image class='choose-img' src='../../../images/add.png'></image>
-<view class='choose-ress'>选择发车地址</view>
+<image class='ress-img01' src='../../../images/head_02.png'></image>
+<view class='choose-ress'>请选择发车地址</view>
 </view>
 <image class='arrow01' src='../../../images/arrow.png'></image>
-
 </view>
 <view class='ress-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 <view hidden='{{!endress}}' bindtap='endAddress' data-index='{{1}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_01.png'></image>
-<view class='people01'>收车人:{{endRess.user_name}}</view>
+<view class='people01'>收车人:{{orderList.recv_name}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
-<view class='phone'>电话：{{endRess.phone}}</view>
-<view class='address'>地址：{{endRess.detail_address}}</view>
+<view class='phone'>电话：{{orderList.recv_phone}}</view>
+<view class='address'>地址：{{orderList.recv_address}}</view>
 </view>
 
 <view hidden='{{endress}}' bindtap='endAddress'data-index='{{1}}'  class='ress01' hover-class="weui-cell_active">
 <view class='choose'>
-<image class='choose-img' src='../../../images/add.png'></image>
-<view class="choose-ress">选择收车地址</view>
+<image class='ress-img01' src='../../../images/head_01.png'></image>
+<view class="choose-ress">请选择收车地址</view>
 </view>
 <image class='arrow01' src='../../../images/arrow.png'></image>
 </view>

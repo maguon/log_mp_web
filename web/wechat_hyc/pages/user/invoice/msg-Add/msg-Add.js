@@ -9,14 +9,15 @@ Page({
    */
   data: {
     invList:[],
-    invoice:"输入发票抬头",
-    ein:"输入税号",
-    bank: "输入开户行",
-    bankNum: "输入银行账号",
-    address: "输入企业地址",
-    phone: "输入联系电话",
+    invoice:"",
+    ein:"",
+    bank: "",
+    bankNum: "",
+    address: "",
+    phone: "",
     add:"确定",
     index:0,
+ 
   },
 
   /**
@@ -131,10 +132,13 @@ Page({
     } else if (address == "") {
       warn = "请输入公司地址";
     }else {
+      console.log(that.data.invList)
+    
       flag = false;
       if (that.data.invList!= "") {
+     
         var params = {
-          companyName: invoice,
+          title: invoice,
           taxNumber: ein,
           companyAddress: address,
           bank: bank,
@@ -142,8 +146,12 @@ Page({
           companyPhone: phone,
         }
         //发送请求
-        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + that.data.invList.id, params, (err, res) => { });
-      } else {
+        reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + that.data.invList.id, params, (err, res) => { 
+          //跳转地址管理界面
+          wx.navigateBack({
+          })
+        });
+      } else {   
         //获取要传递的参数
         var params = {
           companyName: invoice,
@@ -153,13 +161,14 @@ Page({
           bankCode: bankNum,
           companyPhone: phone,
         }
-
         //发送Post请求
-        reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/invoice", params, (err, res) => { })
+        reqUtil.httpPost(config.host.apiHost + '/api/user/' + userId + "/invoice", params, (err, res) => { 
+          //跳转地址管理界面
+          wx.navigateBack({
+          })
+        })
        }
-      //跳转地址管理界面
-      wx.navigateBack({
-      })
+    
     }
     //输入错误弹窗提示
     if (flag == true) {

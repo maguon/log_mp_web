@@ -28,7 +28,8 @@
 </view>
 <view class='city'>
 <view  class='num'>订单编号：{{item.id}}</view>
-<view  class='num-time'>申请时间：{{item.apply_time}}</view>
+<view  hidden='{{carFlag}}' class='num-time'>申请时间：{{item.apply_time}}</view>
+<view  hidden='{{!carFlag}}' class='num-time'>创建时间：{{item.created_on}}</view>
 </view>
 <view class='line'></view>
 </view>

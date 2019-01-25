@@ -24,6 +24,7 @@ Page({
 
     //显示控制
     loadingHidden: false,
+    carMsg:[],
   },
 
 
@@ -180,6 +181,7 @@ Page({
   bindInquiry:function(){
     var that=this;
     var userId=app.globalData.userId;
+    
 
     //判断用户输入
     if (app.globalData.trainBeginCity == ''){
@@ -237,40 +239,68 @@ Page({
               that.setData({
                 distance: res.data.result[0].distance,
               })
+
+              var arr= [{
+                routeId: res.data.result[0].route_id,
+                serviceType: parseInt(that.data.index),
+                startCity: that.data.beginCity,
+                endCity: that.data.endCity,
+                distance: that.data.distance,
+                startId: that.data.beginCityId,
+                endId: that.data.endCityId,
+              }];
+              var newArray=[{
+              routeId:res.data.result[0].route_id,
+              serviceType: parseInt(that.data.index),
+              modelType:parseInt(that.data.car_index),
+              oldCar: that.data.checked,
+              carNum:1,
+                valuation: parseInt(that.data.valuation),             
+              startCity:that.data.beginCity,
+              endCity:that.data.endCity,
+              safeStatus:that.data.insurance,
+              distance: that.data.distance,
+              }];
+
+              
+              app.globalData.name="index";
+              var carMsg=JSON.stringify(newArray);
+              var arr = JSON.stringify(arr[0]);
+              console.log(newArray)
+              wx.navigateTo({
+                url: '/pages/index/budget/budget?carMsg=' + carMsg +"&arr="+arr,
+                  })
+            } else {
+
               //设置参数
               var params = {
-                routeId: res.data.result[0].route_id,
-                serviceType: parseInt(that.data.index) + 1,
-                modelId: [parseInt(that.data.car_index) + 1],
-                oldCar: [that.data.checked],
-                carNum: [1],
-                inquiryName: "",
-                plan: [that.data.valuation],                
+                routeId: parseInt(app.globalData.trainBeginCity) + parseInt(app.globalData.trainEndCity),
+                startCity: that.data.beginCity,
+                endCity: that.data.endCity,
                 startId: app.globalData.trainBeginCity,
                 endId: app.globalData.trainEndCity,
-                startCity: that.data.beginCity,
-                endCity:that.data.endCity,
-                safeStatus:[that.data.insurance],
-                distance: that.data.distance,
+                serviceType: parseInt(that.data.index) + 1,
+                oldCarFlag: that.data.checked,
+                carNum: 1,
+                valuation: that.data.valuation,
+                carModelType: parseInt(that.data.car_index) + 1,
+                carInsureFlag: that.data.insurance,
               }
               //发送服务器
-              reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiry", params, (err, res) => {
-                wx.navigateTo({
-                  url: '/pages/index/budget/budget?inquiryId=' + res.data.result[0].inquiryId,
-                })
-              })
-            } else {
-              wx.showModal({
-                content: '该城市路线暂未开通，请联系客服安排合理路线',
-                showCancel: false,
-                confirmColor: "#a744a7",
-                success(res) {
-                  if (res.confirm) {
-                    this.bindCustomer();
+              reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/noRouteInquiryInfo", params, (err, res) => {
+                wx.showModal({
+                  content: '该城市路线暂未开通，请联系客服安排合理路线',
+                  showCancel: false,
+                  confirmColor: "#a744a7",
+                  success(res) {
+                    if (res.confirm) {
+                      config.bindCustomer();
+                    }
                   }
-                }
-              });
-              return;
+                });
+                return;
+             
+              })
             }
           })
         }else{
@@ -300,15 +330,7 @@ Page({
    * 联系客服
    */
   bindCustomer: function () {
-    wx.makePhoneCall({
-      phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
-      success: function () {
-        console.log("拨打电话成功！")
-      },
-      fail: function () {
-        console.log("拨打电话失败！")
-      }
-    })
+    config.bindCustomer();
   },
 
   

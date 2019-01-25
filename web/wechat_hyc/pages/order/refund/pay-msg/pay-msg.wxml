@@ -7,14 +7,12 @@
 <image hidden='{{item.stat}}' class='item-img02' src='../../../../images/arc.png'></image>
 <image hidden='{{!item.stat}}' class='item-img01' src='../../../../images/arc_01.png'></image>
 </view>
-<view class='div-line'></view>
 
 <view class='item'>
 <view class='cost'>支付金额:</view>
 <view class='num'>-{{item.total_fee}}</view>
 <view class='yuan'>元</view>
 </view>
-<view class='div-line'></view>
 
 <view hidden='{{!item.payment_type}}' class='item'>
 <image class='item-img' src='../../../../images/wx.png'></image>
@@ -27,6 +25,6 @@
 </view>
 </view>
 <view class='null'></view>
-<view class='butlist'>
+<!-- <view class='butlist'>
     <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
-    </view>
+    </view> -->

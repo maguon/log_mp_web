@@ -1,8 +1,8 @@
 <view class='dis-line'></view>
 <view class='dis-head'>
-<view class='head-city'>{{arr.startCity}}</view>
+<view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
-<view class='head-city'>{{arr.endCity}}</view>
+<view class='head-city'>{{orderlist.end_city}}</view>
 </view>
 <view class='dis-line'></view>
 

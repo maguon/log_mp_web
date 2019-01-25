@@ -14,7 +14,7 @@
 
 <view bindtap='choose' class='dis-content' hover-class="active">
 <view class='city'>
-<view class='city-text'>选择一笔支付</view>
+<view class='city-text'>选择支付信息</view>
 <view class='stay-text01'>{{orderPay}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
@@ -23,7 +23,7 @@
 <view  class='dis-content'>
 <view class='city'>
 <view class='city-text'>申请金额（元）</view>
-<input bindinput='apply'  class='city-input' type="number" placeholder='请输入退款金额' placeholder-style='font-size:15px;'></input>
+<input bindinput='apply'  class='city-input' type='digit' placeholder='请输入退款金额' placeholder-style='font-size:15px;'></input>
 </view>
 </view>
 <view class='dis-line'></view>

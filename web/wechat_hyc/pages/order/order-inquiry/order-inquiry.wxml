@@ -24,13 +24,13 @@
 <image class='city-img' src='../../../images/car_02.png'></image>
 <view class='city-text'>运送车辆</view>
 <view class='stay-text01'>{{orderlist.car_num}}</view>
-<image hidden='{{orderlist.status}}'  bindtap='addCar' data-name='order-dis' class='add' src='../../../images/add_01.png'></image>
+<image hidden='{{orderlist.status}}'  bindtap='addCar' class='add' src='../../../images/add_01.png'></image>
 </view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
 <view class='items' hidden='{{orderlist.status}}'>
 <view class='dis-content' hover-class="active" wx:for='{{carlist}}' wx:key='u'
-bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
+bindtap='bindcarList' data-index="{{index}}" hidden='{{!item.status}}'>
 <view class='city'>
 <view class='city-text'>{{carModel[item.model_id-1]}}</view>
 <view class='image'>
@@ -56,7 +56,7 @@ bindtap='bindcarList' data-id="{{index}}" hidden='{{!item.status}}'>
 </view>
 <!--  ---------------------------------------------------------------------- -->
 <view class='items' hidden='{{!orderlist.status}}'>
-<view class='dis-content'  wx:for='{{carlist}}' wx:key='u' data-id="{{index}}" hidden='{{!item.status}}'>
+<view class='dis-content'  wx:for='{{carlist}}' wx:key='u' data-index="{{index}}" hidden='{{!item.status}}'>
 <view class='city'>
 <view class='city-text'>{{carModel[item.model_id-1]}}</view>
 <view class='image'>

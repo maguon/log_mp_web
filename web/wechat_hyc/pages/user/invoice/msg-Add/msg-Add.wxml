@@ -3,37 +3,37 @@
 <view  bindtap='addAddress'  class="listItems">
 <view class="tag">*</view>
 <view class="list-left">发票抬头：</view>
-<input  class="listRight" type="text" bindinput='invoice' placeholder='{{invoice}}'/>
+<input  class="listRight" type="text" bindinput='invoice' placeholder='输入发票抬头' value='{{invoice}}'/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">税<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>号：</view>
-<input class="listRight" type="number" bindinput='ein' placeholder='{{ein}}'/>
+<input class="listRight" type="text" bindinput='ein' placeholder='输入税号' value='{{ein}}'/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">开户银行：</view>
-<input class="listRight" type="text" bindinput='bank' placeholder='{{bank}}'/>
+<input class="listRight" type="text" bindinput='bank' placeholder='输入开户行' value='{{bank}}'/>
 </view>
-
+  
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">开户账号：</view>
-<input class="listRight" type="number" bindinput='bankNum' placeholder='{{bankNum}}'/>
+<input class="listRight" type="number" bindinput='bankNum' placeholder='输入银行账号' value='{{bankNum}}'/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">企业地址：</view>
-<input class="listRight" type="text" bindinput='address' placeholder='{{address}}'/>
+<input class="listRight" type="text" bindinput='address' placeholder='输入企业地址' value='{{address}}'/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">企业电话：</view>
-<input class="listRight" type="number" bindinput='phone' placeholder='{{phone}}'/>
+<input class="listRight" type="number" bindinput='phone' placeholder='输入联系电话' value='{{phone}}'/>
 </view>
 
 <view class="btnGroup">

@@ -1,28 +1,28 @@
 
 <view class="wraper">
-
+<!-- 
 <view  bindtap='addAddress'  class="listItems">
 <view class="tag">*</view>
 <view class="list-left">城市:</view>
 <input class="listRight" type="text" bindinput='city' placeholder='{{city}}'  name="city"/>
-</view>
+</view> -->
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">联系人:</view>
-<input class="listRight" type="text" bindinput='addName' placeholder='{{name}}'  name="consignee"/>
+<input class="listRight" type="text" bindinput='addName' placeholder='请输入姓名' value='{{name}}'  name="consignee"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">电话:</view>
-<input class="listRight" type="number" bindinput='userPhone' placeholder='{{phone}}'  name="mobile"/>
+<input class="listRight" type="number" bindinput='userPhone' placeholder='请输入电话' value='{{phone}}'  name="mobile"/>
 </view>
 
 <view class="listItems">
 <view class="tag">*</view>
 <view class="list-left">地址:</view>
-<input class="listRight" type="number" bindinput='addRess' placeholder='{{address}}'  name="address"/>
+<input class="listRight" type="text" bindinput='addRess' placeholder='请输入详细地址' value='{{address}}' name="address"/>
 </view>
 
 

@@ -45,7 +45,7 @@
 
 <view bindtap='choose' hidden='{{refundFlag}}' class='dis-content' hover-class="weui-cell_active">
 <view class='city'>
-<view class='city-text'>选择一笔支付</view>
+<view class='city-text'>选择支付信息</view>
 <view hidden='{{!refund.payment_type}}' class='stay-text01'>微信</view>
 <view hidden='{{refund.payment_type}}' class='stay-text01'>{{payment.bank}} {{payment.bank_code}} {{payment.account_name}}</view>
 <image class='arrow' src='../../../../images/arrow.png'></image>
@@ -61,28 +61,40 @@
 
 <view hidden='{{refundFlag}}' class='dis-content'>
 <view class='city'>
-<view class='city-text'>退款金额（元）</view>
-<input bindinput='apply' class='city-input' type="number" placeholder='{{refund.apply_fee}}' placeholder-style='font-size:15px;'></input>
+<view class='city-text'>申请金额（元）</view>
+<input bindinput='apply' class='city-input' type='digit' placeholder='输入退款金额' placeholder-style='font-size:15px;' value='{{refund.apply_fee}}'></input>
 </view>
 </view>
 
 <view hidden='{{!refundFlag}}' class='dis-content'>
 <view class='stay-bank'>申请金额：{{refund.apply_fee}}元</view>
+<view hidden='{{refuseFlag}}'>
+<view class='stay-expect01'>
+<view class='stay-text02'>实际退款:</view>
+<view class='stay-num'>{{refund.refund_fee}}</view>
+<view class='stay-text02'>元</view>
+</view>
+</view>
 </view>
 
 <view class='line'></view>
 
 <view hidden='{{refundFlag}}' class='remark-text'>
-<textarea bindinput='why' class='remark' placeholder='{{refund.apply_reason}}' placeholder-style='font-size:14px;'/>
+<textarea bindinput='why' class='remark' placeholder='退款原因' placeholder-style='font-size:14px;' value="{{refund.apply_reason}}"/>
 </view>
 
 <view hidden='{{!refundFlag}}' class='dis-refund'>
 <view class='stay-bank01'>退款原因：</view>
 <view class='refund'>{{remark}}</view>
 </view>
+<view hidden='{{!refuseFlag}}' class='dis-refund'>
+<view class='stay-bank01'>拒绝原因：</view>
+<view class='refund'>{{refund.refuse_reason}}</view>
+</view>
 
 <view class='line'></view>
 <view class='note'>
+<view hidden='{{!refundFlag}}' class='note-left01'>处理时间{{refund.updated_on}}</view>
 <view class='note-left'>申请时间：{{refund.created_on}}</view>
 </view>
 
@@ -95,23 +107,3 @@
 </view>
 
 <view class='null'></view>
-
-<view hidden='{{!refuseFlag}}' class='dis-refund'>
-<view class='stay-bank01'>拒绝原因：</view>
-<view class='refund'>{{refund.refuse_reason}}</view>
-</view>
-
-<view hidden='{{refuseFlag}}' class='ref'>
-<view hidden='{{!refundFlag}}' class='dis-content'>
-<view class='stay-expect'>
-<view class='stay-text'>实际退款:</view>
-<view class='stay-num'>{{refund.refund_fee}}</view>
-<view class='stay-text'>元</view>
-</view>
-</view>
-</view>
-
-<view class='line'></view>
-<view hidden='{{!refundFlag}}' class='note'>
-<view class='note-left'>处理时间{{refund.updated_on}}</view>
-</view>

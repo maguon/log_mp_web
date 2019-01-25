@@ -9,7 +9,8 @@ Page({
     addressList: [],
     orderId:'',
     list: [{ name: "收车地址", hidden:0, }, { name: "发车地址", hidden:1}],
-    flag:false,
+    index:"",
+    hidden:false,
   },
 
 
@@ -20,13 +21,13 @@ Page({
   onLoad: function (e) {
     console.log(e)
     this.setData({
-      index:e.index,
       orderId :e.orderId,
+      index:e.index,
     })
-    if (e.index==""){
-     this.setData({
-      flag: true,
-      index:0,
+    console.log(e.index)
+    if (e.index!= ""){
+      this.setData({
+        hidden: true,
       })
     }
 
@@ -37,11 +38,10 @@ Page({
 
   //生命周期函数--监听页面显示
   onShow: function () {
-    var index=this.data.index;
     //获取userid
     var userId = app.globalData.userId;
     //发送get请求
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress?type="+index, (err, res) => {   
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress", (err, res) => {   
         if (res.data.result.length == 1) {
           res.data.result[0].status = 1;
         }
@@ -62,30 +62,8 @@ Page({
    */
   addAddress: function () {
     var addressList = JSON.stringify("");
-    wx.navigateTo({ url: '../address/address?addressList=' + addressList + "&index=" + this.data.index});
+    wx.navigateTo({ url: '../address/address?addressList=' + addressList});
   },
-
-
-
-
-send:function(e){
-  var list = this.data.list;
-  var index = e.currentTarget.dataset.index;
-
-  //判断用户点击
-  for (var i = 0; i < list.length; i++) {
-    if (index == i) {
-      list[i].hidden = 0;
-    } else {
-      list[i].hidden = 1;
-    }
-  }
-  this.setData({
-    list:list,
-    index: index,
-  })
-  this.onShow();
-},
 
 
   /**
@@ -93,10 +71,11 @@ send:function(e){
      */
   delAddress: function (e) {
    var that=this;
-    var index = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
     var addressList = that.data.addressList[index];
-
+console.log(index)
+    console.log(that.data.addressList)
     wx.showModal({
       content: '确定要删除地址吗？',
       confirmColor: "#a744a7",
@@ -119,51 +98,54 @@ send:function(e){
  * 编辑按钮
  */
   editorAddress: function (e) {
-    var index = e.currentTarget.dataset.id;
+    var that = this;
+    var index = e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
-    var addressList = JSON.stringify(this.data.addressList[index]);
-    console.log(addressList)
-    wx.navigateTo({
-      url: '../address/address?addressList=' + addressList+"&index="+this.data.index,
-    });
-  },
-
-
-
-
-  /**
-     *单项选择控制
-     */
-  radioChange: function (e) {
-    var index=e.currentTarget.dataset.index;
-    var addressList = this.data.addressList;
-    var userId = app.globalData.userId;
+    var addressList = that.data.addressList;
     var shipAddressId = addressList[index].id;
-    console.log(addressList[index].id)
-   // 判断用户点击index设置默认
-    for (var i = 0, len = addressList.length; i < len; ++i) {
-      addressList[i].status = i == index;
-   
-    }
-    console.log(addressList)
-    //发送PUT
-    reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/userAddress/' + shipAddressId + '/type/'+this.data.index, '', (err, res) => {})
-    //保存
-    this.setData({
-      addressList: addressList,
-    });
+    var indexinfo = that.data.index;
+    var orderId = that.data.orderId;
+    var address= JSON.stringify(that.data.addressList[index]);
 
+    console.log(indexinfo)
+    if (indexinfo == 0 && orderId!="" ) {
+   
+      var params = {
+        sendName: addressList[index].user_name,
+        sendPhone: addressList[index].phone,
+        sendAddress: addressList[index].detail_address
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/sendMsg', params, (err, res) => {
+        setTimeout(function () {
+          wx.navigateBack({
+          })
+        }, 500)
+      })
+      return;
+    } else if (indexinfo == 1 && orderId != "") {
+   
+      var params = {
+        recvName: addressList[index].user_name,
+        recvPhone: addressList[index].phone,
+        recvAddress: addressList[index].detail_address
+      }
+      reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/recvMsg', params, (err, res) => {
+        setTimeout(function () {
+          wx.navigateBack({
+          })
+        }, 500)
+      })
+      return;
+    }else{
+    wx.navigateTo({
+      url: '../address/address?addressList=' + address,
+    });
+    }
   },
 
 
 
 
-  /**
-   * 点击跳转
-   */
-  useRess: function () {
-    wx.navigateBack({
-      url: '',
-    });
-  }
+  
+
 })

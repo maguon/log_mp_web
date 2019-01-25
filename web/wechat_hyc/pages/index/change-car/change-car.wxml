@@ -1,8 +1,8 @@
 <view class='dis-line'></view>
 <view class='dis-head'>
-<view class='head-city'>{{beginCity}}</view>
+<view class='head-city'>{{arr.startCity}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
-<view class='head-city'>{{endCity}}</view>
+<view class='head-city'>{{arr.endCity}}</view>
 </view>
 <view class='dis-line'></view>
 
@@ -11,7 +11,7 @@
   <picker bindchange="bindModels" value="{{car_index}}" range="{{carModel}}">
       <view class='content'>
           <view class='weui-cell__bd' >选择车型</view>
-          <view class="weui-cell__bd01">{{carModel[car_index]}} </view>
+          <view class="weui-cell__bd01">{{carModel[modelType]}} </view>
           <image class='arrow' src='../../../images/arrow.png'></image>
       </view>
      </picker>
@@ -21,7 +21,7 @@
   <view class='valuation' >
   <view class='valuation-item'>
   <view class='valuation-text'>车辆估值(元)</view>
-  <input  class='input' bindinput='bindValuation' type='number' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
+  <input  class='input' bindinput='bindValuation' type='digit' placeholder='请输入车辆估值' placeholder-style=' font-size: 15px' value='{{valuation}}'></input>
   </view>
 
   <view  class="weui-cell__hd weui-check__hd_in-checkbox" bindtap="checkboxChange">

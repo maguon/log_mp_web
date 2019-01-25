@@ -1,0 +1,230 @@
+.dis-head{
+  width: 100%;
+  height: 60px;
+  background: #f8f6f8;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.dis-line{
+  width: 100%;
+  height: 1px;
+  background: #e8e8e9;
+}
+.head-city{
+  font-size: 18px;
+  margin-left: 15px;
+  color: #7a387a;
+}
+.head-staycar{
+  margin-left: 15px;
+  width: 45px;
+  height: 15px;
+  font-weight: bolder;
+}
+/* <!-- 选择列表 ---------------------------------------------------------------------- --> */
+.weui-cell_access{
+  background: white;
+}
+
+.content{
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  }
+.weui-cell__bd{
+  font-size: 15px;
+  margin-left: 15px;
+}
+.weui-cell__bd01{
+  font-size: 15px;
+  color: #8a8a8a;
+  position: absolute;
+  right: 30px;
+}
+.left-img{
+  width: 22px;
+  height: 20px;
+  margin-left: 15px;
+}
+.arrow{
+  height: 20px;
+  width: 20px;
+  position: fixed;
+  right: 0px;
+}
+/* <!-- 车辆估值 ---------------------------------------------------------------------- --> */
+.valuation{
+  height: 50px;
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.valuation-item{
+   display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 75%;
+}
+.valuation-text{
+  width: 50%;
+  font-size: 15px;
+  margin-left: 15px;
+}
+.input{
+  width: 50%;
+  text-align: right;
+  font-size: 15px;
+  position: absolute;
+  right: 85px;
+  color:  #8a8a8a;
+}
+.weui-check__hd_in-checkbox{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 50px;
+  border-left: 1px solid gainsboro;
+  position: fixed;
+  right: 10px;
+}
+.right-text{
+margin-left: 5px;
+font-size: 15px;
+}
+
+/* <!-- 预计单价 ---------------------------------------------------------------------- --> */
+.count{
+  width: 100%;
+  height: 50px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+}
+
+.left{
+  font-size: 15px;
+  margin-left: 15px;
+  line-height: 40px;
+}
+
+.stepper { 
+    width: 70px; 
+    height: 26px; 
+    border: 1px solid #ccc; 
+    border-radius: 3px; 
+    position: absolute;
+    right: 15px;
+    margin-top: 5px;
+} 
+.stepper text { 
+    width: 19px; 
+    line-height: 26px; 
+    text-align: center; 
+    float: left; 
+} 
+.stepper input { 
+    width: 30px; 
+    height: 26px; 
+    float: left; 
+    margin: 0 auto; 
+    text-align: center; 
+    font-size: 12px; 
+    border-left: 1px solid #ccc; 
+    border-right: 1px solid #ccc; 
+} 
+.stepper .normal{ 
+    color: black; 
+} 
+.stepper .disabled{ 
+    color: #ccc; 
+} 
+/* <!-- 预计费用 ---------------------------------------------------------------------- --> */
+.stay-expect{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  position: absolute;
+  right: 30px;
+}
+
+.stay-text{
+  font-size:15px;
+  color: #8a8a8a; 
+  margin-top: 10px;
+}
+.stay-num{
+  color: #d43286;
+  font-size: 20px;
+  margin-top: 5px;
+}
+
+.dis-sum{
+width: 100%;
+height: 50px;
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.sum-text{
+font-size: 15px;
+color: #cc7da2;
+margin-left: 15px;
+}
+.sum-line{
+   width: 100%;
+  height: 2px;
+  background: #dfdfe2;
+
+}
+/* <!-- ---------------------------------------------------------------------- --> */
+
+.btn-area{
+  position: fixed;
+  left: 1%;
+  right: 1%;
+  bottom: 80px;
+  height: 45px;
+  width: 90%;
+  background: #7a387a;
+  color: white;
+}
+.area{
+  position: fixed;
+  bottom: 20px;
+  background: white;
+  border: 1px solid #f00e46;
+  color: #f01137;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.weui-cell_active{
+  background-color:#ececec;
+  }
+  /* <!--  ---------------------------------------------------------------------- --> */
+.insurance{
+width: 100%;
+height: 40px;
+background: white;
+margin-top: 10px;
+display: flex;
+flex-direction: row;
+align-items: center;
+}
+.insurance-text{
+margin-left: 15px;
+font-size: 15px;
+}
+.insurance-checked{
+  position: absolute;
+  right: 10px;
+}
+

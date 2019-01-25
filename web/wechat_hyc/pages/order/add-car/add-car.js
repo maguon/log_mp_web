@@ -7,9 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    carMsg: [],
-    arr:[],
-
+    orderlist:[],
+    inquiryId: '',
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
     modelType: 0,
     serviceType: '',
@@ -30,16 +29,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    var userId=app.globalData.userId;
-    var carMsg = JSON.parse(e.carMsg);
-    var arr = JSON.parse(e.arr);
-
+    var userId = app.globalData.userId;
     this.setData({
-      carMsg: carMsg,
-      arr: arr,
-      serviceType: arr.serviceType,
-      distance: arr.distance,
+      inquiryId: e.inquiryId,
     })
+
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId, (err, res) => {
+        this.setData({
+          orderlist: res.data.result[0],
+          serviceType: res.data.result[0].service_type,
+          distance: res.data.result[0].distance,
+        })
+
+      })
+    
   },
 
 
@@ -54,7 +57,7 @@ Page({
       distance: this.data.distance,
       modelType: parseInt(this.data.modelType) + 1,
       oldCar: this.data.checked,
-      serviceType: parseInt(this.data.serviceType) + 1,
+      serviceType: parseInt(this.data.serviceType),
       valuation: parseInt(this.data.valuation),
       safeStatus: this.data.insurance,
     }
@@ -62,7 +65,7 @@ Page({
     reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params, (err, res) => {
       //计算价格
       var price = parseFloat(res.data.result.trans) + parseFloat(res.data.result.insure);
-      var sumPrice = (price * this.data.num).toFixed(2);
+      var sumPrice =(price * this.data.num).toFixed(2);
       console.log(res)
       this.setData({
         price: price.toFixed(2),
@@ -78,7 +81,7 @@ Page({
   /**
    * 车辆估值
    */
-  bindValuation:function(e){
+  bindValuation: function (e) {
     this.setData({
       valuation: e.detail.value,
     })
@@ -101,7 +104,7 @@ Page({
   /**
    * 选择新车
    */
-  checkboxChange:function(){
+  checkboxChange: function () {
     if (this.data.checked == 0) {
       this.setData({
         checked: 1,
@@ -113,7 +116,7 @@ Page({
       })
       this.onShow();
     }
-    
+
   },
 
 
@@ -153,7 +156,7 @@ Page({
       minusStatus: minusStatus
     });
   },
-  
+
 
 
 
@@ -202,7 +205,7 @@ Page({
   /**
    * 点击确定
    */
-  bindAdd:function(){
+  bindAdd: function () {
     var userId = app.globalData.userId;
     //判断用户输入
     if (this.data.modelType == '') {
@@ -222,36 +225,22 @@ Page({
       return;
     }
 
-    var newArray = {
-      distance: this.data.distance,
-      modelType: parseInt(this.data.modelType),
-      oldCar: this.data.checked,
-      valuation: parseInt(this.data.valuation),
-      carNum: parseInt(this.data.num),
-      safeStatus: this.data.insurance,
-      serviceType: parseInt(this.data.serviceType),
-      price: parseFloat(this.data.sumPrice),
-      sumPrice: parseFloat(this.data.sumPrice),
-    };
-    this.data.carMsg.push(newArray);
-
-    app.globalData.name="addCar";
-
-    wx.setStorage({ 
-      key:"addCar",
-      data: {
-        carMsg: this.data.carMsg,
-        arr: this.data.arr,
+      //设置参数
+      var params = {
+        modelId: parseInt(this.data.modelType) + 1,
+        oldCar: this.data.checked,
+        plan: this.data.valuation,
+        carNum: this.data.num,
+        safeStatus: this.data.insurance,
+        serviceType: this.data.serviceType,
       }
-    });
-    wx.navigateBack({
-      
-    })
-    // var carMsg = JSON.stringify(this.data.carMsg);
-    // var arr = JSON.stringify(this.data.arr);
-    // wx.redirectTo({
-    //   url: '/pages/index/budget/budget?carMsg=' + carMsg +"&arr="+arr,
-    // })
+      //发送服务器
+      reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + this.data.inquiryId + "/inquiryCar", params, (err, res) => {
+
+        wx.navigateBack({
+          
+        })
+      })
     
   },
 
@@ -260,5 +249,5 @@ Page({
    */
   onUnload: function () {
   },
-  
+
 })

@@ -63,6 +63,14 @@ page{
   position: absolute;
   right: 25px;
 }
+.stay-expect01{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  position: absolute;
+  right: 25px;
+  margin-top: -20px;
+}
 .stay-car{
   width: 120px;
   font-size:13px;
@@ -71,15 +79,19 @@ page{
   margin-top: 10px;
 }
 .stay-text{
-  font-size:13px;
+  font-size:12px;
   color: #8a8a8a; 
   margin-top: 10px;
-
+}
+.stay-text02{
+  font-size:15px;
+  color: #8a8a8a; 
+  margin-top: 10px;
 }
 .stay-num{
   color: #d43286;
   font-size: 18px;
-  margin-top: 5px;
+  margin-top: 8px;
   text-decoration: blink;
 }
 .stay-num01{
@@ -172,6 +184,7 @@ margin-left: 15px;
   flex-direction: row;
 }
 .stay-bank{
+  width: 70%;
   color: #8a8a8a;
   font-size: 15px;
   margin-left: 15px;
@@ -209,6 +222,11 @@ margin-left: 15px;
   font-size: 12px;
  position: absolute;
  right: 15px;
+}
+.note-left01{
+  color: #8a8a8a;
+  font-size: 12px;
+margin-left: 15px;
 }
 
 .prompt{
@@ -261,7 +279,9 @@ justify-content: center;
  display: flex;
  flex-direction: row;
  align-items: center;
+ margin-top: 10px;
 }
+
 .line{
   border: 1px solid #f8f6f8;
 }

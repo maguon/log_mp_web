@@ -13,22 +13,22 @@
 </view>
 </view>
 
-<view class='choose'>
+<view  class='choose'>
 <view class='choose-head'>选择支付方式</view>
-<view class='wxpay'>
+<view bindtap='checkboxChange'data-name="weixin" class='wxpay' hover-class='weui-cell_active'>
 <image class='wximg' src='../../../../images/wepay.png'></image>
 <view class='wxpay-text'>微信支付</view>
-<view bindtap='checkboxChange' data-name="weixin" class='choose-img'>
+<view   class='choose-img'>
   <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{!checked}}"></icon>
   <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{checked}}"></icon>
   </view>
 </view>
 
 
-<view class='wxpay'>
+<view bindtap='checkboxChange' data-name="bank" class='wxpay' hover-class='weui-cell_active'>
 <image class='wximg'  src='../../../../images/bank_card02.png'></image>
 <view class='wxpay-text'>银行转账</view>
-<view bindtap='checkboxChange' data-name="bank" class='choose-img'>
+<view class='choose-img'>
   <icon class="weui-icon-checkbox_circle" type="circle" size="18" hidden="{{checked}}"></icon>
   <icon class="weui-icon-checkbox_success" type="success" size="18" hidden="{{!checked}}"></icon>
   </view>

@@ -3,7 +3,7 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {AdminUserSettingActionType, NewSupplierModalActionType} from '../../actionTypes';
+import {AdminUserSettingActionType} from '../../actionTypes';
 import {NewAdminModal} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');

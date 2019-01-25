@@ -36,6 +36,7 @@ import {
     CompanyBankSetting,
     DepartmentSetting,
     AdminUserSetting,
+    AdminUserSettingDetail,
 } from '../main/index';
 
 const routes = [
@@ -242,6 +243,12 @@ const routes = [
         path: "/admin_user_setting",
         exact: true,
         component: AdminUserSetting
+    },
+    {
+        // 员工管理
+        path: '/admin_user_setting/:id',
+        exact: true,
+        component: AdminUserSettingDetail
     },
 ];
 

@@ -117,8 +117,6 @@ const mapDispatchToProps = (dispatch) => ({
     getDepartmentList: () => {
         dispatch(commonAction.getDepartmentList())
     },
-
-
     setPhone: (value) => {
         dispatch(NewAdminModalActionType.setPhone(value));
     },
@@ -134,9 +132,6 @@ const mapDispatchToProps = (dispatch) => ({
     changeDepartment: (value) => {
         dispatch(NewAdminModalActionType.setDepartment(value));
     },
-
-
-
     saveAdmin: () => {
         dispatch(newAdminModalAction.saveAdmin());
     },

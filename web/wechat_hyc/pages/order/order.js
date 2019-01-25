@@ -99,17 +99,37 @@ Page({
       })
     })
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
+      var count_a = 0;
+      var count_b = 0;
+      var count_c = 0;
+      var count_d = 0;
+
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 0 || res.data.result[i].status == 1 ) {
+          count_a++;
           orderState[1].hidden = true;
         } else if (res.data.result[i].status == 2 && res.data.result[i].payment_status != 2 ){
+          count_b++;
           orderState[2].hidden = true;
         } else if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+          count_c++;
           orderState[3].hidden = true;
         } else if (res.data.result[i].status == 4 ) {
+          count_d++;
           orderState[4].hidden = true;
         }
       }
+      if (count_a==0){
+        orderState[1].hidden = false;
+      } else if (count_b==0){
+        orderState[2].hidden = false;
+      } else if (count_c == 0){
+        orderState[3].hidden = false;
+      } else if (count_d == 0) {
+        orderState[4].hidden = false;
+      }
+
+
       this.setData({
         orderState: orderState,
       })
@@ -140,7 +160,7 @@ Page({
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
             res.data.result[i].state = 1;
-      
+            res.data.result[i].flag = true;
           } else if (res.data.result[i].status == 1) {
             res.data.result[i].stay = 1;
             res.data.result[i].state = 1;
@@ -156,7 +176,7 @@ Page({
         })
         }else{
           this.setData({
-            flag:true,
+            flag:true,         
             loadingHidden:true,
           })
         }

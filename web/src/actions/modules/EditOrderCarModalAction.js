@@ -77,7 +77,7 @@ export const calculateFreight = () => async (dispatch, getState) => {
     // 服务方式
     const serviceMode = orderInfo[0].service_type;
     // 车型
-    const carModel = getState().EditOrderCarModalReducer.carModel;
+    const carGrade = getState().EditOrderCarModalReducer.carGrade;
     // 是否新车
     const carFlag = getState().EditOrderCarModalReducer.carFlag ? 1:0;
     // 估值
@@ -89,14 +89,14 @@ export const calculateFreight = () => async (dispatch, getState) => {
     let freight = 0;
     // 预计保费
     let insuranceFee = 0;
-    if (orderInfo.length > 0 && carModel != null && valuation !== '') {
+    if (orderInfo.length > 0 && carGrade != null && valuation !== '') {
         // // 暂定公式：里程 * 里程单价 * 车型系数 * 是否新车系数 + 是否购买保险*估值*估值比率  + 服务方式费用
         // freight = distance * sysConst.INQUIRY_PARAMS.unitPrice * sysConst.CAR_MODEL[carModel.value - 1].ratio * sysConst.YES_NO[carFlag].ratio
         //     + sysConst.SERVICE_MODE[serviceMode - 1].fee;
         // insuranceFee = insuranceFlag * valuation * sysConst.INQUIRY_PARAMS.valuationRate;
         const params = {
             distance: distance,
-            modelType: carModel.value,
+            modelType: carGrade.value,
             oldCar: carFlag,
             serviceType: serviceMode,
             valuation: valuation,

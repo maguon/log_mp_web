@@ -167,7 +167,7 @@ class EditOrderCarModal extends React.Component {
 
                         <div className="col input-field s4">
                             <div className="col s12 custom-label-field grey-text">
-                                实际总费用(元)：<span className="pink-font">{formatUtil.formatNumber(parseInt(editOrderCarModalReducer.actInsureFee) + parseInt(editOrderCarModalReducer.actFreight), 2)}</span>
+                                实际总费用(元)：<span className="pink-font">{formatUtil.formatNumber(parseFloat(editOrderCarModalReducer.actInsureFee) + parseFloat(editOrderCarModalReducer.actFreight), 2)}</span>
                             </div>
                         </div>
                     </div>

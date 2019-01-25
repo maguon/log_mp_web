@@ -79,11 +79,11 @@ export const calculateFreight = () => async (dispatch, getState) => {
     // 车型
     const carModel = getState().InquiryModalReducer.carModel;
     // 是否新车
-    const carFlag = getState().InquiryModalReducer.carFlag;
+    const carFlag = getState().InquiryModalReducer.carFlag ? 1 : 0;
     // 估值
     const valuation = getState().InquiryModalReducer.valuation;
     // 是否购买保险
-    const insuranceFlag = getState().InquiryModalReducer.insuranceFlag;
+    const insuranceFlag = getState().InquiryModalReducer.insuranceFlag ? 1 : 0;
 
     // 预计运费
     let freight = 0;

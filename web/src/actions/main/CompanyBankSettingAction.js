@@ -58,7 +58,7 @@ export const addCompanyBank = () => async (dispatch, getState) => {
 
 export const changeCompanyBankStatus = (id, status) => async (dispatch) => {
     swal({
-        title: status === 0 ? "确定停用该账户？" : "确定启用该账户",
+        title: status === 0 ? "确定停用该账户？" : "确定启用该账户？",
         text: "",
         type: "warning",
         showCancelButton: true,

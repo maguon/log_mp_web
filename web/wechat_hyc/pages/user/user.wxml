@@ -7,7 +7,7 @@
 <view class='right'>
 <view class='content'>
 <view class='content-name'>{{user.user_name}}</view>
-<!-- <image class='content-img' src='../../images/icon_01.png'></image> -->
+<image class='content-img' src='../../images/icon_01.png'></image>
 <view bindtap='edit' class='content-right'>设置</view>
 </view>
 
@@ -19,6 +19,8 @@
 </view>
 </view>
 </view>
+
+<view class='shadow'></view>
 
 <view bindtap='orderHistory' class='items' hover-class='weui-cell_active'>
 <view class='item-text'>历史订单</view>

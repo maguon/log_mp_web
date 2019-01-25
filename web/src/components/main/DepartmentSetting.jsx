@@ -31,13 +31,13 @@ class DepartmentSetting extends React.Component {
         this.props.setDepartmentName(event.target.value);
     };
 
-    // /**
-    //  * 显示 修改账户信息
-    //  */
-    // showEditDepartmentModal = (departmentInfo) => {
-    //     this.props.initDepartmentModalData(departmentInfo);
-    //     $('#editDepartmentModal').modal('open');
-    // };
+    /**
+     * 显示 修改账户信息
+     */
+    showEditDepartmentModal = (departmentInfo) => {
+        this.props.initDepartmentModalData(departmentInfo);
+        $('#editDepartmentModal').modal('open');
+    };
 
     render() {
         const {departmentSettingReducer, addDepartment} = this.props;
@@ -74,11 +74,12 @@ class DepartmentSetting extends React.Component {
                                 <div className="row white z-depth-1 detail-box">
 
                                     {/* 明细上部分：名称 */}
-                                    <div className={`col s12 white-text fz16 ${item.status === 0 ? "custom-purple" : "grey"}`}>
-                                        <div className="col s9 context-ellipsis fz18 margin-top10 margin-bottom10">{item.department_name}</div>
-
+                                    <div className="col s12 purple-font fz16">
+                                        <div className="col s9 context-ellipsis fz18 margin-top10 margin-bottom10">
+                                            {item.id} <span className="margin-left10">{item.department_name}</span>
+                                        </div>
                                         <div className="col s3 margin-top10 fz20 right-align">
-                                            <i className="mdi mdi-pencil pointer white-text lighten-1" onClick={() => {this.showEditDepartmentModal(item)}}/>
+                                            <i className="mdi mdi-pencil pointer" onClick={() => {this.showEditDepartmentModal(item)}}/>
                                         </div>
                                     </div>
 
@@ -121,9 +122,9 @@ const mapDispatchToProps = (dispatch) => ({
     // changeStatus: (id, status) => {
     //     dispatch(departmentSettingAction.changeDepartmentStatus(id, status))
     // },
-    // initDepartmentModalData: (departmentInfo) => {
-    //     dispatch(editDepartmentModalAction.initEditDepartmentModal(departmentInfo));
-    // }
+    initDepartmentModalData: (departmentInfo) => {
+        dispatch(editDepartmentModalAction.initEditDepartmentModal(departmentInfo));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DepartmentSetting)

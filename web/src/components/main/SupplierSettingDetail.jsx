@@ -1,10 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
+import {Input} from 'react-materialize';
 import {
     NewSupplierModalActionType,
     NewSupplierContactModalActionType,
-    NewSupplierBankModalActionType
+    NewSupplierBankModalActionType,
+    SupplierSettingDetailActionType
 } from "../../actionTypes";
 import {NewSupplierModal, NewSupplierContactModal, NewSupplierBankModal} from '../modules/index';
 
@@ -67,8 +69,50 @@ class SupplierSettingDetail extends React.Component {
         this.props.deleteSupplierBank(bankId);
     };
 
+    /**
+     * 更新 URL
+     */
+    changeAppUrl = (event) => {
+        this.props.setAppUrl(event.target.value);
+    };
+
+    /**
+     * 更新 ID
+     */
+    changeAppId = (event) => {
+        this.props.setAppId(event.target.value);
+    };
+
+    /**
+     * 更新 密钥
+     */
+    changeAppSecret = (event) => {
+        this.props.setAppSecret(event.target.value);
+    };
+
+    /**
+     * 更新 发运地ID
+     */
+    changeBaseAddrId = (event) => {
+        this.props.setBaseAddrId(event.target.value);
+    };
+
+    /**
+     * 更新 经销商ID
+     */
+    changeReceiveId = (event) => {
+        this.props.setReceiveId(event.target.value);
+    };
+
+    /**
+     * 更新 品牌ID
+     */
+    changeCarModuleId = (event) => {
+        this.props.setCarModuleId(event.target.value);
+    };
+
     render() {
-        const {supplierSettingDetailReducer} = this.props;
+        const {supplierSettingDetailReducer, saveAdvancedSetting} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -106,7 +150,7 @@ class SupplierSettingDetail extends React.Component {
                     </div>
 
                     <div className="col s12 padding-top15 padding-bottom15">
-                        <div className="col s12">备注：{supplierSettingDetailReducer.supplierInfo[0].mark}</div>
+                        <div className="col s12">备注：{supplierSettingDetailReducer.supplierInfo[0].remark}</div>
                     </div>
                     <NewSupplierModal/>
                 </div>}
@@ -156,6 +200,27 @@ class SupplierSettingDetail extends React.Component {
                     }, this)}
                     <NewSupplierBankModal/>
                 </div>
+
+                {/* 主体: 高级设置 */}
+                <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1 grey-text">
+                    <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
+                        <div className="col s12 fz16 bold-font">高级设置</div>
+                    </div>
+
+                    <div className="col s12 padding-top15 padding-bottom15">
+                        <Input s={4} label="URL" maxLength="50" value={supplierSettingDetailReducer.appUrl} onChange={this.changeAppUrl}/>
+                        <Input s={4} label="ID" type="number" value={supplierSettingDetailReducer.appId} onChange={this.changeAppId}/>
+                        <Input s={4} label="密钥" maxLength="50" value={supplierSettingDetailReducer.appSecret} onChange={this.changeAppSecret}/>
+
+                        <Input s={4} label="发运地ID" type="number" value={supplierSettingDetailReducer.baseAddrId} onChange={this.changeBaseAddrId}/>
+                        <Input s={4} label="经销商ID" type="number" value={supplierSettingDetailReducer.receiveId} onChange={this.changeReceiveId}/>
+                        <Input s={4} label="品牌ID" type="number" value={supplierSettingDetailReducer.carModuleId} onChange={this.changeCarModuleId}/>
+
+                        <div className="col s12 right-align">
+                            <button type="button" className="btn confirm-btn" onClick={saveAdvancedSetting}>确定</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }
@@ -194,6 +259,27 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(NewSupplierBankModalActionType.setBankCode(''));
         dispatch(NewSupplierBankModalActionType.setBank(''));
         dispatch(NewSupplierBankModalActionType.setAccountName(''));
+    },
+    setAppUrl: (value) => {
+        dispatch(SupplierSettingDetailActionType.setAppUrl(value))
+    },
+    setAppId: (value) => {
+        dispatch(SupplierSettingDetailActionType.setAppId(value))
+    },
+    setAppSecret: (value) => {
+        dispatch(SupplierSettingDetailActionType.setAppSecret(value))
+    },
+    setBaseAddrId: (value) => {
+        dispatch(SupplierSettingDetailActionType.setBaseAddrId(value))
+    },
+    setReceiveId: (value) => {
+        dispatch(SupplierSettingDetailActionType.setReceiveId(value))
+    },
+    setCarModuleId: (value) => {
+        dispatch(SupplierSettingDetailActionType.setCarModuleId(value))
+    },
+    saveAdvancedSetting: () => {
+        dispatch(supplierSettingDetailAction.saveAdvancedSetting(ownProps.match.params.id));
     }
 });
 

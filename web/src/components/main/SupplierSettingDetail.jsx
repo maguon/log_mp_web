@@ -112,7 +112,7 @@ class SupplierSettingDetail extends React.Component {
     };
 
     render() {
-        const {supplierSettingDetailReducer, saveAdvancedSetting} = this.props;
+        const {supplierSettingDetailReducer, changeStatus, saveAdvancedSetting} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -204,7 +204,17 @@ class SupplierSettingDetail extends React.Component {
                 {/* 主体: 高级设置 */}
                 <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1 grey-text">
                     <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
-                        <div className="col s12 fz16 bold-font">高级设置</div>
+                        <div className={`col s6 fz16 bold-font ${supplierSettingDetailReducer.advancedStatus === 1 ? "grey-text" : ""}`}>高级设置</div>
+                        <div className="col s6 padding-right0 right-align">
+                            {/* 状态：开关 */}
+                            <span className="switch">
+                                <label>
+                                <input type="checkbox" checked={supplierSettingDetailReducer.advancedStatus === 0}
+                                       onClick={() => {changeStatus(supplierSettingDetailReducer.advancedStatus)}}/>
+                                <span className="lever"/>
+                                </label>
+                            </span>
+                        </div>
                     </div>
 
                     <div className="col s12 padding-top15 padding-bottom15">
@@ -217,7 +227,8 @@ class SupplierSettingDetail extends React.Component {
                         <Input s={4} label="品牌ID" type="number" value={supplierSettingDetailReducer.carModuleId} onChange={this.changeCarModuleId}/>
 
                         <div className="col s12 right-align">
-                            <button type="button" className="btn confirm-btn" onClick={saveAdvancedSetting}>确定</button>
+                            {supplierSettingDetailReducer.advancedStatus === 0 &&
+                            <button type="button" className="btn confirm-btn" onClick={saveAdvancedSetting}>确定</button>}
                         </div>
                     </div>
                 </div>
@@ -259,6 +270,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(NewSupplierBankModalActionType.setBankCode(''));
         dispatch(NewSupplierBankModalActionType.setBank(''));
         dispatch(NewSupplierBankModalActionType.setAccountName(''));
+    },
+    changeStatus: (status) => {
+        dispatch(supplierSettingDetailAction.changeAdvancedStatus(ownProps.match.params.id, status))
     },
     setAppUrl: (value) => {
         dispatch(SupplierSettingDetailActionType.setAppUrl(value))

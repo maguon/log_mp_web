@@ -14,6 +14,7 @@ export const getSupplierInfo = (id) => async (dispatch) => {
         if (res.success === true) {
             dispatch({type: SupplierSettingDetailActionType.getSupplierInfo, payload: res.result});
             if (res.result.length > 0) {
+                dispatch({type: SupplierSettingDetailActionType.setAdvancedStatus, payload: res.result[0].close_flag});
                 dispatch({type: SupplierSettingDetailActionType.setAppUrl, payload: res.result[0].app_url == null ? '' : res.result[0].app_url});
                 dispatch({type: SupplierSettingDetailActionType.setAppId, payload: res.result[0].app_id == null ? '' : res.result[0].app_id});
                 dispatch({type: SupplierSettingDetailActionType.setAppSecret, payload: res.result[0].app_secret == null ? '' : res.result[0].app_secret});
@@ -115,6 +116,37 @@ export const deleteSupplierBank = (supplierId, bankId) => async (dispatch) => {
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
+};
+
+export const changeAdvancedStatus = (supplierId, status) => async (dispatch) => {
+    swal({
+        title: status === 0 ? "确定停用高级设置？" : "确定重新启用高级设置？",
+        text: "",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            // 状态
+            let newStatus = 0;
+            if (status === 0) {
+                newStatus = 1
+            } else {
+                newStatus = 0
+            }
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/supplier/' + supplierId  + '/closeFlag/' + newStatus;
+            const res = await httpUtil.httpPut(url, {});
+            if (res.success === true) {
+                swal("修改成功", "", "success");
+                dispatch(getSupplierInfo(supplierId));
+            } else if (res.success === false) {
+                swal('修改失败', res.msg, 'warning');
+            }
+        }
+    });
 };
 
 export const saveAdvancedSetting = (supplierId) => async (dispatch, getState) => {

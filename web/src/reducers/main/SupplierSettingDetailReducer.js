@@ -9,6 +9,8 @@ const initialState = {
     // 银行列表
     bankArray: [],
 
+    // 高级设置启用标记
+    advancedStatus: false,
     // URL
     appUrl: '',
     // ID
@@ -40,6 +42,12 @@ export default handleActions({
         return {
             ...state,
             bankArray: action.payload
+        }
+    },
+    [SupplierSettingDetailActionType.setAdvancedStatus]: (state, action) => {
+        return {
+            ...state,
+            advancedStatus: action.payload
         }
     },
     [SupplierSettingDetailActionType.setAppUrl]: (state, action) => {

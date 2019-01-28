@@ -182,7 +182,7 @@ class OrderManagerDetail extends React.Component {
     render() {
         const {
             orderManagerDetailReducer, commonReducer,
-            getOrderInfo, getPaymentInfo, getLogInfo, getInvoiceList, getOperationList,
+            getOrderInfo, getPaymentInfo, getLogInfo, getInvoiceList, getOperationList,generateTransTask,
             changeInquiryConditionStartCity, changeInquiryConditionEndCity,
             changeInquiryConditionServiceType, changeInquiryConditionStatus,
             saveOrderRemark,saveOrderPaymentRemark
@@ -293,7 +293,7 @@ class OrderManagerDetail extends React.Component {
                                 <button type="button" className="btn custom-btn width-auto"
                                         onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[1].value, '确定要重新完善价格？','')}}>重新完善价格</button>
                                 <button type="button" className="btn confirm-btn width-auto margin-left20"
-                                        onClick={() => {this.changeOrderStatus(sysConst.ORDER_STATUS[3].value, '确定要生成运输需求？','运输需求生成后，订单将进入待安排车辆状态，车辆信息将不可再修改！')}}>生成运输需求</button>
+                                        onClick={generateTransTask}>生成运输需求</button>
                             </div>}
                             <EditOrderCarModal/>
 
@@ -822,6 +822,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     changeOrderStatus: (value, tipsTitle, tipsText) => {
         dispatch(orderManagerDetailAction.changeOrderStatus(ownProps.match.params.id, value, tipsTitle, tipsText))
+    },
+    generateTransTask: () => {
+        dispatch(orderManagerDetailAction.generateTransTask(ownProps.match.params.id))
     },
     saveOrderItem: (orderItemId, actTransFee, actInsuranceFee) => {
         dispatch(orderManagerDetailAction.saveOrderItem(ownProps.match.params.id, orderItemId, actTransFee, actInsuranceFee))

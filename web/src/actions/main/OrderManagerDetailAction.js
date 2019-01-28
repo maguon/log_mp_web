@@ -74,6 +74,31 @@ export const changeOrderStatus = (orderId, status, tipsTitle, tipsText) => async
     });
 };
 
+export const generateTransTask = (orderId) => async (dispatch) => {
+    swal({
+        title: '确定要生成运输需求？',
+        text: '运输需求生成后，订单将进入待安排车辆状态，车辆信息将不可再修改！',
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/order/' + orderId  + '/requireTask';
+            const res = await httpUtil.httpPost(url, {});
+            if (res.success === true) {
+                swal("修改成功", "", "success");
+                dispatch(getOrderInfo(orderId));
+                dispatch(commonAction.getOrderCarList(orderId));
+            } else if (res.success === false) {
+                swal('修改失败', res.msg, 'warning');
+            }
+        }
+    });
+};
+
 export const saveOrderItem = (orderId, orderItemId, actTransFee, actInsuranceFee) => async (dispatch) => {
     swal({
         title: '确定修改运费和保费？',

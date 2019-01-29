@@ -37,6 +37,8 @@ import {
     DepartmentSetting,
     AdminUserSetting,
     AdminUserSettingDetail,
+    TransDemandManager,
+    TransDemandManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -250,6 +252,17 @@ const routes = [
         exact: true,
         component: AdminUserSettingDetail
     },
+    {
+        // 运输需求管理
+        path: "/trans_demand",
+        exact: true,
+        component: TransDemandManager
+    },
+    {
+        path: '/trans_demand/:id',
+        exact: true,
+        component: TransDemandManagerDetail
+    },
 ];
 
 class Container extends React.Component {
@@ -269,6 +282,129 @@ class Container extends React.Component {
         } else {
             avatarUrl = "/assets/images/avatar.png"
         }
+
+        // TODO 后期可以根据登录用户权限 动态生成 不同的菜单数组
+        let menuItem = [
+            {
+                "label": '主控面板',
+                "icon": 'mdi-speedometer',
+                "children": [
+                    {
+                        "link": '/panel',
+                        "name": '管理员主控'
+                    }
+                ]
+            }, {
+                "label": '数据统计',
+                "icon": 'mdi-chart-line',
+                "children": [
+                    {
+                        "link": '/order_statistic',
+                        "name": '订单统计'
+                    },
+                    {
+                        "link": '/invoice_statistic',
+                        "name": '发票统计'
+                    },
+                    {
+                        "link": '/refund_statistic',
+                        "name": '退款统计'
+                    },
+                    {
+                        "link": '/inquiry_statistic',
+                        "name": '询价统计'
+                    },
+                    {
+                        "link": '/user_statistic',
+                        "name": '用户统计'
+                    },
+                    {
+                        "link": '/payment_statistic',
+                        "name": '支付统计'
+                    }
+                ]
+            }, {
+                "label": '用户信息',
+                "icon": 'mdi-account-group',
+                "children": [
+                    {
+                        "link": '/user',
+                        "name": '用户管理'
+                    },
+                    {
+                        "link": '/invoice_title',
+                        "name": '用户发票信息管理'
+                    },
+                    {
+                        "link": '/invoice_apply',
+                        "name": '开票申请'
+                    },
+                    {
+                        "link": '/invoice',
+                        "name": '发票管理'
+                    }
+                ]
+            }, {
+                "label": '订单信息',
+                "icon": 'mdi-cart-outline',
+                "children": [
+                    {
+                        "link": '/inquiry',
+                        "name": '询价管理'
+                    },
+                    {
+                        "link": '/order',
+                        "name": '订单管理'
+                    },
+                    {
+                        "link": '/payment',
+                        "name": '支付管理'
+                    },
+                    {
+                        "link": '/refund',
+                        "name": '订单退款'
+                    },
+                    {
+                        "link": '/trans_demand',
+                        "name": '运输需求'
+                    }
+                ]
+            }, {
+                "label": '系统设置',
+                "icon": 'mdi-settings-outline',
+                "children": [
+                    {
+                        "link": '/city_setting',
+                        "name": '城市'
+                    },
+                    {
+                        "link": '/route_setting',
+                        "name": '线路'
+                    },
+                    {
+                        "link": '/supplier_setting',
+                        "name": '供应商'
+                    },
+                    {
+                        "link": '/log_site_setting',
+                        "name": '收发货地点'
+                    },
+                    {
+                        "link": '/company_bank_setting',
+                        "name": '公司银行账户管理'
+                    },
+                    {
+                        "link": '/department_setting',
+                        "name": '部门管理'
+                    },
+                    {
+                        "link": '/admin_user_setting',
+                        "name": '员工管理'
+                    }
+                ]
+            }
+        ];
+
         return (
             <Router hashType={"hashbang"}>
                 <div className="main-body">
@@ -281,105 +417,34 @@ class Container extends React.Component {
                             </div>
                         </li>
 
-                        <li>
-                            <Link to="/panel" className="side-navigation">
-                                <i className="mdi mdi-cards-variant"/>面板
-                            </Link>
-                        </li>
-                        <li><div className="divider"/></li>
-
-                        <li>
-                            <ul className="collapsible collapsible-accordion">
-                                <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-chart-line"/>统计图</a>
-                                    <div className="collapsible-body">
-                                        <ul>
-                                            <li><Link to="/order_statistic"><i className="mdi mdi-chevron-right"/>订单统计</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/invoice_statistic"><i className="mdi mdi-chevron-right"/>发票统计</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/refund_statistic"><i className="mdi mdi-chevron-right"/>退款统计</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/inquiry_statistic"><i className="mdi mdi-chevron-right"/>询价统计</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/user_statistic"><i className="mdi mdi-chevron-right"/>用户统计</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/payment_statistic"><i className="mdi mdi-chevron-right"/>支付统计</Link></li>
+                        {menuItem.map(function (item) {
+                            return (
+                                <div>
+                                    <li>
+                                        <ul className="collapsible collapsible-accordion">
+                                            <li>
+                                                <a className="collapsible-header"><i className={`mdi ${item.icon}`}/>{item.label}</a>
+                                                <div className="collapsible-body">
+                                                    {item.children.map(function (menu) {
+                                                        return (
+                                                            <ul>
+                                                                <li><Link to={menu.link}><i className="mdi mdi-chevron-right"/>{menu.name}
+                                                                </Link></li>
+                                                                <li><div className="divider"/></li>
+                                                            </ul>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </li>
                                         </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><div className="divider"/></li>
-
-                        <li>
-                            <ul className="collapsible collapsible-accordion">
-                                <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-account-group"/>用户信息</a>
-                                    <div className="collapsible-body">
-                                        <ul>
-                                            <li><Link to="/user"><i className="mdi mdi-chevron-right"/>用户管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/invoice_title"><i className="mdi mdi-chevron-right"/>用户发票信息管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/invoice_apply"><i className="mdi mdi-chevron-right"/>开票申请</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/invoice"><i className="mdi mdi-chevron-right"/>发票管理</Link></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><div className="divider"/></li>
-
-                        <li>
-                            <ul className="collapsible collapsible-accordion">
-                                <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-cart-outline"/>订单信息</a>
-                                    <div className="collapsible-body">
-                                        <ul>
-                                            <li><Link to="/inquiry"><i className="mdi mdi-chevron-right"/>询价管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/order"><i className="mdi mdi-chevron-right"/>订单管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/payment"><i className="mdi mdi-chevron-right"/>支付管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/refund"><i className="mdi mdi-chevron-right"/>订单退款</Link></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><div className="divider"/></li>
-
-                        <li>
-                            <ul className="collapsible collapsible-accordion">
-                                <li>
-                                    <a className="collapsible-header"><i className="mdi mdi-settings-outline"/>系统设置</a>
-                                    <div className="collapsible-body">
-                                        <ul>
-                                            <li><Link to="/city_setting"><i className="mdi mdi-chevron-right"/>城市</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/route_setting"><i className="mdi mdi-chevron-right"/>线路</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/supplier_setting"><i className="mdi mdi-chevron-right"/>供应商</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/log_site_setting"><i className="mdi mdi-chevron-right"/>收发货地点</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/company_bank_setting"><i className="mdi mdi-chevron-right"/>公司银行账户管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/department_setting"><i className="mdi mdi-chevron-right"/>部门管理</Link></li>
-                                            <li><div className="divider"/></li>
-                                            <li><Link to="/admin_user_setting"><i className="mdi mdi-chevron-right"/>员工管理</Link></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
+                                    </li>
+                                    <li><div className="divider"/></li>
+                                </div>
+                            )
+                        })}
                     </ul>
                     {routes.map((route, index) => (
-                        // Render more <Route>s with the same paths as
-                        // above, but different components this time.
+                        // Render more <Route>s with the same paths as above, but different components this time.
                         <Route
                             key={index}
                             path={route.path}

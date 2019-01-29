@@ -23,6 +23,8 @@ export InvoiceApplyManager from "./InvoiceApplyManager";
 export InvoiceApplyManagerDetail from "./InvoiceApplyManagerDetail";
 export InvoiceManager from "./InvoiceManager";
 export InvoiceManagerDetail from "./InvoiceManagerDetail";
+export TransDemandManager from "./TransDemandManager";
+export TransDemandManagerDetail from "./TransDemandManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

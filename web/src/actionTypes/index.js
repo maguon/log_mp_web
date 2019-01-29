@@ -38,6 +38,8 @@ import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionT
 import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
 import * as AdminUserSettingActionType  from './main/AdminUserSettingActionType';
 import * as AdminUserSettingDetailActionType  from './main/AdminUserSettingDetailActionType';
+import * as TransDemandManagerActionType  from './main/TransDemandManagerActionType';
+import * as TransDemandManagerDetailActionType  from './main/TransDemandManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -102,6 +104,8 @@ export  {
     RefundApplyManagerDetailActionType,
     AdminUserSettingActionType,
     AdminUserSettingDetailActionType,
+    TransDemandManagerActionType,
+    TransDemandManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

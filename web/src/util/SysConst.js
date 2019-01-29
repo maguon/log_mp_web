@@ -308,6 +308,22 @@ export const USE_FLAG = [
     }
 ];
 
+// 运输需求状态
+export const TRANS_DEMAND_STATUS = [
+    {
+        value: 0,
+        label: "待安排"
+    },
+    {
+        value: 1,
+        label: "安排中"
+    },
+    {
+        value: 2,
+        label: "已安排"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

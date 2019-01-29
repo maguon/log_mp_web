@@ -5,6 +5,7 @@ const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
+// 取得系统 城市列表
 export const getCityList = () => async (dispatch) => {
     try {
         const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/city';
@@ -19,6 +20,7 @@ export const getCityList = () => async (dispatch) => {
     }
 };
 
+// 取得系统 部门列表
 export const getDepartmentList = () => async (dispatch) => {
     try {
         // 基本检索URL
@@ -28,6 +30,22 @@ export const getDepartmentList = () => async (dispatch) => {
             dispatch({type: CommonActionType.getDepartmentList, payload: res.result})
         } else if (res.success === false) {
             swal('获取部门列表失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+// 取得系统 员工列表
+export const getAdminUserList = () => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/adminUser?isSuperUserFlag=0';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getAdminUserList, payload: res.result})
+        } else if (res.success === false) {
+            swal('获取员工列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

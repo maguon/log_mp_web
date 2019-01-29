@@ -6,6 +6,8 @@ const initialState = {
     cityList: [],
     // 部门列表
     departmentList: [],
+    // 员工列表
+    adminUserList: [],
 
     // 订单信息
     orderInfo: [],
@@ -45,6 +47,16 @@ export default handleActions({
         return {
             ...state,
             departmentList: departmentList
+        }
+    },
+    [CommonActionType.getAdminUserList]: (state, action) => {
+        let adminUserList = [];
+        action.payload.forEach((value) => {
+            adminUserList.push({value: value.id, label: value.real_name})
+        });
+        return {
+            ...state,
+            adminUserList: adminUserList
         }
     },
     [CommonActionType.getOrderInfo]: (state, action) => {

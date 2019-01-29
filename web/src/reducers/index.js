@@ -41,6 +41,8 @@ import RefundApplyManagerReducer from './main/RefundApplyManagerReducer';
 import RefundApplyManagerDetailReducer from './main/RefundApplyManagerDetailReducer';
 import AdminUserSettingReducer from './main/AdminUserSettingReducer';
 import AdminUserSettingDetailReducer from './main/AdminUserSettingDetailReducer';
+import TransDemandManagerReducer from './main/TransDemandManagerReducer';
+import TransDemandManagerDetailReducer from './main/TransDemandManagerDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -106,6 +108,8 @@ export default combineReducers({
     RefundApplyManagerDetailReducer,
     AdminUserSettingReducer,
     AdminUserSettingDetailReducer,
+    TransDemandManagerReducer,
+    TransDemandManagerDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

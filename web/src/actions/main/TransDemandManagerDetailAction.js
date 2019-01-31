@@ -1,25 +1,25 @@
-import {InquiryManagerDetailActionType} from "../../actionTypes";
+import {TransDemandManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-export const getInquiryInfo = (inquiryId) => async (dispatch) => {
+export const getTransDemandInfo = (requireId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiry?inquiryId=' + inquiryId;
+            + '/requireTask?requireId=' + requireId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: InquiryManagerDetailActionType.getInquiryInfo, payload: res.result});
-            // 若 有数据，并且该询价状态 为2：已完成 ，则查询订单信息
-            if (res.result.length > 0 && res.result[0].status === sysConst.INQUIRY_STATUS[2].value) {
-                // 订单信息
-                dispatch(getOrderInfo(inquiryId));
-            }
+            dispatch({type: TransDemandManagerDetailActionType.getTransDemandInfo, payload: res.result});
+            // // 若 有数据，并且该询价状态 为2：已完成 ，则查询订单信息
+            // if (res.result.length > 0 && res.result[0].status === sysConst.INQUIRY_STATUS[2].value) {
+            //     // 订单信息
+            //     dispatch(getOrderInfo(inquiryId));
+            // }
         } else if (res.success === false) {
-            swal('获取询价详细信息失败', res.msg, 'warning');
+            swal('获取运输需求详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
@@ -33,7 +33,7 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
             + '/inquiryCar?status=1&inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: InquiryManagerDetailActionType.getInquiryCarList, payload: res.result});
+            dispatch({type: TransDemandManagerDetailActionType.getInquiryCarList, payload: res.result});
             // 估值总额
             let totalValuation = 0;
             // 预计总运费
@@ -45,9 +45,9 @@ export const getInquiryCarList = (inquiryId) => async (dispatch) => {
                 totalFreight = totalFreight + item.trans_price;
                 totalInsuranceFee = totalInsuranceFee + item.insure_price;
             });
-            dispatch({type: InquiryManagerDetailActionType.setTotalValuation, payload: totalValuation});
-            dispatch({type: InquiryManagerDetailActionType.setTotalFreight, payload: totalFreight});
-            dispatch({type: InquiryManagerDetailActionType.setTotalInsuranceFee, payload: totalInsuranceFee});
+            dispatch({type: TransDemandManagerDetailActionType.setTotalValuation, payload: totalValuation});
+            dispatch({type: TransDemandManagerDetailActionType.setTotalFreight, payload: totalFreight});
+            dispatch({type: TransDemandManagerDetailActionType.setTotalInsuranceFee, payload: totalInsuranceFee});
         } else if (res.success === false) {
             swal('获取询价车辆详细信息失败', res.msg, 'warning');
         }
@@ -63,7 +63,7 @@ export const getOrderInfo = (inquiryId) => async (dispatch) => {
             + '/order?inquiryId=' + inquiryId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: InquiryManagerDetailActionType.getOrderInfo, payload: res.result});
+            dispatch({type: TransDemandManagerDetailActionType.getOrderInfo, payload: res.result});
         } else if (res.success === false) {
             swal('获取订单详细信息失败', res.msg, 'warning');
         }

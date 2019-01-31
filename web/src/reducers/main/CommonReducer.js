@@ -11,6 +11,8 @@ const initialState = {
 
     // 订单信息
     orderInfo: [],
+    // 是否显示订单车辆列表
+    showOrderCarListFlag: false,
     // 订单信息：运送车辆列表
     orderCarArray: [],
     // 订单信息：估值总额
@@ -63,6 +65,12 @@ export default handleActions({
         return {
             ...state,
             orderInfo: action.payload
+        }
+    },
+    [CommonActionType.setShowOrderCarListFlag]: (state, action) => {
+        return {
+            ...state,
+            showOrderCarListFlag: action.payload
         }
     },
     [CommonActionType.getOrderCarList]: (state, action) => {

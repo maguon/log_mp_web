@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {ConfirmRefundModal, RefuseRefundModal, OrderInfoModal} from '../modules/index';
+import {CommonActionType} from "../../actionTypes";
 
 const commonAction = require('../../actions/main/CommonAction');
 const refundApplyManagerDetailAction = require('../../actions/main/RefundApplyManagerDetailAction');
@@ -280,6 +281,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(confirmRefundModalAction.initConfirmRefundModal(refundApplyInfo));
     },
     initOrderInfoModalData: (orderId) => {
+        dispatch(CommonActionType.setShowOrderCarListFlag(false));
         dispatch(commonAction.getOrderInfo(orderId));
         dispatch(commonAction.getOrderCarList(orderId));
     }

@@ -17,7 +17,6 @@ const initialState = {
     conditionEndCity: null,
     // 检索条件：服务方式
     conditionServiceType: null,
-
     // 检索条件：订单创建人
     conditionOrderCreatedUser: null,
     // 检索条件：需求创建时间(始)
@@ -50,9 +49,6 @@ export default handleActions({
             dataSize: action.payload
         }
     },
-    
-    
-    
     [TransDemandManagerActionType.setConditionOrderId]: (state, action) => {
         return {
             ...state,
@@ -77,11 +73,6 @@ export default handleActions({
             conditionServiceType: action.payload
         }
     },
-
-
-
-
-
     [TransDemandManagerActionType.setConditionOrderCreatedUser]: (state, action) => {
         return {
             ...state,

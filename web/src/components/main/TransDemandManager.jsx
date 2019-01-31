@@ -46,14 +46,14 @@ class TransDemandManager extends React.Component {
     };
 
     /**
-     * 更新 检索条件：绑定时间(始)
+     * 更新 检索条件：需求创建时间(始)
      */
     changeConditionCreatedOnStart = (event, value) => {
         this.props.setConditionCreatedOnStart(value);
     };
 
     /**
-     * 更新 检索条件：绑定时间(始)
+     * 更新 检索条件：需求创建时间(始)
      */
     changeConditionCreatedOnEnd = (event, value) => {
         this.props.setConditionCreatedOnEnd(value);
@@ -308,8 +308,6 @@ const mapDispatchToProps = (dispatch) => ({
     changeConditionServiceType: (value) => {
         dispatch(TransDemandManagerActionType.setConditionServiceType(value))
     },
-
-
     changeConditionOrderCreatedUser: (value) => {
         dispatch(TransDemandManagerActionType.setConditionOrderCreatedUser(value))
     },

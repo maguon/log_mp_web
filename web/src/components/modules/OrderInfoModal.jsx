@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {CommonActionType} from "../../actionTypes";
 
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -23,6 +24,13 @@ class OrderInfoModal extends React.Component {
     componentDidMount() {
         $('.modal').modal();
     }
+
+    /**
+     * 点击后，显示/隐藏 订单车辆信息
+     */
+    clickOrderCarList = () => {
+        this.props.setShowOrderCarListFlag(!this.props.commonReducer.showOrderCarListFlag);
+    };
 
     /**
      * 渲染(挂载)画面。
@@ -60,10 +68,18 @@ class OrderInfoModal extends React.Component {
                         </div>
 
                         {/** 运输车辆 列表 */}
-                        <div className="row margin-bottom10 margin-left5 fz16 pink-font">
-                            运输车辆：{formatUtil.formatNumber(commonReducer.orderCarArray.length)}
-                        </div>
                         <div className="row detail-box">
+                            <div className="fz16 pink-font">
+                                <div className="col s9 margin-top10 margin-bottom10">
+                                    运输车辆：{formatUtil.formatNumber(commonReducer.orderCarArray.length)}
+                                </div>
+                                <div className="col s3 margin-top10 margin-bottom10 right-align">
+                                    <span className="pointer" onClick={this.clickOrderCarList}>
+                                        {commonReducer.showOrderCarListFlag ? <i className="mdi mdi-chevron-up fz15"/> : <i className="mdi mdi-chevron-down fz15"/>}
+                                    </span>
+                                </div>
+                            </div>
+                            {commonReducer.showOrderCarListFlag &&
                             <table className="bordered">
                                 <thead className="custom-grey border-top-line">
                                 <tr className="grey-text text-darken-2">
@@ -101,7 +117,7 @@ class OrderInfoModal extends React.Component {
                                     <td className="no-data-tr" colSpan="8">暂无数据</td>
                                 </tr>}
                                 </tbody>
-                            </table>
+                            </table>}
                         </div>
 
                         {/** 运输车辆 费用 */}
@@ -118,7 +134,7 @@ class OrderInfoModal extends React.Component {
                         </div>
 
                         {/* 收发货信息 + 备注 */}
-                        <div className="row grey-text padding-bottom10">
+                        <div className="row grey-text margin-bottom0">
                             <div className="col s12 no-padding"><div className="col s12 divider bold-divider"/></div>
                             <div className="col s12 margin-top15 margin-bottom15">发货人：{commonReducer.orderInfo[0].send_name} {commonReducer.orderInfo[0].send_phone} {commonReducer.orderInfo[0].send_address}</div>
                             <div className="col s12 no-padding"><div className="col s12 dotted-line"/></div>
@@ -153,6 +169,9 @@ const mapStateToProps = (state) => {
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
  */
 const mapDispatchToProps = (dispatch) => ({
+    setShowOrderCarListFlag: (showOrderCarListFlag) => {
+        dispatch(CommonActionType.setShowOrderCarListFlag(showOrderCarListFlag))
+    },
     closeModal: () => {
         $('#orderInfoModal').modal('close');
     }

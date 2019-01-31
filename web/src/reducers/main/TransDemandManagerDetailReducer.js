@@ -1,10 +1,13 @@
 import {handleActions} from 'redux-actions';
-import {InquiryManagerDetailActionType} from '../../actionTypes';
+import {TransDemandManagerDetailActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 询价信息
-    inquiryInfo: [],
+    // 运输需求信息
+    transDemandInfo: [],
+
+
+
     // 询价车辆列表
     inquiryCarArray: [],
     // 估值总额
@@ -18,37 +21,37 @@ const initialState = {
 };
 
 export default handleActions({
-    [InquiryManagerDetailActionType.getInquiryInfo]: (state, action) => {
+    [TransDemandManagerDetailActionType.getTransDemandInfo]: (state, action) => {
         return {
             ...state,
-            inquiryInfo: action.payload
+            transDemandInfo: action.payload
         }
     },
-    [InquiryManagerDetailActionType.getInquiryCarList]: (state, action) => {
+    [TransDemandManagerDetailActionType.getInquiryCarList]: (state, action) => {
         return {
             ...state,
             inquiryCarArray: action.payload
         }
     },
-    [InquiryManagerDetailActionType.setTotalValuation]: (state, action) => {
+    [TransDemandManagerDetailActionType.setTotalValuation]: (state, action) => {
         return {
             ...state,
             totalValuation: action.payload
         }
     },
-    [InquiryManagerDetailActionType.setTotalFreight]: (state, action) => {
+    [TransDemandManagerDetailActionType.setTotalFreight]: (state, action) => {
         return {
             ...state,
             totalFreight: action.payload
         }
     },
-    [InquiryManagerDetailActionType.setTotalInsuranceFee]: (state, action) => {
+    [TransDemandManagerDetailActionType.setTotalInsuranceFee]: (state, action) => {
         return {
             ...state,
             totalInsuranceFee: action.payload
         }
     },
-    [InquiryManagerDetailActionType.getOrderInfo]: (state, action) => {
+    [TransDemandManagerDetailActionType.getOrderInfo]: (state, action) => {
         return {
             ...state,
             orderInfo: action.payload

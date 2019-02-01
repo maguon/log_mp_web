@@ -24,3 +24,4 @@ export OrderInfoModal from "./OrderInfoModal";
 export EditCompanyBankModal from "./EditCompanyBankModal";
 export EditDepartmentModal from "./EditDepartmentModal";
 export NewAdminModal from "./NewAdminModal";
+export NewLoadTaskModal from "./NewLoadTaskModal";

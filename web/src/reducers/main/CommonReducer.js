@@ -4,6 +4,8 @@ import {CommonActionType} from '../../actionTypes';
 const initialState = {
     // 城市列表
     cityList: [],
+    // 供应商列表
+    supplierList: [],
     // 部门列表
     departmentList: [],
     // 员工列表
@@ -39,6 +41,16 @@ export default handleActions({
         return {
             ...state,
             cityList: cityList
+        }
+    },
+    [CommonActionType.getSupplierList]: (state, action) => {
+        let supplierList = [];
+        action.payload.forEach((value) => {
+            supplierList.push({value: value.id, label: value.supplier_short})
+        });
+        return {
+            ...state,
+            supplierList: supplierList
         }
     },
     [CommonActionType.getDepartmentList]: (state, action) => {

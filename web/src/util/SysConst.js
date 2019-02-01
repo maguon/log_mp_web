@@ -124,7 +124,7 @@ export const WE_CHAT_STATUS = [
 export const TRANSPORT_MODE = [
     {
         value: 1,
-        label: "公路"
+        label: "陆运"
     },
     {
         value: 2,
@@ -132,7 +132,7 @@ export const TRANSPORT_MODE = [
     },
     {
         value: 3,
-        label: "公路/海运"
+        label: "陆运/海运"
     }
 ];
 

@@ -18,7 +18,7 @@ export const saveSupplier = () => async (dispatch, getState) => {
         const supplierShort = getState().NewSupplierModalReducer.supplierShort.trim();
         // 供应商模态画面：供应商全称
         const supplierName = getState().NewSupplierModalReducer.supplierName.trim();
-        // 供应商模态画面：运输方式：公路
+        // 供应商模态画面：运输方式：陆运
         const transportModeRoad = getState().NewSupplierModalReducer.transportModeRoad;
         // 供应商模态画面：运输方式：海运
         const transportModeShip = getState().NewSupplierModalReducer.transportModeShip;

@@ -11,7 +11,7 @@ const initialState = {
     supplierShort: '',
     // 供应商全称
     supplierName: '',
-    // 运输方式：公路
+    // 运输方式：陆运
     transportModeRoad: false,
     // 运输方式：海运
     transportModeShip: false,

@@ -36,7 +36,7 @@ class NewSupplierModal extends React.Component {
     };
 
     /**
-     * 更新 公路
+     * 更新 陆运
      */
     changeTransportModeRoad = (event) => {
         this.props.setTransportModeRoad(event.target.checked);
@@ -79,7 +79,7 @@ class NewSupplierModal extends React.Component {
                             <input type="checkbox" id="road" className="filled-in"
                                    checked={newSupplierModalReducer.transportModeRoad}
                                    onChange={this.changeTransportModeRoad}/>
-                            <label htmlFor="road">公路</label>
+                            <label htmlFor="road">陆运</label>
 
                             <input type="checkbox" id="ship" className="filled-in"
                                    checked={newSupplierModalReducer.transportModeShip}

@@ -63,6 +63,7 @@ import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActi
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
 import * as RefuseInvoiceModalActionType  from './modules/RefuseInvoiceModalActionType';
 import * as NewAdminModalActionType  from './modules/NewAdminModalActionType';
+import * as NewLoadTaskModalActionType  from './modules/NewLoadTaskModalActionType';
 
 export  {
     LoginActionType,
@@ -128,5 +129,6 @@ export  {
     ConfirmRefundModalActionType,
     RefuseRefundModalActionType,
     RefuseInvoiceModalActionType,
-    NewAdminModalActionType
+    NewAdminModalActionType,
+    NewLoadTaskModalActionType
 }

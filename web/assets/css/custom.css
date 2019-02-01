@@ -15,6 +15,13 @@ body {
     font-size: 15px;
 }
 
+.display-block {
+    display: block !important;
+}
+
+.display-none {
+    display: none !important;
+}
 
 /** 主画面 头部(header)样式 start */
 .header-icon {
@@ -94,12 +101,17 @@ body {
     padding-right: 10px !important;
 }
 
+.trans-demand-header {
+    height: 150px;
+    padding-top: 10px;
+}
+
 .user-detail-header, .inquiry-detail-header, .order-detail-header {
     height: 122px;
     padding-top: 18px;
 }
 
-.detail-box-header, .user-detail-header, .inquiry-detail-header, .order-detail-header {
+.detail-box-header, .user-detail-header, .inquiry-detail-header, .order-detail-header, .trans-demand-header {
     background-color: #F0EFF4;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -488,6 +500,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .margin-bottom0 {
     margin-bottom: 0 !important;
+}
+
+.margin-bottom5 {
+    margin-bottom: 5px !important;
 }
 
 .margin-bottom8 {
@@ -1164,9 +1180,7 @@ table.striped > tbody > tr:nth-child(odd) {
     border: 1px solid #ff0000;
 }
 
-.custom-select {
-    display: block;
-}
+
 
 
 

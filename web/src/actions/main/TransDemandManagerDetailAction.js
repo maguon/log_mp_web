@@ -43,7 +43,36 @@ export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
     }
 };
 
+// 删除指定线路
+export const deleteLoadTask = (orderId, requireId, loadTaskId) => async (dispatch) => {
+    try {
+        swal({
+            title: "确定删除该线路？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#724278',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                // 基本检索URL
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/order/' + orderId + '/require/' + requireId + '/loadTask/' + loadTaskId;
+                const res = await httpUtil.httpDelete(url);
+                if (res.success === true) {
+                    dispatch(getTransDemandInfo(requireId));
+                } else if (res.success === false) {
+                    swal('删除运输线路失败', res.msg, 'warning');
+                }
+            }
+        });
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
 
+// 更新线路状态
 export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (dispatch) => {
     let cusTitle = '';
     let newStatus = 0;

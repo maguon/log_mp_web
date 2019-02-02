@@ -352,6 +352,18 @@ table.striped > tbody > tr:nth-child(odd) {
     width: 4%;
 }
 
+.s-percent-5 {
+    width: 5%;
+}
+
+.s-percent-6 {
+    width: 6%;
+}
+
+.s-percent-7 {
+    width: 7%;
+}
+
 .s-percent-8 {
     width: 8%;
 }
@@ -366,6 +378,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .s-percent-20 {
     width: 20%;
+}
+
+.s-percent-31 {
+    width: 31%;
 }
 
 .s-percent-40 {
@@ -437,6 +453,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .fz30 {
     font-size: 30px;
+}
+
+.fz36 {
+    font-size: 36px;
 }
 
 .fz45 {

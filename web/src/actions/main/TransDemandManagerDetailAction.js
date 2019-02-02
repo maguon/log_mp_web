@@ -13,11 +13,11 @@ export const getTransDemandInfo = (requireId) => async (dispatch) => {
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: TransDemandManagerDetailActionType.getTransDemandInfo, payload: res.result});
-            // // 若 有数据，并且该询价状态 为2：已完成 ，则查询订单信息
-            // if (res.result.length > 0 && res.result[0].status === sysConst.INQUIRY_STATUS[2].value) {
-            //     // 订单信息
-            //     dispatch(getOrderInfo(inquiryId));
-            // }
+            // 若 有数据
+            if (res.result.length > 0) {
+                // 安排线路列表
+                dispatch(getLoadTaskList(res.result[0].order_id, requireId));
+            }
         } else if (res.success === false) {
             swal('获取运输需求详细信息失败', res.msg, 'warning');
         }
@@ -26,56 +26,39 @@ export const getTransDemandInfo = (requireId) => async (dispatch) => {
     }
 };
 
-export const getInquiryCarList = (inquiryId) => async (dispatch) => {
+// 安排线路列表
+export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/inquiryCar?status=1&inquiryId=' + inquiryId;
+            + '/order/' + orderId + '/require/' + requireId + '/loadTask';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getInquiryCarList, payload: res.result});
-            // 估值总额
-            let totalValuation = 0;
-            // 预计总运费
-            let totalFreight = 0;
-            // 预计总保费
-            let totalInsuranceFee = 0;
-            res.result.forEach((item) => {
-                totalValuation = totalValuation + item.plan_total;
-                totalFreight = totalFreight + item.trans_price;
-                totalInsuranceFee = totalInsuranceFee + item.insure_price;
-            });
-            dispatch({type: TransDemandManagerDetailActionType.setTotalValuation, payload: totalValuation});
-            dispatch({type: TransDemandManagerDetailActionType.setTotalFreight, payload: totalFreight});
-            dispatch({type: TransDemandManagerDetailActionType.setTotalInsuranceFee, payload: totalInsuranceFee});
+            dispatch({type: TransDemandManagerDetailActionType.getLoadTaskList, payload: res.result});
         } else if (res.success === false) {
-            swal('获取询价车辆详细信息失败', res.msg, 'warning');
+            swal('获取线路安排列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-export const getOrderInfo = (inquiryId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/order?inquiryId=' + inquiryId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getOrderInfo, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取订单详细信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
 
-export const generateOrder = (inquiryId) => async (dispatch) => {
+export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (dispatch) => {
+    let cusTitle = '';
+    let newStatus = 0;
+    // 待发运状态时，变更
+    if (status === sysConst.LOAD_TASK_STATUS[0].value) {
+        cusTitle = '确定将状态变更为已发运？';
+        newStatus = sysConst.LOAD_TASK_STATUS[1].value;
+    } else {
+        cusTitle = '确定将状态变更为已送达？';
+        newStatus = sysConst.LOAD_TASK_STATUS[2].value;
+    }
+
     swal({
-        title: "确定将该询价生成订单？",
-        text: "",
+        title: cusTitle,
+        text: "状态变更后将不可修改",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: '#724278',
@@ -84,12 +67,10 @@ export const generateOrder = (inquiryId) => async (dispatch) => {
     }).then(async function (isConfirm) {
         if (isConfirm && isConfirm.value === true) {
             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/inquiry/' + inquiryId + '/order';
-            const res = await httpUtil.httpPost(url, {});
+                + '/loadTask/' + loadTaskId + '/status/' + newStatus;
+            const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
-                swal("修改成功", "", "success");
-                dispatch(getInquiryInfo(inquiryId));
-                dispatch(getInquiryCarList(inquiryId));
+                dispatch(getTransDemandInfo(requireId));
             } else if (res.success === false) {
                 swal('修改失败', res.msg, 'warning');
             }

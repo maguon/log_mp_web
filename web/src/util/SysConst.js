@@ -324,6 +324,22 @@ export const TRANS_DEMAND_STATUS = [
     }
 ];
 
+// 线路发运状态
+export const LOAD_TASK_STATUS = [
+    {
+        value: 1,
+        label: "待发运"
+    },
+    {
+        value: 2,
+        label: "已发运"
+    },
+    {
+        value: 3,
+        label: "已送达"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

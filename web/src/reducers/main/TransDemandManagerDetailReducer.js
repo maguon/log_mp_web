@@ -3,13 +3,13 @@ import {TransDemandManagerDetailActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 运输需求信息
+    // 运输需求基本信息
     transDemandInfo: [],
+    // 线路安排列表
+    loadTaskArray: [],
 
 
 
-    // 询价车辆列表
-    inquiryCarArray: [],
     // 估值总额
     totalValuation: 0,
     // 预计总运费
@@ -27,12 +27,16 @@ export default handleActions({
             transDemandInfo: action.payload
         }
     },
-    [TransDemandManagerDetailActionType.getInquiryCarList]: (state, action) => {
+    [TransDemandManagerDetailActionType.getLoadTaskList]: (state, action) => {
         return {
             ...state,
-            inquiryCarArray: action.payload
+            loadTaskArray: action.payload
         }
     },
+
+
+
+
     [TransDemandManagerDetailActionType.setTotalValuation]: (state, action) => {
         return {
             ...state,

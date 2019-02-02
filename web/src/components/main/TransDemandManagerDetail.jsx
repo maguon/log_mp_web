@@ -58,23 +58,8 @@ class TransDemandManagerDetail extends React.Component {
         $('#newLoadTaskModal').modal('open');
     };
 
-    /**
-     * 取消报价按钮 点击事件
-     */
-    showCancelInquiryModal = () => {
-        let freight = this.props.transDemandManagerDetailReducer.totalFreight;
-        let insuranceFee = this.props.transDemandManagerDetailReducer.totalInsuranceFee;
-        let actTotalFreight = this.props.transDemandManagerDetailReducer.transDemandInfo[0].total_trans_price;
-        let actTotalInsuranceFee = this.props.transDemandManagerDetailReducer.transDemandInfo[0].total_insure_price;
-
-        this.props.initCancelInquiryModalData(freight, insuranceFee, actTotalFreight, actTotalInsuranceFee);
-        $('#cancelInquiryModal').modal('open');
-    };
-
-
-
     render() {
-        const {transDemandManagerDetailReducer} = this.props;
+        const {transDemandManagerDetailReducer, changeLoadTaskStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -171,6 +156,77 @@ class TransDemandManagerDetail extends React.Component {
                         <div className="row divider bold-divider"/>
 
 
+                        {/* 运输线路列表 */}
+                        {transDemandManagerDetailReducer.loadTaskArray.map(function (item) {
+                            return (
+                                <div className="row margin-top40 margin-left50 margin-right50 detail-box z-depth-1 grey-text">
+                                    <div className="col s12 padding-top20 padding-bottom20 custom-grey purple-font border-bottom-line">
+                                        <div className="col s6 margin-top10">
+                                            <span className="fz16 bold-font">{item.route_start} -- {item.route_end}</span>
+                                            {item.trans_type === 1 && <i className="mdi mdi-truck-fast fz20 pink-font margin-left30"/>}
+                                            {item.trans_type === 2 && <i className="mdi mdi-ferry fz20 pink-font margin-left30"/>}
+                                            <span className="margin-left30">{item.supplier_short}</span>
+                                        </div>
+                                        <div className="col s6 fz20 pink-font margin-top10 right-align">
+                                            <i className="mdi mdi-sync"/>
+                                            <i className="mdi mdi-pencil margin-left30"/>
+                                            <i className="mdi mdi-close margin-left30"/>
+                                        </div>
+                                    </div>
+
+                                    <div className="col s12 padding-top15 padding-bottom10">
+                                        <div className="col s6">线路编号：{item.id}</div>
+                                        <div className="col s6 right-align">线路创建时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                    </div>
+
+                                    <div className="col s12 padding-bottom15 border-bottom-line grey-text text-darken-2">
+                                        <div className="col s6">安排车辆数：<span className="fz16 pink-font">{formatUtil.formatNumber(item.car_count)}</span></div>
+                                        <div className="col s6 right-align">预计发货时间：{item.plan_date_id}</div>
+                                    </div>
+
+                                    <div className="col s12 padding-top15 padding-bottom15">
+                                        <div className="col s11 no-padding">
+                                            {/* 待发运 */}
+                                            <div className="col s-percent-6"><i className="mdi mdi-checkbox-marked-circle fz36 pink-font"/></div>
+                                            <div className="col s-percent-10 no-padding">
+                                                <div className="margin-top5 pink-font">{sysConst.LOAD_TASK_STATUS[0].label}</div>
+                                                <div>{formatUtil.getDate(item.created_on)}</div>
+                                            </div>
+
+                                            {/* 分割线 */}
+                                            <div className="col s-percent-26"><div className="col s12 bold-divider margin-top25"/></div>
+
+                                            {/* 已发运 */}
+                                            <div className="col s-percent-6"><i className={`mdi mdi-checkbox-marked-circle fz36 ${item.load_task_status !== sysConst.LOAD_TASK_STATUS[0].value ? "pink-font" : ""}`}/></div>
+                                            <div className="col s-percent-10 no-padding">
+                                                <div className={`${item.load_task_status !== sysConst.LOAD_TASK_STATUS[0].value ? "margin-top5 pink-font" : "margin-top15"}`}>{sysConst.LOAD_TASK_STATUS[1].label}</div>
+                                                <div>{item.load_date}</div>
+                                            </div>
+
+                                            {/* 分割线 */}
+                                            <div className="col s-percent-26"><div className="col s12 bold-divider margin-top25"/></div>
+
+                                            {/* 已送达 */}
+                                            <div className="col s-percent-6"><i className={`mdi mdi-checkbox-marked-circle fz36 ${item.load_task_status === sysConst.LOAD_TASK_STATUS[2].value ? "pink-font" : ""}`}/></div>
+                                            <div className="col s-percent-10 no-padding">
+                                                <div className={`${item.load_task_status === sysConst.LOAD_TASK_STATUS[2].value ? "margin-top5 pink-font" : "margin-top15"}`}>{sysConst.LOAD_TASK_STATUS[2].label}</div>
+                                                <div>{item.arrive_date}</div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col s1 no-padding margin-top15">
+                                            <button type="button" className="btn purple-btn btn-height24 fz14" onClick={() => {changeLoadTaskStatus(item.id, item.load_task_status)}}>变更状态</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        }, this)}
+
+
+
+
+
+
                     </div>
                 </div>}
             </div>
@@ -199,15 +255,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
 
-    // 收发货地址
-    initCancelInquiryModalData: (freight, insuranceFee, actTotalFreight, actTotalInsuranceFee) => {
-        dispatch(CancelInquiryModalActionType.setInquiryId(ownProps.match.params.id));
-        dispatch(CancelInquiryModalActionType.setFreight(freight));
-        dispatch(CancelInquiryModalActionType.setInsuranceFee(insuranceFee));
-        dispatch(CancelInquiryModalActionType.setActFreight(actTotalFreight));
-        dispatch(CancelInquiryModalActionType.setActInsuranceFee(actTotalInsuranceFee));
-        dispatch(CancelInquiryModalActionType.setRemark(''));
-    },
+
     // 线路安排
     initNewLoadTaskModalData: (orderId, requireId) => {
         // 初始化画面
@@ -216,7 +264,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(commonAction.getCityList());
         // 供应商列表
         dispatch(commonAction.getSupplierList());
-    }
+    },
+    // 更新线路状态
+    changeLoadTaskStatus: (loadTaskId, status) => {
+        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(ownProps.match.params.id, loadTaskId, status));
+    },
 
 });
 

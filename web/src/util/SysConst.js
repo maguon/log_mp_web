@@ -316,10 +316,6 @@ export const TRANS_DEMAND_STATUS = [
     },
     {
         value: 1,
-        label: "安排中"
-    },
-    {
-        value: 2,
         label: "已安排"
     }
 ];

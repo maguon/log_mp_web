@@ -11,6 +11,8 @@ const initialState = {
     orderId: '',
     // 运输需求ID
     requireId: '',
+    // 线路安排ID
+    loadTaskId: '',
 
     // TAB 线路信息：起始城市
     startCity: null,
@@ -33,6 +35,9 @@ const initialState = {
     unscheduledCarList: [],
     // TAB 运输车辆：已安排车辆
     scheduledCarList: [],
+
+    // TAB 信息同步：是否同步标记
+    syncFlag: false
 };
 
 export default handleActions({
@@ -58,6 +63,12 @@ export default handleActions({
         return {
             ...state,
             requireId: action.payload
+        }
+    },
+    [NewLoadTaskModalActionType.setLoadTaskId]: (state, action) => {
+        return {
+            ...state,
+            loadTaskId: action.payload
         }
     },
     [NewLoadTaskModalActionType.setStartCity]: (state, action) => {
@@ -130,4 +141,10 @@ export default handleActions({
             scheduledCarList: action.payload
         }
     },
+    [NewLoadTaskModalActionType.setSyncFlag]: (state, action) => {
+        return {
+            ...state,
+            syncFlag: action.payload
+        }
+    }
 }, initialState)

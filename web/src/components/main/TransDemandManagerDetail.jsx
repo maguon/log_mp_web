@@ -49,17 +49,17 @@ class TransDemandManagerDetail extends React.Component {
     };
 
     /**
-     * 安排线路 按钮
+     * 增加线路 按钮
      */
-    showNewLoadTaskModal = () => {
+    showNewLoadTaskModal = (pageId, loadTaskId) => {
         let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
         let requireId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].id;
-        this.props.initNewLoadTaskModalData(orderId, requireId);
+        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId);
         $('#newLoadTaskModal').modal('open');
     };
 
     render() {
-        const {transDemandManagerDetailReducer, deleteLoadTask, changeLoadTaskStatus} = this.props;
+        const {transDemandManagerDetailReducer, changeStatus, deleteLoadTask, changeLoadTaskStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -134,14 +134,26 @@ class TransDemandManagerDetail extends React.Component {
                     </div>
 
                     {/* 主体 */}
+
+                    {/* 待安排 */}
+                    {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value &&
                     <div className="col s12 margin-top20 padding-left50 padding-right50">
-                        {/** 收发货地址/安排线路 按钮 */}
+                        {/** 开始安排 按钮 */}
+                        <div className="row margin-bottom10 right-align">
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={changeStatus}>开始安排</button>
+                        </div>
+                    </div>}
+
+                    {/* 已安排 */}
+                    {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                    <div className="col s12 margin-top20 padding-left50 padding-right50">
+                        {/** 收发货地址/增加线路 按钮 */}
                         <div className="row margin-bottom10 right-align">
                             {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
                             <button type="button" className="btn custom-btn" onClick={this.showCancelInquiryModal}>收发货地址</button>}
                             {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value ||
                               transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value) &&
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={this.showNewLoadTaskModal}>安排线路</button>}
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>}
                         </div>
                         <NewLoadTaskModal/>
                         <CancelInquiryModal/>
@@ -155,7 +167,6 @@ class TransDemandManagerDetail extends React.Component {
                         </div>
                         <div className="row divider bold-divider"/>
 
-
                         {/* 运输线路列表 */}
                         {transDemandManagerDetailReducer.loadTaskArray.map(function (item) {
                             return (
@@ -168,8 +179,8 @@ class TransDemandManagerDetail extends React.Component {
                                             <span className="margin-left30 grey-text text-darken-2">{item.supplier_short}</span>
                                         </div>
                                         <div className="col s6 fz20 pink-font margin-top10 right-align">
-                                            <i className="mdi mdi-sync"/>
-                                            <i className="mdi mdi-pencil margin-left30"/>
+                                            <i className="mdi mdi-sync pointer"/>
+                                            <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {this.showNewLoadTaskModal('edit',item.id)}}/>
                                             <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.order_id, item.id)}}/>
                                         </div>
                                     </div>
@@ -221,13 +232,13 @@ class TransDemandManagerDetail extends React.Component {
                                 </div>
                             )
                         }, this)}
+                    </div>}
 
 
 
 
 
 
-                    </div>
                 </div>}
             </div>
         )
@@ -244,6 +255,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getTransDemandInfo: () => {
         dispatch(transDemandManagerDetailAction.getTransDemandInfo(ownProps.match.params.id));
     },
+    // 更新线路状态
+    changeStatus: () => {
+        dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id));
+    },
+
+
+
+
+
+
+
+
+
     initOrderInfoModalData: (orderId) => {
         dispatch(CommonActionType.setShowOrderCarListFlag(false));
         dispatch(commonAction.getOrderInfo(orderId));
@@ -257,9 +281,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 
     // 线路安排
-    initNewLoadTaskModalData: (orderId, requireId) => {
+    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId) => {
         // 初始化画面
-        dispatch(newLoadTaskModalAction.initNewLoadTaskModal('new',orderId, requireId));
+        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId));
         // 城市列表
         dispatch(commonAction.getCityList());
         // 供应商列表

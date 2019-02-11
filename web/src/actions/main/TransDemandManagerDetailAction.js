@@ -43,6 +43,30 @@ export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
     }
 };
 
+// 更新线路状态
+export const changeStatus = (requireId) => async (dispatch) => {
+    swal({
+        title: "确定将状态变更为已安排？",
+        text: "状态变更后将不可修改",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#724278',
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+    }).then(async function (isConfirm) {
+        if (isConfirm && isConfirm.value === true) {
+            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                + '/requireTask/' + requireId + '/status/' + sysConst.TRANS_DEMAND_STATUS[1].value;
+            const res = await httpUtil.httpPut(url, {});
+            if (res.success === true) {
+                dispatch(getTransDemandInfo(requireId));
+            } else if (res.success === false) {
+                swal('修改失败', res.msg, 'warning');
+            }
+        }
+    });
+};
+
 // 删除指定线路
 export const deleteLoadTask = (orderId, requireId, loadTaskId) => async (dispatch) => {
     try {

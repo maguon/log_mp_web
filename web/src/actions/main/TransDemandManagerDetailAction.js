@@ -1,10 +1,12 @@
 import {TransDemandManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
+import {saveLoadTaskInfo} from "../modules/NewLoadTaskModalAction";
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
+// 取得需求基本信息
 export const getTransDemandInfo = (requireId) => async (dispatch) => {
     try {
         // 基本检索URL
@@ -26,24 +28,7 @@ export const getTransDemandInfo = (requireId) => async (dispatch) => {
     }
 };
 
-// 安排线路列表
-export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/order/' + orderId + '/require/' + requireId + '/loadTask';
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getLoadTaskList, payload: res.result});
-        } else if (res.success === false) {
-            swal('获取线路安排列表失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-// 更新线路状态
+// 更新需求状态
 export const changeStatus = (requireId) => async (dispatch) => {
     swal({
         title: "确定将状态变更为已安排？",
@@ -65,6 +50,53 @@ export const changeStatus = (requireId) => async (dispatch) => {
             }
         }
     });
+};
+
+// 取得安排线路列表
+export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/order/' + orderId + '/require/' + requireId + '/loadTask';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: TransDemandManagerDetailActionType.getLoadTaskList, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取线路安排列表失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+// 安排线路列表：同步到供应商
+export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
+    try {
+        swal({
+            title: "确定需求同步至供应商？",
+            text: "需求同步后，该线路需求信息将不可修改",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#724278',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                // 基本url
+                let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/loadTask/' + loadTaskId + '/submitToSupplier';
+                let res = await httpUtil.httpPost(url, {});
+                if (res.success === true) {
+                    swal("同步成功", "", "success");
+                    dispatch(getTransDemandInfo(requireId));
+                } else if (res.success === false) {
+                    swal('同步失败', res.msg, 'warning');
+                }
+            }
+        });
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
 };
 
 // 删除指定线路

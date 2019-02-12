@@ -90,14 +90,6 @@ export default handleActions({
         }
     },
     [NewLoadTaskModalActionType.setTransportModeList]: (state, action) => {
-        // let transportModeList = [];
-        // action.payload.forEach((value) => {
-        //     transportModeList.push({value: value.id, label: value.name})
-        // });
-        // return {
-        //     ...state,
-        //     transportModeList: transportModeList
-        // }
         return {
             ...state,
             transportModeList: action.payload
@@ -121,8 +113,6 @@ export default handleActions({
             remark: action.payload
         }
     },
-
-
     [NewLoadTaskModalActionType.getLoadTaskInfo]: (state, action) => {
         return {
             ...state,

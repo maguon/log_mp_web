@@ -73,6 +73,11 @@ body {
 .height-35 {
     height: 35px !important;
 }
+
+.height-75 {
+    height: 75px !important;
+}
+
 /** 主画面 头部(header)样式 end */
 
 
@@ -578,6 +583,10 @@ table.striped > tbody > tr:nth-child(odd) {
     margin-left: 150px !important;
 }
 
+.margin-left300 {
+    margin-left: 300px !important;
+}
+
 .margin-right0 {
     margin-right: 0 !important;
 }
@@ -608,6 +617,10 @@ table.striped > tbody > tr:nth-child(odd) {
 
 .margin-right150 {
     margin-right: 150px !important;
+}
+
+.margin-right300 {
+    margin-right: 300px !important;
 }
 
 .padding20 {
@@ -1106,7 +1119,17 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 616px;
 }
 
-#newRefundModal, #orderInfoModal {
+#newLoadTaskModal {
+    width: 1200px;
+    max-height: 716px;
+}
+
+#loadTaskCarDetailModal {
+    width: 1200px;
+    max-height: 606px;
+}
+
+#newRefundModal, #orderInfoModal{
     width: 1200px;
     max-height: 616px;
 }
@@ -1136,6 +1159,36 @@ table.striped > tbody > tr:nth-child(odd) {
     height: calc(100% - 106px) !important;
 }
 
+#newLoadTaskModal .modal-content #tab-trans .modal-content-header {
+    height:50px;
+    width: 95%;
+    position: absolute;
+    top: 90px;
+}
+
+#newLoadTaskModal .modal-content #tab-trans .modal-content-body {
+    height: 398px;
+    position: absolute;
+    max-height: 100%;
+    width: 95%;
+    overflow-y: auto;
+}
+
+#loadTaskCarDetailModal .modal-content .modal-content-body {
+    height: 426px;
+    position: absolute;
+    max-height: 100%;
+    width: 95%;
+    overflow-y: auto;
+}
+
+.modal-content-footer {
+    height:50px;
+    width: 95%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    position: absolute;
+    bottom: 0;
+}
 
 /*#inquiryModal, #inquiryInfoModal .modal- {*/
     /*max-height: 556px;*/

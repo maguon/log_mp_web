@@ -67,6 +67,7 @@ import RefuseRefundModalReducer from './modules/RefuseRefundModalReducer';
 import RefuseInvoiceModalReducer from './modules/RefuseInvoiceModalReducer';
 import NewAdminModalReducer from './modules/NewAdminModalReducer';
 import NewLoadTaskModalReducer from './modules/NewLoadTaskModalReducer';
+import LoadTaskCarDetailModalReducer from './modules/LoadTaskCarDetailModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -135,4 +136,5 @@ export default combineReducers({
     RefuseInvoiceModalReducer,
     NewAdminModalReducer,
     NewLoadTaskModalReducer,
+    LoadTaskCarDetailModalReducer,
 })

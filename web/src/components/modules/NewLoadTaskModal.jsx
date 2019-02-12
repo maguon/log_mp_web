@@ -67,7 +67,7 @@ class NewLoadTaskModal extends React.Component {
     render() {
         const {
             newLoadTaskModalReducer, commonReducer, changeStartCity, changeEndCity, changeSupplier, changeTransportMode,
-            closeModal, goNext, showLoadTaskTab, showTransCarTab, showSyncTab, changeSyncFlag
+            closeModal, goNext, confirmLoadTask, showLoadTaskTab, showTransCarTab, changeSyncFlag
         } = this.props;
         return (
             <div id="newLoadTaskModal" className="modal modal-fixed-footer row">
@@ -93,20 +93,17 @@ class NewLoadTaskModal extends React.Component {
 
                         {newLoadTaskModalReducer.pageId === 'edit' &&
                         <div>
-                            <li className={`tab col s4`}>
+                            <li className={`tab col s6`}>
                                 <a href="#tab-load" onClick={showLoadTaskTab} className={`${newLoadTaskModalReducer.tabId === 'base' ? "active" : ""}`}>线路信息</a>
                             </li>
-                            <li className={`tab col s4`}>
+                            <li className={`tab col s6`}>
                                 <a href="#tab-trans" onClick={showTransCarTab} className={`${newLoadTaskModalReducer.tabId === 'trans' ? "active" : ""}`}>运输车辆</a>
-                            </li>
-                            <li className={`tab col s4`}>
-                                <a href="#tab-sync" onClick={showSyncTab} className={`${newLoadTaskModalReducer.tabId === 'sync' ? "active" : ""}`}>信息同步</a>
                             </li>
                         </div>}
                     </ul>
 
                     {/* TAB 1 : 线路信息TAB */}
-                    <div id="tab-load" className={`col s12 margin-top20 ${newLoadTaskModalReducer.tabId === 'base' ? "display-block" : "display-none"}`}>
+                    <div id="tab-load" className={`col s12 margin-top50 ${newLoadTaskModalReducer.tabId === 'base' ? "display-block" : "display-none"}`}>
                         <div className="input-field col s6">
                             <Select
                                 options={commonReducer.cityList}
@@ -177,222 +174,252 @@ class NewLoadTaskModal extends React.Component {
                     <div id="tab-trans" className={`col s12 margin-top20 ${newLoadTaskModalReducer.tabId === 'trans' ? "display-block" : "display-none"}`}>
                         {newLoadTaskModalReducer.loadTaskInfo.length > 0 &&
                         <div>
-                            <div className="col s8">
-                                {newLoadTaskModalReducer.loadTaskInfo[0].route_start} -- {newLoadTaskModalReducer.loadTaskInfo[0].route_end}
-                                <span className="margin-left30">{newLoadTaskModalReducer.loadTaskInfo[0].supplier_short}</span>
-                                <span className="margin-left30">{commonUtil.getJsonValue(sysConst.TRANSPORT_MODE, newLoadTaskModalReducer.loadTaskInfo[0].trans_type)}</span>
-                            </div>
-                            <div className="col s4 right-align">计划发运日期：{newLoadTaskModalReducer.loadTaskInfo[0].plan_date}</div>
-
-
-                            {/* 已安排车辆 列表 */}
-                            {newLoadTaskModalReducer.pageId === 'edit' &&
-                            <div className="col s12 z-depth-1 no-padding margin-top20">
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">已安排车辆</div>
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
-                                    {formatUtil.formatNumber(newLoadTaskModalReducer.scheduledCarList.length)}
+                            <div className="modal-content-header">
+                                <div className="col s8">
+                                    <span className="fz16 pink-font">{newLoadTaskModalReducer.loadTaskInfo[0].route_start} -- {newLoadTaskModalReducer.loadTaskInfo[0].route_end}</span>
+                                    <span className="margin-left30">{newLoadTaskModalReducer.loadTaskInfo[0].supplier_short}</span>
+                                    <span className="margin-left30">{commonUtil.getJsonValue(sysConst.TRANSPORT_MODE, newLoadTaskModalReducer.loadTaskInfo[0].trans_type)}</span>
                                 </div>
-                                {newLoadTaskModalReducer.scheduledCarList.length > 0 &&
-                                <table className="bordered">
-                                    <thead className="">
-                                    <tr className="grey-text text-darken-2">
-                                        <th className="padding-left10">VIN</th>
-                                        <th className="center">车型</th>
-                                        <th className="center">品牌</th>
-                                        <th className="center">型号</th>
-                                        <th className="right-align">估值</th>
-                                        <th className="center">新车</th>
-                                        <th className="center">保险</th>
-                                        <th className="right-align width-150">供应商运费</th>
-                                        <th className="right-align width-200">供应商保费</th>
-                                        <th className="center"/>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {newLoadTaskModalReducer.scheduledCarList.map(function (item, key) {
-                                        return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td className="padding-left10">{item.vin}</td>
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
-                                                <td className="center">{item.brand}</td>
-                                                <td className="center">{item.brand_type}</td>
-                                                <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                {/* 是否新车 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
-                                                {/* 是否保险 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
-                                                {/* 供应商运费 */}
-                                                <td className="right-align width-150">
-                                                    <input id={`trans_scheduled_index${key}`} defaultValue={item.supplier_trans_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                {/* 供应商保费 */}
-                                                <td className="right-align width-200">
-                                                    <input id={`insure_scheduled_index${key}`} defaultValue={item.supplier_insure_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                <td className="center">
-                                                    <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
-                                                       onClick={()=> {this.editLoadTaskDetail(item,`trans_scheduled_index${key}`,`insure_scheduled_index${key}`)}}/>
-                                                    <i className="mdi mdi-minus-circle margin-left20 fz24 orange-text text-darken-3 pointer"
-                                                       onClick={()=> {this.deleteLoadTaskDetail(item.load_task_detail_id)}}/>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }, this)}
-                                    </tbody>
-                                </table>}
-                            </div>}
-
-                            {/* 未安排车辆 列表 */}
-                            <div className="col s12 z-depth-1 no-padding margin-top20">
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">未安排车辆</div>
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
-                                    {formatUtil.formatNumber(newLoadTaskModalReducer.unscheduledCarList.length)}
-                                </div>
-                                {newLoadTaskModalReducer.unscheduledCarList.length > 0 &&
-                                <table className="bordered">
-                                    <thead className="">
-                                    <tr className="grey-text text-darken-2">
-                                        <th className="padding-left10">VIN</th>
-                                        <th className="center">车型</th>
-                                        <th className="center">品牌</th>
-                                        <th className="center">型号</th>
-                                        <th className="right-align">估值</th>
-                                        <th className="center">新车</th>
-                                        <th className="center">保险</th>
-                                        <th className="right-align width-150">供应商运费</th>
-                                        <th className="right-align width-200">供应商保费</th>
-                                        <th className="center"/>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {newLoadTaskModalReducer.unscheduledCarList.map(function (item, key) {
-                                        return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td className="padding-left10">{item.vin}</td>
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
-                                                <td className="center">{item.brand}</td>
-                                                <td className="center">{item.brand_type}</td>
-                                                <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                {/* 是否新车 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
-                                                {/* 是否保险 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
-                                                {/* 供应商运费 */}
-                                                <td className="right-align width-150">
-                                                    <input id={`trans_unscheduled_index${key}`} defaultValue={item.supplier_trans_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                {/* 供应商保费 */}
-                                                <td className="right-align width-200">
-                                                    <input id={`insure_unscheduled_index${key}`} defaultValue={item.supplier_insure_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                <td className="center">
-                                                    <i className="mdi mdi-plus-circle margin-left20 fz24 purple-font pointer"
-                                                       onClick={()=> {this.addLoadTaskDetail(item,`trans_unscheduled_index${key}`,`insure_unscheduled_index${key}`)}}/>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }, this)}
-                                    </tbody>
-                                </table>}
+                                <div className="col s4 right-align">计划发运日期：{newLoadTaskModalReducer.loadTaskInfo[0].plan_date}</div>
                             </div>
 
-                            {/* 已安排车辆 列表 */}
-                            {newLoadTaskModalReducer.pageId === 'new' &&
-                            <div className="col s12 z-depth-1 no-padding margin-top20">
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">已安排车辆</div>
-                                <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
-                                    {formatUtil.formatNumber(newLoadTaskModalReducer.scheduledCarList.length)}
+                            <div className="modal-content-body margin-top30">
+                                {/* 已安排车辆 列表 */}
+                                {newLoadTaskModalReducer.pageId === 'edit' &&
+                                <div className="col s12 detail-box z-depth-1 no-padding margin-bottom20">
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">已安排车辆</div>
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
+                                        {formatUtil.formatNumber(newLoadTaskModalReducer.scheduledCarList.length)}
+                                    </div>
+                                    {newLoadTaskModalReducer.scheduledCarList.length > 0 &&
+                                    <table className="bordered">
+                                        <thead className="">
+                                        <tr className="grey-text text-darken-2">
+                                            <th className="padding-left10">VIN</th>
+                                            <th className="center">车型</th>
+                                            <th className="center">品牌</th>
+                                            <th className="center">型号</th>
+                                            <th className="right-align">估值</th>
+                                            <th className="center">新车</th>
+                                            <th className="center">保险</th>
+                                            <th className="right-align width-150">供应商运费</th>
+                                            <th className="right-align width-200">供应商保费</th>
+                                            <th className="center"/>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {newLoadTaskModalReducer.scheduledCarList.map(function (item, key) {
+                                            return (
+                                                <tr className="grey-text text-darken-1">
+                                                    <td className="padding-left10">{item.vin}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
+                                                    <td className="center">{item.brand}</td>
+                                                    <td className="center">{item.brand_type}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
+                                                    {/* 是否新车 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
+                                                    {/* 是否保险 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
+                                                    {/* 供应商运费 */}
+                                                    <td className="right-align width-150">
+                                                        <input id={`trans_scheduled_index${key}`} defaultValue={item.supplier_trans_price} type="number" className="scheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    {/* 供应商保费 */}
+                                                    <td className="right-align width-200">
+                                                        <input id={`insure_scheduled_index${key}`} defaultValue={item.supplier_insure_price} type="number" className="scheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    <td className="center">
+                                                        <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
+                                                           onClick={()=> {this.editLoadTaskDetail(item,`trans_scheduled_index${key}`,`insure_scheduled_index${key}`)}}/>
+                                                        <i className="mdi mdi-minus-circle margin-left20 fz24 orange-text text-darken-3 pointer"
+                                                           onClick={()=> {this.deleteLoadTaskDetail(item.load_task_detail_id)}}/>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }, this)}
+                                        </tbody>
+                                    </table>}
+                                </div>}
+
+                                {/* 未安排车辆 列表 */}
+                                <div className="col s12 detail-box z-depth-1 no-padding margin-bottom20">
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">未安排车辆</div>
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
+                                        {formatUtil.formatNumber(newLoadTaskModalReducer.unscheduledCarList.length)}
+                                    </div>
+                                    {newLoadTaskModalReducer.unscheduledCarList.length > 0 &&
+                                    <table className="bordered">
+                                        <thead className="">
+                                        <tr className="grey-text text-darken-2">
+                                            <th className="padding-left10">VIN</th>
+                                            <th className="center">车型</th>
+                                            <th className="center">品牌</th>
+                                            <th className="center">型号</th>
+                                            <th className="right-align">估值</th>
+                                            <th className="center">新车</th>
+                                            <th className="center">保险</th>
+                                            <th className="right-align width-150">供应商运费</th>
+                                            <th className="right-align width-200">供应商保费</th>
+                                            <th className="center"/>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr className="grey-text text-darken-1">
+                                            <td className="padding-left10">1</td>
+                                            <td className="center">1</td>
+                                            <td className="center">1</td>
+                                            <td className="center">1</td>
+                                            <td className="right-align">1</td>
+                                            <td className="center">1</td>
+                                            <td className="center">1</td>
+                                            <td className="right-align width-150">1
+                                            </td>
+                                            <td className="right-align width-200">1
+                                            </td>
+                                            <td className="center">1
+                                            </td>
+                                        </tr>
+                                        {newLoadTaskModalReducer.unscheduledCarList.map(function (item, key) {
+                                            return (
+                                                <tr className="grey-text text-darken-1">
+                                                    <td className="padding-left10">{item.vin}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
+                                                    <td className="center">{item.brand}</td>
+                                                    <td className="center">{item.brand_type}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
+                                                    {/* 是否新车 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
+                                                    {/* 是否保险 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
+                                                    {/* 供应商运费 */}
+                                                    <td className="right-align width-150">
+                                                        <input id={`trans_unscheduled_index${key}`} defaultValue="0" type="number" className="unscheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    {/* 供应商保费 */}
+                                                    <td className="right-align width-200">
+                                                        <input id={`insure_unscheduled_index${key}`} defaultValue="0" type="number" className="unscheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    <td className="center">
+                                                        <i className="mdi mdi-plus-circle margin-left20 fz24 purple-font pointer"
+                                                           onClick={()=> {this.addLoadTaskDetail(item,`trans_unscheduled_index${key}`,`insure_unscheduled_index${key}`)}}/>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }, this)}
+                                        </tbody>
+                                    </table>}
                                 </div>
-                                {newLoadTaskModalReducer.scheduledCarList.length > 0 &&
-                                <table className="bordered">
-                                    <thead className="">
-                                    <tr className="grey-text text-darken-2">
-                                        <th className="padding-left10">VIN</th>
-                                        <th className="center">车型</th>
-                                        <th className="center">品牌</th>
-                                        <th className="center">型号</th>
-                                        <th className="right-align">估值</th>
-                                        <th className="center">新车</th>
-                                        <th className="center">保险</th>
-                                        <th className="right-align width-150">供应商运费</th>
-                                        <th className="right-align width-200">供应商保费</th>
-                                        <th className="center"/>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {newLoadTaskModalReducer.scheduledCarList.map(function (item, key) {
-                                        return (
-                                            <tr className="grey-text text-darken-1">
-                                                <td className="padding-left10">{item.vin}</td>
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
-                                                <td className="center">{item.brand}</td>
-                                                <td className="center">{item.brand_type}</td>
-                                                <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                {/* 是否新车 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
-                                                {/* 是否保险 */}
-                                                <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
-                                                {/* 供应商运费 */}
-                                                <td className="right-align width-150">
-                                                    <input id={`trans_scheduled_index${key}`} defaultValue={item.supplier_trans_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                {/* 供应商保费 */}
-                                                <td className="right-align width-200">
-                                                    <input id={`insure_scheduled_index${key}`} defaultValue={item.supplier_insure_price} className="margin-bottom0 width-100 right-align"/>
-                                                </td>
-                                                <td className="center">
-                                                    <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
-                                                       onClick={()=> {this.editLoadTaskDetail(item,`trans_scheduled_index${key}`,`insure_scheduled_index${key}`)}}/>
-                                                    <i className="mdi mdi-minus-circle margin-left20 fz24 orange-text text-darken-3 pointer"
-                                                       onClick={()=> {this.deleteLoadTaskDetail(item.load_task_detail_id)}}/>
-                                                </td>
-                                            </tr>
-                                        )
-                                    }, this)}
-                                    </tbody>
-                                </table>}
-                            </div>}
 
+                                {/* 已安排车辆 列表 */}
+                                {newLoadTaskModalReducer.pageId === 'new' &&
+                                <div className="col s12 detail-box z-depth-1 no-padding">
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">已安排车辆</div>
+                                    <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
+                                        {formatUtil.formatNumber(newLoadTaskModalReducer.scheduledCarList.length)}
+                                    </div>
+                                    {newLoadTaskModalReducer.scheduledCarList.length > 0 &&
+                                    <table className="bordered">
+                                        <thead className="">
+                                        <tr className="grey-text text-darken-2">
+                                            <th className="padding-left10">VIN</th>
+                                            <th className="center">车型</th>
+                                            <th className="center">品牌</th>
+                                            <th className="center">型号</th>
+                                            <th className="right-align">估值</th>
+                                            <th className="center">新车</th>
+                                            <th className="center">保险</th>
+                                            <th className="right-align width-150">供应商运费</th>
+                                            <th className="right-align width-200">供应商保费</th>
+                                            <th className="center"/>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {newLoadTaskModalReducer.scheduledCarList.map(function (item, key) {
+                                            return (
+                                                <tr className="grey-text text-darken-1">
+                                                    <td className="padding-left10">{item.vin}</td>
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
+                                                    <td className="center">{item.brand}</td>
+                                                    <td className="center">{item.brand_type}</td>
+                                                    <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
+                                                    {/* 是否新车 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
+                                                    {/* 是否保险 */}
+                                                    <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
+                                                    {/* 供应商运费 */}
+                                                    <td className="right-align width-150">
+                                                        <input id={`trans_scheduled_index${key}`} defaultValue={item.supplier_trans_price} type="number" className="scheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    {/* 供应商保费 */}
+                                                    <td className="right-align width-200">
+                                                        <input id={`insure_scheduled_index${key}`} defaultValue={item.supplier_insure_price} type="number" className="scheduled-input margin-bottom0 width-100 right-align"/>
+                                                    </td>
+                                                    <td className="center">
+                                                        <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
+                                                           onClick={()=> {this.editLoadTaskDetail(item,`trans_scheduled_index${key}`,`insure_scheduled_index${key}`)}}/>
+                                                        <i className="mdi mdi-minus-circle margin-left20 fz24 orange-text text-darken-3 pointer"
+                                                           onClick={()=> {this.deleteLoadTaskDetail(item.load_task_detail_id)}}/>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }, this)}
+                                        </tbody>
+                                    </table>}
+                                </div>}
+                            </div>
 
-
-
-
+                            <div className="modal-content-footer padding-top10 right-align">
+                                总运输费用：
+                                <span className="fz16 pink-font">
+                                    {formatUtil.formatNumber(newLoadTaskModalReducer.loadTaskInfo[0].supplier_trans_price + newLoadTaskModalReducer.loadTaskInfo[0].supplier_insure_price,2)}
+                                </span> 元
+                            </div>
 
                         </div>}
                     </div>
 
-
                     {/* TAB 3 : 信息同步TAB */}
                     <div id="tab-sync" className={`col s12 margin-top20 ${newLoadTaskModalReducer.tabId === 'sync' ? "display-block" : "display-none"}`}>
-                        <div className="col s12 margin-left150 margin-rigth150 detail-box">
-                            <div className="center">该供应商支持信息同步，可将需求直接提交至供应商</div>
-                            <div className="center margin-top30">需求同步至供应商？</div>
+                        {newLoadTaskModalReducer.loadTaskInfo.length > 0 &&
+                        <div className="margin-top50 margin-left300 margin-right300">
+                            {newLoadTaskModalReducer.loadTaskInfo[0].close_flag === 1 &&
+                            <div className="detail-box">
+                                <div className="center pink-font margin-top20 margin-bottom20">该供应商需求信息不可同步</div>
+                            </div>}
 
-                            <div className="center margin-top30">
-                                {/* 状态：开关 */}
-                                <span className="switch">
-                                    <label>
-                                        不同步
-                                        <input type="checkbox" checked={newLoadTaskModalReducer.syncFlag}
-                                           onClick={() => {changeSyncFlag(!newLoadTaskModalReducer.syncFlag)}}/>
-                                        <span className="lever"/>
-                                        同步
-                                    </label>
-                                </span>
-                            </div>
+                            {newLoadTaskModalReducer.loadTaskInfo[0].close_flag === 0 &&
+                            <div className="detail-box">
+                                <div className="center pink-font margin-top20">该供应商支持信息同步，可将需求直接提交至供应商</div>
+                                <div className="center margin-top20 fz24">需求同步至供应商？</div>
 
-                        </div>
+                                <div className="center margin-top40 margin-bottom40">
+                                    {/* 状态：开关 */}
+                                    <span className="switch">
+                                        <label className="fz14">
+                                            不同步
+                                            <input type="checkbox" checked={newLoadTaskModalReducer.syncFlag}
+                                                   onClick={() => {changeSyncFlag(!newLoadTaskModalReducer.syncFlag)}}/>
+                                            <span className="lever"/>
+                                            同步
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>}
+                        </div>}
                     </div>
-
                 </div>
 
                 {/** Modal固定底部：取消/确定按钮 */}
                 <div className="modal-footer">
                     {newLoadTaskModalReducer.tabId !== 'sync' &&
                     <button type="button" className="btn close-btn" onClick={closeModal}>关闭</button>}
+                    {newLoadTaskModalReducer.pageId === 'new' &&
                     <button type="button" className="btn confirm-btn margin-left20" onClick={goNext}>
                         {newLoadTaskModalReducer.tabId === 'sync' ? "完成" : "下一步"}
-                    </button>
+                    </button>}
+
+                    {newLoadTaskModalReducer.pageId === 'edit' &&
+                    <button type="button" className="btn confirm-btn margin-left20" onClick={confirmLoadTask}>确定</button>}
                 </div>
             </div>
         );
@@ -434,11 +461,13 @@ const mapDispatchToProps = (dispatch) => ({
     setRemark: (value) => {
         dispatch(NewLoadTaskModalActionType.setRemark(value))
     },
-
-
-
+    // 新建画面用 (下一步/完成 按钮)
     goNext: () => {
         dispatch(newLoadTaskModalAction.goNext())
+    },
+    // 编辑画面用 (确定)
+    confirmLoadTask: () => {
+        dispatch(newLoadTaskModalAction.confirmLoadTask());
     },
     showLoadTaskTab: () => {
         dispatch(newLoadTaskModalAction.showLoadTaskTab())
@@ -446,11 +475,6 @@ const mapDispatchToProps = (dispatch) => ({
     showTransCarTab: () => {
         dispatch(newLoadTaskModalAction.showTransCarTab())
     },
-    showSyncTab: () => {
-        dispatch(newLoadTaskModalAction.showSyncTab())
-    },
-
-
     addLoadTaskDetail: (orderItemId, vin, supplierTransPrice, supplierInsurePrice) => {
         dispatch(newLoadTaskModalAction.addLoadTaskDetail(orderItemId, vin, supplierTransPrice, supplierInsurePrice))
     },
@@ -460,11 +484,9 @@ const mapDispatchToProps = (dispatch) => ({
     deleteLoadTaskDetail: (loadTaskDetailId) => {
         dispatch(newLoadTaskModalAction.deleteLoadTaskDetail(loadTaskDetailId))
     },
-
     changeSyncFlag: (syncFlag) => {
         dispatch(NewLoadTaskModalActionType.setSyncFlag(syncFlag));
     },
-
     closeModal: () => {
         $('#newLoadTaskModal').modal('close');
     }

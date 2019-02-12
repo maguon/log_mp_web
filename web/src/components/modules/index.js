@@ -25,3 +25,4 @@ export EditCompanyBankModal from "./EditCompanyBankModal";
 export EditDepartmentModal from "./EditDepartmentModal";
 export NewAdminModal from "./NewAdminModal";
 export NewLoadTaskModal from "./NewLoadTaskModal";
+export LoadTaskCarDetailModal from "./LoadTaskCarDetailModal";

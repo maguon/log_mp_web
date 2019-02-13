@@ -65,6 +65,7 @@ import * as RefuseInvoiceModalActionType  from './modules/RefuseInvoiceModalActi
 import * as NewAdminModalActionType  from './modules/NewAdminModalActionType';
 import * as NewLoadTaskModalActionType  from './modules/NewLoadTaskModalActionType';
 import * as LoadTaskCarDetailModalActionType  from './modules/LoadTaskCarDetailModalActionType';
+import * as EditLogAddressModalActionType  from './modules/EditLogAddressModalActionType';
 
 export  {
     LoginActionType,
@@ -132,5 +133,6 @@ export  {
     RefuseInvoiceModalActionType,
     NewAdminModalActionType,
     NewLoadTaskModalActionType,
-    LoadTaskCarDetailModalActionType
+    LoadTaskCarDetailModalActionType,
+    EditLogAddressModalActionType
 }

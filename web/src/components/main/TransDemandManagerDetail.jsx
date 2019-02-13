@@ -2,12 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {CommonActionType} from '../../actionTypes';
-import {NewLoadTaskModal, LoadTaskCarDetailModal, CancelInquiryModal, OrderInfoModal} from '../modules/index';
+import {NewLoadTaskModal, LoadTaskCarDetailModal, CancelInquiryModal, OrderInfoModal, EditLogAddressModal} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');
 const transDemandManagerDetailAction = require('../../actions/main/TransDemandManagerDetailAction');
 const newLoadTaskModalAction = require('../../actions/modules/NewLoadTaskModalAction');
 const loadTaskCarDetailModalAction = require('../../actions/modules/LoadTaskCarDetailModalAction');
+const editLogAddressModalAction = require('../../actions/modules/EditLogAddressModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -41,12 +42,15 @@ class TransDemandManagerDetail extends React.Component {
     /**
      * 收发货地址 按钮
      */
-    showNewOfferModal = () => {
-        let userId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].user_id;
-        let totalFreight = this.props.transDemandManagerDetailReducer.totalFreight;
-        let totalInsuranceFee = this.props.transDemandManagerDetailReducer.totalInsuranceFee;
-        this.props.initNewOfferModalData(userId, totalFreight, totalInsuranceFee, 0, 0, '');
-        $('#newOfferModal').modal('open');
+    showEditLogAddressModal = () => {
+        let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
+        let startCity = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_start;
+        let endCity = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_end;
+        let startCityId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_start_id;
+        let endCityId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_end_id;
+
+        this.props.initEditLogAddressModalData(orderId, startCity, endCity, startCityId, endCityId);
+        $('#editLogAddressModal').modal('open');
     };
 
     /**
@@ -161,11 +165,12 @@ class TransDemandManagerDetail extends React.Component {
                         {/** 收发货地址/增加线路 按钮 */}
                         <div className="row margin-bottom10 right-align">
                             {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
-                            <button type="button" className="btn custom-btn" onClick={this.showCancelInquiryModal}>收发货地址</button>}
+                            <button type="button" className="btn custom-btn" onClick={this.showEditLogAddressModal}>收发货地址</button>}
                             {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value ||
                               transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value) &&
                             <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>}
                         </div>
+                        <EditLogAddressModal/>
                         <NewLoadTaskModal/>
                         <LoadTaskCarDetailModal/>
                         <CancelInquiryModal/>
@@ -273,21 +278,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     changeStatus: () => {
         dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id));
     },
-
-
-
-
-
-
-
-
-
+    // 显示订单详情
     initOrderInfoModalData: (orderId) => {
         dispatch(CommonActionType.setShowOrderCarListFlag(false));
         dispatch(commonAction.getOrderInfo(orderId));
         dispatch(commonAction.getOrderCarList(orderId));
     },
-
+    // 收发货地址
+    initEditLogAddressModalData: (orderId, startCity, endCity, startCityId, endCityId) => {
+        dispatch(editLogAddressModalAction.initEditLogAddressModal(orderId, startCity, endCity, startCityId, endCityId));
+    },
 
 
 
@@ -320,8 +320,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // 更新线路状态
     changeLoadTaskStatus: (loadTaskId, status) => {
         dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(ownProps.match.params.id, loadTaskId, status));
-    },
-
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TransDemandManagerDetail)

@@ -26,3 +26,4 @@ export EditDepartmentModal from "./EditDepartmentModal";
 export NewAdminModal from "./NewAdminModal";
 export NewLoadTaskModal from "./NewLoadTaskModal";
 export LoadTaskCarDetailModal from "./LoadTaskCarDetailModal";
+export EditLogAddressModal from "./EditLogAddressModal";

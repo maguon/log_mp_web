@@ -20,8 +20,11 @@ const initialState = {
     // 订单信息TAB：订单的支付备注
     orderPaymentRemark: '',
 
-    // 银行卡TAB：列表
-    bankCardArray: [],
+    // // 运输信息TAB：运输需求基本信息
+    // transDemandInfo: [],
+    // // 运输信息TAB：线路安排列表
+    // loadTaskArray: [],
+
     // 发票信息TAB：列表
     invoiceArray: [],
     // 操作记录TAB：列表
@@ -80,6 +83,18 @@ export default handleActions({
         }
     },
 
+    // [OrderManagerDetailActionType.getTransDemandInfo]: (state, action) => {
+    //     return {
+    //         ...state,
+    //         transDemandInfo: action.payload
+    //     }
+    // },
+    // [OrderManagerDetailActionType.getLoadTaskList]: (state, action) => {
+    //     return {
+    //         ...state,
+    //         loadTaskArray: action.payload
+    //     }
+    // },
 
     [OrderManagerDetailActionType.getInvoiceArray]: (state, action) => {
         return {

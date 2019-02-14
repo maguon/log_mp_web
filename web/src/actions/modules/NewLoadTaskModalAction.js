@@ -239,8 +239,6 @@ export const goNext = () => async (dispatch, getState) => {
         if (tabId === 'base'){
             // 保存线路安排 基本信息
             dispatch(saveLoadTaskInfo());
-            // 运输需求 - 线路安排 刷新安排线路列表
-            dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
         } else if (tabId === 'trans'){
             // 切换画面
             dispatch({type: NewLoadTaskModalActionType.setTabId, payload: 'sync'});
@@ -353,6 +351,8 @@ export const saveLoadTaskInfo = () => async (dispatch, getState) => {
                 swal("保存成功", "", "success");
                 $('#newLoadTaskModal').modal('close');
             }
+            // 运输需求 - 线路安排 刷新安排线路列表
+            dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
         } else if (res.success === false) {
             swal('保存失败', res.msg, 'warning');
         }

@@ -5,7 +5,6 @@ import {CommonActionType} from '../../actionTypes';
 import {
     NewLoadTaskModal,
     LoadTaskCarDetailModal,
-    CancelInquiryModal,
     OrderInfoModal,
     EditLogAddressModal,
     SyncInfoModal
@@ -52,12 +51,7 @@ class TransDemandManagerDetail extends React.Component {
      */
     showEditLogAddressModal = () => {
         let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
-        let startCity = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_start;
-        let endCity = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_end;
-        let startCityId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_start_id;
-        let endCityId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].route_end_id;
-
-        this.props.initEditLogAddressModalData(orderId, startCity, endCity, startCityId, endCityId);
+        this.props.initEditLogAddressModalData(orderId);
         $('#editLogAddressModal').modal('open');
     };
 
@@ -105,7 +99,7 @@ class TransDemandManagerDetail extends React.Component {
                 <div className="row">
                     {/* 头部 */}
                     <div className="col s12">
-                        {/* 询价详情：基本信息 */}
+                        {/* 基本信息 */}
                         <div className="trans-demand-header">
                             <div className="col s9 margin-top5 grey-text text-darken-1">
                                 <div className="pink-font">订单编号：{transDemandManagerDetailReducer.transDemandInfo[0].order_id}</div>
@@ -182,7 +176,6 @@ class TransDemandManagerDetail extends React.Component {
                         <EditLogAddressModal/>
                         <NewLoadTaskModal/>
                         <LoadTaskCarDetailModal/>
-                        <CancelInquiryModal/>
 
                         <div className="row margin-top20 margin-bottom5 pink-font">
                             <div className="col s6">
@@ -290,8 +283,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(commonAction.getOrderCarList(orderId));
     },
     // 显示/修改 收发货地址
-    initEditLogAddressModalData: (orderId, startCity, endCity, startCityId, endCityId) => {
-        dispatch(editLogAddressModalAction.initEditLogAddressModal(orderId, startCity, endCity, startCityId, endCityId));
+    initEditLogAddressModalData: (orderId) => {
+        dispatch(editLogAddressModalAction.initEditLogAddressModal(orderId));
     },
     // 进行同步/显示同步信息
     syncLoadTask: (loadTaskId, hookId) => {

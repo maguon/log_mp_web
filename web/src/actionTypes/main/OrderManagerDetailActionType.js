@@ -9,5 +9,7 @@ export const getOrderPaymentArray = createAction('GET_ORDER_PAYMENT_DATA_ARRAY')
 export const getOrderRefundApplyArray = createAction('GET_ORDER_REFUND_APPLY_ARRAY');
 export const setOrderPaymentRemark = createAction('SET_ORDER_PAYMENT_REMARK');
 
+// export const getTransDemandInfo = createAction('GET_ORDER_TRANS_DEMAND_INFO');
+// export const getLoadTaskList = createAction('GET_ORDER_LOAD_TASK_LIST');
 
 export const getInvoiceArray = createAction('GET_INVOICE_LIST');

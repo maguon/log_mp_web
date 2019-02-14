@@ -162,3 +162,25 @@ export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (di
         }
     });
 };
+
+// 取得需求基本信息
+export const getTransDemandInfoByOrder = (orderId) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/requireTask?orderId=' + orderId;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: TransDemandManagerDetailActionType.getTransDemandInfo, payload: res.result});
+            // 若 有数据
+            if (res.result.length > 0) {
+                // 安排线路列表
+                dispatch(getLoadTaskList(orderId, res.result[0].id));
+            }
+        } else if (res.success === false) {
+            swal('获取运输需求详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};

@@ -17,7 +17,13 @@ import {
     CancelOrderModal,
     NewPaymentModal,
     NewRefundModal,
-    NewInvoiceModal
+    NewInvoiceModal,
+
+
+    NewLoadTaskModal,
+    LoadTaskCarDetailModal,
+    EditLogAddressModal,
+    SyncInfoModal
 } from '../modules/index';
 
 const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
@@ -26,6 +32,11 @@ const editOrderCarModalAction = require('../../actions/modules/EditOrderCarModal
 const newPaymentModalAction = require('../../actions/modules/NewPaymentModalAction');
 const newRefundModalAction = require('../../actions/modules/NewRefundModalAction');
 const newInvoiceModalAction = require('../../actions/modules/NewInvoiceModalAction');
+const transDemandManagerDetailAction = require('../../actions/main/TransDemandManagerDetailAction');
+const newLoadTaskModalAction = require('../../actions/modules/NewLoadTaskModalAction');
+const loadTaskCarDetailModalAction = require('../../actions/modules/LoadTaskCarDetailModalAction');
+const editLogAddressModalAction = require('../../actions/modules/EditLogAddressModalAction');
+const syncInfoModalAction = require('../../actions/modules/SyncInfoModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -163,6 +174,34 @@ class OrderManagerDetail extends React.Component {
     };
 
 
+    /**
+     * 运输信息TAB：收发货地址 按钮
+     */
+    showEditLogAddressModal = () => {
+        this.props.initEditLogAddressModalData();
+        $('#editLogAddressModal').modal('open');
+    };
+
+    /**
+     * 运输信息TAB：显示 线路安排 模态画面
+     */
+    showNewLoadTaskModal = (pageId, loadTaskId) => {
+        let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
+        let requireId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].id;
+        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId);
+        $('#newLoadTaskModal').modal('open');
+    };
+
+    /**
+     * 运输信息TAB：显示 车辆安排 模态画面
+     */
+    showLoadTaskCarDetailModal = (loadTaskId) => {
+        let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
+        let requireId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].id;
+        this.props.initLoadTaskCarDetailModal(orderId, requireId, loadTaskId);
+        $('#loadTaskCarDetailModal').modal('open');
+    };
+
 
     /**
      * 发票信息TAB：显示 申请开票 模态画面
@@ -181,10 +220,10 @@ class OrderManagerDetail extends React.Component {
 
     render() {
         const {
-            orderManagerDetailReducer, commonReducer,
-            getOrderInfo, getPaymentInfo, getLogInfo, getInvoiceList, getOperationList,generateTransTask,
-            changeInquiryConditionStartCity, changeInquiryConditionEndCity,
-            changeInquiryConditionServiceType, changeInquiryConditionStatus,
+            commonReducer, orderManagerDetailReducer, transDemandManagerDetailReducer,
+            getOrderInfo, getPaymentInfo, getTransDemandInfo, getInvoiceList, getOperationList,generateTransTask,
+            changeRequireStatus,
+            syncLoadTask, deleteLoadTask,changeLoadTaskStatus,
             saveOrderRemark,saveOrderPaymentRemark
         } = this.props;
         return (
@@ -258,7 +297,7 @@ class OrderManagerDetail extends React.Component {
                         <ul className="tabs">
                             <li className="tab col s-percent-20"><a href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
                             <li className="tab col s-percent-20"><a className="active" href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getLogInfo}>运输信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getTransDemandInfo}>运输信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>
                         </ul>
@@ -684,29 +723,136 @@ class OrderManagerDetail extends React.Component {
 
                     {/* TAB 3 : 运输信息TAB */}
                     <div id="tab-log-info" className="col s12">
-                        {orderManagerDetailReducer.bankCardArray.length === 0 &&
-                        <div className="row center grey-text margin-top40 fz18">
-                            该用户暂未绑定银行卡
+
+                        {transDemandManagerDetailReducer.transDemandInfo.length === 0 &&
+                        <div className="row center margin-top50 grey-text">
+                            暂无运输信息
                         </div>}
-                        {orderManagerDetailReducer.bankCardArray.length > 0 && <div className="row margin-top40 margin-bottom0 margin-left50 margin-right50 divider grey-border"/>}
-                        {orderManagerDetailReducer.bankCardArray.map(function (item) {
-                            return (
-                                <div className="row margin-bottom0 margin-left50 margin-right50 grey-text text-darken-1">
-                                    <div className="row margin-top10 margin-bottom10 padding-left10 padding-right10">
-                                        <div className="col s11">
-                                            <i className={`mdi mdi-credit-card fz20 ${item.status === 1 ? "purple-font" : "grey-text"}`}/>
-                                            <span className="margin-left50">{item.bank}</span>
-                                            <span className="margin-left30">{item.bank_code}</span>
-                                            <span className="margin-left50">{item.account_name}</span>
-                                        </div>
-                                        <div className="col s1 right-align pink-font margin-top5">
-                                            {item.status === 1 && '默认'}
-                                        </div>
-                                    </div>
-                                    <div className="row margin-bottom0 divider grey-border"/>
+                        {transDemandManagerDetailReducer.transDemandInfo.length > 0 &&
+                        <div>
+                            <div className="padding-top10 grey-text text-darken-1">
+                                <div className="col s6 padding-left30">需求创建时间：{formatUtil.getDateTime(transDemandManagerDetailReducer.transDemandInfo[0].created_on)}</div>
+                                <div className="col s6 padding-right30 right-align pink-font">
+                                    {commonUtil.getJsonValue(sysConst.TRANS_DEMAND_STATUS,transDemandManagerDetailReducer.transDemandInfo[0].status)}
                                 </div>
-                            )
-                        })}
+                                <div className="col s12 divider custom-divider margin-top10"/>
+                            </div>
+
+                            {/* 待安排 */}
+                            {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value &&
+                            <div className="col s12 margin-top20 padding-left50 padding-right50">
+                                {/** 开始安排 按钮 */}
+                                <div className="row margin-bottom10 right-align">
+                                    <button type="button" className="btn confirm-btn margin-left20" onClick={() => {changeRequireStatus(transDemandManagerDetailReducer.transDemandInfo[0].id)}}>开始安排</button>
+                                </div>
+                            </div>}
+
+                            {/* 已安排 */}
+                            {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                            <div className="col s12 margin-top20 padding-left50 padding-right50">
+                                {/** 收发货地址/增加线路 按钮 */}
+                                <div className="row margin-bottom10 right-align">
+                                    {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
+                                    <button type="button" className="btn custom-btn" onClick={this.showEditLogAddressModal}>收发货地址</button>}
+                                    {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value ||
+                                        transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value) &&
+                                    <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>}
+                                </div>
+                                <SyncInfoModal/>
+                                <EditLogAddressModal/>
+                                <NewLoadTaskModal/>
+                                <LoadTaskCarDetailModal/>
+
+                                <div className="row margin-top20 margin-bottom5 pink-font">
+                                    <div className="col s6">
+                                        <i className="mdi mdi-truck fz20"/>
+                                        <span className="margin-left10 fz16">运输线路</span>
+                                    </div>
+                                    <div className="col s6 margin-top5 right-align">线路数：{formatUtil.formatNumber(transDemandManagerDetailReducer.loadTaskArray.length)}</div>
+                                </div>
+                                <div className="row divider bold-divider"/>
+
+                                {/* 运输线路列表 */}
+                                {transDemandManagerDetailReducer.loadTaskArray.map(function (item) {
+                                    return (
+                                        <div className="row margin-top20 detail-box z-depth-1 grey-text">
+                                            <div className="col s12 padding-bottom10 custom-grey border-bottom-line">
+                                                <div className="col s6 margin-top10">
+                                                    <span className="fz16 purple-font bold-font">{item.route_start} -- {item.route_end}</span>
+                                                    {item.trans_type === 1 && <i className="mdi mdi-truck-fast fz20 pink-font margin-left30"/>}
+                                                    {item.trans_type === 2 && <i className="mdi mdi-ferry fz20 pink-font margin-left30"/>}
+                                                    <span className="margin-left30 grey-text text-darken-2">{item.supplier_short}</span>
+                                                </div>
+                                                <div className="col s6 fz20 pink-font margin-top10 right-align">
+                                                    {item.close_flag === 0 &&
+                                                    <i className="mdi mdi-sync pointer" onClick={() => {
+                                                        syncLoadTask(transDemandManagerDetailReducer.transDemandInfo[0].id, item.id, item.hook_id)
+                                                    }}/>}
+
+                                                    {item.hook_id == null && <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {this.showNewLoadTaskModal('edit',item.id)}}/>}
+                                                    {item.hook_id != null && <i className="mdi mdi-car margin-left30 pointer" onClick={() => {this.showLoadTaskCarDetailModal(item.id)}}/>}
+                                                    <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.require_id, item.id)}}/>
+                                                </div>
+                                            </div>
+
+                                            <div className="col s12 padding-top15 padding-bottom10">
+                                                <div className="col s6">线路编号：{item.id}</div>
+                                                <div className="col s6 right-align">线路创建时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                            </div>
+
+                                            <div className="col s12 padding-bottom15 border-bottom-line grey-text text-darken-2">
+                                                <div className="col s6">安排车辆数：<span className="fz16 pink-font">{formatUtil.formatNumber(item.car_count)}</span></div>
+                                                <div className="col s6 right-align">预计发货时间：{item.plan_date}</div>
+                                            </div>
+
+                                            <div className="col s12 padding-top15 padding-bottom15">
+                                                <div className="col s11 no-padding">
+                                                    {/* 待发运 */}
+                                                    <div className="col s-percent-5"><i className="mdi mdi-checkbox-marked-circle fz36 pink-font"/></div>
+                                                    <div className="col s-percent-7 no-padding">
+                                                        <div className="margin-top5 pink-font">{sysConst.LOAD_TASK_STATUS[0].label}</div>
+                                                        <div>{formatUtil.getDate(item.created_on)}</div>
+                                                    </div>
+
+                                                    {/* 分割线 */}
+                                                    <div className="col s-percent-31"><div className="col s12 bold-divider margin-top25"/></div>
+
+                                                    {/* 已发运 */}
+                                                    <div className="col s-percent-5"><i className={`mdi mdi-checkbox-marked-circle fz36 ${item.load_task_status !== sysConst.LOAD_TASK_STATUS[0].value ? "pink-font" : ""}`}/></div>
+                                                    <div className="col s-percent-7 no-padding">
+                                                        <div className={`${item.load_task_status !== sysConst.LOAD_TASK_STATUS[0].value ? "margin-top5 pink-font" : "margin-top15"}`}>{sysConst.LOAD_TASK_STATUS[1].label}</div>
+                                                        <div>{item.load_date}</div>
+                                                    </div>
+
+                                                    {/* 分割线 */}
+                                                    <div className="col s-percent-31"><div className="col s12 bold-divider margin-top25"/></div>
+
+                                                    {/* 已送达 */}
+                                                    <div className="col s-percent-5"><i className={`mdi mdi-checkbox-marked-circle fz36 ${item.load_task_status === sysConst.LOAD_TASK_STATUS[2].value ? "pink-font" : ""}`}/></div>
+                                                    <div className="col s-percent-7 no-padding">
+                                                        <div className={`${item.load_task_status === sysConst.LOAD_TASK_STATUS[2].value ? "margin-top5 pink-font" : "margin-top15"}`}>{sysConst.LOAD_TASK_STATUS[2].label}</div>
+                                                        <div>{item.arrive_date}</div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="col s1 no-padding margin-top15 center">
+                                                    {item.load_task_status !== sysConst.LOAD_TASK_STATUS[2].value &&
+                                                    <button type="button" className="btn purple-btn btn-height24 fz14" onClick={() => {changeLoadTaskStatus(item.require_id, item.id, item.load_task_status)}}>变更状态</button>}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                }, this)}
+                            </div>}
+
+                        </div>}
+
+
+
+
+
+
+
                     </div>
 
                     {/* TAB 4 : 发票信息TAB */}
@@ -791,6 +937,7 @@ class OrderManagerDetail extends React.Component {
 const mapStateToProps = (state) => {
     return {
         orderManagerDetailReducer: state.OrderManagerDetailReducer,
+        transDemandManagerDetailReducer: state.TransDemandManagerDetailReducer,
         commonReducer: state.CommonReducer
     }
 };
@@ -874,11 +1021,58 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(orderManagerDetailAction.saveOrderPaymentRemark(ownProps.match.params.id))
     },
 
-
     // TAB3：运输信息
-    getLogInfo: () => {
-        dispatch(orderManagerDetailAction.getBankCardList(ownProps.match.params.id))
+
+    // 取得需求基本信息
+    getTransDemandInfo: () => {
+        dispatch(transDemandManagerDetailAction.getTransDemandInfoByOrder(ownProps.match.params.id));
     },
+    // 更新需求状态
+    changeRequireStatus: (requireId) => {
+        dispatch(transDemandManagerDetailAction.changeStatus(requireId));
+    },
+    // 显示/修改 收发货地址
+    initEditLogAddressModalData: () => {
+        dispatch(editLogAddressModalAction.initEditLogAddressModal(ownProps.match.params.id));
+    },
+    // 进行同步/显示同步信息
+    syncLoadTask: (requireId, loadTaskId, hookId) => {
+        // 没同步的进行同步
+        if (hookId == null) {
+            dispatch(transDemandManagerDetailAction.syncLoadTask(requireId, loadTaskId));
+        } else {
+            dispatch(syncInfoModalAction.initSyncInfoModal(loadTaskId));
+            // 显示同步信息
+            $('#syncInfoModal').modal('open');
+        }
+    },
+    // 增加/修改 线路安排
+    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId) => {
+        // 初始化画面
+        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId));
+        // 城市列表
+        dispatch(commonAction.getCityList());
+        // 供应商列表
+        dispatch(commonAction.getSupplierList());
+    },
+    // 车辆安排
+    initLoadTaskCarDetailModal: (orderId, requireId, loadTaskId) => {
+        // 初始化画面
+        dispatch(loadTaskCarDetailModalAction.initLoadTaskCarDetailModal(orderId, requireId, loadTaskId));
+    },
+    // 删除指定线路
+    deleteLoadTask: (requireId, loadTaskId) => {
+        dispatch(transDemandManagerDetailAction.deleteLoadTask(ownProps.match.params.id, requireId, loadTaskId));
+    },
+    // 更新线路状态
+    changeLoadTaskStatus: (requireId, loadTaskId, status) => {
+        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(requireId, loadTaskId, status));
+    },
+
+
+
+
+
     // TAB4：发票信息
     getInvoiceList: () => {
         dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))

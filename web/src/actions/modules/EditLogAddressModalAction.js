@@ -6,19 +6,9 @@ const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
 // 收发货地址画面 初期
-export const initEditLogAddressModal = (orderId, startCity, endCity, startCityId, endCityId) => async (dispatch) => {
+export const initEditLogAddressModal = (orderId) => async (dispatch) => {
     // 订单ID
     dispatch({type: EditLogAddressModalActionType.setOrderId, payload: orderId});
-
-    // 发货城市
-    dispatch({type: EditLogAddressModalActionType.setSendCity, payload: startCity});
-    // 发货地址列表
-    dispatch(getLogSiteList('send', startCityId));
-
-    // 收货城市
-    dispatch({type: EditLogAddressModalActionType.setRecvCity, payload: endCity});
-    // 收货地址列表
-    dispatch(getLogSiteList('receive', endCityId));
 
     // 发货地址 / 收货地址 （订单信息）
     dispatch(getOrderInfo(orderId));
@@ -33,12 +23,21 @@ export const getOrderInfo = (orderId) => async (dispatch) => {
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             if (res.result.length > 0) {
+                // 发货城市
+                dispatch({type: EditLogAddressModalActionType.setSendCity, payload: res.result[0].route_start});
+                // 发货地址列表
+                dispatch(getLogSiteList('send', res.result[0].route_start_id));
                 // 发货地址
                 if (res.result[0].send_address_point_id != null) {
                     dispatch({type: EditLogAddressModalActionType.setSendAddress, payload: {value: res.result[0].send_address_point_id, label: res.result[0].send_address_point}});
                 } else {
                     dispatch({type: EditLogAddressModalActionType.setSendAddress, payload: null});
                 }
+
+                // 收货城市
+                dispatch({type: EditLogAddressModalActionType.setRecvCity, payload: res.result[0].route_end});
+                // 收货地址列表
+                dispatch(getLogSiteList('receive', res.result[0].route_end_id));
                 // 收货地址
                 if (res.result[0].recv_address_point_id != null) {
                     dispatch({type: EditLogAddressModalActionType.setRecvAddress, payload: {value: res.result[0].recv_address_point_id, label: res.result[0].recv_address_point}});
@@ -86,10 +85,10 @@ export const saveLogAddress = () => async (dispatch, getState) => {
             swal('保存失败', '请输入完整的地址信息！', 'warning');
         } else {
             const params = {
-                "sendAddressPointId": sendAddress.value,
-                "sendAddressPoint": sendAddress.label,
-                "recvAddressPointId": recvAddress.value,
-                "recvAddressPoint": recvAddress.label
+                sendAddressPointId: sendAddress.value,
+                sendAddressPoint: sendAddress.label,
+                recvAddressPointId: recvAddress.value,
+                recvAddressPoint: recvAddress.label
             };
 
             // 基本url

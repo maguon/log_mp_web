@@ -1,5 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
-import {OrderManagerDetailActionType} from '../../actionTypes';
+import {OrderManagerDetailActionType, TransDemandManagerDetailActionType} from '../../actionTypes';
 
 const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
@@ -247,6 +247,12 @@ export const saveOrderPaymentRemark = (id) => async (dispatch, getState) => {
         swal('操作失败', err.message, 'error');
     }
 };
+
+
+
+
+
+
 
 export const getInvoiceList = (id) => async (dispatch) => {
     try {

@@ -699,6 +699,10 @@ table.striped > tbody > tr:nth-child(odd) {
     padding-right: 100px !important;
 }
 
+.padding-top5 {
+    padding-top: 5px !important;
+}
+
 .padding-top10 {
     padding-top: 10px !important;
 }
@@ -1129,7 +1133,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 606px;
 }
 
-#newRefundModal, #orderInfoModal{
+#newRefundModal, #orderInfoModal, #syncInfoModal{
     width: 1200px;
     max-height: 616px;
 }
@@ -1142,11 +1146,12 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 538px;
 }
 
-#newInvoiceModal{
+#newInvoiceModal, #editLogAddressModal{
     max-height: 580px;
 }
 
-#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal, #editCompanyBankModal, #newAdminModal {
+#newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal,
+#editCompanyBankModal, #newAdminModal {
     max-height: 456px;
 }
 

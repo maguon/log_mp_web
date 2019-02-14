@@ -264,21 +264,6 @@ class NewLoadTaskModal extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr className="grey-text text-darken-1">
-                                            <td className="padding-left10">1</td>
-                                            <td className="center">1</td>
-                                            <td className="center">1</td>
-                                            <td className="center">1</td>
-                                            <td className="right-align">1</td>
-                                            <td className="center">1</td>
-                                            <td className="center">1</td>
-                                            <td className="right-align width-150">1
-                                            </td>
-                                            <td className="right-align width-200">1
-                                            </td>
-                                            <td className="center">1
-                                            </td>
-                                        </tr>
                                         {newLoadTaskModalReducer.unscheduledCarList.map(function (item, key) {
                                             return (
                                                 <tr className="grey-text text-darken-1">

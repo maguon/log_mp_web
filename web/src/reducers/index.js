@@ -69,6 +69,7 @@ import NewAdminModalReducer from './modules/NewAdminModalReducer';
 import NewLoadTaskModalReducer from './modules/NewLoadTaskModalReducer';
 import LoadTaskCarDetailModalReducer from './modules/LoadTaskCarDetailModalReducer';
 import EditLogAddressModalReducer from './modules/EditLogAddressModalReducer';
+import SyncInfoModalReducer from './modules/SyncInfoModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -139,4 +140,5 @@ export default combineReducers({
     NewLoadTaskModalReducer,
     LoadTaskCarDetailModalReducer,
     EditLogAddressModalReducer,
+    SyncInfoModalReducer
 })

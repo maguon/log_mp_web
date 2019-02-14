@@ -2,13 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {CommonActionType} from '../../actionTypes';
-import {NewLoadTaskModal, LoadTaskCarDetailModal, CancelInquiryModal, OrderInfoModal, EditLogAddressModal} from '../modules/index';
+import {NewLoadTaskModal, LoadTaskCarDetailModal, CancelInquiryModal, OrderInfoModal, EditLogAddressModal, SyncInfoModal} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');
 const transDemandManagerDetailAction = require('../../actions/main/TransDemandManagerDetailAction');
 const newLoadTaskModalAction = require('../../actions/modules/NewLoadTaskModalAction');
 const loadTaskCarDetailModalAction = require('../../actions/modules/LoadTaskCarDetailModalAction');
 const editLogAddressModalAction = require('../../actions/modules/EditLogAddressModalAction');
+const syncInfoModalAction = require('../../actions/modules/SyncInfoModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -170,6 +171,7 @@ class TransDemandManagerDetail extends React.Component {
                               transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value) &&
                             <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>}
                         </div>
+                        <SyncInfoModal/>
                         <EditLogAddressModal/>
                         <NewLoadTaskModal/>
                         <LoadTaskCarDetailModal/>
@@ -196,7 +198,7 @@ class TransDemandManagerDetail extends React.Component {
                                             <span className="margin-left30 grey-text text-darken-2">{item.supplier_short}</span>
                                         </div>
                                         <div className="col s6 fz20 pink-font margin-top10 right-align">
-                                            {item.close_flag === 0 && <i className="mdi mdi-sync pointer" onClick={() => {syncLoadTask(item.id)}}/>}
+                                            {item.close_flag === 0 && <i className="mdi mdi-sync pointer" onClick={() => {syncLoadTask(item.id, item.hook_id)}}/>}
 
                                             {item.hook_id == null && <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {this.showNewLoadTaskModal('edit',item.id)}}/>}
                                             {item.hook_id != null && <i className="mdi mdi-car margin-left30 pointer" onClick={() => {this.showLoadTaskCarDetailModal(item.id)}}/>}
@@ -271,10 +273,11 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    // 取得需求基本信息
     getTransDemandInfo: () => {
         dispatch(transDemandManagerDetailAction.getTransDemandInfo(ownProps.match.params.id));
     },
-    // 更新线路状态
+    // 更新需求状态
     changeStatus: () => {
         dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id));
     },
@@ -284,18 +287,22 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(commonAction.getOrderInfo(orderId));
         dispatch(commonAction.getOrderCarList(orderId));
     },
-    // 收发货地址
+    // 显示/修改 收发货地址
     initEditLogAddressModalData: (orderId, startCity, endCity, startCityId, endCityId) => {
         dispatch(editLogAddressModalAction.initEditLogAddressModal(orderId, startCity, endCity, startCityId, endCityId));
     },
-
-
-
-
-
-
-
-    // 线路安排
+    // 进行同步/显示同步信息
+    syncLoadTask: (loadTaskId, hookId) => {
+        // 没同步的进行同步
+        if (hookId == null) {
+            dispatch(transDemandManagerDetailAction.syncLoadTask(ownProps.match.params.id, loadTaskId));
+        } else {
+            dispatch(syncInfoModalAction.initSyncInfoModal(loadTaskId));
+            // 显示同步信息
+            $('#syncInfoModal').modal('open');
+        }
+    },
+    // 增加/修改 线路安排
     initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId) => {
         // 初始化画面
         dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId));
@@ -308,10 +315,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     initLoadTaskCarDetailModal: (orderId, requireId, loadTaskId) => {
         // 初始化画面
         dispatch(loadTaskCarDetailModalAction.initLoadTaskCarDetailModal(orderId, requireId, loadTaskId));
-    },
-    // 删除指定线路
-    syncLoadTask: (loadTaskId) => {
-        dispatch(transDemandManagerDetailAction.syncLoadTask(ownProps.match.params.id, loadTaskId));
     },
     // 删除指定线路
     deleteLoadTask: (orderId, loadTaskId) => {

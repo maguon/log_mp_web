@@ -336,6 +336,46 @@ export const LOAD_TASK_STATUS = [
     }
 ];
 
+// 供应商同步相关状态：需求状态
+export const SUPPLIER_DEMAND_STATUS = [
+    {
+        value: 0,
+        label: "取消"
+    },
+    {
+        value: 1,
+        label: "正常"
+    },
+    {
+        value: 2,
+        label: "完成"
+    }
+];
+
+// 供应商同步相关状态：任务状态
+export const SUPPLIER_LOAD_TASK_STATUS = [
+    {
+        value: 1,
+        label: "未装车"
+    },
+    {
+        value: 3,
+        label: "已装车"
+    },
+    {
+        value: 7,
+        label: "已到达"
+    },
+    {
+        value: 8,
+        label: "取消任务"
+    },
+    {
+        value: 9,
+        label: "已完成"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

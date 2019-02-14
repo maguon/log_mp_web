@@ -66,6 +66,7 @@ import * as NewAdminModalActionType  from './modules/NewAdminModalActionType';
 import * as NewLoadTaskModalActionType  from './modules/NewLoadTaskModalActionType';
 import * as LoadTaskCarDetailModalActionType  from './modules/LoadTaskCarDetailModalActionType';
 import * as EditLogAddressModalActionType  from './modules/EditLogAddressModalActionType';
+import * as SyncInfoModalActionType  from './modules/SyncInfoModalActionType';
 
 export  {
     LoginActionType,
@@ -134,5 +135,6 @@ export  {
     NewAdminModalActionType,
     NewLoadTaskModalActionType,
     LoadTaskCarDetailModalActionType,
-    EditLogAddressModalActionType
+    EditLogAddressModalActionType,
+    SyncInfoModalActionType
 }

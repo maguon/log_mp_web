@@ -257,13 +257,13 @@ export const goNext = () => async (dispatch, getState) => {
                 let res = await httpUtil.httpPost(url, {});
                 if (res.success === true) {
                     swal("同步成功", "", "success");
-                    $('#newLoadTaskModal').modal('close');
+                    // 运输需求 - 线路安排 刷新安排线路列表
+                    dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
                 } else if (res.success === false) {
                     swal('同步失败', res.msg, 'warning');
                 }
-            } else {
-                $('#newLoadTaskModal').modal('close');
             }
+            $('#newLoadTaskModal').modal('close');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

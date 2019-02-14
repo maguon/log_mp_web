@@ -2,7 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {CommonActionType} from '../../actionTypes';
-import {NewLoadTaskModal, LoadTaskCarDetailModal, CancelInquiryModal, OrderInfoModal, EditLogAddressModal, SyncInfoModal} from '../modules/index';
+import {
+    NewLoadTaskModal,
+    LoadTaskCarDetailModal,
+    CancelInquiryModal,
+    OrderInfoModal,
+    EditLogAddressModal,
+    SyncInfoModal
+} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');
 const transDemandManagerDetailAction = require('../../actions/main/TransDemandManagerDetailAction');
@@ -182,7 +189,7 @@ class TransDemandManagerDetail extends React.Component {
                                 <i className="mdi mdi-truck fz20"/>
                                 <span className="margin-left10 fz16">运输线路</span>
                             </div>
-                            <div className="col s6 margin-top5 right-align">线路数：{formatUtil.formatNumber(transDemandManagerDetailReducer.transDemandInfo[0].status)}</div>
+                            <div className="col s6 margin-top5 right-align">线路数：{formatUtil.formatNumber(transDemandManagerDetailReducer.loadTaskArray.length)}</div>
                         </div>
                         <div className="row divider bold-divider"/>
 
@@ -247,19 +254,14 @@ class TransDemandManagerDetail extends React.Component {
                                         </div>
 
                                         <div className="col s1 no-padding margin-top15 center">
-                                            <button type="button" className="btn purple-btn btn-height24 fz14" onClick={() => {changeLoadTaskStatus(item.id, item.load_task_status)}}>变更状态</button>
+                                            {item.load_task_status !== sysConst.LOAD_TASK_STATUS[2].value &&
+                                            <button type="button" className="btn purple-btn btn-height24 fz14" onClick={() => {changeLoadTaskStatus(item.id, item.load_task_status)}}>变更状态</button>}
                                         </div>
                                     </div>
                                 </div>
                             )
                         }, this)}
                     </div>}
-
-
-
-
-
-
                 </div>}
             </div>
         )

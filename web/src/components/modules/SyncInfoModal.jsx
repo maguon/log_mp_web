@@ -57,7 +57,7 @@ class SyncInfoModal extends React.Component {
                         <div className="col s12 padding-bottom15 border-bottom-line">
                             <div className="col s4">派送车辆：{formatUtil.formatNumber(syncInfoModalReducer.syncRequireInfo[0].pre_count)}</div>
                             <div className="col s4">已派车辆：{formatUtil.formatNumber(syncInfoModalReducer.syncRequireInfo[0].plan_count)}</div>
-                            <div className="col s4 right-align">需求生成时间：{formatUtil.number2date(syncInfoModalReducer.syncRequireInfo[0].date_id)}</div>
+                            <div className="col s4 right-align">指令日期：{formatUtil.number2date(syncInfoModalReducer.syncRequireInfo[0].date_id)}</div>
                         </div>
                     </div>}
 

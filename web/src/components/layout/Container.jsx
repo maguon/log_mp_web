@@ -39,6 +39,8 @@ import {
     AdminUserSettingDetail,
     TransDemandManager,
     TransDemandManagerDetail,
+    LoadTaskManager,
+    LoadTaskManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -190,6 +192,29 @@ const routes = [
         exact: true,
         component: RefundApplyManagerDetail
     },
+    {
+        // 运输需求管理
+        path: "/trans_demand",
+        exact: true,
+        component: TransDemandManager
+    },
+    {
+        path: '/trans_demand/:id',
+        exact: true,
+        component: TransDemandManagerDetail
+    },
+    {
+        // 线路管理
+        path: "/load_task",
+        exact: true,
+        component: LoadTaskManager
+    },
+    {
+        path: '/load_task/:id',
+        exact: true,
+        component: LoadTaskManagerDetail
+    },
+
 
     // 设置模块
     {
@@ -251,17 +276,6 @@ const routes = [
         path: '/admin_user_setting/:id',
         exact: true,
         component: AdminUserSettingDetail
-    },
-    {
-        // 运输需求管理
-        path: "/trans_demand",
-        exact: true,
-        component: TransDemandManager
-    },
-    {
-        path: '/trans_demand/:id',
-        exact: true,
-        component: TransDemandManagerDetail
     },
 ];
 
@@ -367,6 +381,10 @@ class Container extends React.Component {
                     {
                         "link": '/trans_demand',
                         "name": '运输需求'
+                    },
+                    {
+                        "link": '/load_task',
+                        "name": '线路管理'
                     }
                 ]
             }, {

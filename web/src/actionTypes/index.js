@@ -40,6 +40,8 @@ import * as AdminUserSettingActionType  from './main/AdminUserSettingActionType'
 import * as AdminUserSettingDetailActionType  from './main/AdminUserSettingDetailActionType';
 import * as TransDemandManagerActionType  from './main/TransDemandManagerActionType';
 import * as TransDemandManagerDetailActionType  from './main/TransDemandManagerDetailActionType';
+import * as LoadTaskManagerActionType  from './main/LoadTaskManagerActionType';
+import * as LoadTaskManagerDetailActionType  from './main/LoadTaskManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -110,6 +112,8 @@ export  {
     AdminUserSettingDetailActionType,
     TransDemandManagerActionType,
     TransDemandManagerDetailActionType,
+    LoadTaskManagerActionType,
+    LoadTaskManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

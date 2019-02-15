@@ -25,6 +25,8 @@ export InvoiceManager from "./InvoiceManager";
 export InvoiceManagerDetail from "./InvoiceManagerDetail";
 export TransDemandManager from "./TransDemandManager";
 export TransDemandManagerDetail from "./TransDemandManagerDetail";
+export LoadTaskManager from "./LoadTaskManager";
+export LoadTaskManagerDetail from "./LoadTaskManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

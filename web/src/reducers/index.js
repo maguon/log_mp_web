@@ -43,6 +43,8 @@ import AdminUserSettingReducer from './main/AdminUserSettingReducer';
 import AdminUserSettingDetailReducer from './main/AdminUserSettingDetailReducer';
 import TransDemandManagerReducer from './main/TransDemandManagerReducer';
 import TransDemandManagerDetailReducer from './main/TransDemandManagerDetailReducer';
+import LoadTaskManagerReducer from './main/LoadTaskManagerReducer';
+import LoadTaskManagerDetailReducer from './main/LoadTaskManagerDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -114,6 +116,8 @@ export default combineReducers({
     AdminUserSettingDetailReducer,
     TransDemandManagerReducer,
     TransDemandManagerDetailReducer,
+    LoadTaskManagerReducer,
+    LoadTaskManagerDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

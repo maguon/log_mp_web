@@ -120,6 +120,18 @@ export const WE_CHAT_STATUS = [
     }
 ];
 
+// 运输方式 for 线路管理
+export const TRANSPORT_TYPE = [
+    {
+        value: 1,
+        label: "陆运"
+    },
+    {
+        value: 2,
+        label: "海运"
+    }
+];
+
 // 运输方式
 export const TRANSPORT_MODE = [
     {
@@ -317,6 +329,10 @@ export const TRANS_DEMAND_STATUS = [
     {
         value: 1,
         label: "已安排"
+    },
+    {
+        value: 9,
+        label: "已完成"
     }
 ];
 

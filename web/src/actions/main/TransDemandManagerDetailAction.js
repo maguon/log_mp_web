@@ -29,9 +29,9 @@ export const getTransDemandInfo = (requireId) => async (dispatch) => {
 };
 
 // 更新需求状态
-export const changeStatus = (requireId) => async (dispatch) => {
+export const changeStatus = (requireId, status) => async (dispatch) => {
     swal({
-        title: "确定将状态变更为已安排？",
+        title: status === sysConst.TRANS_DEMAND_STATUS[1].value ? "确定将状态变更为已安排？" : "确定将状态变更为已完成？",
         text: "状态变更后将不可修改",
         type: "warning",
         showCancelButton: true,
@@ -41,7 +41,7 @@ export const changeStatus = (requireId) => async (dispatch) => {
     }).then(async function (isConfirm) {
         if (isConfirm && isConfirm.value === true) {
             const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/requireTask/' + requireId + '/status/' + sysConst.TRANS_DEMAND_STATUS[1].value;
+                + '/requireTask/' + requireId + '/status/' + status;
             const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
                 dispatch(getTransDemandInfo(requireId));
@@ -100,7 +100,7 @@ export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
 };
 
 // 删除指定线路
-export const deleteLoadTask = (orderId, requireId, loadTaskId) => async (dispatch) => {
+export const deleteLoadTask = (requireId, loadTaskId) => async (dispatch) => {
     try {
         swal({
             title: "确定删除该线路？",
@@ -113,8 +113,7 @@ export const deleteLoadTask = (orderId, requireId, loadTaskId) => async (dispatc
         }).then(async function (isConfirm) {
             if (isConfirm && isConfirm.value === true) {
                 // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/order/' + orderId + '/require/' + requireId + '/loadTask/' + loadTaskId;
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/loadTask/' + loadTaskId;
                 const res = await httpUtil.httpDelete(url);
                 if (res.success === true) {
                     dispatch(getTransDemandInfo(requireId));

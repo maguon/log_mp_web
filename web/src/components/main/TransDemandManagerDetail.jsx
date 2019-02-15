@@ -157,21 +157,21 @@ class TransDemandManagerDetail extends React.Component {
                     <div className="col s12 margin-top20 padding-left50 padding-right50">
                         {/** 开始安排 按钮 */}
                         <div className="row margin-bottom10 right-align">
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={changeStatus}>开始安排</button>
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {changeStatus(sysConst.TRANS_DEMAND_STATUS[1].value)}}>开始安排</button>
                         </div>
                     </div>}
 
-                    {/* 已安排 */}
-                    {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                    {/* 已安排/已完成 */}
+                    {transDemandManagerDetailReducer.transDemandInfo[0].status !== sysConst.TRANS_DEMAND_STATUS[0].value &&
                     <div className="col s12 margin-top20 padding-left50 padding-right50">
-                        {/** 收发货地址/增加线路 按钮 */}
+                        {/** 已安排：收发货地址/增加线路 按钮 */}
+                        {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
                         <div className="row margin-bottom10 right-align">
                             {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
                             <button type="button" className="btn custom-btn" onClick={this.showEditLogAddressModal}>收发货地址</button>}
-                            {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[0].value ||
-                              transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value) &&
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>}
-                        </div>
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>
+                            <button type="button" className="btn orange-btn margin-left20" onClick={() => {changeStatus(sysConst.TRANS_DEMAND_STATUS[2].value)}}>完成需求</button>
+                        </div>}
                         <SyncInfoModal/>
                         <EditLogAddressModal/>
                         <NewLoadTaskModal/>
@@ -198,11 +198,28 @@ class TransDemandManagerDetail extends React.Component {
                                             <span className="margin-left30 grey-text text-darken-2">{item.supplier_short}</span>
                                         </div>
                                         <div className="col s6 fz20 pink-font margin-top10 right-align">
-                                            {item.close_flag === 0 && <i className="mdi mdi-sync pointer" onClick={() => {syncLoadTask(item.id, item.hook_id)}}/>}
+                                            {/* 同步图标，仅在供应商为 可同步的时候 显示 */}
+                                            {item.close_flag === 0 &&
+                                            <i className="mdi mdi-sync pointer" onClick={() => {
+                                                syncLoadTask(item.id, item.hook_id, transDemandManagerDetailReducer.transDemandInfo[0].status)
+                                            }}/>}
 
-                                            {item.hook_id == null && <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {this.showNewLoadTaskModal('edit',item.id)}}/>}
-                                            {item.hook_id != null && <i className="mdi mdi-car margin-left30 pointer" onClick={() => {this.showLoadTaskCarDetailModal(item.id)}}/>}
-                                            <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.order_id, item.id)}}/>
+                                            {/* 编辑图标，已安排 并且 未同步 显示 */}
+                                            {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.hook_id === 0 &&
+                                            <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {
+                                                this.showNewLoadTaskModal('edit', item.id)
+                                            }}/>}
+
+                                            {/* 显示图标，(已安排 并且 已同步) 或者 已完成 显示 */}
+                                            {((transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.hook_id !== 0)
+                                            || transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[2].value) &&
+                                            <i className="mdi mdi-car margin-left30 pointer" onClick={() => {
+                                                this.showLoadTaskCarDetailModal(item.id)
+                                            }}/>}
+
+                                            {/* 删除图标，仅在已安排状态显示 */}
+                                            {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                                            <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.id)}}/>}
                                         </div>
                                     </div>
 
@@ -273,8 +290,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(transDemandManagerDetailAction.getTransDemandInfo(ownProps.match.params.id));
     },
     // 更新需求状态
-    changeStatus: () => {
-        dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id));
+    changeStatus: (status) => {
+        dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id, status));
     },
     // 显示订单详情
     initOrderInfoModalData: (orderId) => {
@@ -287,10 +304,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(editLogAddressModalAction.initEditLogAddressModal(orderId));
     },
     // 进行同步/显示同步信息
-    syncLoadTask: (loadTaskId, hookId) => {
+    syncLoadTask: (loadTaskId, hookId, status) => {
         // 没同步的进行同步
-        if (hookId == null) {
-            dispatch(transDemandManagerDetailAction.syncLoadTask(ownProps.match.params.id, loadTaskId));
+        if (hookId === 0) {
+            if (status === sysConst.TRANS_DEMAND_STATUS[1].value) {
+                dispatch(transDemandManagerDetailAction.syncLoadTask(ownProps.match.params.id, loadTaskId));
+            } else {
+                swal('暂无同步信息', '', 'warning');
+            }
         } else {
             dispatch(syncInfoModalAction.initSyncInfoModal(loadTaskId));
             // 显示同步信息
@@ -312,8 +333,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(loadTaskCarDetailModalAction.initLoadTaskCarDetailModal(orderId, requireId, loadTaskId));
     },
     // 删除指定线路
-    deleteLoadTask: (orderId, loadTaskId) => {
-        dispatch(transDemandManagerDetailAction.deleteLoadTask(orderId, ownProps.match.params.id, loadTaskId));
+    deleteLoadTask: (loadTaskId) => {
+        dispatch(transDemandManagerDetailAction.deleteLoadTask(ownProps.match.params.id, loadTaskId));
     },
     // 更新线路状态
     changeLoadTaskStatus: (loadTaskId, status) => {

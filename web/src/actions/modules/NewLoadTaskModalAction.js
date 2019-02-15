@@ -324,7 +324,7 @@ export const saveLoadTaskInfo = () => async (dispatch, getState) => {
                 + '/order/' + orderId + '/require/' + requireId + '/loadTask';
         } else {
             url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/order/' + orderId + '/require/' + requireId + '/loadTask/' + loadTaskId;
+                + '/loadTask/' + loadTaskId;
         }
 
         let res = null;

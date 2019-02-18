@@ -2,6 +2,7 @@ import {apiHost} from '../../config/HostConfig';
 import {NewLoadTaskModalActionType} from "../../actionTypes";
 
 const transDemandManagerDetailAction = require('../../actions/main/TransDemandManagerDetailAction');
+const loadTaskManagerDetailAction = require('../../actions/main/LoadTaskManagerDetailAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -158,6 +159,8 @@ export const addLoadTaskDetail = (orderItemId, vin, supplierTransPrice, supplier
             dispatch(getUnscheduledCarList(orderId, loadTaskId));
             // 已安排车辆列表
             dispatch(getScheduledCarList(orderId, loadTaskId));
+            // 刷新前画面数据
+            dispatch(refreshPrePage(orderId, requireId, loadTaskId));
         } else if (res.success === false) {
             swal('保存失败', res.msg, 'warning');
         }
@@ -191,6 +194,8 @@ export const editLoadTaskDetail = (loadTaskDetailId, supplierTransPrice, supplie
             dispatch(getUnscheduledCarList(orderId, loadTaskId));
             // 已安排车辆列表
             dispatch(getScheduledCarList(orderId, loadTaskId));
+            // 刷新前画面数据
+            dispatch(refreshPrePage(orderId, requireId, loadTaskId));
         } else if (res.success === false) {
             swal('保存失败', res.msg, 'warning');
         }
@@ -219,6 +224,8 @@ export const deleteLoadTaskDetail = (loadTaskDetailId) => async (dispatch, getSt
             dispatch(getUnscheduledCarList(orderId, loadTaskId));
             // 已安排车辆列表
             dispatch(getScheduledCarList(orderId, loadTaskId));
+            // 刷新前画面数据
+            dispatch(refreshPrePage(orderId, requireId, loadTaskId));
         } else if (res.success === false) {
             swal('保存失败', res.msg, 'warning');
         }
@@ -347,15 +354,30 @@ export const saveLoadTaskInfo = () => async (dispatch, getState) => {
                 dispatch(getUnscheduledCarList(orderId, res.id));
                 // 已安排车辆列表
                 dispatch(getScheduledCarList(orderId, res.id));
+                // 运输需求 - 线路安排 刷新安排线路列表
+                dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
             } else {
+                // 刷新前画面数据
+                dispatch(refreshPrePage(orderId, requireId, loadTaskId));
                 swal("保存成功", "", "success");
                 $('#newLoadTaskModal').modal('close');
             }
-            // 运输需求 - 线路安排 刷新安排线路列表
-            dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
         } else if (res.success === false) {
             swal('保存失败', res.msg, 'warning');
         }
+    }
+};
+
+// 保存线路安排 基本信息
+export const refreshPrePage = (orderId, requireId, loadTaskId) => async (dispatch, getState) => {
+    // 画面标记
+    const pageId = getState().NewLoadTaskModalReducer.pageId;
+    if (pageId === 'edit') {
+        // 运输需求 - 线路安排 刷新安排线路列表
+        dispatch(transDemandManagerDetailAction.getLoadTaskList(orderId, requireId));
+    } else if (pageId === 'load_task_detail'){
+        // 检索线路基本信息
+        dispatch(loadTaskManagerDetailAction.getLoadTaskInfo(loadTaskId));
     }
 };
 

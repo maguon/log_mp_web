@@ -1,68 +1,47 @@
-import {TransDemandManagerDetailActionType} from "../../actionTypes";
+import {LoadTaskManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
-import {saveLoadTaskInfo} from "../modules/NewLoadTaskModalAction";
 
+const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-// 取得需求基本信息
-export const getTransDemandInfo = (requireId) => async (dispatch) => {
+// 取得线路安排基本信息
+export const getLoadTaskInfo = (loadTaskId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/requireTask?requireId=' + requireId;
+            + '/routeLoadTask?loadTaskId=' + loadTaskId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getTransDemandInfo, payload: res.result});
+            dispatch({type: LoadTaskManagerDetailActionType.getLoadTaskInfo, payload: res.result});
             // 若 有数据
             if (res.result.length > 0) {
-                // 安排线路列表
-                dispatch(getLoadTaskList(res.result[0].order_id, requireId));
+                // 已安排车辆列表
+                dispatch(getScheduledCarList(res.result[0].order_id, loadTaskId));
+                // 订单信息
+                dispatch(commonAction.getOrderInfo(res.result[0].order_id));
             }
         } else if (res.success === false) {
-            swal('获取运输需求详细信息失败', res.msg, 'warning');
+            swal('获取线路安排基本信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-// 更新需求状态
-export const changeStatus = (requireId) => async (dispatch) => {
-    swal({
-        title: "确定将状态变更为已安排？",
-        text: "状态变更后将不可修改",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: '#724278',
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
-    }).then(async function (isConfirm) {
-        if (isConfirm && isConfirm.value === true) {
-            const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/requireTask/' + requireId + '/status/' + sysConst.TRANS_DEMAND_STATUS[1].value;
-            const res = await httpUtil.httpPut(url, {});
-            if (res.success === true) {
-                dispatch(getTransDemandInfo(requireId));
-            } else if (res.success === false) {
-                swal('修改失败', res.msg, 'warning');
-            }
-        }
-    });
-};
-
-// 取得安排线路列表
-export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
+// 已安排车辆列表
+export const getScheduledCarList = (orderId, loadTaskId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/order/' + orderId + '/require/' + requireId + '/loadTask';
+            + '/order/' + orderId + '/loadTask/' + loadTaskId + '/loadTaskDetail?arrangeFlag=2';
+
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getLoadTaskList, payload: res.result});
+            dispatch({type: LoadTaskManagerDetailActionType.getScheduledCarList, payload: res.result});
         } else if (res.success === false) {
-            swal('获取线路安排列表失败', res.msg, 'warning');
+            swal('获取已安排车辆列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
@@ -70,7 +49,7 @@ export const getLoadTaskList = (orderId, requireId) => async (dispatch) => {
 };
 
 // 安排线路列表：同步到供应商
-export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
+export const syncLoadTask = (loadTaskId) => async (dispatch) => {
     try {
         swal({
             title: "确定需求同步至供应商？",
@@ -88,7 +67,7 @@ export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
                 let res = await httpUtil.httpPost(url, {});
                 if (res.success === true) {
                     swal("同步成功", "", "success");
-                    dispatch(getTransDemandInfo(requireId));
+                    dispatch(getLoadTaskInfo(loadTaskId));
                 } else if (res.success === false) {
                     swal('同步失败', res.msg, 'warning');
                 }
@@ -99,37 +78,8 @@ export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
     }
 };
 
-// 删除指定线路
-export const deleteLoadTask = (orderId, requireId, loadTaskId) => async (dispatch) => {
-    try {
-        swal({
-            title: "确定删除该线路？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#724278',
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-        }).then(async function (isConfirm) {
-            if (isConfirm && isConfirm.value === true) {
-                // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/order/' + orderId + '/require/' + requireId + '/loadTask/' + loadTaskId;
-                const res = await httpUtil.httpDelete(url);
-                if (res.success === true) {
-                    dispatch(getTransDemandInfo(requireId));
-                } else if (res.success === false) {
-                    swal('删除运输线路失败', res.msg, 'warning');
-                }
-            }
-        });
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
 // 更新线路状态
-export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (dispatch) => {
+export const changeLoadTaskStatus = (loadTaskId, status) => async (dispatch) => {
     let cusTitle = '';
     let newStatus = 0;
     // 待发运状态时，变更
@@ -155,32 +105,10 @@ export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (di
                 + '/loadTask/' + loadTaskId + '/status/' + newStatus;
             const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
-                dispatch(getTransDemandInfo(requireId));
+                dispatch(getLoadTaskInfo(loadTaskId));
             } else if (res.success === false) {
                 swal('修改失败', res.msg, 'warning');
             }
         }
     });
-};
-
-// 取得需求基本信息
-export const getTransDemandInfoByOrder = (orderId) => async (dispatch) => {
-    try {
-        // 基本检索URL
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/requireTask?orderId=' + orderId;
-        const res = await httpUtil.httpGet(url);
-        if (res.success === true) {
-            dispatch({type: TransDemandManagerDetailActionType.getTransDemandInfo, payload: res.result});
-            // 若 有数据
-            if (res.result.length > 0) {
-                // 安排线路列表
-                dispatch(getLoadTaskList(orderId, res.result[0].id));
-            }
-        } else if (res.success === false) {
-            swal('获取运输需求详细信息失败', res.msg, 'warning');
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
 };

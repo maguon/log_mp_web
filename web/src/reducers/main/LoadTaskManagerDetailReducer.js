@@ -1,25 +1,25 @@
 import {handleActions} from 'redux-actions';
-import {TransDemandManagerDetailActionType} from '../../actionTypes';
+import {LoadTaskManagerDetailActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 运输需求基本信息
-    transDemandInfo: [],
-    // 线路安排列表
-    loadTaskArray: []
+    // 线路安排基本信息
+    loadTaskInfo: [],
+    // 安排车辆列表
+    scheduledCarList: []
 };
 
 export default handleActions({
-    [TransDemandManagerDetailActionType.getTransDemandInfo]: (state, action) => {
+    [LoadTaskManagerDetailActionType.getLoadTaskInfo]: (state, action) => {
         return {
             ...state,
-            transDemandInfo: action.payload
+            loadTaskInfo: action.payload
         }
     },
-    [TransDemandManagerDetailActionType.getLoadTaskList]: (state, action) => {
+    [LoadTaskManagerDetailActionType.getScheduledCarList]: (state, action) => {
         return {
             ...state,
-            loadTaskArray: action.payload
+            scheduledCarList: action.payload
         }
     }
 }, initialState)

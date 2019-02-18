@@ -310,7 +310,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             if (status === sysConst.TRANS_DEMAND_STATUS[1].value) {
                 dispatch(transDemandManagerDetailAction.syncLoadTask(ownProps.match.params.id, loadTaskId));
             } else {
-                swal('暂无同步信息', '', 'warning');
+                swal('需求已完成，暂无同步信息', '', 'warning');
             }
         } else {
             dispatch(syncInfoModalAction.initSyncInfoModal(loadTaskId));

@@ -91,7 +91,7 @@ class NewLoadTaskModal extends React.Component {
                             </li>
                         </div>}
 
-                        {newLoadTaskModalReducer.pageId === 'edit' &&
+                        {(newLoadTaskModalReducer.pageId === 'edit' || newLoadTaskModalReducer.pageId === 'load_task_detail') &&
                         <div>
                             <li className={`tab col s6`}>
                                 <a href="#tab-load" onClick={showLoadTaskTab} className={`${newLoadTaskModalReducer.tabId === 'base' ? "active" : ""}`}>线路信息</a>
@@ -185,7 +185,7 @@ class NewLoadTaskModal extends React.Component {
 
                             <div className="modal-content-body margin-top30">
                                 {/* 已安排车辆 列表 */}
-                                {newLoadTaskModalReducer.pageId === 'edit' &&
+                                {(newLoadTaskModalReducer.pageId === 'edit' || newLoadTaskModalReducer.pageId === 'load_task_detail') &&
                                 <div className="col s12 detail-box z-depth-1 no-padding margin-bottom20">
                                     <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">已安排车辆</div>
                                     <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
@@ -403,7 +403,7 @@ class NewLoadTaskModal extends React.Component {
                         {newLoadTaskModalReducer.tabId === 'sync' ? "完成" : "下一步"}
                     </button>}
 
-                    {newLoadTaskModalReducer.pageId === 'edit' &&
+                    {(newLoadTaskModalReducer.pageId === 'edit' || newLoadTaskModalReducer.pageId === 'load_task_detail') &&
                     <button type="button" className="btn confirm-btn margin-left20" onClick={confirmLoadTask}>确定</button>}
                 </div>
             </div>

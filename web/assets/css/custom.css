@@ -1341,6 +1341,12 @@ img.responsive-img {
     font-size: 40px;
 }
 
+.circle-font {
+    padding: 5px 7px;
+    border-radius: 100%;
+    color: white;
+}
+
 /* 统计画面用*/
 .statistic-half-page {
     min-width: 400px;

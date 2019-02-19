@@ -84,7 +84,7 @@ export const syncLoadTask = (requireId, loadTaskId) => async (dispatch) => {
             if (isConfirm && isConfirm.value === true) {
                 // 基本url
                 let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/loadTask/' + loadTaskId + '/submitToSupplier';
+                    + '/loadTask/' + loadTaskId + '/supplier';
                 let res = await httpUtil.httpPost(url, {});
                 if (res.success === true) {
                     swal("同步成功", "", "success");

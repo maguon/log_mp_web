@@ -18,7 +18,7 @@ export const getSyncLoadTask = (loadTaskId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/loadTask/' + loadTaskId + '/getSyncLoadTask';
+            + '/loadTask/' + loadTaskId + '/syncLoadTask';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: SyncInfoModalActionType.getSyncRequireInfo, payload: res.result.require});
@@ -39,7 +39,7 @@ export const getLoadTaskCarList = (syncLoadTaskId) => async (dispatch, getState)
         const loadTaskId = getState().SyncInfoModalReducer.loadTaskId;
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/loadTask/' + loadTaskId + '/getSyncLoadTaskDetail/' + syncLoadTaskId;
+            + '/loadTask/' + loadTaskId + '/syncLoadTaskDetail/' + syncLoadTaskId;
 
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {

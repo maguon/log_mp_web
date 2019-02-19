@@ -352,6 +352,18 @@ export const LOAD_TASK_STATUS = [
     }
 ];
 
+// 线路收支状态
+export const LOAD_TASK_PROFIT_STATUS = [
+    {
+        value: 1,
+        label: "盈利"
+    },
+    {
+        value: 2,
+        label: "亏损"
+    }
+];
+
 // 供应商同步相关状态：需求状态
 export const SUPPLIER_DEMAND_STATUS = [
     {

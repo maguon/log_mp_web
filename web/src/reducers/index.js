@@ -45,6 +45,8 @@ import TransDemandManagerReducer from './main/TransDemandManagerReducer';
 import TransDemandManagerDetailReducer from './main/TransDemandManagerDetailReducer';
 import LoadTaskManagerReducer from './main/LoadTaskManagerReducer';
 import LoadTaskManagerDetailReducer from './main/LoadTaskManagerDetailReducer';
+import LoadTaskProfitManagerReducer from './main/LoadTaskProfitManagerReducer';
+import LoadTaskProfitManagerDetailReducer from './main/LoadTaskProfitManagerDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -118,6 +120,8 @@ export default combineReducers({
     TransDemandManagerDetailReducer,
     LoadTaskManagerReducer,
     LoadTaskManagerDetailReducer,
+    LoadTaskProfitManagerReducer,
+    LoadTaskProfitManagerDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

@@ -41,6 +41,8 @@ import {
     TransDemandManagerDetail,
     LoadTaskManager,
     LoadTaskManagerDetail,
+    LoadTaskProfitManager,
+    LoadTaskProfitManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -214,7 +216,17 @@ const routes = [
         exact: true,
         component: LoadTaskManagerDetail
     },
-
+    {
+        // 车辆运输利润
+        path: "/load_task_profit",
+        exact: true,
+        component: LoadTaskProfitManager
+    },
+    {
+        path: '/load_task_profit/:id',
+        exact: true,
+        component: LoadTaskProfitManagerDetail
+    },
 
     // 设置模块
     {
@@ -385,6 +397,10 @@ class Container extends React.Component {
                     {
                         "link": '/load_task',
                         "name": '线路管理'
+                    },
+                    {
+                        "link": '/load_task_profit',
+                        "name": '车辆运输利润'
                     }
                 ]
             }, {

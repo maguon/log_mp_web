@@ -42,6 +42,8 @@ import * as TransDemandManagerActionType  from './main/TransDemandManagerActionT
 import * as TransDemandManagerDetailActionType  from './main/TransDemandManagerDetailActionType';
 import * as LoadTaskManagerActionType  from './main/LoadTaskManagerActionType';
 import * as LoadTaskManagerDetailActionType  from './main/LoadTaskManagerDetailActionType';
+import * as LoadTaskProfitManagerActionType  from './main/LoadTaskProfitManagerActionType';
+import * as LoadTaskProfitManagerDetailActionType  from './main/LoadTaskProfitManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -114,6 +116,8 @@ export  {
     TransDemandManagerDetailActionType,
     LoadTaskManagerActionType,
     LoadTaskManagerDetailActionType,
+    LoadTaskProfitManagerActionType,
+    LoadTaskProfitManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

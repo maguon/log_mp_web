@@ -27,6 +27,8 @@ export TransDemandManager from "./TransDemandManager";
 export TransDemandManagerDetail from "./TransDemandManagerDetail";
 export LoadTaskManager from "./LoadTaskManager";
 export LoadTaskManagerDetail from "./LoadTaskManagerDetail";
+export LoadTaskProfitManager from "./LoadTaskProfitManager";
+export LoadTaskProfitManagerDetail from "./LoadTaskProfitManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

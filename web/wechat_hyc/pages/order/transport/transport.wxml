@@ -5,6 +5,8 @@
 <view class='head-city'>{{orderList.end_city}}</view>
 </view>
 <view class='dis-line'></view>
+
+ <loading hidden="{{!loadingHidden}}">加载中</loading>
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-way' hover-class="active">
 <image class='way-image' src='../../../images/car.png'></image>
@@ -12,7 +14,7 @@
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-
+<view hidden='{{perFlag}}'>
 <view hidden='{{!startress}}'bindtap='startAddress' data-index='{{0}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_02.png'></image>
@@ -21,6 +23,19 @@
 </view>
 <view class='phone'>电话：{{orderList.send_phone}}</view>
 <view class='address'>地址：{{orderList.send_address}}</view>
+</view>
+</view>
+
+
+<view hidden='{{!perFlag}}'>
+<view hidden='{{!startress}}' class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img01' src='../../../images/head_02.png'></image>
+<view class='people01'>发车人:{{orderList.send_name}}</view>
+</view>
+<view class='phone'>电话：{{orderList.send_phone}}</view>
+<view class='address'>地址：{{orderList.send_address}}</view>
+</view>
 </view>
 
 <view hidden='{{startress}}' bindtap='startAddress' data-index='{{0}}'  class='ress01' hover-class="weui-cell_active">
@@ -32,6 +47,7 @@
 </view>
 <view class='ress-line'></view>
 <!--  ---------------------------------------------------------------------- -->
+<view hidden='{{perFlag}}'>
 <view hidden='{{!endress}}' bindtap='endAddress' data-index='{{1}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_01.png'></image>
@@ -40,6 +56,18 @@
 </view>
 <view class='phone'>电话：{{orderList.recv_phone}}</view>
 <view class='address'>地址：{{orderList.recv_address}}</view>
+</view>
+</view>
+
+<view hidden='{{!perFlag}}'>
+<view hidden='{{!endress}}'  class='ress' hover-class="weui-cell_active">
+<view class='ress-people'>
+<image class='ress-img01' src='../../../images/head_01.png'></image>
+<view class='people01'>收车人:{{orderList.recv_name}}</view>
+</view>
+<view class='phone'>电话：{{orderList.recv_phone}}</view>
+<view class='address'>地址：{{orderList.recv_address}}</view>
+</view>
 </view>
 
 <view hidden='{{endress}}' bindtap='endAddress'data-index='{{1}}'  class='ress01' hover-class="weui-cell_active">
@@ -81,6 +109,6 @@
 <view class='null'></view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='butlist'>
+<view hidden='{{perFlag}}' class='butlist'>
     <button   bindtap="bindAdd" class="btn-area" hover-class="weui-cell_active">确定</button>
     </view>

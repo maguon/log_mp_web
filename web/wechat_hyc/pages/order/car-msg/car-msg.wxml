@@ -32,7 +32,7 @@
 <view class='item-v'>型号:{{item.brand_type}}</view>
 </view>
 </view>
-
+ <loading hidden="{{!loadingHidden}}">加载中</loading>
 <!--  ---------------------------------------------------------------------- -->
 <view hidden='{{!hidden}}' class='items'  wx:for="{{orderItem}}"  wx:key='u'>
 <view  class='item'>
@@ -48,6 +48,11 @@
 <view class='item'>
 <view class='item-car'>{{carModel[item.model_type-1]}}</view>
 <view class='item-v'>估值:{{item.valuation}}元</view>
+</view>
+
+<view class='item'>
+<view class='item-car'>品牌:{{item.brand}}</view>
+<view class='item-v'>型号:{{item.brand_type}}</view>
 </view>
 </view>
 <view class='heigh'></view>

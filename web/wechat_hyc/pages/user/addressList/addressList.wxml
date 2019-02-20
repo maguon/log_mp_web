@@ -3,6 +3,7 @@
 <view class='add-text'>新增</view>
 <image  class='arrow' src='../../../images/add_02.png'></image>
 </view>
+<view hidden='{{!flag}}' class='prompt'>～暂无地址信息，请添加</view>
 
 <view  wx:for="{{addressList}}" wx:key='u'>
 <!-- <view bindtap="radioChange" data-index="{{index}}" class="label" hover-class='weui-cell_active_btn'>     -->

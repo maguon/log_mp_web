@@ -59,7 +59,7 @@
 <view class='item-tiny' hover-class="active">
 <view class='item-ress'>
 <view class='ress'>发票抬头：</view>
-<view class='ress-text'>{{invoice.company_name}}</view>
+<view class='ress-text'>{{invoice.title}}</view>
 </view>
 
 <view class='item-ress'>

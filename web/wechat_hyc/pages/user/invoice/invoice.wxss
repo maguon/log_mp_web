@@ -9,6 +9,13 @@ page{
   align-items: center;
 
 }
+.prompt{
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-top: 50px;
+}
 .invoice{
 width: 50%;
 height: 50px;

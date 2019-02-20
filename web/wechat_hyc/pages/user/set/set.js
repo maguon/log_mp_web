@@ -9,7 +9,7 @@ Page({
    */
   data: {
     imgUrl:"",
-    name:'请输入您的昵称',
+    name:'',
     imgFlag:false,
   },
 

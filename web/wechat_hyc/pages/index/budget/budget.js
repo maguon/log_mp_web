@@ -156,7 +156,14 @@ bindInquiry:function(e){
   var arr=this.data.arr;
   var carMsg = this.data.carMsg;
     
-
+  if (carMsg==""){
+    wx.showModal({
+      content: '您的车辆信息不能为空',
+      showCancel: false,
+      confirmColor: "#a744a7",
+    });
+    return;
+  }
   
   for(var i=0;i<carMsg.length;i++){
     carMsg[i].modelId= carMsg[i].modelType+1;

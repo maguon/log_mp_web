@@ -15,8 +15,11 @@ Page({
   endress:false,
   orderList:[],
   orderId:'',
+  name:"",
 
   logFlag:false,
+  perFlag:false,
+  loadingHidden: false,
   },
 
 
@@ -27,6 +30,7 @@ Page({
     var userId = app.globalData.userId;
     this.setData({
       orderId: e.orderId,
+      name:e.name,
     })
   },
 
@@ -45,6 +49,20 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     var orderId=this.data.orderId;
+    var name=this.data.name;
+
+
+    this.setData({
+      loadingHidden: true
+    }) 
+
+
+    if (name=="delivery"){
+      this.setData({
+        perFlag:true,
+      })
+    }
+
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" +orderId, (err, res) => {
       if (res.data.result[0].send_name!=null){
@@ -62,6 +80,7 @@ Page({
       
       this.setData({
         orderList: res.data.result[0],
+        loadingHidden: false,
       })
     })
   

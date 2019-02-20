@@ -2,6 +2,7 @@
 <view class='add-text'>新增</view>
 <image  class='arrow' src='../../../../../images/add_02.png'></image>
 </view>
+<view hidden='{{!flag}}' class='prompt'>～暂无银行卡信息，请添加</view>
 
 <view  wx:for="{{bankList}}" wx:key='u'>
 

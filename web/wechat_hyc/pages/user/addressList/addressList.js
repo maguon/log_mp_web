@@ -11,6 +11,7 @@ Page({
     list: [{ name: "收车地址", hidden:0, }, { name: "发车地址", hidden:1}],
     index:"",
     hidden:false,
+    flag:false,
   },
 
 
@@ -41,13 +42,20 @@ Page({
     //获取userid
     var userId = app.globalData.userId;
     //发送get请求
-    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress", (err, res) => {   
+    reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/userAddress", (err, res) => {  
+      if (res.data.result!=""){ 
         if (res.data.result.length == 1) {
           res.data.result[0].status = 1;
         }
         this.setData({
+          flag:false,
           addressList: res.data.result,
         }) 
+      }else{
+        this.setData({
+          flag:true,
+        })
+      }
     })
    
 

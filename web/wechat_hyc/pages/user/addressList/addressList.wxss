@@ -10,6 +10,13 @@ margin-top:10px ;
 display: flex;
 flex-direction: column;
 }
+.prompt{
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-top: 50px;
+}
 .default{
   height: 40px;
   width: 100%;

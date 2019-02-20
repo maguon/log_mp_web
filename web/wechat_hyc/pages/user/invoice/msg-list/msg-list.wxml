@@ -4,6 +4,7 @@
 <image   class='arrow' src='../../../../images/add_02.png'></image>
 </view>
 
+<view hidden='{{!flag}}' class='prompt'>～暂无抬头信息，请添加</view>
 <view  wx:for="{{invList}}" wx:key='u'>
 <view  class="label" hover-class='weui-cell_active_btn'>    
     

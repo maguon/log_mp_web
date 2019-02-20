@@ -37,8 +37,8 @@
 <view class='city-text'>{{item.start_city}}</view>
 <image class='city-arrow' src='../../images/arrow_02.png'></image>
 <view class='city-text'>{{item.end_city}}</view>
-<view hidden='{{item.flag}}' class='state'>{{state[item.stay]}}</view>
-<view hidden='{{!item.flag}}' class='state01'>{{state[item.stay]}}</view>
+<view hidden='{{item.is}}' class='state'>{{state[item.stay]}}</view>
+<view hidden='{{!item.is}}' class='state01'>{{state[item.stay]}}</view>
 <image class='arrow'src='../../images/arrow.png'></image>
 </view>
 

@@ -100,19 +100,27 @@ Page({
     var orderId = that.data.orderId;
     var paymentId = that.data.paymentId;
     var remark=that.data.remark;
-    var fee= parseInt(that.data.fee);
-    var applyFee =parseInt(that.data.applyFee);
+    var fee= that.data.fee;
+    var applyFee = that.data.applyfee;
 
+    console.log(applyFee)
+    console.log(fee)
 
-    if (applyFee > fee){
-
+    if (fee == "") {
+      wx.showModal({
+        content: '请选择一笔支付',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+    } else if (applyFee > fee){
       wx.showModal({
         content: '申请金额已大于支付金额',
         showCancel: false,
         confirmColor: "#a744a7",
       });
       return;
-    }else{
+    } else {
     //获取要传递的参数
     var params={
       mark: that.data.remark,

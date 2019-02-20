@@ -3,15 +3,15 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {LoadTaskProfitManagerActionType} from '../../actionTypes';
+import {OrderProfitManagerActionType} from '../../actionTypes';
 
-const loadTaskProfitManagerAction = require('../../actions/main/LoadTaskProfitManagerAction');
+const orderProfitManagerAction = require('../../actions/main/OrderProfitManagerAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
 
-class LoadTaskProfitManager extends React.Component {
+class OrderProfitManager extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -26,24 +26,17 @@ class LoadTaskProfitManager extends React.Component {
     componentDidMount() {
         if (!this.props.fromDetail) {
             this.props.setStartNumber(0);
-            this.props.setConditionVin('');
+            this.props.setConditionOrderId('');
             this.props.changeConditionStartCity(null);
             this.props.changeConditionEndCity(null);
             this.props.changeConditionServiceType(null);
-            this.props.setConditionOrderId('');
+            this.props.changeConditionOrderCreatedUser(null);
             this.props.setConditionCreatedOnStart('');
             this.props.setConditionCreatedOnEnd('');
             this.props.changeConditionStatus(null);
         }
-        this.props.getLoadTaskProfitList();
+        this.props.getOrderProfitList();
     }
-
-    /**
-     * 更新 检索条件：VIN
-     */
-    changeConditionVin = (event) => {
-        this.props.setConditionVin(event.target.value);
-    };
 
     /**
      * 更新 检索条件：订单编号
@@ -67,37 +60,38 @@ class LoadTaskProfitManager extends React.Component {
     };
 
     /**
-     * 查询车辆运输利润列表
+     * 查询订单利润列表
      */
-    queryLoadTaskProfitList = () => {
+    queryOrderProfitList = () => {
         // 默认第一页
         this.props.setStartNumber(0);
-        this.props.getLoadTaskProfitList();
+        this.props.getOrderProfitList();
     };
 
     /**
      * 上一页
      */
     preBtn = () => {
-        this.props.setStartNumber(this.props.loadTaskProfitManagerReducer.start - (this.props.loadTaskProfitManagerReducer.size - 1));
-        this.props.getLoadTaskProfitList();
+        this.props.setStartNumber(this.props.orderProfitManagerReducer.start - (this.props.orderProfitManagerReducer.size - 1));
+        this.props.getOrderProfitList();
     };
 
     /**
      * 下一页
      */
     nextBtn = () => {
-        this.props.setStartNumber(this.props.loadTaskProfitManagerReducer.start + (this.props.loadTaskProfitManagerReducer.size - 1));
-        this.props.getLoadTaskProfitList();
+        this.props.setStartNumber(this.props.orderProfitManagerReducer.start + (this.props.orderProfitManagerReducer.size - 1));
+        this.props.getOrderProfitList();
     };
 
     render() {
         const {
-            loadTaskProfitManagerReducer,
+            orderProfitManagerReducer,
             commonReducer,
             changeConditionStartCity,
             changeConditionEndCity,
             changeConditionServiceType,
+            changeConditionOrderCreatedUser,
             changeConditionStatus
         } = this.props;
         return (
@@ -105,7 +99,7 @@ class LoadTaskProfitManager extends React.Component {
                 {/* 标题部分 */}
                 <div className="row">
                     <div className="input-field col s12 page-title">
-                        <span className="margin-left10">车辆运输利润</span>
+                        <span className="margin-left10">订单利润</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -115,15 +109,15 @@ class LoadTaskProfitManager extends React.Component {
                     <div className="col s11 search-condition-box">
                         {/* 查询条件：第一行 */}
                         <div>
-                            {/* 查询条件：VIN */}
-                            <Input s={3} label="VIN" value={loadTaskProfitManagerReducer.conditionVin} onChange={this.changeConditionVin}/>
+                            {/* 查询条件：订单编号 */}
+                            <Input s={3} label="订单编号" value={orderProfitManagerReducer.conditionOrderId} onChange={this.changeConditionOrderId}/>
 
                             {/* 查询条件：起始城市 */}
                             <div className="input-field col s3">
                                 <Select
                                     options={commonReducer.cityList}
                                     onChange={changeConditionStartCity}
-                                    value={loadTaskProfitManagerReducer.conditionStartCity}
+                                    value={orderProfitManagerReducer.conditionStartCity}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -137,7 +131,7 @@ class LoadTaskProfitManager extends React.Component {
                                 <Select
                                     options={commonReducer.cityList}
                                     onChange={changeConditionEndCity}
-                                    value={loadTaskProfitManagerReducer.conditionEndCity}
+                                    value={orderProfitManagerReducer.conditionEndCity}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -151,7 +145,7 @@ class LoadTaskProfitManager extends React.Component {
                                 <Select
                                     options={sysConst.SERVICE_MODE}
                                     onChange={changeConditionServiceType}
-                                    value={loadTaskProfitManagerReducer.conditionServiceType}
+                                    value={orderProfitManagerReducer.conditionServiceType}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -163,20 +157,31 @@ class LoadTaskProfitManager extends React.Component {
 
                         {/* 查询条件：第二行 */}
                         <div>
-                            {/* 查询条件：订单编号 */}
-                            <Input s={3} label="订单编号" value={loadTaskProfitManagerReducer.conditionOrderId} onChange={this.changeConditionOrderId}/>
+                            {/* 查询条件：订单创建人 */}
+                            <div className="input-field col s3">
+                                <Select
+                                    options={commonReducer.adminUserList}
+                                    onChange={changeConditionOrderCreatedUser}
+                                    value={orderProfitManagerReducer.conditionOrderCreatedUser}
+                                    isSearchable={true}
+                                    placeholder={"请选择"}
+                                    styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
+                                    isClearable={true}
+                                />
+                                <label className="active">订单创建人</label>
+                            </div>
 
                             {/* 查询条件：创建时间(始) */}
                             <div className="input-field col s3 custom-input-field">
                                 <Input s={12} label="创建时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={loadTaskProfitManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
+                                       value={orderProfitManagerReducer.conditionCreatedOnStart} onChange={this.changeConditionCreatedOnStart} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
                             {/* 查询条件：创建时间(终) */}
                             <div className="input-field col s3 custom-input-field">
                                 <Input s={12} label="创建时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={loadTaskProfitManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
+                                       value={orderProfitManagerReducer.conditionCreatedOnEnd} onChange={this.changeConditionCreatedOnEnd} />
                                 <span className="mdi data-icon mdi-table-large"/>
                             </div>
 
@@ -185,7 +190,7 @@ class LoadTaskProfitManager extends React.Component {
                                 <Select
                                     options={sysConst.PROFIT_STATUS}
                                     onChange={changeConditionStatus}
-                                    value={loadTaskProfitManagerReducer.conditionStatus}
+                                    value={orderProfitManagerReducer.conditionStatus}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
@@ -198,7 +203,7 @@ class LoadTaskProfitManager extends React.Component {
 
                     {/* 查询按钮 */}
                     <div className="col s1">
-                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryLoadTaskProfitList}>
+                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryOrderProfitList}>
                             <i className="mdi mdi-magnify"/>
                         </a>
                     </div>
@@ -210,46 +215,42 @@ class LoadTaskProfitManager extends React.Component {
                         <table className="bordered striped">
                             <thead className="custom-dark-grey table-top-line">
                             <tr className="grey-text text-darken-2">
-                                <th>VIN</th>
                                 <th>订单编号</th>
                                 <th className="center">线路</th>
+                                <th className="right-align">车辆数</th>
                                 <th className="center">服务方式</th>
                                 <th>创建人</th>
                                 <th className="center">订单创建时间</th>
-                                <th className="right-align">订单运费</th>
-                                <th className="right-align">订单保费</th>
-                                <th className="right-align">供应商运费</th>
-                                <th className="right-align">供应商保费</th>
+                                <th className="right-align">订单收入</th>
+                                <th className="right-align">支付供应商</th>
                                 <th className="right-align">利润</th>
                                 <th className="center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {loadTaskProfitManagerReducer.loadTaskProfitArray.map(function (item) {
+                            {orderProfitManagerReducer.orderProfitArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
-                                        <td>{item.vin}</td>
-                                        <td>{item.order_id}</td>
+                                        <td>{item.id}</td>
                                         <td className="center">{item.route_start} - {item.route_end}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.car_num)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,item.service_type)}</td>
                                         <td>{item.real_name}</td>
-                                        <td className="center">{formatUtil.getDateTime(item.order_created_on)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.act_trans_price,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.act_insure_price,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_trans_price,2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_insure_price,2)}</td>
-                                        <td className={`right-align ${item.profit_price > 0 ? "teal-text text-accent-4" : "red-font"}`}>{formatUtil.formatNumber(item.profit_price,2)}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.total_trans_price + item.total_insure_price,2)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_trans_price + item.supplier_insure_price,2)}</td>
+                                        <td className={`right-align ${item.profit_price > 0 ? "teal-text text-accent-4" : "red-font"}`}>{formatUtil.formatNumber(item.order_real_profit,2)}</td>
                                         <td className="operation center">
-                                            <Link to={{pathname: '/load_task_profit/' + item.order_item_id}}>
+                                            <Link to={{pathname: '/order_profit/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
                                     </tr>
                                 )
                             })}
-                            {loadTaskProfitManagerReducer.loadTaskProfitArray.length === 0 &&
+                            {orderProfitManagerReducer.orderProfitArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
-                                    <td className="no-data-tr" colSpan="12">暂无数据</td>
+                                    <td className="no-data-tr" colSpan="10">暂无数据</td>
                                 </tr>
                             }
                             </tbody>
@@ -259,11 +260,11 @@ class LoadTaskProfitManager extends React.Component {
                     {/* 上下页按钮 */}
                     <div className="col s12 margin-top10">
                         <div className="right">
-                            {loadTaskProfitManagerReducer.start > 0 && loadTaskProfitManagerReducer.dataSize > 0 &&
+                            {orderProfitManagerReducer.start > 0 && orderProfitManagerReducer.dataSize > 0 &&
                             <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.preBtn}>
                                 上一页
                             </a>}
-                            {loadTaskProfitManagerReducer.dataSize >= loadTaskProfitManagerReducer.size &&
+                            {orderProfitManagerReducer.dataSize >= orderProfitManagerReducer.size &&
                             <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.nextBtn}>
                                 下一页
                             </a>}
@@ -281,44 +282,45 @@ const mapStateToProps = (state, ownProps) => {
         fromDetail = true;
     }
     return {
-        loadTaskProfitManagerReducer: state.LoadTaskProfitManagerReducer,
+        orderProfitManagerReducer: state.OrderProfitManagerReducer,
         commonReducer: state.CommonReducer,
         fromDetail: fromDetail
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getLoadTaskProfitList: () => {
+    getOrderProfitList: () => {
         dispatch(commonAction.getCityList());
-        dispatch(loadTaskProfitManagerAction.getLoadTaskProfitList())
+        dispatch(commonAction.getAdminUserList());
+        dispatch(orderProfitManagerAction.getOrderProfitList())
     },
     setStartNumber: (start) => {
-        dispatch(LoadTaskProfitManagerActionType.setStartNumber(start))
-    },
-    setConditionVin: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionVin(value))
-    },
-    changeConditionStartCity: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionStartCity(value))
-    },
-    changeConditionEndCity: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionEndCity(value))
-    },
-    changeConditionServiceType: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionServiceType(value))
+        dispatch(OrderProfitManagerActionType.setStartNumber(start))
     },
     setConditionOrderId: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionOrderId(value))
+        dispatch(OrderProfitManagerActionType.setConditionOrderId(value))
+    },
+    changeConditionStartCity: (value) => {
+        dispatch(OrderProfitManagerActionType.setConditionStartCity(value))
+    },
+    changeConditionEndCity: (value) => {
+        dispatch(OrderProfitManagerActionType.setConditionEndCity(value))
+    },
+    changeConditionServiceType: (value) => {
+        dispatch(OrderProfitManagerActionType.setConditionServiceType(value))
+    },
+    changeConditionOrderCreatedUser: (value) => {
+        dispatch(OrderProfitManagerActionType.setConditionOrderCreatedUser(value))
     },
     setConditionCreatedOnStart: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionCreatedOnStart(value))
+        dispatch(OrderProfitManagerActionType.setConditionCreatedOnStart(value))
     },
     setConditionCreatedOnEnd: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionCreatedOnEnd(value))
+        dispatch(OrderProfitManagerActionType.setConditionCreatedOnEnd(value))
     },
     changeConditionStatus: (value) => {
-        dispatch(LoadTaskProfitManagerActionType.setConditionStatus(value))
+        dispatch(OrderProfitManagerActionType.setConditionStatus(value))
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadTaskProfitManager)
+export default connect(mapStateToProps, mapDispatchToProps)(OrderProfitManager)

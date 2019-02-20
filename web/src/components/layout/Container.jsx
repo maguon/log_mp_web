@@ -43,6 +43,8 @@ import {
     LoadTaskManagerDetail,
     LoadTaskProfitManager,
     LoadTaskProfitManagerDetail,
+    OrderProfitManager,
+    OrderProfitManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -227,6 +229,17 @@ const routes = [
         exact: true,
         component: LoadTaskProfitManagerDetail
     },
+    {
+        // 订单利润
+        path: "/order_profit",
+        exact: true,
+        component: OrderProfitManager
+    },
+    {
+        path: '/order_profit/:id',
+        exact: true,
+        component: OrderProfitManagerDetail
+    },
 
     // 设置模块
     {
@@ -401,6 +414,10 @@ class Container extends React.Component {
                     {
                         "link": '/load_task_profit',
                         "name": '车辆运输利润'
+                    },
+                    {
+                        "link": '/order_profit',
+                        "name": '订单利润'
                     }
                 ]
             }, {

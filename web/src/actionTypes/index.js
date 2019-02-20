@@ -44,6 +44,8 @@ import * as LoadTaskManagerActionType  from './main/LoadTaskManagerActionType';
 import * as LoadTaskManagerDetailActionType  from './main/LoadTaskManagerDetailActionType';
 import * as LoadTaskProfitManagerActionType  from './main/LoadTaskProfitManagerActionType';
 import * as LoadTaskProfitManagerDetailActionType  from './main/LoadTaskProfitManagerDetailActionType';
+import * as OrderProfitManagerActionType  from './main/OrderProfitManagerActionType';
+import * as OrderProfitManagerDetailActionType  from './main/OrderProfitManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -71,6 +73,8 @@ import * as NewLoadTaskModalActionType  from './modules/NewLoadTaskModalActionTy
 import * as LoadTaskCarDetailModalActionType  from './modules/LoadTaskCarDetailModalActionType';
 import * as EditLogAddressModalActionType  from './modules/EditLogAddressModalActionType';
 import * as SyncInfoModalActionType  from './modules/SyncInfoModalActionType';
+import * as SupplierPaymentDetailModalActionType  from './modules/SupplierPaymentDetailModalActionType';
+import * as OrderPaymentDetailModalActionType  from './modules/OrderPaymentDetailModalActionType';
 
 export  {
     LoginActionType,
@@ -118,6 +122,8 @@ export  {
     LoadTaskManagerDetailActionType,
     LoadTaskProfitManagerActionType,
     LoadTaskProfitManagerDetailActionType,
+    OrderProfitManagerActionType,
+    OrderProfitManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -144,5 +150,7 @@ export  {
     NewLoadTaskModalActionType,
     LoadTaskCarDetailModalActionType,
     EditLogAddressModalActionType,
-    SyncInfoModalActionType
+    SyncInfoModalActionType,
+    SupplierPaymentDetailModalActionType,
+    OrderPaymentDetailModalActionType
 }

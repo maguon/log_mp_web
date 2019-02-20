@@ -29,6 +29,8 @@ export LoadTaskManager from "./LoadTaskManager";
 export LoadTaskManagerDetail from "./LoadTaskManagerDetail";
 export LoadTaskProfitManager from "./LoadTaskProfitManager";
 export LoadTaskProfitManagerDetail from "./LoadTaskProfitManagerDetail";
+export OrderProfitManager from "./OrderProfitManager";
+export OrderProfitManagerDetail from "./OrderProfitManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

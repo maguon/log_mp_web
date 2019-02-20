@@ -1128,7 +1128,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 716px;
 }
 
-#loadTaskCarDetailModal {
+#loadTaskCarDetailModal, #supplierPaymentDetailModal, #orderPaymentDetailModal {
     width: 1200px;
     max-height: 606px;
 }

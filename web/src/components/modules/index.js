@@ -28,3 +28,5 @@ export NewLoadTaskModal from "./NewLoadTaskModal";
 export LoadTaskCarDetailModal from "./LoadTaskCarDetailModal";
 export EditLogAddressModal from "./EditLogAddressModal";
 export SyncInfoModal from "./SyncInfoModal";
+export SupplierPaymentDetailModal from "./SupplierPaymentDetailModal";
+export OrderPaymentDetailModal from "./OrderPaymentDetailModal";

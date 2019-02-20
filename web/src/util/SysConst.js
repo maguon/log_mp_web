@@ -352,8 +352,8 @@ export const LOAD_TASK_STATUS = [
     }
 ];
 
-// 线路收支状态
-export const LOAD_TASK_PROFIT_STATUS = [
+// 收支状态
+export const PROFIT_STATUS = [
     {
         value: 1,
         label: "盈利"

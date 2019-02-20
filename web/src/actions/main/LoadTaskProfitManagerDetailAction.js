@@ -13,8 +13,6 @@ export const getLoadTaskProfitInfo = (orderItemId) => async (dispatch) => {
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
             + '/loadTaskProfitOfCar?orderItemId=' + orderItemId;
         const res = await httpUtil.httpGet(url);
-
-        console.log('url',url);
         if (res.success === true) {
             dispatch({type: LoadTaskProfitManagerDetailActionType.getLoadTaskProfitInfo, payload: res.result});
             // 若 有数据

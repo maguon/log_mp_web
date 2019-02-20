@@ -49,6 +49,8 @@ import LoadTaskProfitManagerReducer from './main/LoadTaskProfitManagerReducer';
 import LoadTaskProfitManagerDetailReducer from './main/LoadTaskProfitManagerDetailReducer';
 import OrderProfitManagerReducer from './main/OrderProfitManagerReducer';
 import OrderProfitManagerDetailReducer from './main/OrderProfitManagerDetailReducer';
+import LoadTaskPaymentManagerReducer from './main/LoadTaskPaymentManagerReducer';
+import LoadTaskPaymentManagerDetailReducer from './main/LoadTaskPaymentManagerDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -128,6 +130,8 @@ export default combineReducers({
     LoadTaskProfitManagerDetailReducer,
     OrderProfitManagerReducer,
     OrderProfitManagerDetailReducer,
+    LoadTaskPaymentManagerReducer,
+    LoadTaskPaymentManagerDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

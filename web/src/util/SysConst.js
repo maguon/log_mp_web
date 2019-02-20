@@ -364,6 +364,18 @@ export const PROFIT_STATUS = [
     }
 ];
 
+// 结算状态
+export const PAYMENT_FLAG = [
+    {
+        value: 0,
+        label: "未付款"
+    },
+    {
+        value: 1,
+        label: "已付款"
+    }
+];
+
 // 供应商同步相关状态：需求状态
 export const SUPPLIER_DEMAND_STATUS = [
     {

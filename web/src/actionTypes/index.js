@@ -46,6 +46,8 @@ import * as LoadTaskProfitManagerActionType  from './main/LoadTaskProfitManagerA
 import * as LoadTaskProfitManagerDetailActionType  from './main/LoadTaskProfitManagerDetailActionType';
 import * as OrderProfitManagerActionType  from './main/OrderProfitManagerActionType';
 import * as OrderProfitManagerDetailActionType  from './main/OrderProfitManagerDetailActionType';
+import * as LoadTaskPaymentManagerActionType  from './main/LoadTaskPaymentManagerActionType';
+import * as LoadTaskPaymentManagerDetailActionType  from './main/LoadTaskPaymentManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -124,6 +126,8 @@ export  {
     LoadTaskProfitManagerDetailActionType,
     OrderProfitManagerActionType,
     OrderProfitManagerDetailActionType,
+    LoadTaskPaymentManagerActionType,
+    LoadTaskPaymentManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

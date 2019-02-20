@@ -46,6 +46,13 @@ Page({
       console.log(res.data.result)
       if (res.data.result!=''){
         var refundSum = 0;
+
+        //支付按钮显示
+        if (res.data.result[0].unpaid_price == 0) {
+          that.setData({
+            pagFlag: true,
+          })
+        }
       for( var i=0;i<res.data.result.length;i++){
         //微信 银行支付判断
         if (res.data.result[i].payment_type==2){
@@ -73,12 +80,7 @@ Page({
       remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
       refund:refundSum,
     })
-    //支付按钮显示
-        if (res.data.result[0].unpaid_price==0){
-          that.setData({
-          pagFlag:true,
-          })
-        }
+  
 
   }else{
      that.setData({
@@ -126,8 +128,9 @@ Page({
     var that=this;
     var index=e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
-    var paymentId = this.data.payment[index].id;
+    var paymentId = that.data.payment[index].id;
 
+    console.log(index);
     wx.showModal({
       content: "确定要删除该笔支付？",
       confirmColor: "#a744a7",
@@ -154,11 +157,5 @@ bindModify:function(e){
 wx.navigateTo({
   url: '/pages/order/order-pay/bank-pay/bank-pay?orderId=' + orderId + '&fee=' + fee + '&name=' + "Modify" + "&paymentId=" + paymentId + "&param=" + "" ,
 })
-
 },
-
-
-
-
-
 })

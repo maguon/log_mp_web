@@ -310,8 +310,8 @@ Page({
             confirmColor: "#a744a7",
             success(res) {
               if (res.confirm) {
-                wx.navigateTo({
-                  url:"pages/user/bind/bind",
+                wx.switchTab({
+                  url: "/pages/user/user",
                 })
               }
             }

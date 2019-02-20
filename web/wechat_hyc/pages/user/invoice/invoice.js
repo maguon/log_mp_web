@@ -17,7 +17,8 @@ Page({
   size:6,
   index:0,
   hidden:false,
-  carFlag:false
+  carFlag:false,
+   flag: false,
   },
 
   /**
@@ -44,6 +45,7 @@ Page({
       //发送get请求
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoicesList?start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
+        if (res.data.result!=""){
        for(var i=0;i<res.data.result.length;i++){
          res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
          res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
@@ -56,12 +58,19 @@ Page({
         this.setData({
           invoice: res.data.result,
           carFlag: false,
+          flag: false,
         })
+        }else{
+          this.setData({
+          flag:true,
+          })
+        }
       })
     } else if (index == 1){
       //发送get请求
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/noInvoiceOrderList?start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
+        if (res.data.result != "") {
         for (var i = 0; i < res.data.result.length; i++) {
           res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
           res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
@@ -71,10 +80,17 @@ Page({
           res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
 
         }
+          console.log("1111")
         this.setData({
           invoice: res.data.result,
           carFlag: true,
+          flag: false,
         })
+        } else {
+          this.setData({
+            flag: true,
+          })
+        }
       })
     }
 

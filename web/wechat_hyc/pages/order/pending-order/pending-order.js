@@ -18,6 +18,7 @@ Page({
     disabled:false,
     address:false,
     carflag:false,
+    loadingHidden: false,
   },
 
 
@@ -45,6 +46,9 @@ Page({
     var userId = app.globalData.userId;
     var orderId = this.data.orderId;
 
+    this.setData({
+      loadingHidden: true
+    }) 
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       if (res.data.result != '') {
@@ -71,9 +75,15 @@ Page({
         res.data.result[0].total_insure_price = config.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
         //编译时间
         res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
+
+        if (res.data.result[0].remark==null){
+          res.data.result[0].remark=""
+        }
+
         this.setData({
           orderlist: res.data.result[0],
           service_type: res.data.result[0].service_type - 1,
+          loadingHidden: false,
         })
       }
       console.log(res.data.result)
@@ -105,9 +115,15 @@ Page({
   service:function(e){
     console.log(e)
     var name=e.currentTarget.dataset.name;
+    if (this.data.disabled) {
   wx.navigateTo({
-    url: '/pages/order/transport/transport?orderId='+this.data.orderId,
+    url: '/pages/order/transport/transport?orderId=' + this.data.orderId + "&name=" + "delivery",
   })
+  }else{
+      wx.navigateTo({
+        url: '/pages/order/transport/transport?orderId=' + this.data.orderId + "&name=" + "pending",
+      })
+  }
   },
 
 
@@ -149,28 +165,6 @@ var note=e.detail.value;
     config.bindCustomer();
   },
 
-
-
-
-  /**
-  * 复制成功
-  */
-  textPaste: function () {
-    wx.showToast({
-      title: '复制成功',
-    })
-    wx.setClipboardData({
-      data: this.data.orderId,
-      success: function (res) {
-        wx.getClipboardData({
-          //这个api是把拿到的数据放到电脑系统中的
-          success: function (res) {
-            console.log(res.data) // data
-          }
-        })
-      }
-    })
-  },
 
 
 
@@ -224,7 +218,6 @@ submit:function(e){
     });
     return;
   }else{
-    var that=this;
     wx.showModal({
       title: '确定已完善所有信息？',
       content: '确定完善所有信息后，客服将开始为您补充价格信息。若还需补充信息，请点击取消。',

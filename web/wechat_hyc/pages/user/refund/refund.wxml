@@ -1,4 +1,4 @@
-
+<view hidden='{{!flag}}' class='prompt'>～暂无退款信息</view>
 
 <view bindtap='bindtap' data-index='{{index}}' class='content' hover-class="active" wx:for="{{refund}}" wx:key="u">
 <view class='city'>

@@ -12,36 +12,14 @@ Page({
     size:8,
     state:["已拒绝","已退款","待处理"],
     hidden:false,
+    flag:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    var userId = app.globalData.userId;
-
-
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?start=" + 0 +"&size="+this.data.size, (err, res) => {
-      console.log(res.data.result)
-      for (var i = 0; i < res.data.result.length;i++){
-        //保留小数
-        res.data.result[i].apply_fee = config.decimal(res.data.result[i].apply_fee)
-        res.data.result[i].refund_fee = config.decimal(res.data.result[i].refund_fee)
-        //编译时间
-        res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
-        res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on)
-        //退款金额显示
-        if (res.data.result[i].status==1){
-          res.data.result[i].hidden=true;
-        }
-      }
-
-      this.setData({
-        refund:res.data.result,
-      })
-    })
-
-
+  
   },
 
   /**
@@ -55,7 +33,36 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var userId = app.globalData.userId;
 
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?start=" + 0 + "&size=" + this.data.size, (err, res) => {
+      console.log(res.data.result)
+      if (res.data.result != "") {
+        for (var i = 0; i < res.data.result.length; i++) {
+          //保留小数
+          res.data.result[i].apply_fee = config.decimal(res.data.result[i].apply_fee)
+          res.data.result[i].refund_fee = config.decimal(res.data.result[i].refund_fee)
+          //编译时间
+          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
+          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on)
+          //退款金额显示
+          if (res.data.result[i].status == 1) {
+            res.data.result[i].hidden = true;
+          }
+        }
+
+        this.setData({
+          flag: false,
+          refund: res.data.result,
+        })
+      } else {
+        this.setData({
+          refund: res.data.result,
+          flag: true,
+        })
+      }
+    })
   },
 
 

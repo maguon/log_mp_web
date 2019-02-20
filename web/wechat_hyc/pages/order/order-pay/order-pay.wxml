@@ -3,8 +3,7 @@
  <view class='prompt-state'>订单编号:{{orderlist.id}}</view>
   <view class='prompt-time'>{{orderlist.created_on}}</view>
 </view>
-
-<view class='dis-line'></view>
+ <view class='shadow'></view>
 <view class='dis-head'>
 <view class='head-city'>{{orderlist.start_city}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
@@ -59,7 +58,7 @@
 <view class='note-right'>{{orderlist.remark}}</view>
 </view>
 <view class='dis-line'></view>
-
+ <loading hidden="{{!loadingHidden}}">加载中</loading>
 <!--  ---------------------------------------------------------------------- -->
 <view class='butlist'>
 <button hidden='{{!delFlag}}' bindtap='del' class='refund' hover-class="cancel_btn">删除</button>

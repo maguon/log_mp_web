@@ -11,6 +11,13 @@ page{
   border-radius: 2%;
   background: #864c86;
 }
+.prompt{
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #8a8a8a;
+  margin-top: 50px;
+}
 .bank01{
   height: 100px;
   margin-left: 2%;

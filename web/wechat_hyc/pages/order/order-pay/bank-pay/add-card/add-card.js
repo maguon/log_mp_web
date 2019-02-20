@@ -8,6 +8,7 @@ Page({
    */
   data: {
     bankList: [],
+    flag:false,
   },
 
   /**
@@ -32,20 +33,26 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/inquiryBank", (err, res) => {
+      if (res.data.result!=""){
      for(var i=0;i<res.data.result.length;i++){
        res.data.result[i].bank_code=this.bankNum(res.data.result[i].bank_code);
      }
      
       this.setData({
+        flag:false,
         bankList: res.data.result,
       })
+      }else{
+        this.setData({
+          flag:true,
+        })
+      }
     })
   },
 
 
 
   bankNum: function (e) {
-    console.log(e)
     var mphone = e.substring(0, 4) + ' **** **** ' + e.substring(14);
     return mphone;
   },

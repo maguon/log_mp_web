@@ -52,3 +52,27 @@ export const bindCustomer=()=> {
     }
   })
 }
+
+
+
+
+/**
+* 复制成功
+*/
+export const textPaste=()=> {
+  wx.showToast({
+    title: '复制成功',
+  })
+  wx.setClipboardData({
+    data: this.data.orderId,
+    success: function (res) {
+      wx.getClipboardData({
+        //这个api是把拿到的数据放到电脑系统中的
+        success: function (res) {
+          console.log(res.data) // data
+        }
+      })
+    }
+  })
+}
+

@@ -1,10 +1,12 @@
+
+
 <view class='head'>
 <view bindtap='chooseInvoice' data-index='{{index}}' class='invoice' wx:for="{{invoiceList}}" wx:key="u">
 <view hidden='{{item.hidden}}' class='invoice-order'>{{item.name}}</view>
 <view hidden='{{!item.hidden}}' class='invoice-no'>{{item.name}}</view>
 </view>
 </view>
-
+<view hidden='{{!flag}}' class='prompt'>～暂无信息</view>
 
 <view bindtap='bindtap' data-index='{{index}}'  wx:for="{{invoice}}"  wx:key="u" class='content' hover-class="active">
 <view class='city'>
@@ -33,3 +35,4 @@
 </view>
 <view class='line'></view>
 </view>
+

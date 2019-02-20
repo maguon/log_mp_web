@@ -15,22 +15,17 @@ Page({
 
     hidden:false,
     promptFlag:false,
+    loadingHidden: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    var userId = app.globalData.userId;
     this.setData({
       orderId: e.orderId,
-    })
-    console.log(e.name)
-    if (e.name == "delivery"){
-      this.setData({
-        hidden: true,
-      })
-    }
+      name: e.name,
+    })   
    
   },
 
@@ -47,6 +42,17 @@ Page({
   onShow: function () {
     var userId = app.globalData.userId;
     var orderId = this.data.orderId;
+    var name=this.data.name;
+
+
+    this.setData({
+      loadingHidden: true
+    })
+    if (name == "delivery") {
+      this.setData({
+        hidden: true,
+      })
+    }
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + orderId, (err, res) => {
       var count = 0;
@@ -59,6 +65,7 @@ Page({
           orderItem: res.data.result,
           count: count,
           promptFlag:true,
+          loadingHidden:false,
         })
       }
     })

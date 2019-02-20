@@ -145,7 +145,7 @@ Page({
         loadingHidden: false,
         prompt: false,
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1,2"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         console.log(res.data.result)
         if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
@@ -160,7 +160,7 @@ Page({
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
             res.data.result[i].state = 1;
-            res.data.result[i].flag = true;
+            res.data.result[i].is=true;
           } else if (res.data.result[i].status == 1) {
             res.data.result[i].stay = 1;
             res.data.result[i].state = 1;
@@ -240,8 +240,10 @@ Page({
         prompt: false,
      
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList" + "2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" +"2,3"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
+          console.log(res.data.result)
+
           for (var i = 0; i < res.data.result.length; i++) {
             //支付费用
             res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
@@ -254,9 +256,10 @@ Page({
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
               //判断删除状态
-            }else  if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
-            } 
+            }
+            // else  if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
            //判断支付状态
             if (res.data.result[i].payment_status == 0) {
               res.data.result[i].stay = 4;
@@ -291,7 +294,7 @@ Page({
         prompt: false,
     
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList=" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
       
@@ -306,9 +309,10 @@ Page({
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
             //判断删除状态
-            }else  if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
-            } 
+            }
+            // else  if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
             //判断物流状态 
             if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 7;
@@ -338,7 +342,7 @@ Page({
         prompt:false,
      
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList" + "4" + "&start=" + 0 +"&size="+this.data.size,(err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "4" + "&start=" + 0 +"&size="+this.data.size,(err, res) => {
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
 
@@ -352,9 +356,10 @@ Page({
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
-            } else if (res.data.result[i].status == 8) {
-              res.data.result[i].state = 0;
             } 
+            // else if (res.data.result[i].status == 8) {
+            //   res.data.result[i].state = 0;
+            // } 
             //判断执行状态
             if (res.data.result[i].log_status == 2) {
               res.data.result[i].stay = 9;

@@ -32,6 +32,7 @@ Page({
     vin_Flag:false,
     vinFlag:false,
     novinFlag: false,
+    loadingHidden: false,
   },
 
   /**
@@ -63,6 +64,9 @@ Page({
     var orderId = that.data.orderId;
     var name = that.data.name;
 
+    that.setData({
+      loadingHidden: true
+    })
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
       //应付费用
       res.data.result[0].sumFee = (res.data.result[0].total_trans_price + res.data.result[0].total_insure_price).toFixed(2);
@@ -73,15 +77,20 @@ Page({
           title: "部分支付订单",
         })
         that.setData({
+          loadingHidden: false,
           partFlag: true,
-          refundFlag: true,
         })
       } else if (res.data.result[0].payment_status == 2) {
         wx.setNavigationBarTitle({
           title: "已支付订单",
         })
         that.setData({
+          loadingHidden: false,
           completeFlag: true,
+         
+        })
+      } else if (res.data.result[0].payment_status == 1 || res.data.result[0].payment_status == 2 && that.data.ref_Flag != true && that.data.refFlag != true && that.data.norefFlag!=true){
+        that.setData({
           refundFlag: true,
         })
       }
@@ -90,6 +99,15 @@ Page({
         res.data.result[0].remark=""
       }
    
+
+      that.setData({
+        loadingHidden: false,
+        orderlist: res.data.result[0],
+        service_type: res.data.result[0].service_type - 1,
+        sumFee: res.data.result[0].sumFee,
+      })
+
+
       if (name == "") {
         that.setData({
           refundFlag: true,
@@ -98,14 +116,6 @@ Page({
           delFlag: true,
         })
       }
-
-      that.setData({
-        orderlist: res.data.result[0],
-        service_type: res.data.result[0].service_type - 1,
-        sumFee: res.data.result[0].sumFee,
-      })
-
-
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId, (err, res) => {
         if (res.data.result != "") {
@@ -135,6 +145,7 @@ Page({
             })
           }
           that.setData({
+            loadingHidden: false,
             refundlist: res.data.result[0],
           })
 
@@ -170,6 +181,7 @@ Page({
             })
           }
           that.setData({
+            loadingHidden: false,
             invoicelist: res.data.result[0],
           })
 
@@ -278,14 +290,22 @@ isInvoice: function () {
 
   //取消订单
   cancel: function () {
+    var that=this;
     var userId = app.globalData.userId;
-
+  
     wx.showModal({
       content: '确定要取消订单吗？',
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
-          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + this.data.orderId + "/cancel", "", (err, res) => { })
+          var param={
+            cancelMark: "",
+          }
+          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + that.data.orderId + "/cancel", param, (err, res) => { 
+            wx.navigateBack({
+              
+            })
+          })
         }
       }
     })

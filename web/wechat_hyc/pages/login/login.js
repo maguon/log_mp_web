@@ -8,12 +8,25 @@ Page({
     //判断小程序的API，回调，参数，组件等是否在当前版本可用。
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     loadingHidden: false,
+    scene:0,
   },
 
   /**
   * 生命周期函数--监听页面加载
   */
-  onLoad: function () {
+  onLoad: function (query) {
+
+   
+    // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
+    const scene = decodeURIComponent(query.scene)
+    if (scene!=""){
+    this.setData({
+      scene:scene
+    })
+    }
+    console.log(this.data.scene)
+
+
     //app.onLaunch res成功后执行{}内代码
     app.userInfoReadyCallback = res => {
       if (res != '') {
@@ -35,6 +48,7 @@ Page({
                     wechatName: res.userInfo.nickName,
                     gender: res.userInfo.gender,
                     avatar: res.userInfo.avatarUrl,
+                    recommendId: that.data.scene,
                   }
                   //发送请求
                   reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
@@ -82,12 +96,15 @@ Page({
         wechatName: e.detail.userInfo.nickName,
         gender: e.detail.userInfo.gender,
         avatar: e.detail.userInfo.avatarUrl,
+        recommendId: that.data.scene,
       }
 
       reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
 
         app.globalData.userId = res.data.result.userId;
         app.globalData.accessToken = res.data.result.accessToken;
+        console.log(that.data.scene)
+  
         //从数据库获取用户信息
         that.queryUsreInfo();
         console.log(res.data.result.userId);

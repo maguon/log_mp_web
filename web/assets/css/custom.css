@@ -111,12 +111,13 @@ body {
     padding-top: 10px;
 }
 
-.user-detail-header, .inquiry-detail-header, .order-detail-header {
+.user-detail-header, .inquiry-detail-header, .order-detail-header, .supplier-business-detail-header {
     height: 122px;
     padding-top: 18px;
 }
 
-.detail-box-header, .user-detail-header, .inquiry-detail-header, .order-detail-header, .trans-demand-header {
+.detail-box-header, .user-detail-header, .inquiry-detail-header,
+.order-detail-header, .trans-demand-header, .supplier-business-detail-header  {
     background-color: #F0EFF4;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -1133,7 +1134,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 606px;
 }
 
-#newRefundModal, #orderInfoModal, #syncInfoModal{
+#newRefundModal, #orderInfoModal, #syncInfoModal, #loadTaskInfoModal{
     width: 1200px;
     max-height: 616px;
 }

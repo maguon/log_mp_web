@@ -47,6 +47,8 @@ import {
     OrderProfitManagerDetail,
     LoadTaskPaymentManager,
     LoadTaskPaymentManagerDetail,
+    SupplierBusinessManager,
+    SupplierBusinessManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -253,6 +255,17 @@ const routes = [
         exact: true,
         component: LoadTaskPaymentManagerDetail
     },
+    {
+        // 供应商业务
+        path: "/supplier_business",
+        exact: true,
+        component: SupplierBusinessManager
+    },
+    {
+        path: '/supplier_business/:id',
+        exact: true,
+        component: SupplierBusinessManagerDetail
+    },
 
     // 设置模块
     {
@@ -435,6 +448,10 @@ class Container extends React.Component {
                     {
                         "link": '/load_task_payment',
                         "name": '线路结算'
+                    },
+                    {
+                        "link": '/supplier_business',
+                        "name": '供应商业务'
                     }
                 ]
             }, {

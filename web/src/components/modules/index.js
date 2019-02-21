@@ -30,3 +30,4 @@ export EditLogAddressModal from "./EditLogAddressModal";
 export SyncInfoModal from "./SyncInfoModal";
 export SupplierPaymentDetailModal from "./SupplierPaymentDetailModal";
 export OrderPaymentDetailModal from "./OrderPaymentDetailModal";
+export LoadTaskInfoModal from "./LoadTaskInfoModal";

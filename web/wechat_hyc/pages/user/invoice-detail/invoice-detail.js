@@ -96,6 +96,7 @@ Page({
 
   choose:function(){
     var applyId = this.data.invoice.invoice_apply_id;
+    console.log(this.data.invoice)
     wx.navigateTo({
       url: "/pages/user/invoice/msg-list/msg-list?applyId=" + applyId,
     })
@@ -132,6 +133,7 @@ again:function(){
   var userId = app.globalData.userId;
   var applyId = this.data.invoice.invoice_apply_id;
   var remark = this.data.remark;
+  var invoice = this.data.invoice;
 
   var params = {
     title: invoice.title,

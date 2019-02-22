@@ -13,7 +13,7 @@ Page({
     sumFee:0,
     service: ["上门服务", "当地自提"],
     state:["未支付","部分支付","已支付"],
-    lagstate: ["待安排", "待发运", "执行中","已送达"],
+    lagstate: ["待安排", "待发运", "运输中","已送达"],
     invoicelist:[],
     refundlist:[],
 
@@ -79,6 +79,7 @@ Page({
         that.setData({
           loadingHidden: false,
           partFlag: true,
+          refundFlag: true,
         })
       } else if (res.data.result[0].payment_status == 2) {
         wx.setNavigationBarTitle({
@@ -87,18 +88,34 @@ Page({
         that.setData({
           loadingHidden: false,
           completeFlag: true,
-         
-        })
-      } else if (res.data.result[0].payment_status == 1 || res.data.result[0].payment_status == 2 && that.data.ref_Flag != true && that.data.refFlag != true && that.data.norefFlag!=true){
-        that.setData({
           refundFlag: true,
         })
-      }
+      } 
+      // else if (res.data.result[0].payment_status == 1 || res.data.result[0].payment_status == 2){
+      //   that.setData({
+      //     refundFlag: true,
+      //   })
+      // }
 
       if(res.data.result[0].remark==null){
         res.data.result[0].remark=""
       }
-   
+      if (name =="transport"){
+        if (res.data.result[0].log_status==0){
+          res.data.result[0].log_status=2;
+        }
+      }
+
+      if (name == "") {
+        res.data.result[0].log_status = 3;
+        that.setData({
+          refundFlag: true,
+          completeFlag: true,
+          invoiceFlag: true,
+          delFlag: true,
+        })
+      }
+      console.log(res.data.result[0])
 
       that.setData({
         loadingHidden: false,
@@ -108,14 +125,6 @@ Page({
       })
 
 
-      if (name == "") {
-        that.setData({
-          refundFlag: true,
-          completeFlag: true,
-          invoiceFlag: true,
-          delFlag: true,
-        })
-      }
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId, (err, res) => {
         if (res.data.result != "") {
@@ -344,10 +353,13 @@ isInvoice: function () {
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
-    wx.switchTab({
-      url: '/pages/order/order',
-    })
+    var name = this.data.name;
+    if(name!=""){
+      wx.switchTab({
+        url: '/pages/order/order',
+      })
+    }
+ 
   },
 
   /**

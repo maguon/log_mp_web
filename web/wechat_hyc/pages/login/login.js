@@ -27,49 +27,99 @@ Page({
     console.log(this.data.scene)
 
 
+
+    // wx.getSetting({
+    //   success: function (res) {
+    //     //判断是否授权
+    //     if (res.authSetting['scope.userLocation']) {
+    //       wx.getLocation({
+    //        type: 'wgs84',
+    //       success(res) {
+    //           console.log(res.latitude)
+    //           console.log(res.longitude)
+    //           console.log(res.speed)
+    //           console.log(res.accuracy)
+    //           }
+    //        })
+    //     }
+    //   }
+    // })
+
+    // wx.getSystemInfo({
+    //   success(res) {
+    //     console.log(res.model)
+    //     console.log(res.pixelRatio)
+    //     console.log(res.windowWidth)
+    //     console.log(res.windowHeight)
+    //     console.log(res.language)
+    //     console.log(res.version)
+    //     console.log(res.platform)
+    //   }
+    // })
+
+
+
     //app.onLaunch res成功后执行{}内代码
-    app.userInfoReadyCallback = res => {
-      if (res != '') {
+    // app.userInfoReadyCallback = res => {
+    //   if (res != '') {
+   
         var that = this;
 
         // 查看是否授权
         wx.getSetting({
           success: function (res) {
+            console.log(res.authSetting)
             //判断是否授权
             if (res.authSetting['scope.userInfo']) {
 
-              //获取用户信息
-              wx.getUserInfo({
-
+              // 登录
+              wx.login({
                 success: res => {
-                  console.log(res);
-                  var params = {
-                    wechatId: app.globalData.openid,
-                    wechatName: res.userInfo.nickName,
-                    gender: res.userInfo.gender,
-                    avatar: res.userInfo.avatarUrl,
-                    recommendId: that.data.scene,
-                  }
-                  //发送请求
-                  reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
-                    //userid保存到全局
-                    app.globalData.userId = res.data.result.userId;
-                    app.globalData.accessToken = res.data.result.accessToken;
-                    //从数据库获取用户信息
-                    that.queryUsreInfo();
-                    that.setData({
-                      loadingHidden: true,
-                    })
+                  //获取code
+                  var code = res.code;
+                  //发送code 请求openid
+                  reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, res) => {
+                    //保存openid 到全局
+                    app.globalData.openid = res.data.result.openid;
+                   app.globalData.session_key = res.data.result.session_key;
 
+
+                    //获取用户信息
+                    wx.getUserInfo({
+
+                      success: res => {
+                        console.log(res);
+                        var params = {
+                          wechatId: app.globalData.openid,
+                          wechatName: res.userInfo.nickName,
+                          gender: res.userInfo.gender,
+                          avatar: res.userInfo.avatarUrl,
+                          recommendId: that.data.scene,
+                        }
+                        //发送请求
+                        reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
+                          //userid保存到全局
+                          app.globalData.userId = res.data.result.userId;
+                          app.globalData.accessToken = res.data.result.accessToken;
+                          //从数据库获取用户信息
+                          that.queryUsreInfo();
+                          that.setData({
+                            loadingHidden: true,
+                          })
+                        })
+                      }
+                    });
                   })
-
                 }
-              });
+              })
+              console.log("8888888888")
+            }else{
+              console.log("000000000000")
             }
           }
         })
-      }
-    }
+     //}
+    // }
   },
 
 

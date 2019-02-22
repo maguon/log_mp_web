@@ -21,6 +21,7 @@ Page({
     car_index:'',
     valuation:'',
     distance:0,
+    scene:0,
 
     //显示控制
     loadingHidden: false,
@@ -31,8 +32,7 @@ Page({
   /**
    * 加载页面执行
    */
-  onLoad: function () {
-    console.log(app.globalData.userId)
+  onLoad: function (query) {
   },
 
 

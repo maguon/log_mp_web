@@ -45,12 +45,11 @@ Page({
     var name=this.data.name;
 
 
-    this.setData({
-      loadingHidden: true
-    })
+ 
     if (name == "delivery") {
       this.setData({
         hidden: true,
+        loadingHidden: true
       })
     }
 
@@ -65,7 +64,7 @@ Page({
           orderItem: res.data.result,
           count: count,
           promptFlag:true,
-          loadingHidden:false,
+          loadingHidden: false,
         })
       }
     })

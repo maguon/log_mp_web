@@ -18,11 +18,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    console.log(e.applyId)
     if (e.applyId!=""){
- this.setData({
-   applyId: e.applyId,
-   hidden:true,
- })
+      this.setData({
+       applyId: e.applyId,
+       hidden:true,
+       })
     }
   },
   /**
@@ -100,7 +101,8 @@ Page({
     console.log(id)
     console.log(invList)
     if (applyId != "") {
-  
+     reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + id + "/defaultInvoice", "", (err, res) => {
+  });
       var params = {
         title: invList[index].company_name,
         taxNumber: invList[index].tax_number,

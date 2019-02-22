@@ -361,7 +361,7 @@ Page({
             //   res.data.result[i].state = 0;
             // } 
             //判断执行状态
-            if (res.data.result[i].log_status == 2) {
+            if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 9;
             }
           }
@@ -456,7 +456,7 @@ Page({
         break;
    case 4:
         wx.navigateTo({
-          url: '/pages/order/pending-order/pending-order?orderId=' + orderId,
+        url: '/pages/order/order-pay/order-pay?orderId=' + orderId + "&name=" + "transport",
         })
         break;
       default: 

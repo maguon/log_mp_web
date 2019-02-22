@@ -62,6 +62,7 @@ Page({
         })
         }else{
           this.setData({
+          invoice: res.data.result,
           flag:true,
           })
         }
@@ -88,6 +89,7 @@ Page({
         })
         } else {
           this.setData({
+            invoice: res.data.result,
             flag: true,
           })
         }
@@ -117,8 +119,9 @@ Page({
         invoice[i].hidden = true;
       }
     }
+
     this.setData({
-      invoiceList:invoice,
+       invoiceList:invoice,
       index: index,
     })
     this.onShow();

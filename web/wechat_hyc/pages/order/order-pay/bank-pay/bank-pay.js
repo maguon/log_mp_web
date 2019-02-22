@@ -122,6 +122,14 @@ Page({
         confirmColor: "#a744a7",
       })
       return;
+    } else if (costNum > totalPrice) {
+
+      wx.showModal({
+        content: "输入金额不能大于支付的金额",
+        showCancel: false,
+        confirmColor: "#a744a7",
+      })
+      return;
     } else  if (name == "Modify") {
      
         var params = {

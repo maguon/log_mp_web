@@ -43,7 +43,7 @@
 					"name": "扫描二维码",
 					"pathName": "pages/login/login",
 					"query": "scene=\"测试参数\"",
-					"scene": "1011"
+					"scene": "1001"
 				}
 			]
 		}

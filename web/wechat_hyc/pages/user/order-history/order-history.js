@@ -42,37 +42,6 @@ Page({
       }
     })
 
-    // reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order", (err, res) => {
-    //   if (res.data.result != '') {
-    //     for (var i = 0; i < res.data.result.length; i++) {
-    //       //支付费用
-    //       res.data.result[i].sumFee =  config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
-    //       //编译时间
-    //       res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-    //       res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
-    //       //判断显示状态
-    //       if (res.data.result[i].status==9) {
-    //         res.data.result[i].state = 1;
-    //         this.setData({
-    //           flag: true,
-    //         })
-    //         //判断删除状态
-    //       } else if (res.data.result[i].status == 8) {
-    //         res.data.result[i].state = 0;
-    //       }
-    //     }
-    //     console.log(res.data.result)
-    //     this.setData({
-    //       orderlist: res.data.result,
-    //       loadingHidden: true
-    //     })
-    //   } else {
-    //     this.setData({
-    //       flag: true,
-    //     })
-    //   }
-    // })
-
   },
 
   /**

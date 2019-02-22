@@ -67,6 +67,7 @@ Page({
        index=i;
      }
    }
+      console.log(res.data.result)
       this.setData({
         invList: res.data.result[index],
       })
@@ -119,7 +120,7 @@ Page({
 
   payMsg:function(){
     wx.navigateTo({
-      url: '/pages/user/invoice/msg-list/msg-list?applyId=' + "",
+      url: '/pages/user/invoice/msg-list/msg-list?applyId=' + "111",
     })
   },
 })

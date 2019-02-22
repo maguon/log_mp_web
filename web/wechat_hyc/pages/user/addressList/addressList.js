@@ -115,7 +115,7 @@ console.log(index)
     var orderId = that.data.orderId;
     var address= JSON.stringify(that.data.addressList[index]);
 
-    console.log(indexinfo)
+    console.log(addressList)
     if (indexinfo == 0 && orderId!="" ) {
    
       var params = {

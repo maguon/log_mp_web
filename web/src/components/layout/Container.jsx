@@ -49,6 +49,8 @@ import {
     LoadTaskPaymentManagerDetail,
     SupplierBusinessManager,
     SupplierBusinessManagerDetail,
+    RecommenderSetting,
+    RecommenderSettingDetail,
 } from '../main/index';
 
 const routes = [
@@ -323,10 +325,20 @@ const routes = [
         component: AdminUserSetting
     },
     {
-        // 员工管理
         path: '/admin_user_setting/:id',
         exact: true,
         component: AdminUserSettingDetail
+    },
+    {
+        // 员工管理
+        path: "/recommend_setting",
+        exact: true,
+        component: RecommenderSetting
+    },
+    {
+        path: '/recommend_setting/:id',
+        exact: true,
+        component: RecommenderSettingDetail
     },
 ];
 
@@ -485,6 +497,10 @@ class Container extends React.Component {
                     {
                         "link": '/admin_user_setting',
                         "name": '员工管理'
+                    },
+                    {
+                        "link": '/recommend_setting',
+                        "name": '推荐人管理'
                     }
                 ]
             }

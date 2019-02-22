@@ -35,6 +35,8 @@ export LoadTaskPaymentManager from "./LoadTaskPaymentManager";
 export LoadTaskPaymentManagerDetail from "./LoadTaskPaymentManagerDetail";
 export SupplierBusinessManager from "./SupplierBusinessManager";
 export SupplierBusinessManagerDetail from "./SupplierBusinessManagerDetail";
+export RecommenderSetting from "./RecommenderSetting";
+export RecommenderSettingDetail from "./RecommenderSettingDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

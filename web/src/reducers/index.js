@@ -53,6 +53,8 @@ import LoadTaskPaymentManagerReducer from './main/LoadTaskPaymentManagerReducer'
 import LoadTaskPaymentManagerDetailReducer from './main/LoadTaskPaymentManagerDetailReducer';
 import SupplierBusinessManagerReducer from './main/SupplierBusinessManagerReducer';
 import SupplierBusinessManagerDetailReducer from './main/SupplierBusinessManagerDetailReducer';
+import RecommenderSettingReducer from './main/RecommenderSettingReducer';
+import RecommenderSettingDetailReducer from './main/RecommenderSettingDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -83,6 +85,7 @@ import SyncInfoModalReducer from './modules/SyncInfoModalReducer';
 import SupplierPaymentDetailModalReducer from './modules/SupplierPaymentDetailModalReducer';
 import OrderPaymentDetailModalReducer from './modules/OrderPaymentDetailModalReducer';
 import LoadTaskInfoModalReducer from './modules/LoadTaskInfoModalReducer';
+import NewRecommenderModalReducer from './modules/NewRecommenderModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -137,6 +140,8 @@ export default combineReducers({
     LoadTaskPaymentManagerDetailReducer,
     SupplierBusinessManagerReducer,
     SupplierBusinessManagerDetailReducer,
+    RecommenderSettingReducer,
+    RecommenderSettingDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
@@ -166,5 +171,6 @@ export default combineReducers({
     SyncInfoModalReducer,
     SupplierPaymentDetailModalReducer,
     OrderPaymentDetailModalReducer,
-    LoadTaskInfoModalReducer
+    LoadTaskInfoModalReducer,
+    NewRecommenderModalReducer
 })

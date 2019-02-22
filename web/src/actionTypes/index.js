@@ -50,6 +50,8 @@ import * as LoadTaskPaymentManagerActionType  from './main/LoadTaskPaymentManage
 import * as LoadTaskPaymentManagerDetailActionType  from './main/LoadTaskPaymentManagerDetailActionType';
 import * as SupplierBusinessManagerActionType  from './main/SupplierBusinessManagerActionType';
 import * as SupplierBusinessManagerDetailActionType  from './main/SupplierBusinessManagerDetailActionType';
+import * as RecommenderSettingActionType  from './main/RecommenderSettingActionType';
+import * as RecommenderSettingDetailActionType  from './main/RecommenderSettingDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -80,6 +82,7 @@ import * as SyncInfoModalActionType  from './modules/SyncInfoModalActionType';
 import * as SupplierPaymentDetailModalActionType  from './modules/SupplierPaymentDetailModalActionType';
 import * as OrderPaymentDetailModalActionType  from './modules/OrderPaymentDetailModalActionType';
 import * as LoadTaskInfoModalActionType  from './modules/LoadTaskInfoModalActionType';
+import * as NewRecommenderModalActionType  from './modules/NewRecommenderModalActionType';
 
 export  {
     LoginActionType,
@@ -133,6 +136,8 @@ export  {
     LoadTaskPaymentManagerDetailActionType,
     SupplierBusinessManagerActionType,
     SupplierBusinessManagerDetailActionType,
+    RecommenderSettingActionType,
+    RecommenderSettingDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -162,5 +167,6 @@ export  {
     SyncInfoModalActionType,
     SupplierPaymentDetailModalActionType,
     OrderPaymentDetailModalActionType,
-    LoadTaskInfoModalActionType
+    LoadTaskInfoModalActionType,
+    NewRecommenderModalActionType
 }

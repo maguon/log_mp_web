@@ -86,6 +86,7 @@ import SupplierPaymentDetailModalReducer from './modules/SupplierPaymentDetailMo
 import OrderPaymentDetailModalReducer from './modules/OrderPaymentDetailModalReducer';
 import LoadTaskInfoModalReducer from './modules/LoadTaskInfoModalReducer';
 import NewRecommenderModalReducer from './modules/NewRecommenderModalReducer';
+import AdvertisingModalReducer from './modules/AdvertisingModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -172,5 +173,6 @@ export default combineReducers({
     SupplierPaymentDetailModalReducer,
     OrderPaymentDetailModalReducer,
     LoadTaskInfoModalReducer,
-    NewRecommenderModalReducer
+    NewRecommenderModalReducer,
+    AdvertisingModalReducer
 })

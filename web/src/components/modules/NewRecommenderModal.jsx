@@ -56,7 +56,7 @@ class NewRecommenderModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content padding-bottom0 white grey-text text-darken-2">
                     <div className="row margin-top20">
-                        <Input s={12} label="推荐人名称" maxLength="20" value={newRecommenderModalReducer.recommendName} onChange={this.changeCommendName}/>
+                        <Input s={12} label={<span><span className="must-input">*</span>推荐人名称</span>} maxLength="20" value={newRecommenderModalReducer.recommendName} onChange={this.changeCommendName}/>
                         <Input s={12} label="推荐人简介" maxLength="50" value={newRecommenderModalReducer.introduction} onChange={this.changeCommendIntroduction}/>
                     </div>
                 </div>

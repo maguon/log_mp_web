@@ -83,6 +83,7 @@ import * as SupplierPaymentDetailModalActionType  from './modules/SupplierPaymen
 import * as OrderPaymentDetailModalActionType  from './modules/OrderPaymentDetailModalActionType';
 import * as LoadTaskInfoModalActionType  from './modules/LoadTaskInfoModalActionType';
 import * as NewRecommenderModalActionType  from './modules/NewRecommenderModalActionType';
+import * as AdvertisingModalActionType  from './modules/AdvertisingModalActionType';
 
 export  {
     LoginActionType,
@@ -168,5 +169,6 @@ export  {
     SupplierPaymentDetailModalActionType,
     OrderPaymentDetailModalActionType,
     LoadTaskInfoModalActionType,
-    NewRecommenderModalActionType
+    NewRecommenderModalActionType,
+    AdvertisingModalActionType
 }

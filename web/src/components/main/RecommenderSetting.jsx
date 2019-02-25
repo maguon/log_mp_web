@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Input} from 'react-materialize';
 import {Link} from "react-router-dom";
 import {RecommenderSettingActionType} from '../../actionTypes';
-import {NewReCommenderModal} from '../modules/index';
+import {NewRecommenderModal} from '../modules/index';
 
 const recommenderSettingAction = require('../../actions/main/RecommenderSettingAction');
 const newRecommenderModalAction = require('../../actions/modules/NewRecommenderModalAction');
@@ -112,13 +112,13 @@ class RecommenderSetting extends React.Component {
                         )
                     },this)}
                 </div>}
-                <NewReCommenderModal/>
+                <NewRecommenderModal/>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
     let fromDetail = false;
     if (typeof ownProps.location.state !== 'undefined' && ownProps.location.state.fromDetail === true) {
         fromDetail = true;

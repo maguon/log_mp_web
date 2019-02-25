@@ -1356,8 +1356,30 @@ img.responsive-img {
     padding-top: 80px;
 }
 
+/* 推荐人管理 - 详情 推荐码效果图 */
+.recommend-div {
+    height: 430px;
+    width:250px;
+}
 
 .recommend-img {
-    height: 420px;
-    width: 230px;
+    height: 430px;
+    width: 250px;
+}
+
+.recommend-content {
+    margin-top: 60px;
+    margin-left: 50px;
+    height: 80px;
+    width: 160px;
+    font-size: 18px;
+    z-index: 999;
+    color: #724278 !important;
+}
+
+.recommend-code {
+    margin-top: 177px;
+    margin-left: 36px;
+    height: 180px;
+    width: 180px;
 }

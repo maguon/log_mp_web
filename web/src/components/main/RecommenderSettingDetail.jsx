@@ -7,7 +7,6 @@ import {AdvertisingModal} from '../modules/index';
 
 const recommenderSettingDetailAction = require('../../actions/main/RecommenderSettingDetailAction');
 const advertisingModalAction = require('../../actions/modules/AdvertisingModalAction');
-const sysConst = require('../../util/SysConst');
 
 class RecommenderSettingDetail extends React.Component {
 
@@ -49,7 +48,7 @@ class RecommenderSettingDetail extends React.Component {
     };
 
     render() {
-        const {recommenderSettingDetailReducer, saveRecommend, downloadRecommend} = this.props;
+        const {recommenderSettingDetailReducer, saveRecommend, crateRecommendCode, downloadRecommend} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -84,12 +83,18 @@ class RecommenderSettingDetail extends React.Component {
                     <div className="col s12 padding-top15 padding-bottom15 custom-grey purple-font border-bottom-line">
                         <div className="col s12">推荐码效果图</div>
                     </div>
-                    <div className="col s12 center padding-top10 border-bottom-line">
-                        <img className="recommend-img" src="../../../assets/images/recommend_bg.jpg"/>
-                        <img className="circle" src="../../../assets/images/avatar.png"/>
+                    <div className="col s12 padding-top10 padding-bottom10 border-bottom-line">
+                        <div className="col s12 position-relative">
+                            <div id="recommend-div" className="recommend-div">
+                                <span className="position-absolute recommend-content">{recommenderSettingDetailReducer.content}</span>
+                                <img className="position-absolute recommend-img" src="../../../assets/images/recommend_bg.jpg"/>
+                                <img className="position-absolute recommend-code" src={recommenderSettingDetailReducer.mpUrl}/>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col s12 padding-top10 padding-bottom20 right-align">
-                        <button type="button" className="btn confirm-btn margin-right10" onClick={this.showAdvertisingModal}>生成广告语</button>
+                    <div className="col s12 padding-top20 padding-bottom20 right-align">
+                        <button type="button" className="btn custom-btn" onClick={crateRecommendCode}>生成推荐码</button>
+                        <button type="button" className="btn confirm-btn margin-left20" onClick={this.showAdvertisingModal}>生成广告语</button>
                         <button type="button" className="btn orange-btn margin-left20 margin-right10" onClick={downloadRecommend}>下载</button>
                     </div>
                     <AdvertisingModal/>
@@ -106,6 +111,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    // 取得基本信息
     getRecommendInfo: () => {
         dispatch(recommenderSettingDetailAction.getRecommendInfo(ownProps.match.params.id));
     },
@@ -115,12 +121,19 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     setIntroduction: (value) => {
         dispatch(RecommenderSettingDetailActionType.setIntroduction(value));
     },
+    // 修改基本信息
     saveRecommend: () => {
         dispatch(recommenderSettingDetailAction.saveRecommend());
     },
+    // 生成推荐码
+    crateRecommendCode: () => {
+        dispatch(recommenderSettingDetailAction.crateRecommendCode(ownProps.match.params.id));
+    },
+    // 打开 生成广告语 模态画面
     initAdvertisingModalData: (advertisement) => {
         dispatch(advertisingModalAction.initAdvertisingModal(ownProps.match.params.id, advertisement));
     },
+    // 下载 推荐码图片
     downloadRecommend: () => {
         dispatch(recommenderSettingDetailAction.downloadRecommend());
     }

@@ -220,7 +220,7 @@ class LoadTaskProfitManager extends React.Component {
                                 <th className="right-align">订单保费</th>
                                 <th className="right-align">供应商运费</th>
                                 <th className="right-align">供应商保费</th>
-                                <th className="right-align">利润</th>
+                                <th className="right-align">预计利润</th>
                                 <th className="center">操作</th>
                             </tr>
                             </thead>

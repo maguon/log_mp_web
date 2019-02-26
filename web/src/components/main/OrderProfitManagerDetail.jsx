@@ -91,17 +91,18 @@ class OrderProfitManagerDetail extends React.Component {
                             </div>
 
                             <div className="col s12 padding-top15 padding-bottom15 border-bottom-line">
-                                <div className="col s4">订单运费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_trans_price, 2)} 元</div>
-                                <div className="col s4">订单保费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_insure_price, 2)} 元</div>
-                                <div className="col s4 right-align">
-                                    订单收入：<span className="fz16 pink-font">{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_trans_price + orderProfitManagerDetailReducer.orderProfitInfo[0].total_insure_price, 2)}</span> 元
+                                <div className="col s3">订单运费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_trans_price, 2)} 元</div>
+                                <div className="col s3">订单保费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_insure_price, 2)} 元</div>
+                                <div className="col s3">订单价格：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].total_trans_price + orderProfitManagerDetailReducer.orderProfitInfo[0].total_insure_price, 2)} 元</div>
+                                <div className="col s3 right-align">
+                                    实际支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].real_payment_price, 2)}</span> 元
                                     <button type="button" className="btn purple-btn margin-left40 btn-height24 fz14" onClick={() => {this.showOrderPaymentModal()}}>查看详情</button>
                                 </div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15 border-bottom-line">
-                                <div className="col s4">供应商运费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_trans_price, 2)} 元</div>
-                                <div className="col s4">供应商保费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_insure_price, 2)} 元</div>
-                                <div className="col s4 right-align">
+                                <div className="col s3">供应商运费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_trans_price, 2)} 元</div>
+                                <div className="col s3">供应商保费：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_insure_price, 2)} 元</div>
+                                <div className="col s6 right-align">
                                     支付供应商：<span className="fz16 pink-font">{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_trans_price + orderProfitManagerDetailReducer.orderProfitInfo[0].supplier_insure_price, 2)}</span> 元
                                     <button type="button" className="btn purple-btn margin-left40 btn-height24 fz14" onClick={() => {this.showSupplierPaymentModal()}}>查看详情</button>
                                 </div>

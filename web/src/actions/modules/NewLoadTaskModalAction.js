@@ -9,7 +9,7 @@ const sysConst = require('../../util/SysConst');
 const commonUtil = require('../../util/CommonUtil');
 
 // 线路安排 初期
-export const initNewLoadTaskModal = (pageId, orderId, requireId, loadTaskId) => async (dispatch) => {
+export const initNewLoadTaskModal = (pageId, orderId, requireId, loadTaskId, loadTaskStatus) => async (dispatch) => {
     // 画面标记(新建/编辑)
     dispatch({type: NewLoadTaskModalActionType.setPageId, payload: pageId});
     // 订单编号
@@ -18,6 +18,8 @@ export const initNewLoadTaskModal = (pageId, orderId, requireId, loadTaskId) => 
     dispatch({type: NewLoadTaskModalActionType.setRequireId, payload: requireId});
     // 线路安排编号
     dispatch({type: NewLoadTaskModalActionType.setLoadTaskId, payload: loadTaskId});
+    // 线路安排状态
+    dispatch({type: NewLoadTaskModalActionType.setLoadTaskStatus, payload: loadTaskStatus});
 
     if (pageId === 'new') {
         // 画面TAB标记

@@ -1,7 +1,7 @@
 import {TransDemandManagerDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
-import {saveLoadTaskInfo} from "../modules/NewLoadTaskModalAction";
 
+const orderManagerDetailAction = require('../../actions/main/OrderManagerDetailAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -29,7 +29,7 @@ export const getTransDemandInfo = (requireId) => async (dispatch) => {
 };
 
 // 更新需求状态
-export const changeStatus = (requireId, status) => async (dispatch) => {
+export const changeStatus = (requireId, status, orderId) => async (dispatch) => {
     swal({
         title: status === sysConst.TRANS_DEMAND_STATUS[1].value ? "确定将状态变更为已安排？" : "确定将状态变更为已完成？",
         text: "状态变更后将不可修改",
@@ -45,6 +45,9 @@ export const changeStatus = (requireId, status) => async (dispatch) => {
             const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
                 dispatch(getTransDemandInfo(requireId));
+                if (orderId !== '') {
+                    dispatch(orderManagerDetailAction.getOrderInfo(orderId));
+                }
             } else if (res.success === false) {
                 swal('修改失败', res.msg, 'warning');
             }

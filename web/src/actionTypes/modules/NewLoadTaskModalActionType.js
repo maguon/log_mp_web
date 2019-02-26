@@ -5,6 +5,7 @@ export const setTabId = createAction('SET_NEW_LOAD_TASK_TAB_ID');
 export const setOrderId = createAction('SET_NEW_LOAD_TASK_ORDER_ID');
 export const setRequireId = createAction('SET_NEW_LOAD_TASK_REQUIRE_ID');
 export const setLoadTaskId = createAction('SET_NEW_LOAD_TASK_EDIT_ID');
+export const setLoadTaskStatus = createAction('SET_NEW_LOAD_TASK_EDIT_STATUS');
 export const setStartCity = createAction('SET_NEW_LOAD_TASK_START_CITY');
 export const setEndCity= createAction('SET_NEW_LOAD_TASK_END_CITY');
 export const setSupplier= createAction('SET_NEW_LOAD_TASK_SUPPLIER');

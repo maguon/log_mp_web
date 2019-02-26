@@ -13,6 +13,8 @@ const initialState = {
     requireId: '',
     // 线路安排ID
     loadTaskId: '',
+    // 线路安排状态
+    loadTaskStatus: '',
 
     // TAB 线路信息：起始城市
     startCity: null,
@@ -69,6 +71,12 @@ export default handleActions({
         return {
             ...state,
             loadTaskId: action.payload
+        }
+    },
+    [NewLoadTaskModalActionType.setLoadTaskStatus]: (state, action) => {
+        return {
+            ...state,
+            loadTaskStatus: action.payload
         }
     },
     [NewLoadTaskModalActionType.setStartCity]: (state, action) => {

@@ -58,10 +58,10 @@ class TransDemandManagerDetail extends React.Component {
     /**
      * 显示 线路安排 模态画面
      */
-    showNewLoadTaskModal = (pageId, loadTaskId) => {
+    showNewLoadTaskModal = (pageId, loadTaskId, loadTaskStatus) => {
         let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
         let requireId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].id;
-        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId);
+        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId, loadTaskStatus);
         $('#newLoadTaskModal').modal('open');
     };
 
@@ -169,7 +169,7 @@ class TransDemandManagerDetail extends React.Component {
                         <div className="row margin-bottom10 right-align">
                             {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
                             <button type="button" className="btn custom-btn" onClick={this.showEditLogAddressModal}>收发货地址</button>}
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','','')}}>增加线路</button>
                             <button type="button" className="btn orange-btn margin-left20" onClick={() => {changeStatus(sysConst.TRANS_DEMAND_STATUS[2].value)}}>完成需求</button>
                         </div>}
                         <SyncInfoModal/>
@@ -207,7 +207,7 @@ class TransDemandManagerDetail extends React.Component {
                                             {/* 编辑图标，已安排 并且 未同步 显示 */}
                                             {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.hook_id === 0 &&
                                             <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {
-                                                this.showNewLoadTaskModal('edit', item.id)
+                                                this.showNewLoadTaskModal('edit', item.id, item.load_task_status)
                                             }}/>}
 
                                             {/* 显示图标，(已安排 并且 已同步) 或者 已完成 显示 */}
@@ -218,7 +218,7 @@ class TransDemandManagerDetail extends React.Component {
                                             }}/>}
 
                                             {/* 删除图标，仅在已安排状态显示 */}
-                                            {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                                            {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.load_task_status === sysConst.LOAD_TASK_STATUS[0].value) &&
                                             <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.id)}}/>}
                                         </div>
                                     </div>
@@ -291,7 +291,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     // 更新需求状态
     changeStatus: (status) => {
-        dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id, status));
+        dispatch(transDemandManagerDetailAction.changeStatus(ownProps.match.params.id, status, ''));
     },
     // 显示订单详情
     initOrderInfoModalData: (orderId) => {
@@ -319,9 +319,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         }
     },
     // 增加/修改 线路安排
-    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId) => {
+    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId, loadTaskStatus) => {
         // 初始化画面
-        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId));
+        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId, loadTaskStatus));
         // 城市列表
         dispatch(commonAction.getCityList());
         // 供应商列表

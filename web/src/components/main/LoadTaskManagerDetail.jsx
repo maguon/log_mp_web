@@ -40,7 +40,8 @@ class LoadTaskManagerDetail extends React.Component {
     showNewLoadTaskModal = (pageId) => {
         let orderId = this.props.loadTaskManagerDetailReducer.loadTaskInfo[0].order_id;
         let requireId = this.props.loadTaskManagerDetailReducer.loadTaskInfo[0].require_id;
-        this.props.initNewLoadTaskModalData(pageId, orderId, requireId);
+        let loadTaskStatus = this.props.loadTaskManagerDetailReducer.loadTaskInfo[0].load_task_status;
+        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskStatus);
         $('#newLoadTaskModal').modal('open');
     };
 
@@ -282,9 +283,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         }
     },
     // 增加/修改 线路安排
-    initNewLoadTaskModalData: (pageId, orderId, requireId) => {
+    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskStatus) => {
         // 初始化画面
-        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, ownProps.match.params.id));
+        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, ownProps.match.params.id, loadTaskStatus));
         // 城市列表
         dispatch(commonAction.getCityList());
         // 供应商列表

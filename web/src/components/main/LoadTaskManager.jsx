@@ -304,7 +304,7 @@ class LoadTaskManager extends React.Component {
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.LOAD_TASK_STATUS,item.load_task_status)}</td>
                                         <td className="operation right-align padding-right20">
-                                            {item.require_status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                                            {(item.require_status === sysConst.TRANS_DEMAND_STATUS[1].value && item.load_task_status === sysConst.LOAD_TASK_STATUS[0].value) &&
                                             <i className="mdi mdi-close margin-right20 pink-font pointer" onClick={() => {deleteLoadTask(item.id)}}/>}
                                             <Link to={{pathname: '/load_task/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>

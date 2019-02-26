@@ -18,8 +18,6 @@ import {
     NewPaymentModal,
     NewRefundModal,
     NewInvoiceModal,
-
-
     NewLoadTaskModal,
     LoadTaskCarDetailModal,
     EditLogAddressModal,
@@ -59,12 +57,6 @@ class OrderManagerDetail extends React.Component {
         this.props.clearNewOrderId();
         // 取得用户信息
         this.props.getOrderInfo();
-
-        // TODO delete
-        this.props.getPaymentInfo();
-
-
-
         $('ul.tabs').tabs();
     }
 
@@ -128,11 +120,6 @@ class OrderManagerDetail extends React.Component {
         $('#cancelOrderModal').modal('open');
     };
 
-
-
-
-
-
     /**
      * 支付信息TAB：显示 支付 模态画面
      */
@@ -165,14 +152,12 @@ class OrderManagerDetail extends React.Component {
         $('#newRefundModal').modal('open');
     };
 
-
     /**
      * 支付信息TAB：删除 申请退款
      */
     deleteRefundApply = (item) => {
         this.props.deleteRefundApply(item);
     };
-
 
     /**
      * 运输信息TAB：收发货地址 按钮
@@ -185,10 +170,10 @@ class OrderManagerDetail extends React.Component {
     /**
      * 运输信息TAB：显示 线路安排 模态画面
      */
-    showNewLoadTaskModal = (pageId, loadTaskId) => {
+    showNewLoadTaskModal = (pageId, loadTaskId, loadTaskStatus) => {
         let orderId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].order_id;
         let requireId = this.props.transDemandManagerDetailReducer.transDemandInfo[0].id;
-        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId);
+        this.props.initNewLoadTaskModalData(pageId, orderId, requireId, loadTaskId, loadTaskStatus);
         $('#newLoadTaskModal').modal('open');
     };
 
@@ -201,7 +186,6 @@ class OrderManagerDetail extends React.Component {
         this.props.initLoadTaskCarDetailModal(orderId, requireId, loadTaskId);
         $('#loadTaskCarDetailModal').modal('open');
     };
-
 
     /**
      * 发票信息TAB：显示 申请开票 模态画面
@@ -295,8 +279,8 @@ class OrderManagerDetail extends React.Component {
                         </div>}
                         <InquiryInfoModal/>
                         <ul className="tabs">
-                            <li className="tab col s-percent-20"><a href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
-                            <li className="tab col s-percent-20"><a className="active" href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
+                            <li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
+                            <li className="tab col s-percent-20"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getTransDemandInfo}>运输信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                             <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>
@@ -710,20 +694,11 @@ class OrderManagerDetail extends React.Component {
                                     </div>
                                 )
                             }, this)}
-
-
-
-
-
-
-
-
                         </div>}
                     </div>
 
                     {/* TAB 3 : 运输信息TAB */}
                     <div id="tab-log-info" className="col s12">
-
                         {transDemandManagerDetailReducer.transDemandInfo.length === 0 &&
                         <div className="row center margin-top50 grey-text">
                             暂无运输信息
@@ -758,7 +733,7 @@ class OrderManagerDetail extends React.Component {
                                 <div className="row margin-bottom10 right-align">
                                     {transDemandManagerDetailReducer.transDemandInfo[0].service_type === sysConst.SERVICE_MODE[1].value &&
                                     <button type="button" className="btn custom-btn" onClick={this.showEditLogAddressModal}>收发货地址</button>}
-                                    <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','')}}>增加线路</button>
+                                    <button type="button" className="btn confirm-btn margin-left20" onClick={() => {this.showNewLoadTaskModal('new','', '')}}>增加线路</button>
                                     <button type="button" className="btn orange-btn margin-left20" onClick={() => {
                                         changeRequireStatus(transDemandManagerDetailReducer.transDemandInfo[0].id, sysConst.TRANS_DEMAND_STATUS[2].value)
                                     }}>完成需求
@@ -798,7 +773,7 @@ class OrderManagerDetail extends React.Component {
                                                     {/* 编辑图标，已安排 并且 未同步 显示 */}
                                                     {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.hook_id === 0 &&
                                                     <i className="mdi mdi-pencil margin-left30 pointer" onClick={() => {
-                                                        this.showNewLoadTaskModal('edit', item.id)
+                                                        this.showNewLoadTaskModal('edit', item.id, item.load_task_status)
                                                     }}/>}
 
                                                     {/* 显示图标，(已安排 并且 已同步) 或者 已完成 显示 */}
@@ -809,7 +784,7 @@ class OrderManagerDetail extends React.Component {
                                                     }}/>}
 
                                                     {/* 删除图标，仅在已安排状态显示 */}
-                                                    {transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value &&
+                                                    {(transDemandManagerDetailReducer.transDemandInfo[0].status === sysConst.TRANS_DEMAND_STATUS[1].value && item.load_task_status === sysConst.LOAD_TASK_STATUS[0].value) &&
                                                     <i className="mdi mdi-close margin-left30 pointer" onClick={() => {deleteLoadTask(item.require_id, item.id)}}/>}
                                                 </div>
                                             </div>
@@ -863,15 +838,7 @@ class OrderManagerDetail extends React.Component {
                                     )
                                 }, this)}
                             </div>}
-
                         </div>}
-
-
-
-
-
-
-
                     </div>
 
                     {/* TAB 4 : 发票信息TAB */}
@@ -1048,7 +1015,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     // 更新需求状态
     changeRequireStatus: (requireId, status) => {
-        dispatch(transDemandManagerDetailAction.changeStatus(requireId, status));
+        dispatch(transDemandManagerDetailAction.changeStatus(requireId, status, ownProps.match.params.id));
     },
     // 显示/修改 收发货地址
     initEditLogAddressModalData: () => {
@@ -1070,9 +1037,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         }
     },
     // 增加/修改 线路安排
-    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId) => {
+    initNewLoadTaskModalData: (pageId, orderId, requireId, loadTaskId, loadTaskStatus) => {
         // 初始化画面
-        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId));
+        dispatch(newLoadTaskModalAction.initNewLoadTaskModal(pageId, orderId, requireId, loadTaskId, loadTaskStatus));
         // 城市列表
         dispatch(commonAction.getCityList());
         // 供应商列表
@@ -1092,10 +1059,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(requireId, loadTaskId, status));
     },
 
-
-
-
-
     // TAB4：发票信息
     getInvoiceList: () => {
         dispatch(orderManagerDetailAction.getInvoiceList(ownProps.match.params.id))
@@ -1109,7 +1072,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     // TAB5：操作记录
     getOperationList: () => {
-        dispatch(orderManagerDetailAction.getOperationList(ownProps.match.params.id))
+        // dispatch(orderManagerDetailAction.getOperationList(ownProps.match.params.id))
     }
 });
 

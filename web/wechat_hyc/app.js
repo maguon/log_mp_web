@@ -9,22 +9,22 @@ App({
    */
   onLaunch: function () {
 
-    // 登录
-    wx.login({
-      success: res => {
-        //获取code
-        var code = res.code;
-        console.log(res.code)
-        //发送code 请求openid
-        reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, res) => {
+    // // 登录
+    // wx.login({
+    //   success: res => {
+    //     //获取code
+    //     var code = res.code;
+    //     console.log(res.code)
+    //     //发送code 请求openid
+    //     reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, res) => {
 
-          //保存openid 到全局
-          this.globalData.openid = res.data.result.openid;
-          console.log(res.data.result.openid)
-          this.globalData.session_key = res.data.result.session_key;
-        })
-      }
-    })
+    //       //保存openid 到全局
+    //       this.globalData.openid = res.data.result.openid;
+    //       console.log(res.data.result.openid)
+    //       this.globalData.session_key = res.data.result.session_key;
+    //     })
+    //   }
+    //})
     // // 获取用户信息
     // wx.getSetting({
     //   success: res => {

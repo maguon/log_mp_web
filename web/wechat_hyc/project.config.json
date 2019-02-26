@@ -36,13 +36,13 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
 					"name": "扫描二维码",
 					"pathName": "pages/login/login",
-					"query": "scene=\"测试参数\"",
+					"query": "scene=0",
 					"scene": "1001"
 				}
 			]

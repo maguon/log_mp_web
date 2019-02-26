@@ -143,7 +143,7 @@ Page({
   choose: function () {
     var orderId = this.data.orderId;
     var refundId = this.data.refund.id;
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/order/refund/pay-msg/pay-msg?orderId=" + orderId + "&name=" + "user" + "&refundId=" + refundId,
     })
   },

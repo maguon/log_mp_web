@@ -121,9 +121,7 @@ Page({
     //判断用户输入
     if (invoice == "") {
       warn = "请输入公司名称";
-    } else if (phone == "") {
-      warn = "请输入您的电话号！";
-    } else if (ein == "") {
+    } else  if (ein == "") {
       warn = "请输入公司税号";
     } else if (bank == "") {
       warn = "请输入开户银行";

@@ -88,7 +88,8 @@ class RecommenderSettingDetail extends React.Component {
                             <div id="recommend-div" className="recommend-div">
                                 <span className="position-absolute recommend-content">{recommenderSettingDetailReducer.content}</span>
                                 <img className="position-absolute recommend-img" src="../../../assets/images/recommend_bg.jpg"/>
-                                <img className="position-absolute recommend-code" src={recommenderSettingDetailReducer.mpUrl}/>
+                                {recommenderSettingDetailReducer.mpUrl != null &&
+                                <img className="position-absolute recommend-code" src={recommenderSettingDetailReducer.mpUrl}/>}
                             </div>
                         </div>
                     </div>

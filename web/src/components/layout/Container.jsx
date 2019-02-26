@@ -51,6 +51,8 @@ import {
     SupplierBusinessManagerDetail,
     RecommenderSetting,
     RecommenderSettingDetail,
+    RecommendBusinessManager,
+    RecommendBusinessManagerDetail,
 } from '../main/index';
 
 const routes = [
@@ -268,6 +270,17 @@ const routes = [
         exact: true,
         component: SupplierBusinessManagerDetail
     },
+    {
+        // 推广业绩
+        path: "/recommend_business",
+        exact: true,
+        component: RecommendBusinessManager
+    },
+    {
+        path: '/recommend_business/:id',
+        exact: true,
+        component: RecommendBusinessManagerDetail
+    },
 
     // 设置模块
     {
@@ -464,6 +477,10 @@ class Container extends React.Component {
                     {
                         "link": '/supplier_business',
                         "name": '供应商业务'
+                    },
+                    {
+                        "link": '/recommend_business',
+                        "name": '推广业绩'
                     }
                 ]
             }, {

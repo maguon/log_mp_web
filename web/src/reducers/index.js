@@ -55,6 +55,8 @@ import SupplierBusinessManagerReducer from './main/SupplierBusinessManagerReduce
 import SupplierBusinessManagerDetailReducer from './main/SupplierBusinessManagerDetailReducer';
 import RecommenderSettingReducer from './main/RecommenderSettingReducer';
 import RecommenderSettingDetailReducer from './main/RecommenderSettingDetailReducer';
+import RecommendBusinessManagerReducer from './main/RecommendBusinessManagerReducer';
+import RecommendBusinessManagerDetailReducer from './main/RecommendBusinessManagerDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -143,6 +145,8 @@ export default combineReducers({
     SupplierBusinessManagerDetailReducer,
     RecommenderSettingReducer,
     RecommenderSettingDetailReducer,
+    RecommendBusinessManagerReducer,
+    RecommendBusinessManagerDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

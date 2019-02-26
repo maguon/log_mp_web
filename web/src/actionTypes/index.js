@@ -52,6 +52,8 @@ import * as SupplierBusinessManagerActionType  from './main/SupplierBusinessMana
 import * as SupplierBusinessManagerDetailActionType  from './main/SupplierBusinessManagerDetailActionType';
 import * as RecommenderSettingActionType  from './main/RecommenderSettingActionType';
 import * as RecommenderSettingDetailActionType  from './main/RecommenderSettingDetailActionType';
+import * as RecommendBusinessManagerActionType  from './main/RecommendBusinessManagerActionType';
+import * as RecommendBusinessManagerDetailActionType  from './main/RecommendBusinessManagerDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -139,6 +141,8 @@ export  {
     SupplierBusinessManagerDetailActionType,
     RecommenderSettingActionType,
     RecommenderSettingDetailActionType,
+    RecommendBusinessManagerActionType,
+    RecommendBusinessManagerDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

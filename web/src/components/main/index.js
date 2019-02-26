@@ -37,6 +37,8 @@ export SupplierBusinessManager from "./SupplierBusinessManager";
 export SupplierBusinessManagerDetail from "./SupplierBusinessManagerDetail";
 export RecommenderSetting from "./RecommenderSetting";
 export RecommenderSettingDetail from "./RecommenderSettingDetail";
+export RecommendBusinessManager from "./RecommendBusinessManager";
+export RecommendBusinessManagerDetail from "./RecommendBusinessManagerDetail";
 
 export CitySetting from "./CitySetting";
 export RouteSetting from "./RouteSetting";

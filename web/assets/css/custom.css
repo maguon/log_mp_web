@@ -422,6 +422,10 @@ table.striped > tbody > tr:nth-child(odd) {
     width: 92%;
 }
 
+.s-percent-93 {
+    width: 93%;
+}
+
 .s-percent-96 {
     width: 96%;
 }
@@ -1178,7 +1182,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #newLoadTaskModal .modal-content #tab-trans .modal-content-body {
-    height: 398px;
+    height: 58%;
     position: absolute;
     max-height: 100%;
     width: 95%;
@@ -1186,7 +1190,7 @@ table.striped > tbody > tr:nth-child(odd) {
 }
 
 #loadTaskCarDetailModal .modal-content .modal-content-body {
-    height: 426px;
+    height: 80%;
     position: absolute;
     max-height: 100%;
     width: 95%;

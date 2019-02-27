@@ -91,6 +91,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(NewRecommenderModalActionType.setCommendIntroduction(value));
     },
     addReCommend: () => {
+        // 设置保存成功后的推荐人编号，默认值：空
+        dispatch(NewRecommenderModalActionType.setNewRecommendId(''));
         dispatch(newRecommenderModalAction.addReCommend());
     },
     closeModal: () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import {Input} from 'react-materialize';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
-import {RecommenderSettingDetailActionType} from "../../actionTypes";
+import {RecommenderSettingDetailActionType, NewRecommenderModalActionType} from "../../actionTypes";
 import {AdvertisingModal} from '../modules/index';
 
 const recommenderSettingDetailAction = require('../../actions/main/RecommenderSettingDetailAction');
@@ -21,6 +21,8 @@ class RecommenderSettingDetail extends React.Component {
      * 组件完全挂载到页面上，调用执行
      */
     componentDidMount() {
+        // 清空创建的推荐人编号
+        this.props.clearNewRecommendId();
         // 取得推荐人信息
         this.props.getRecommendInfo();
     }
@@ -112,6 +114,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    // 清除内部推荐人编号
+    clearNewRecommendId: () => {
+        dispatch(NewRecommenderModalActionType.setNewRecommendId(''));
+    },
     // 取得基本信息
     getRecommendInfo: () => {
         dispatch(recommenderSettingDetailAction.getRecommendInfo(ownProps.match.params.id));

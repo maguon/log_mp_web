@@ -531,29 +531,28 @@ class OrderManagerDetail extends React.Component {
                             {/* 头部：支付概述 */}
                             <div className="row margin-top40 margin-left50 margin-right50 detail-box">
                                 <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
-                                    <div className="col s6">
-                                        应付总额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee,2)}</span> 元
+                                    <div className="col s4">
+                                        应收款：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee,2)}</span> 元
+                                    </div>
+                                    <div className="col s4">
+                                        实收款：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid + orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
                                     </div>
                                     {/* 支付状态 */}
-                                    <div className="col s6 pink-font right-align">
+                                    <div className="col s4 pink-font right-align">
                                         {commonUtil.getJsonValue(sysConst.ORDER_PAYMENT_STATUS, orderManagerDetailReducer.orderInfo[0].payment_status)}
                                     </div>
                                 </div>
-                                <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
-                                    <div className="col s6">
+                                <div className="col s12 padding-top15 padding-bottom15">
+                                    <div className="col s4">
                                         已支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid,2)}</span> 元
                                     </div>
 
-                                    <div className="col s6 right-align">
+                                    <div className="col s4">
                                         剩余应付：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.totalActFreight + commonReducer.totalInsuranceFee - orderManagerDetailReducer.orderPaymentPaid,2)}</span> 元
                                     </div>
-                                </div>
-                                <div className="col s12 padding-top15 padding-bottom15">
-                                    <div className="col s6">
+
+                                    <div className="col s4 right-align">
                                         已退款：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
-                                    </div>
-                                    <div className="col s6 right-align">
-                                        实际支付：<span className="fz16 pink-font">{formatUtil.formatNumber(orderManagerDetailReducer.orderPaymentPaid + orderManagerDetailReducer.orderPaymentRefund,2)}</span> 元
                                     </div>
                                 </div>
                             </div>
@@ -700,7 +699,7 @@ class OrderManagerDetail extends React.Component {
                     {/* TAB 3 : 运输信息TAB */}
                     <div id="tab-log-info" className="col s12">
                         {transDemandManagerDetailReducer.transDemandInfo.length === 0 &&
-                        <div className="row center margin-top50 grey-text">
+                        <div className="row center margin-top50 grey-text fz18">
                             暂无运输信息
                         </div>}
                         {transDemandManagerDetailReducer.transDemandInfo.length > 0 &&
@@ -859,7 +858,7 @@ class OrderManagerDetail extends React.Component {
                                 orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value &&
                                 orderManagerDetailReducer.invoiceArray.length === 0) ||
                             (orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.invoiceArray.length === 0)) &&
-                            <div className="row center grey-text margin-top40 fz18">
+                            <div className="row center grey-text margin-top50 fz18">
                                 暂无发票信息
                             </div>}
 
@@ -988,6 +987,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
     // TAB2：支付信息
     getPaymentInfo: () => {
+        dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
         dispatch(orderManagerDetailAction.getOrderPaymentList(ownProps.match.params.id));
         dispatch(orderManagerDetailAction.getOrderRefundList(ownProps.match.params.id));
     },

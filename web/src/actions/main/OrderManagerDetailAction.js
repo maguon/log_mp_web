@@ -168,9 +168,9 @@ export const getOrderPaymentList = (id) => async (dispatch) => {
                 if (res.result[i].type === sysConst.PAYMENT_TYPE[0].value) {
                     refund = refund + res.result[i].total_fee;
                 } else if (res.result[i].type === sysConst.PAYMENT_TYPE[1].value) {
-                    paid = paid + res.result[i].total_fee;
                     // 已支付的数据
                     if (res.result[i].status === sysConst.PAYMENT_STATUS[1].value) {
+                        paid = paid + res.result[i].total_fee;
                         paymentSize++;
                     }
                 }

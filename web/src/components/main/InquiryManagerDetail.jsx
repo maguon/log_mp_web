@@ -239,11 +239,8 @@ class InquiryManagerDetail extends React.Component {
                                 </div>
                                 <div className="col s12 no-padding divider"/>
 
-                                <div className="col s-percent-6 padding-right0 margin-top10 margin-bottom10 bold-font">
-                                    协商描述：
-                                </div>
-                                <div className="col s-percent-94 margin-top10 margin-bottom10 grey-text">
-                                    {inquiryManagerDetailReducer.inquiryInfo[0].remark}
+                                <div className="col s12 margin-top10 margin-bottom10 bold-font">
+                                    协商描述：{inquiryManagerDetailReducer.inquiryInfo[0].remark}
                                 </div>
                                 <div className="col s12 no-padding divider"/>
 
@@ -270,7 +267,7 @@ class InquiryManagerDetail extends React.Component {
                                 取消原因：
                             </div>
                             <div className="col s-percent-92 padding-left0 margin-top10 margin-bottom10 grey-text">
-                                {inquiryManagerDetailReducer.inquiryInfo[0].mark_reason}
+                                {inquiryManagerDetailReducer.inquiryInfo[0].cancel_reason}
                             </div>
                         </div>}
                     </div>

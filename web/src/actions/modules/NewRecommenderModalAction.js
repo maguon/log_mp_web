@@ -7,6 +7,8 @@ const sysConst = require('../../util/SysConst');
 
 // 新增推荐人 初期
 export const initNewReCommendModal = () => async (dispatch) => {
+    // 推荐人ID
+    dispatch({type: NewRecommenderModalActionType.setNewRecommendId, payload: ''});
     // 推荐人名称
     dispatch({type: NewRecommenderModalActionType.setCommendName, payload: ''});
     // 推荐人简介

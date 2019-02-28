@@ -370,7 +370,7 @@ class OrderManagerDetail extends React.Component {
                                                     <td className="right-align width-150">
                                                         {/* 待完善价格 状态时，可编辑 */}
                                                         {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
-                                                        <input id={`trans_index${key}`} defaultValue={item.act_trans_price} className="margin-bottom0 width-100 right-align"/>}
+                                                        <input id={`trans_index${key}`} type="number" defaultValue={item.act_trans_price} className="margin-bottom0 width-100 right-align"/>}
 
                                                         {/* 待完善价格 状态 以外时，只显示 */}
                                                         {orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[1].value &&
@@ -381,7 +381,7 @@ class OrderManagerDetail extends React.Component {
                                                         {/* 待完善价格 状态时，可编辑 */}
                                                         {orderManagerDetailReducer.orderInfo[0].status === sysConst.ORDER_STATUS[1].value &&
                                                         <div>
-                                                            <input id={`insure_index${key}`} defaultValue={item.act_insure_price} className="margin-bottom0 width-100 right-align"/>
+                                                            <input id={`insure_index${key}`} type="number" defaultValue={item.act_insure_price} className="margin-bottom0 width-100 right-align"/>
                                                             <i className="mdi mdi-checkbox-marked-circle margin-left20 fz24 purple-font pointer"
                                                                onClick={()=> {this.saveOrderItemInfo(item,`trans_index${key}`,`insure_index${key}`)}}/>
                                                         </div>}

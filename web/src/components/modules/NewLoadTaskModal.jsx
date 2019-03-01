@@ -242,7 +242,7 @@ class NewLoadTaskModal extends React.Component {
                                 </div>}
 
                                 {/* 未安排车辆 列表 */}
-                                <div className="col s12 detail-box z-depth-1 no-padding margin-bottom20">
+                                <div className="col s12 detail-box z-depth-1 no-padding">
                                     <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line purple-font">未安排车辆</div>
                                     <div className="col s6 custom-grey padding-top10 padding-bottom10 border-top-line border-bottom-line pink-font right-align">
                                         {formatUtil.formatNumber(newLoadTaskModalReducer.unscheduledCarList.length)}

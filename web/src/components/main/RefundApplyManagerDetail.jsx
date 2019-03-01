@@ -118,8 +118,7 @@ class PaymentManagerDetail extends React.Component {
                                 <div className="col s12"><div className="col s12 dotted-line"/></div>
 
                                 <div className="col s12 padding-top15 padding-bottom10">
-                                    <div className="col s-percent-6 padding-right0">申请原因：</div>
-                                    <div className="col s-percent-94 padding-left0">{refundApplyManagerDetailReducer.refundApplyInfo[0].apply_reason}</div>
+                                    <div className="col s12 padding-right0">申请原因：{refundApplyManagerDetailReducer.refundApplyInfo[0].apply_reason}</div>
                                 </div>
                                 <div className="col s12"><div className="col s12 dotted-line"/></div>
 
@@ -141,14 +140,12 @@ class PaymentManagerDetail extends React.Component {
                                     {/* 原因 已退款 状态显示下面部分 */}
                                     {refundApplyManagerDetailReducer.refundApplyInfo[0].status === sysConst.REFUND_STATUS[1].value &&
                                     <div className="col s12 padding-top15 padding-bottom10">
-                                        <div className="col s-percent-6 padding-right0">退款描述：</div>
-                                        <div className="col s-percent-94 padding-left0">{refundApplyManagerDetailReducer.refundApplyInfo[0].remark}</div>
+                                        <div className="col s12 padding-right0">退款描述：{refundApplyManagerDetailReducer.refundApplyInfo[0].remark}</div>
                                     </div>}
                                     {/* 原因 已拒绝 状态显示下面部分 */}
                                     {refundApplyManagerDetailReducer.refundApplyInfo[0].status === sysConst.REFUND_STATUS[0].value &&
                                     <div className="col s12 padding-top15 padding-bottom10">
-                                        <div className="col s-percent-6 padding-right0">拒绝原因：</div>
-                                        <div className="col s-percent-94 padding-left0">{refundApplyManagerDetailReducer.refundApplyInfo[0].refuse_reason}</div>
+                                        <div className="col s12 padding-right0">拒绝原因：{refundApplyManagerDetailReducer.refundApplyInfo[0].refuse_reason}</div>
                                     </div>}
                                     <div className="col s12"><div className="col s12 dotted-line"/></div>
 

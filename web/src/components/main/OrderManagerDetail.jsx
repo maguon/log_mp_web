@@ -594,11 +594,19 @@ class OrderManagerDetail extends React.Component {
                                                 <i className="mdi mdi-pencil margin-left20 pointer" onClick={() => {this.showPaymentModal('edit',item)}}/>}
                                             </div>
                                         </div>
+                                        {/* 微信支付 */}
+                                        {item.payment_type === sysConst.PAYMENT_MODE[0].value &&
+                                        <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
+                                            <div className="col s6">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</div>
+                                            <div className="col s6 right-align">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
+                                        </div>}
+                                        {/* 银行转账 */}
+                                        {item.payment_type === sysConst.PAYMENT_MODE[1].value &&
                                         <div className="col s12 padding-top15 padding-bottom15 border-bottom-dotted-line">
                                             <div className="col s2">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, item.payment_type)}</div>
                                             <div className="col s7 no-padding">支付账户：{item.bank} {item.bank_code} {item.account_name}</div>
                                             <div className="col s3 right-align">支付时间：{formatUtil.getDateTime(item.created_on)}</div>
-                                        </div>
+                                        </div>}
                                         <div className="col s12 padding-top15 padding-bottom15">
                                             <div className="col s12 right-align">
                                                 支付金额：<span className="fz16 pink-font">{formatUtil.formatNumber(item.total_fee,2)}</span> 元

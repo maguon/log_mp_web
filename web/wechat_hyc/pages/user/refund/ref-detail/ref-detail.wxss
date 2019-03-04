@@ -94,6 +94,12 @@ page{
   margin-top: 8px;
   text-decoration: blink;
 }
+.stay-num-fee{
+   color: #d43286;
+  font-size: 18px;
+  margin-top: 5px;
+  text-decoration: blink;
+}
 .stay-num01{
   color: #d43286;
   font-size: 18px;

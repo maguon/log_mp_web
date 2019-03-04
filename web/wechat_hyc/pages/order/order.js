@@ -54,7 +54,7 @@ Page({
     flag:false,
     loadingHidden:false,
     prompt:false,
-    size:6,
+    size:20,
   
   },
 
@@ -108,25 +108,33 @@ Page({
         if (res.data.result[i].status == 0 || res.data.result[i].status == 1 ) {
           count_a++;
           orderState[1].hidden = true;
-        } else if (res.data.result[i].status == 2 && res.data.result[i].payment_status != 2 ){
+        }else if (res.data.result[i].payment_status == 0 || res.data.result[i].payment_status == 1){
           count_b++;
           orderState[2].hidden = true;
-        } else if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
+        } 
+         if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
           count_c++;
           orderState[3].hidden = true;
-        } else if (res.data.result[i].status == 4 ) {
+        } 
+
+         if (res.data.result[i].status == 4 ) {
+           console.log("1111")
           count_d++;
           orderState[4].hidden = true;
         }
       }
       if (count_a==0){
         orderState[1].hidden = false;
-      } else if (count_b==0){
+      }
+       if (count_b==0){
         orderState[2].hidden = false;
-      } else if (count_c == 0){
+      } 
+      if (count_c == 0){
         orderState[3].hidden = false;
-      } else if (count_d == 0) {
+      } 
+       if (count_d == 0) {
         orderState[4].hidden = false;
+        console.log("000")
       }
 
 
@@ -240,9 +248,8 @@ Page({
         prompt: false,
      
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" +"2,3"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?paymentStatusList=" +"0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
-          console.log(res.data.result)
 
           for (var i = 0; i < res.data.result.length; i++) {
             //支付费用
@@ -250,25 +257,20 @@ Page({
             //编译时间
             res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
-            //  //判断显示状态
-            if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
-              res.data.result[i].status = 1;
-              res.data.result[i].state = 1;
-              res.data.result[i].payFlag = true;
-              //判断删除状态
-            }
-            // else  if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
+
+           
            //判断支付状态
-            if (res.data.result[i].payment_status == 0) {
+            if (res.data.result[i].payment_status == 0 && res.data.result[i].status != 0 && res.data.result[i].status != 1) {
               res.data.result[i].stay = 4;
+              res.data.result[i].payFlag = true;
+              res.data.result[i].state = 1;
             } else if (res.data.result[i].payment_status == 1) {
               res.data.result[i].stay = 5;
-            } else if (res.data.result[i].payment_status == 2) {
-              res.data.result[i].stay = 6;
+              res.data.result[i].payFlag = true;
+              res.data.result[i].state = 1;
+            } else{
               res.data.result[i].state = 0;
-            } 
+            }
           }
 
           console.log(res.data.result)
@@ -307,12 +309,8 @@ Page({
             if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
-              res.data.result[i].payFlag = true;
-            //判断删除状态
+              res.data.result[i].payFlag = true;  
             }
-            // else  if (res.data.result[i].status == 8) {
-            //   res.data.result[i].state = 0;
-            // } 
             //判断物流状态 
             if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 7;
@@ -353,6 +351,7 @@ Page({
             res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
             // //判断显示状态
             if (res.data.result[i].status == 4) {
+              res.data.result[i].stay = 9;
               res.data.result[i].status = 1;           
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;
@@ -409,7 +408,7 @@ Page({
     that.setData({
       orderState: orderState,
       index:index,
-      size:6,
+      size:20,
     })
     this.onShow();
   },
@@ -462,45 +461,4 @@ Page({
       default: 
     }
   },
-
-
-
-
-
-
-  // /**
-  //  * 页面上拉触底事件的处理函数
-  //  */
-  // onReachBottom: function () {
-  //   var that = this;
-  //   // 显示加载图标
-  //   wx.showLoading({
-  //     title: '玩命加载中',
-  //   })
-  //   // 页数+1
-  //   page = page + 1;
-  //   wx.request({
-  //     url: 'https://xxx/?page=' + page,
-  //     method: "GET",
-  //     // 请求头部
-  //     header: {
-  //       'content-type': 'application/text'
-  //     },
-  //     success: function (res) {
-  //       // 回调函数
-  //       var moment_list = that.data.moment;
-
-  //       for (var i = 0; i < res.data.data.length; i++) {
-  //         moment_list.push(res.data.data[i]);
-  //       }
-  //       // 设置数据
-  //       that.setData({
-  //         moment: that.data.moment
-  //       })
-  //       // 隐藏加载框
-  //       wx.hideLoading();
-  //     }
-  //   })
-
-  // },
 })

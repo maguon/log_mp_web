@@ -62,6 +62,12 @@ page{
   position: absolute;
   right: 25px;
 }
+.stay-expect01{
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  margin-left: 10px;
+}
 .stay-car{
   width: 120px;
   font-size:13px;
@@ -77,8 +83,8 @@ page{
 }
 .stay-num{
   color: #d43286;
-  font-size: 18px;
-  margin-top: 5px;
+  font-size: 15px;
+  margin-top: 8px;
   text-decoration: blink;
 }
 .stay-num01{

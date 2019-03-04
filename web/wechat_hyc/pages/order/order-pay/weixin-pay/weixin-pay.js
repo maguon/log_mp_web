@@ -19,7 +19,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
- 
     this.setData({
       orderId: e.orderId,
       totalPrice: e.fee,
@@ -50,10 +49,13 @@ Page({
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
     }
+    console.log(userId)
+    console.log(orderId)
+    console.log(that.data.totalPrice)
     console.log(app.globalData.openid)
     //发送Post请求
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/wechatPayment", params, (err, res) => {
-      console.log(res.data.result)
+      console.log(res)
 
       wx.requestPayment({
         timeStamp: res.data.result[0].timeStamp + "",
@@ -63,24 +65,27 @@ Page({
         paySign: res.data.result[0].paySign,
         success: (res) => {       
           console.log('支付成功');
-     
+          
           wx.showToast({
             title: '支付成功',
             icon: 'success',
             duration: 2000
           })
           
-          //支付完成跳转页面
-          if (that.data.param == "pagment") {
-          wx.navigateBack({
-              delta: 2
-            })
-          } else if (that.data.param == "order") {
-            wx.navigateBack({
-              delta: 3
-            })
-          } 
-          
+          // //支付完成跳转页面
+          // if (that.data.param == "pagment") {
+          // wx.navigateBack({
+          //     delta: 2
+          //   })
+            
+          // } else if (that.data.param == "order") {
+          //   wx.navigateBack({
+          //     delta: 3
+          //   })
+          // } 
+          wx.redirectTo({
+            url: "/pages/order/order-pay/order-pay?orderId=" + orderId+"&name="+"wexin-pay",
+          })
         },
         fail: function (err) {
           console.log('支付失败')

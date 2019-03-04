@@ -69,10 +69,11 @@
 <button hidden='{{!norefFlag}}' bindtap='isRefund' class='refund' hover-class="cancel_btn">退款拒绝</button>
 
 <button hidden='{{!invoiceFlag}}' bindtap='invoice' class='refund' hover-class="cancel_btn">开票</button>
-<button hidden='{{!vin_Flag}}' class='in-refund'>开票申请中...</button>
-</view>
+<button hidden='{{!inv_Flag}}' class='in-refund'>开票申请中...</button>
 <button hidden='{{!invFlag}}' bindtap='isInvoice' class='refund' hover-class="cancel_btn">已开票</button>
 <button hidden='{{!noinvFlag}}' bindtap='isInvoice' class='refund' hover-class="cancel_btn">开票拒绝</button>
+</view>
+
 
 <!--  ---------------------------------------------------------------------- -->
 <view hidden='{{completeFlag}}' class='bottom'>

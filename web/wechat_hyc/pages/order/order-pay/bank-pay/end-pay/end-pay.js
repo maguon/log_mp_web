@@ -14,6 +14,7 @@ Page({
     remain:0,
     refund:0,
     sumFee:0,
+    status:0,
     pagFlag:false,
     refundFlag:false,
   },
@@ -27,6 +28,7 @@ Page({
     this.setData({
       orderId: e.orderId,
       sumFee:e.fee,
+      status:e.status,
     })
   },
 
@@ -48,7 +50,7 @@ Page({
         var refundSum = 0;
 
         //支付按钮显示
-        if (res.data.result[0].unpaid_price == 0) {
+        if (that.data.status == 2) {
           that.setData({
             pagFlag: true,
           })
@@ -75,7 +77,10 @@ Page({
             refundFlag: true,
           })
         }
-        that.setData({
+        console.log(sumFee)
+        console.log(res.data.result[0].unpaid_price)
+        console.log(res.data.result)
+      that.setData({
       payment:res.data.result,
       remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
       refund:refundSum,
@@ -103,19 +108,7 @@ Page({
       url: '/pages/order/order-pay/choose/choose?orderId=' + this.data.orderId + "&fee=" + this.data.sumFee +"&param="+"order",
     })
   },
-  // chooseBank: function () {
-  //   wx.navigateTo({
-  //     url: '/pages/order/order-pay/bank-pay/add-card/add-card',
-  //   })
-  // },
 
-  // costNum: function (e) {
-  //   console.log(e)
-  //   var num = e.detail.value;
-  //   this.setData({
-  //     cost_num: num,
-  //   })
-  // },
 
 
 

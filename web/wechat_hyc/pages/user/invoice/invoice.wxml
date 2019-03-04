@@ -10,6 +10,12 @@
 
 <view bindtap='bindtap' data-index='{{index}}'  wx:for="{{invoice}}"  wx:key="u" class='content' hover-class="active">
 <view class='city'>
+<view  class='num'>订单编号：{{item.id}}</view>
+<view  hidden='{{carFlag}}' class='num-time'>申请时间：{{item.apply_time}}</view>
+<view  hidden='{{!carFlag}}' class='num-time'>创建时间：{{item.created_on}}</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
 <view class='city-text'>{{item.route_start}}</view>
 <image class='city-arrow' src='../../../images/arrow_02.png'></image>
 <view class='city-text'>{{item.route_end}}</view>
@@ -23,15 +29,18 @@
 <view hidden='{{!carFlag}}' class='stay-car'>订单金额:{{item.sumfee}}元</view>
 
 <view class='stay-expect'>
+<view class='stay-text'>订单金额:</view>
+<view class='stay-text'>{{item.sumfee}}</view>
+<view class='stay-text'>元</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<view class='city'>
+<view class='stay-expect'>
 <view class='stay-text'>支付金额:</view>
 <view class='stay-num'>{{item.real_payment_price}}</view>
 <view class='stay-text'>元</view>
 </view>
-</view>
-<view class='city'>
-<view  class='num'>订单编号：{{item.id}}</view>
-<view  hidden='{{carFlag}}' class='num-time'>申请时间：{{item.apply_time}}</view>
-<view  hidden='{{!carFlag}}' class='num-time'>创建时间：{{item.created_on}}</view>
 </view>
 <view class='line'></view>
 </view>

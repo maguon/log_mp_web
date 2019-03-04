@@ -16,6 +16,7 @@ Page({
     lagstate: ["待安排", "待发运", "运输中","已送达"],
     invoicelist:[],
     refundlist:[],
+    payment_status:0,
 
     completeFlag: false,
     partFlag:false,  
@@ -29,9 +30,9 @@ Page({
     norefFlag: false,
 
     invoiceFlag:false,
-    vin_Flag:false,
-    vinFlag:false,
-    novinFlag: false,
+    inv_Flag:false,
+    invFlag:false,
+    noinvFlag: false,
     loadingHidden: false,
   },
 
@@ -45,8 +46,8 @@ Page({
       name:e.name,
     })
 
-
   },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -58,7 +59,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+ onShow: function () {
     var that=this;
     var userId = app.globalData.userId;
     var orderId = that.data.orderId;
@@ -73,35 +74,33 @@ Page({
       //编译时间
       res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
       if (res.data.result[0].payment_status == 1) {
-        wx.setNavigationBarTitle({
-          title: "部分支付订单",
-        })
         that.setData({
           loadingHidden: false,
           partFlag: true,
-          refundFlag: true,
         })
+        if (!that.data.ref_Flag && !that.data.refFlag && !that.data.norefFlag){
+          that.setData({
+            refundFlag: true,
+          })
+        }
       } else if (res.data.result[0].payment_status == 2) {
-        wx.setNavigationBarTitle({
-          title: "已支付订单",
-        })
         that.setData({
           loadingHidden: false,
           completeFlag: true,
-          refundFlag: true,
         })
+        if (!that.data.ref_Flag && !that.data.refFlag && !that.data.norefFlag) {
+          that.setData({
+            refundFlag: true,
+          })
+        }
       } 
-      // else if (res.data.result[0].payment_status == 1 || res.data.result[0].payment_status == 2){
-      //   that.setData({
-      //     refundFlag: true,
-      //   })
-      // }
+
 
       if(res.data.result[0].remark==null){
         res.data.result[0].remark=""
       }
       if (name =="transport"){
-        if (res.data.result[0].log_status==0){
+        if (res.data.result[0].log_status==1){
           res.data.result[0].log_status=2;
         }
       }
@@ -109,24 +108,40 @@ Page({
       if (name == "") {
         res.data.result[0].log_status = 3;
         that.setData({
-          refundFlag: true,
           completeFlag: true,
-          invoiceFlag: true,
-          delFlag: true,
+          
         })
+        if (!that.data.inv_Flag && !that.data.invFlag && !that.data.noinvFlag) {
+          that.setData({
+            invoiceFlag: true,
+          })
+        }
+        if (res.data.result[0].payment_status == 2){
+          that.setData({
+            delFlag: true,
+          })
+        }
+        if (!that.data.ref_Flag && !that.data.refFlag && !that.data.norefFlag && res.data.result[0].payment_status!=0) {
+          console.log("00000")
+          that.setData({
+            refundFlag: true,
+          })
+        }
       }
       console.log(res.data.result[0])
 
       that.setData({
+        payment_status: res.data.result[0].payment_status,
         loadingHidden: false,
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
         sumFee: res.data.result[0].sumFee,
-      })
+      }) 
 
 
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId, (err, res) => {
+        console.log(res.data.result)
         if (res.data.result != "") {
           //申请中
           if (res.data.result[0].status == 2) {
@@ -163,30 +178,31 @@ Page({
 
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/invoicesList?orderId=" + orderId, (err, res) => {
+        console.log(res.data.result)
         if (res.data.result != "") {
           //申请中
           if (res.data.result[0].invoiced_status == 0) {
             that.setData({
               invoiceFlag: false,
-              vin_Flag: true,
-              vinFlag: false,
-              novinFlag: false,
+              inv_Flag: true,
+              invFlag: false,
+              noinvFlag: false,
             })
             //已开票
           } else if (res.data.result[0].invoiced_status == 1) {
             that.setData({
               invoiceFlag: false,
-              vin_Flag: false,
-              vinFlag: true,
-              novinFlag: false,
+              inv_Flag: false,
+              invFlag: true,
+              noinvFlag: false,
             })
             //已拒绝
           } else if (res.data.result[0].invoiced_status == 2) {
             that.setData({
               invoiceFlag: false,
-              vin_Flag: false,
-              vinFlag: false,
-              novinFlag: true,
+              inv_Flag: false,
+              invFlag: false,
+              noinvFlag: true,
             })
           }
           that.setData({
@@ -206,20 +222,28 @@ Page({
   //取消订单
  del: function () {
     var userId = app.globalData.userId;
+   var orderId = this.data.orderId;
+   console.log(orderId)
 
     wx.showModal({
       content: '确定要删除订单吗？',
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
-          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + this.data.orderId + "/cancel", "", (err, res) => { })
+          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/cancel", "", (err, res) => {
+            wx.navigateBack({
+              
+            })
+           })
         }
       }
     })
   },
 
 
-
+button:function(){
+  var status = this.data.payment_status;
+},
 
 
 //退款
@@ -272,8 +296,10 @@ isInvoice: function () {
   },
 
   payMsg: function () {
+    var status = this.data.payment_status;
+
     wx.navigateTo({
-      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId+"&fee="+this.data.sumFee,
+      url: '/pages/order/order-pay/bank-pay/end-pay/end-pay?orderId=' + this.data.orderId + "&fee=" + this.data.sumFee + "&status=" + status,
     })
   },
 

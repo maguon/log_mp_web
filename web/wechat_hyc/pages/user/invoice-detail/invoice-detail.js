@@ -35,6 +35,7 @@ Page({
       //保留小数
       res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
       res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
+      res.data.result[0].real_payment_price = config.decimal(res.data.result[0].real_payment_price)
 
 
       //编译时间
@@ -48,9 +49,6 @@ Page({
         orderlist: res.data.result[0],
       })
     })
-    
-   
-
 
   },
 

@@ -34,7 +34,7 @@
 <view class='city'>
 <view class='stay-expect'>
 <view class='stay-text'>实际支付:</view>
-<view class='stay-num'>{{sumfee}}</view>
+<view class='stay-num-fee'>{{sumfee}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>

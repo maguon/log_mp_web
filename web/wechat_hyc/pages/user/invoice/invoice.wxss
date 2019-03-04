@@ -39,7 +39,7 @@ color: white;
 
 .content{
  width: 100%;
- height: 110px;
+ height: 150px;
  background: white;
  margin-bottom: 5px;
 }
@@ -54,7 +54,7 @@ color: white;
   height: 20px;
   position: absolute;
   right: 1px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 .active{
 background-color:#ececec;
@@ -146,4 +146,10 @@ background-color:#ececec;
   width: 100%;
   height: 5px;
   background: #efeff4;
+}
+.dis-line{
+  border: 1px solid #f8f8f8;
+  position: absolute;
+  right: 2%;
+  left: 2%;
 }

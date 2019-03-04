@@ -105,7 +105,6 @@ Page({
     var paymentId = that.data.paymentId; 
 
 
-
     if (that.data.hidden == false) {
    
       wx.showModal({
@@ -122,7 +121,7 @@ Page({
         confirmColor: "#a744a7",
       })
       return;
-    } else if (costNum > parseInt(totalPrice)) {
+    } else if (costNum > parseFloat(totalPrice)) {
       wx.showModal({
         content: "输入金额不能大于支付的金额",
         showCancel: false,

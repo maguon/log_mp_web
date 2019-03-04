@@ -24,28 +24,54 @@ Page({
       })
     }
   
-  wx.getSetting({
-  success: function (res) {
-    console.log(res.authSetting)
-  //判断是否授权
- if (res.authSetting['scope.userInfo']) {
-
-   //获得本地存储信息
-   wx.getStorage({
-     key: 'user',
-     success: function(res) {
-       if (res.data.userId != "" ){
-         //从数据库获取用户信息
-         that.queryUsreInfo();
-         that.setData({
-           loadingHidden: true,
-         })
+    //登录
+   wx.login({
+    success: e => {
+    //获取code
+    var code = e.code;
+    //发送code 请求openid
+    reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
+    //保存openid 到全局
+    app.globalData.openid = rea.data.result.openid;
+    app.globalData.session_key = rea.data.result.session_key;
+    //获得本地存储信息
+    wx.getStorage({
+      key: 'user',
+      success: function (res) {
+        if (res.data.userId != "" && res.data.accessToken != "") {
+          app.globalData.userId = res.data.userId;
+          app.globalData.accessToken = res.data.accessToken;
+       
+          reqUtil.httpGet(config.host.apiHost + "/api/user/" + res.data.userId + "/token/" + res.data.accessToken, (err, rec) => {
+       
+          if(rec.data.result){
+            wx.setStorage({
+              key: 'user',
+              data:{
+                userId: rec.data.result.userId,
+                accessToken: rec.data.result.accessToken,
+              },
+            })
+            that.queryUsreInfo();
+            that.setData({
+              loadingHidden: true,
+            })
+            }
+          }) 
         }
-      },
+        },
+      })
      })
     }
-   }
-  })
+   })
+
+    wx.getStorageInfo({
+      success(res) {
+        console.log(res)
+        console.log(res.currentSize)
+        console.log(res.limitSize)
+      }
+    })
 },
 
 
@@ -61,23 +87,13 @@ Page({
         e.detail.userInfo.gender == 0;
       }
 
-      //登录
-      wx.login({
-        success: res => {
-          //获取code
-          var code = res.code;
-          //发送code 请求openid
-          reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, res) => {
-            //保存openid 到全局
-            app.globalData.openid = res.data.result.openid;
-            
             //插入登录的用户的相关信息到数据库
             var params = {
-              wechatId: res.data.result.openid,
+              wechatId: app.globalData.openid,
               wechatName: e.detail.userInfo.nickName,
               gender: e.detail.userInfo.gender,
               avatar: e.detail.userInfo.avatarUrl,
-              recommendId: that.data.scene,
+              recommendId: parseInt(that.data.scene),
             }
 
             reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
@@ -98,6 +114,7 @@ Page({
                   })
                 }
               })
+
              //保存本地
               wx.setStorage({
                 key: 'user',
@@ -109,10 +126,6 @@ Page({
               //从数据库获取用户信息
               that.queryUsreInfo();
             })
-          })
-        }
-      })
-
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -137,7 +150,9 @@ Page({
   */
   queryUsreInfo: function () {
     var userId = app.globalData.userId;
+    console.log(userId)
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
+      console.log(res)
       if (res.data != '') {
         app.globalData.userInfo = res.data;
       } else {

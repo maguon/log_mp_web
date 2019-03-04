@@ -227,9 +227,10 @@ Page({
       });
       return;
     }else{
-
+     
       reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
-        if (res.data.result[0].phone != '' && res.data.result[0].phone != null){
+        console.log(res)
+        if (res.data.result[0].phone != '' && res.data.result[0].phone != null ){
           //获取路线
           var route = that.data.beginCityId.toString() + that.data.endCityId.toString();
           console.log(route)

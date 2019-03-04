@@ -17,13 +17,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+ 
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
     var userId = app.globalData.userId;
-    
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?status=" + 9 + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?status=" + 9 + "&start=" + 0 + "&size=" + this.data.size, (err, res) => {
       if (res.data.result != '') {
         for (var i = 0; i < res.data.result.length; i++) {
           //支付费用
           res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price);
           //编译时间
           res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
           res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
@@ -41,21 +57,6 @@ Page({
         })
       }
     })
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
   },
 
   /**

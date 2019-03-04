@@ -41,13 +41,19 @@
 <view class='yuan01'>元</view>
  <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
 </view>
-
+<view hidden='{{item.status}}'>
 <view hidden='{{item.payment_type}}' bindtap="bindModify" data-index='{{index}}' class='bankcard'>
 <image class='card-img' src='../../../../../images/bank_card02.png'></image>
 <view  class='card-text01'> {{item.bank}} {{item.bank_code}} {{item.account_name}}</view>
 <image   class='arrow01' src='../../../../../images/arrow.png'></image>
 </view>
-
+</view>
+<view hidden='{{!item.status}}'>
+<view hidden='{{item.payment_type}}'class='bankcard'>
+<image class='card-img' src='../../../../../images/bank_card02.png'></image>
+<view  class='card-text01'> {{item.bank}} {{item.bank_code}} {{item.account_name}}</view>
+</view>
+</view>
 <view  hidden='{{!item.payment_type}}' class='bankcard'>
 <image class='card-img' src='../../../../../images/wx.png'></image>
 <view  class='card-text01'> 微信</view>

@@ -84,7 +84,7 @@ export const getOrderInfo = (orderId) => async (dispatch) => {
     }
 };
 
-export const getOrderCarList = (orderId, prePage) => async (dispatch) => {
+export const getOrderCarList = (orderId) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
@@ -102,10 +102,6 @@ export const getOrderCarList = (orderId, prePage) => async (dispatch) => {
                 totalValuation = totalValuation + res.result[i].valuation;
                 totalActFreight = totalActFreight + res.result[i].act_trans_price;
                 totalInsuranceFee = totalInsuranceFee + res.result[i].act_insure_price;
-                if (prePage === 'order_manager_detail') {
-                    $("#trans_index" + i).val(res.result[i].act_trans_price);
-                    $("#insure_index" + i).val(res.result[i].act_insure_price);
-                }
             }
             dispatch({type: CommonActionType.setTotalValuation, payload: totalValuation});
             dispatch({type: CommonActionType.setTotalActFreight, payload: totalActFreight});

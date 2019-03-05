@@ -210,6 +210,14 @@ class OrderManagerDetail extends React.Component {
             syncLoadTask, deleteLoadTask,changeLoadTaskStatus,
             saveOrderRemark,saveOrderPaymentRemark
         } = this.props;
+
+
+        // 订单信息TAB 运送车辆列表价格赋值
+        for (let i = 0; i < commonReducer.orderCarArray.length; i++) {
+            $("#trans_index" + i).val(commonReducer.orderCarArray[i].act_trans_price);
+            $("#insure_index" + i).val(commonReducer.orderCarArray[i].act_insure_price);
+        }
+
         return (
             <div>
                 {/* 标题部分 */}
@@ -939,7 +947,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // TAB1：订单信息
     getOrderInfo: () => {
         dispatch(orderManagerDetailAction.getOrderInfo(ownProps.match.params.id));
-        dispatch(commonAction.getOrderCarList(ownProps.match.params.id,'order_manager_detail'));
+        dispatch(commonAction.getOrderCarList(ownProps.match.params.id));
     },
     initEditOrderCarModalData: (pageType, orderInfo, orderItem) => {
         dispatch(EditOrderCarModalActionType.setPageType(pageType));

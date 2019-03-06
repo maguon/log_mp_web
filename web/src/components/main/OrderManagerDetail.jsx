@@ -286,12 +286,19 @@ class OrderManagerDetail extends React.Component {
                             </div>
                         </div>}
                         <InquiryInfoModal/>
+                        {/*<ul className="tabs">*/}
+                            {/*<li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>*/}
+                            {/*<li className="tab col s-percent-20"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>*/}
+                            {/*<li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getTransDemandInfo}>运输信息</a></li>*/}
+                            {/*<li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>*/}
+                            {/*<li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>*/}
+                        {/*</ul>*/}
+
                         <ul className="tabs">
-                            <li className="tab col s-percent-20"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-log-info" onClick={getTransDemandInfo}>运输信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
-                            <li className="tab col s-percent-20"><a href="#tab-operation" onClick={getOperationList}>操作记录</a></li>
+                            <li className="tab col s3"><a className="active" href="#tab-order" onClick={getOrderInfo}>订单信息</a></li>
+                            <li className="tab col s3"><a href="#tab-payment-info" onClick={getPaymentInfo}>支付信息</a></li>
+                            <li className="tab col s3"><a href="#tab-log-info" onClick={getTransDemandInfo}>运输信息</a></li>
+                            <li className="tab col s3"><a href="#tab-invoice" onClick={getInvoiceList}>发票信息</a></li>
                         </ul>
                     </div>
 
@@ -911,12 +918,6 @@ class OrderManagerDetail extends React.Component {
                             </div>}
                         </div>}
                     </div>
-
-
-
-
-
-
 
                 </div>
             </div>

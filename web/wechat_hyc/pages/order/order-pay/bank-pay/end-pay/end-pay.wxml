@@ -37,7 +37,7 @@
 
 <view hidden='{{item.type}}'  class='pay-num'>
 <view class='cost-text'>退款金额:</view>
-<view class='cost-num'>+{{item.total_fee}}</view>
+<view class='cost-num'>+{{item.total_fee*-1}}</view>
 <view class='yuan01'>元</view>
  <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
 </view>

@@ -18,29 +18,48 @@ Page({
     var that = this;
     // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
     const scene = decodeURIComponent(query.scene)
+    console.log(scene)
     if (scene != "" && scene !="undefined"){
        that.setData({
        scene:scene
       })
     }
   
-    //登录
-   wx.login({
-    success: e => {
-    //获取code
-    var code = e.code;
-    //发送code 请求openid
-    reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
-    //保存openid 到全局
-    app.globalData.openid = rea.data.result.openid;
-    app.globalData.session_key = rea.data.result.session_key;
+  wx.getStorage({
+    key: 'openid',
+    success: function(res) {
+      if (res.data.openid != "" && res.data.session_key != ""){
+        console.log(res.data.openid)
+        //保存openid 到全局
+        app.globalData.openid = res.data.openid;
+        app.globalData.session_key = res.data.session_key;
+        console.log(res.data.session_key)
+      }
+    },
+  })
+  //   //登录
+  //  wx.login({
+  //   success: e => {
+  //   //获取code
+  //   var code = e.code;
+  //     console.log(code)
+  //   //发送code 请求openid
+  //   reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
+  //   //保存openid 到全局
+  //   app.globalData.openid = rea.data.result.openid;
+  //     console.log(rea.data.result.openid)
+  //   app.globalData.session_key = rea.data.result.session_key;
     //获得本地存储信息
     wx.getStorage({
       key: 'user',
       success: function (res) {
+       
         if (res.data.userId != "" && res.data.accessToken != "") {
           app.globalData.userId = res.data.userId;
           app.globalData.accessToken = res.data.accessToken;
+          console.log(res.data.userId)
+          console.log(res.data.accessToken)
+
        
           reqUtil.httpGet(config.host.apiHost + "/api/user/" + res.data.userId + "/token/" + res.data.accessToken, (err, rec) => {
        
@@ -61,9 +80,9 @@ Page({
         }
         },
       })
-     })
-    }
-   })
+  //    })
+  //   }
+  //  })
 
     wx.getStorageInfo({
       success(res) {
@@ -82,21 +101,50 @@ Page({
   bindGetUserInfo: function (e) {
     var that = this;
     if (e.detail.userInfo) {
+      console.log(e.detail.userInfo.gender)
       //用户按了允许授权按钮
       if (e.detail.userInfo.gender==2){
-        e.detail.userInfo.gender == 0;
+        e.detail.userInfo.gender = 0;
+      }else if (e.detail.userInfo.gender == 0){
+        e.detail.userInfo.gender = 3;
       }
 
+      //登录
+      wx.login({
+        success:ree => {
+          //获取code
+          var code = ree.code;
+          console.log(code)
+          //发送code 请求openid
+          reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
+            // //保存openid 到全局
+            app.globalData.openid = rea.data.result.openid;
+            app.globalData.session_key = rea.data.result.session_key;
+            console.log(rea.data.result.session_key)
+            //保存本地
+            wx.setStorage({
+              key: 'openid',
+              data: {
+                openid: rea.data.result.openid,
+                session_key:rea.data.result.session_key,
+              },
+            })
             //插入登录的用户的相关信息到数据库
             var params = {
-              wechatId: app.globalData.openid,
+              wechatId: rea.data.result.openid,
               wechatName: e.detail.userInfo.nickName,
               gender: e.detail.userInfo.gender,
               avatar: e.detail.userInfo.avatarUrl,
               recommendId: parseInt(that.data.scene),
             }
 
+            console.log(rea.data.result.openid)
+            console.log(e.detail.userInfo.nickName)
+            console.log(e.detail.userInfo.gender)
+            console.log(e.detail.userInfo.avatarUrl)
+            console.log(parseInt(that.data.scene))
             reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
+
               console.log(res)
               app.globalData.userId = res.data.result.userId;
               app.globalData.accessToken = res.data.result.accessToken;
@@ -126,6 +174,9 @@ Page({
               //从数据库获取用户信息
               that.queryUsreInfo();
             })
+          })
+        }
+      })
     } else {
       //用户按了拒绝按钮
       wx.showModal({

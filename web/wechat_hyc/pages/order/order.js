@@ -134,7 +134,6 @@ Page({
       } 
        if (count_d == 0) {
         orderState[4].hidden = false;
-        console.log("000")
       }
 
 

@@ -18,7 +18,7 @@
 
 <view class='note'>
 <view class='note-text'>VIN</view>
-<input bindinput='noteInput'  class='note-input' placeholder='填写车辆17位识别码' value='{{vin}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<input bindinput='noteInput'  class='note-input' placeholder='填写车辆17位识别码' value='{{vin}}'maxlength="17" placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->

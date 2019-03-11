@@ -100,7 +100,7 @@ const mapDispatchToProps = (dispatch) => ({
     // 询价
     openInquiryModal: () => {
         dispatch(commonAction.getCityList());
-        dispatch(inquiryModalAction.initInquiryModal());
+        // dispatch(inquiryModalAction.initInquiryModal());
     },
     // 修改密码
     openEditLoginUserModal: () => {

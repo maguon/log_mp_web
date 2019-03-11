@@ -227,7 +227,7 @@ const routes = [
         component: LoadTaskManagerDetail
     },
     {
-        // 车辆运输利润
+        // 车辆利润
         path: "/load_task_profit",
         exact: true,
         component: LoadTaskProfitManager
@@ -320,7 +320,7 @@ const routes = [
         component: LogSiteSettingDetail
     },
     {
-        // 公司银行账户管理
+        // 收款账户设置
         path: "/company_bank_setting",
         exact: true,
         component: CompanyBankSetting
@@ -382,6 +382,10 @@ class Container extends React.Component {
                     {
                         "link": '/panel',
                         "name": '管理员主控'
+                    },
+                    {
+                        "link": '/recommend_business',
+                        "name": '推广业绩'
                     }
                 ]
             }, {
@@ -413,7 +417,8 @@ class Container extends React.Component {
                         "name": '支付统计'
                     }
                 ]
-            }, {
+            },
+            {
                 "label": '用户信息',
                 "icon": 'mdi-account-group',
                 "children": [
@@ -424,7 +429,12 @@ class Container extends React.Component {
                     {
                         "link": '/invoice_title',
                         "name": '用户发票信息管理'
-                    },
+                    }
+                ]
+            },{
+                "label": '发票信息',
+                "icon": 'mdi-cash-100',
+                "children": [
                     {
                         "link": '/invoice_apply',
                         "name": '开票申请'
@@ -434,7 +444,7 @@ class Container extends React.Component {
                         "name": '发票管理'
                     }
                 ]
-            }, {
+            },{
                 "label": '订单信息',
                 "icon": 'mdi-cart-outline',
                 "children": [
@@ -447,14 +457,6 @@ class Container extends React.Component {
                         "name": '订单管理'
                     },
                     {
-                        "link": '/payment',
-                        "name": '支付管理'
-                    },
-                    {
-                        "link": '/refund',
-                        "name": '订单退款'
-                    },
-                    {
                         "link": '/trans_demand',
                         "name": '运输需求'
                     },
@@ -463,27 +465,44 @@ class Container extends React.Component {
                         "name": '线路管理'
                     },
                     {
-                        "link": '/load_task_profit',
-                        "name": '车辆运输利润'
+                        "link": '/supplier_business',
+                        "name": '供应商业务'
+                    }
+                ]
+            },
+            {
+                "label": '支付信息',
+                "icon": 'mdi-currency-cny',
+                "children": [
+                    {
+                        "link": '/payment',
+                        "name": '支付管理'
                     },
                     {
-                        "link": '/order_profit',
-                        "name": '订单利润'
-                    },
+                        "link": '/refund',
+                        "name": '订单退款'
+                    }
+                ]
+            },
+            {
+                "label": '结算信息',
+                "icon": 'mdi-cash-multiple',
+                "children": [
                     {
                         "link": '/load_task_payment',
                         "name": '线路结算'
                     },
                     {
-                        "link": '/supplier_business',
-                        "name": '供应商业务'
+                        "link": '/load_task_profit',
+                        "name": '车辆利润'
                     },
                     {
-                        "link": '/recommend_business',
-                        "name": '推广业绩'
+                        "link": '/order_profit',
+                        "name": '订单利润'
                     }
                 ]
-            }, {
+            },
+            {
                 "label": '系统设置',
                 "icon": 'mdi-settings-outline',
                 "children": [
@@ -505,7 +524,7 @@ class Container extends React.Component {
                     },
                     {
                         "link": '/company_bank_setting',
-                        "name": '公司银行账户管理'
+                        "name": '收款账户设置'
                     },
                     {
                         "link": '/department_setting',

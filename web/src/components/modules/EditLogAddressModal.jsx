@@ -39,9 +39,7 @@ class EditLogAddressModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content padding-bottom0 white grey-text text-darken-2">
                     <div className="row margin-top30">
-                        <div className="col s12 fz16">发货城市<span className="margin-left20 purple-font">{editLogAddressModalReducer.sendCity}</span></div>
-
-
+                        <div className="col s12 fz16"><span className="must-input">*</span> 发货城市<span className="margin-left20 purple-font">{editLogAddressModalReducer.sendCity}</span></div>
                         <div className="input-field col s12 margin-top30">
                             <Select
                                 options={editLogAddressModalReducer.sendAddressArray}
@@ -56,9 +54,7 @@ class EditLogAddressModal extends React.Component {
                             <label className="active">发货地址</label>
                         </div>
 
-
                         <div className="col s12 fz16 margin-top30">收货城市<span className="margin-left20 purple-font">{editLogAddressModalReducer.recvCity}</span></div>
-
                         <div className="input-field col s12 margin-top30">
                             <Select
                                 options={editLogAddressModalReducer.recvAddressArray}

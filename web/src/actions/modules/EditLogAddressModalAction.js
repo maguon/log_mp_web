@@ -81,15 +81,23 @@ export const saveLogAddress = () => async (dispatch, getState) => {
         // 收货地址
         const recvAddress = getState().EditLogAddressModalReducer.recvAddress;
 
-        if (sendAddress == null || recvAddress == null) {
-            swal('保存失败', '请输入完整的地址信息！', 'warning');
+        if (sendAddress == null) {
+            swal('保存失败', '请输入发货地址信息！', 'warning');
         } else {
-            const params = {
-                sendAddressPointId: sendAddress.value,
-                sendAddressPoint: sendAddress.label,
-                recvAddressPointId: recvAddress.value,
-                recvAddressPoint: recvAddress.label
-            };
+            let params = {};
+            if (recvAddress == null) {
+                params = {
+                    sendAddressPointId: sendAddress.value,
+                    sendAddressPoint: sendAddress.label
+                };
+            } else {
+                params = {
+                    sendAddressPointId: sendAddress.value,
+                    sendAddressPoint: sendAddress.label,
+                    recvAddressPointId: recvAddress.value,
+                    recvAddressPoint: recvAddress.label
+                };
+            }
 
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)

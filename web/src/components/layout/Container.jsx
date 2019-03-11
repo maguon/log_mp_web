@@ -35,6 +35,7 @@ import {
     LogSiteSettingDetail,
     CompanyBankSetting,
     DepartmentSetting,
+    CallCenterSetting,
     AdminUserSetting,
     AdminUserSettingDetail,
     TransDemandManager,
@@ -332,6 +333,12 @@ const routes = [
         component: DepartmentSetting
     },
     {
+        // 部门管理
+        path: "/call_center_setting",
+        exact: true,
+        component: CallCenterSetting
+    },
+    {
         // 员工管理
         path: "/admin_user_setting",
         exact: true,
@@ -537,6 +544,10 @@ class Container extends React.Component {
                     {
                         "link": '/recommend_setting',
                         "name": '推荐人管理'
+                    },
+                    {
+                        "link": '/call_center_setting',
+                        "name": '客服电话'
                     }
                 ]
             }

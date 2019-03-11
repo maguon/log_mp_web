@@ -23,6 +23,7 @@ export RefuseInvoiceModal from "./RefuseInvoiceModal";
 export OrderInfoModal from "./OrderInfoModal";
 export EditCompanyBankModal from "./EditCompanyBankModal";
 export EditDepartmentModal from "./EditDepartmentModal";
+export EditCustomerPhoneModal from "./EditCustomerPhoneModal";
 export NewAdminModal from "./NewAdminModal";
 export NewLoadTaskModal from "./NewLoadTaskModal";
 export LoadTaskCarDetailModal from "./LoadTaskCarDetailModal";

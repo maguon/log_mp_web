@@ -36,6 +36,7 @@ import SupplierSettingDetailReducer from './main/SupplierSettingDetailReducer';
 import LogSiteSettingReducer from './main/LogSiteSettingReducer';
 import LogSiteSettingDetailReducer from './main/LogSiteSettingDetailReducer';
 import DepartmentSettingReducer from './main/DepartmentSettingReducer';
+import CallCenterSettingReducer from './main/CallCenterSettingReducer';
 import CompanyBankSettingReducer from './main/CompanyBankSettingReducer';
 import RefundApplyManagerReducer from './main/RefundApplyManagerReducer';
 import RefundApplyManagerDetailReducer from './main/RefundApplyManagerDetailReducer';
@@ -75,6 +76,7 @@ import EditUserAddressModalReducer from './modules/EditUserAddressModalReducer';
 import EditOrderCarModalReducer from './modules/EditOrderCarModalReducer';
 import EditCompanyBankModalReducer from './modules/EditCompanyBankModalReducer';
 import EditDepartmentModalReducer from './modules/EditDepartmentModalReducer';
+import EditCustomerPhoneModalReducer from './modules/EditCustomerPhoneModalReducer';
 import ConfirmPaymentModalReducer from './modules/ConfirmPaymentModalReducer';
 import ConfirmRefundModalReducer from './modules/ConfirmRefundModalReducer';
 import RefuseRefundModalReducer from './modules/RefuseRefundModalReducer';
@@ -126,6 +128,7 @@ export default combineReducers({
     LogSiteSettingReducer,
     LogSiteSettingDetailReducer,
     DepartmentSettingReducer,
+    CallCenterSettingReducer,
     CompanyBankSettingReducer,
     RefundApplyManagerReducer,
     RefundApplyManagerDetailReducer,
@@ -165,6 +168,7 @@ export default combineReducers({
     EditOrderCarModalReducer,
     EditCompanyBankModalReducer,
     EditDepartmentModalReducer,
+    EditCustomerPhoneModalReducer,
     ConfirmPaymentModalReducer,
     ConfirmRefundModalReducer,
     RefuseRefundModalReducer,

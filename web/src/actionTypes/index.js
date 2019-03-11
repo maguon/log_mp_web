@@ -33,6 +33,7 @@ import * as SupplierSettingDetailActionType  from './main/SupplierSettingDetailA
 import * as LogSiteSettingActionType  from './main/LogSiteSettingActionType';
 import * as LogSiteSettingDetailActionType  from './main/LogSiteSettingDetailActionType';
 import * as DepartmentSettingActionType  from './main/DepartmentSettingActionType';
+import * as CallCenterSettingActionType  from './main/CallCenterSettingActionType';
 import * as CompanyBankSettingActionType  from './main/CompanyBankSettingActionType';
 import * as RefundApplyManagerActionType  from './main/RefundApplyManagerActionType';
 import * as RefundApplyManagerDetailActionType  from './main/RefundApplyManagerDetailActionType';
@@ -72,6 +73,7 @@ import * as EditUserAddressModalActionType  from './modules/EditUserAddressModal
 import * as EditOrderCarModalActionType  from './modules/EditOrderCarModalActionType';
 import * as EditCompanyBankModalActionType  from './modules/EditCompanyBankModalActionType';
 import * as EditDepartmentModalActionType  from './modules/EditDepartmentModalActionType';
+import * as EditCustomerPhoneModalActionType  from './modules/EditCustomerPhoneModalActionType';
 import * as ConfirmPaymentModalActionType  from './modules/ConfirmPaymentModalActionType';
 import * as ConfirmRefundModalActionType  from './modules/ConfirmRefundModalActionType';
 import * as RefuseRefundModalActionType  from './modules/RefuseRefundModalActionType';
@@ -122,6 +124,7 @@ export  {
     LogSiteSettingActionType,
     LogSiteSettingDetailActionType,
     DepartmentSettingActionType,
+    CallCenterSettingActionType,
     CompanyBankSettingActionType,
     RefundApplyManagerActionType,
     RefundApplyManagerDetailActionType,
@@ -161,6 +164,7 @@ export  {
     EditOrderCarModalActionType,
     EditCompanyBankModalActionType,
     EditDepartmentModalActionType,
+    EditCustomerPhoneModalActionType,
     ConfirmPaymentModalActionType,
     ConfirmRefundModalActionType,
     RefuseRefundModalActionType,

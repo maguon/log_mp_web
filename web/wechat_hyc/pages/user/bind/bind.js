@@ -102,7 +102,15 @@ Page({
     var userId = app.globalData.userId;
     this.countDown(second);
     //请求验证码
-    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + '/phone/' + userPhone + "/userPhoneSms", '', (err, res) => {})
+    reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + '/phone/' + userPhone + "/userPhoneSms", '', (err, res) => {
+      if (res.data.success==false){
+        wx.showModal({
+          title: '提示',
+          content: res.data.msg,
+        })
+        return;
+      }
+    })
   },
 
   /** 

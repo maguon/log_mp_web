@@ -61,23 +61,23 @@ Page({
    
     reqUtil.httpPost(config.host.apiHost +"/api/transAndInsurePrice",params,(err,res)=>{
 
-      carMsg[0].price = parseFloat(res.data.result.trans)+parseFloat(res.data.result.insure);
-      carMsg[0].sumPrice = carMsg[0].price;
-    
+
+      console.log(res.data.result.trans)
+      console.log(res.data.result.insure)
+      carMsg[0].price =(res.data.result.trans+res.data.result.insure).toFixed(2);
+
+      carMsg[0].price = parseFloat(carMsg[0].price);
+
       for (var i = 0; i < carMsg.length; i++) {
         car_num += carMsg[i].carNum;
-        sumFee += carMsg[i].sumPrice;
+        sumFee += carMsg[i].price;
       }
-
-
-  console.log(res.data.result)
-  console.log(carMsg)
-
-
+       
+    
       that.setData({
         carMsg: carMsg,
         car_num: car_num,
-        sumFee: sumFee.toFixed(2),
+        sumFee: sumFee,
         loadingHidden: false,
       })
     }) 

@@ -99,9 +99,11 @@ Page({
       warn = "请输入您的姓名！";
     } else if (phone == "") {
       warn = "请输入您的手机号！";
-    } else if (!(/^1(3|4||5|7|8)\d{9}$/.test(phone)) || len != 11 || phone.charAt(0) != '1') {
-      warn = "手机号码格式不正确";
-    } else if (address == "") {
+    } 
+    // else if (!(/^1(3|4||5|7|8)\d{9}$/.test(phone)) || len != 11 || phone.charAt(0) != '1') {
+    //   warn = "手机号码格式不正确";
+    // } 
+    else if (address == "") {
       warn = "请输入您的具体地址";
     } else {
       flag = false;

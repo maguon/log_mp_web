@@ -12,7 +12,7 @@ export const getCompanyBankList = () => async (dispatch, getState) => {
         if (res.success === true) {
             dispatch({type: CompanyBankSettingActionType.getCompanyBankList, payload: res.result})
         } else if (res.success === false) {
-            swal('获取公司银行账户列表失败', res.msg, 'warning');
+            swal('获取收款账户列表失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
@@ -29,7 +29,7 @@ export const addCompanyBank = () => async (dispatch, getState) => {
         const companyBankUser = getState().CompanyBankSettingReducer.companyBankUser.trim();
 
         if (companyBank === '' || companyBankCode === '' || companyBankUser === '') {
-            swal('添加失败', '请输入完整的公司银行账户信息！', 'warning');
+            swal('添加失败', '请输入完整的收款账户信息！', 'warning');
         } else {
             const params = {
                 bank: companyBank,

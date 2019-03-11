@@ -58,7 +58,7 @@ export const getLoadTaskProfitList = () => async (dispatch, getState) => {
             dispatch({type: LoadTaskProfitManagerActionType.setDataSize, payload: res.result.length});
             dispatch({type: LoadTaskProfitManagerActionType.getLoadTaskProfitArray, payload: res.result.slice(0, size - 1)});
         } else if (res.success === false) {
-            swal('获取车辆运输利润列表信息失败', res.msg, 'warning');
+            swal('获取车辆利润列表信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

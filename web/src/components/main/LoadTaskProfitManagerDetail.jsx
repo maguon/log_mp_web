@@ -36,7 +36,7 @@ class LoadTaskProfitManagerDetail extends React.Component {
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">车辆运输利润 - 详情</span>
+                        <span className="page-title margin-left30">车辆利润 - 详情</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -176,7 +176,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // 取得车辆运输利润 详情
+    // 取得车辆利润 详情
     getDetailInfo: () => {
         dispatch(loadTaskProfitManagerDetailAction.getLoadTaskProfitInfo(ownProps.match.params.id));
         dispatch(loadTaskProfitManagerDetailAction.getLoadTaskList(ownProps.match.params.id));

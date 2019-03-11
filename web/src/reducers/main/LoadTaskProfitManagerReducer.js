@@ -26,7 +26,7 @@ const initialState = {
     // 检索条件：状态
     conditionStatus: null,
 
-    // 车辆运输利润列表
+    // 车辆利润列表
     loadTaskProfitArray: []
 };
 

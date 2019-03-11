@@ -3,7 +3,7 @@ import {LoadTaskProfitManagerDetailActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 车辆运输利润 详情
+    // 车辆利润 详情
     loadTaskProfitInfo: [],
     // 线路安排列表
     loadTaskArray: []

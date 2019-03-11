@@ -62,7 +62,7 @@ class CompanyBankSetting extends React.Component {
                 {/* 标题部分 */}
                 <div className="row">
                     <div className="input-field col s12 page-title">
-                        <span className="margin-left10">公司银行账户管理</span>
+                        <span className="margin-left10">收款账户设置</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>

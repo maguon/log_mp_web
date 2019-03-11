@@ -67,7 +67,7 @@ class LoadTaskProfitManager extends React.Component {
     };
 
     /**
-     * 查询车辆运输利润列表
+     * 查询车辆利润列表
      */
     queryLoadTaskProfitList = () => {
         // 默认第一页
@@ -105,7 +105,7 @@ class LoadTaskProfitManager extends React.Component {
                 {/* 标题部分 */}
                 <div className="row">
                     <div className="input-field col s12 page-title">
-                        <span className="margin-left10">车辆运输利润</span>
+                        <span className="margin-left10">车辆利润</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>

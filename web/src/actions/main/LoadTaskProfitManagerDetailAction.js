@@ -6,7 +6,7 @@ const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-// 取得车辆运输利润基本信息
+// 取得车辆利润基本信息
 export const getLoadTaskProfitInfo = (orderItemId) => async (dispatch) => {
     try {
         // 基本检索URL
@@ -21,7 +21,7 @@ export const getLoadTaskProfitInfo = (orderItemId) => async (dispatch) => {
                 dispatch(commonAction.getOrderInfo(res.result[0].order_id));
             }
         } else if (res.success === false) {
-            swal('获取车辆运输利润详细信息失败', res.msg, 'warning');
+            swal('获取车辆利润详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

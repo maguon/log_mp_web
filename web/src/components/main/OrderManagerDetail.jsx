@@ -885,7 +885,6 @@ class OrderManagerDetail extends React.Component {
                                     <div className="col s6 pink-font right-align">
                                         {commonUtil.getJsonValue(sysConst.INVOICE_STATUS, orderManagerDetailReducer.invoiceArray[0].invoiced_status)}
 
-
                                         {/* 编辑按钮 */}
                                         {orderManagerDetailReducer.invoiceArray[0].invoiced_status !== sysConst.INVOICE_STATUS[1].value &&
                                         <span>

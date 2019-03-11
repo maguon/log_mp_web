@@ -26,8 +26,12 @@ export const initNewLoadTaskModal = (pageId, orderId, requireId, loadTaskId, loa
         dispatch({type: NewLoadTaskModalActionType.setTabId, payload: 'base'});
         // TAB 线路信息：起始城市
         dispatch({type: NewLoadTaskModalActionType.setStartCity, payload: null});
+        // TAB 线路信息：起始地址
+        dispatch({type: NewLoadTaskModalActionType.setStartAddress, payload: ''});
         // TAB 线路信息：目的城市
         dispatch({type: NewLoadTaskModalActionType.setEndCity, payload: null});
+        // TAB 线路信息：目的地址
+        dispatch({type: NewLoadTaskModalActionType.setEndAddress, payload: ''});
         // TAB 线路信息：供应商
         dispatch({type: NewLoadTaskModalActionType.setSupplier, payload: null});
         // TAB 线路信息：运送方式列表
@@ -95,8 +99,12 @@ export const showLoadTaskTab = () => async (dispatch, getState) => {
                 dispatch({type: NewLoadTaskModalActionType.setTabId, payload: 'base'});
                 // TAB 线路信息：起始城市
                 dispatch({type: NewLoadTaskModalActionType.setStartCity, payload: {value: res.result[0].route_start_id, label: res.result[0].route_start}});
+                // TAB 线路信息：起始地址
+                dispatch({type: NewLoadTaskModalActionType.setStartAddress, payload: res.result[0].route_start_detail});
                 // TAB 线路信息：目的城市
                 dispatch({type: NewLoadTaskModalActionType.setEndCity, payload: {value: res.result[0].route_end_id, label: res.result[0].route_end}});
+                // TAB 线路信息：目的地址
+                dispatch({type: NewLoadTaskModalActionType.setEndAddress, payload: res.result[0].route_end_detail});
                 // TAB 线路信息：供应商
                 dispatch({type: NewLoadTaskModalActionType.setSupplier, payload: {value: res.result[0].supplier_id, label: res.result[0].supplier_short}});
                 // TAB 线路信息：运送方式列表
@@ -301,8 +309,12 @@ export const saveLoadTaskInfo = () => async (dispatch, getState) => {
 
     // TAB 线路信息：起始城市
     const startCity = getState().NewLoadTaskModalReducer.startCity;
+    // TAB 线路信息：起始地址
+    const startAddress = getState().NewLoadTaskModalReducer.startAddress.trim();
     // TAB 线路信息：目的城市
     const endCity = getState().NewLoadTaskModalReducer.endCity;
+    // TAB 线路信息：目的地址
+    const endAddress = getState().NewLoadTaskModalReducer.endAddress.trim();
     // TAB 线路信息：供应商
     const supplier = getState().NewLoadTaskModalReducer.supplier;
     // TAB 线路信息：运送方式
@@ -312,12 +324,15 @@ export const saveLoadTaskInfo = () => async (dispatch, getState) => {
     // TAB 线路信息：备注
     const remark = getState().NewLoadTaskModalReducer.remark;
 
-    if (startCity == null || endCity == null || supplier == null || transportMode == null || planDate === '') {
+    if (startCity == null || startAddress === '' || endCity == null || endAddress === ''
+        || supplier == null || transportMode == null || planDate === '') {
         swal('保存失败', '请输入完整的线路安排信息！', 'warning');
     } else {
         const params = {
             routeStart: startCity.label,
             routeEnd: endCity.label,
+            routeStartDetail: startAddress,
+            routeEndDetail: endAddress,
             routeStartId: startCity.value,
             routeEndId: endCity.value,
             supplierId: supplier.value,

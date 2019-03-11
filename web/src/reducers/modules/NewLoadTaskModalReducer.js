@@ -18,8 +18,12 @@ const initialState = {
 
     // TAB 线路信息：起始城市
     startCity: null,
+    // TAB 线路信息：起始地址
+    startAddress: '',
     // TAB 线路信息：目的城市
     endCity: null,
+    // TAB 线路信息：目的地址
+    endAddress: '',
     // TAB 线路信息：供应商
     supplier: null,
     // TAB 线路信息：运送方式列表
@@ -85,10 +89,22 @@ export default handleActions({
             startCity: action.payload
         }
     },
+    [NewLoadTaskModalActionType.setStartAddress]: (state, action) => {
+        return {
+            ...state,
+            startAddress: action.payload
+        }
+    },
     [NewLoadTaskModalActionType.setEndCity]: (state, action) => {
         return {
             ...state,
             endCity: action.payload
+        }
+    },
+    [NewLoadTaskModalActionType.setEndAddress]: (state, action) => {
+        return {
+            ...state,
+            endAddress: action.payload
         }
     },
     [NewLoadTaskModalActionType.setSupplier]: (state, action) => {

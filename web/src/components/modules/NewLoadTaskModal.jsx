@@ -34,6 +34,20 @@ class NewLoadTaskModal extends React.Component {
     };
 
     /**
+     * 更新 起始地址
+     */
+    changeStartAddress = (event) => {
+        this.props.setStartAddress(event.target.value);
+    };
+
+    /**
+     * 更新 目的地址
+     */
+    changeEndAddress = (event) => {
+        this.props.setEndAddress(event.target.value);
+    };
+
+    /**
      * 更新 备注
      */
     changeRemark = (event) => {
@@ -104,7 +118,7 @@ class NewLoadTaskModal extends React.Component {
 
                     {/* TAB 1 : 线路信息TAB */}
                     <div id="tab-load" className={`col s12 margin-top50 ${newLoadTaskModalReducer.tabId === 'base' ? "display-block" : "display-none"}`}>
-                        <div className="input-field col s6">
+                        <div className="input-field col s2">
                             <Select
                                 options={commonReducer.cityList}
                                 onChange={changeStartCity}
@@ -117,8 +131,9 @@ class NewLoadTaskModal extends React.Component {
                             />
                             <label className="active"><span className="must-input">*</span>起始城市</label>
                         </div>
+                        <Input s={4} label={<span><span className="must-input">*</span>起始地址</span>} maxLength="50" value={newLoadTaskModalReducer.startAddress} onChange={this.changeStartAddress}/>
 
-                        <div className="input-field col s6">
+                        <div className="input-field col s2">
                             <Select
                                 options={commonReducer.cityList}
                                 onChange={changeEndCity}
@@ -131,6 +146,7 @@ class NewLoadTaskModal extends React.Component {
                             />
                             <label className="active"><span className="must-input">*</span>目的城市</label>
                         </div>
+                        <Input s={4} label={<span><span className="must-input">*</span>目的地址</span>} maxLength="50" value={newLoadTaskModalReducer.endAddress} onChange={this.changeEndAddress}/>
 
                         <div className="input-field col s4">
                             <Select
@@ -428,8 +444,14 @@ const mapDispatchToProps = (dispatch) => ({
     changeStartCity: (value) => {
         dispatch(NewLoadTaskModalActionType.setStartCity(value))
     },
+    setStartAddress: (value) => {
+        dispatch(NewLoadTaskModalActionType.setStartAddress(value))
+    },
     changeEndCity: (value) => {
         dispatch(NewLoadTaskModalActionType.setEndCity(value))
+    },
+    setEndAddress: (value) => {
+        dispatch(NewLoadTaskModalActionType.setEndAddress(value))
     },
     changeSupplier: (supplier) => {
         dispatch(NewLoadTaskModalActionType.setSupplier(supplier));

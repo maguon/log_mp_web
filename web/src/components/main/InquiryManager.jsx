@@ -33,7 +33,8 @@ class InquiryManager extends React.Component {
             this.props.changeConditionServiceType(null);
             this.props.setConditionCreatedOnStart('');
             this.props.setConditionCreatedOnEnd('');
-            this.props.changeConditionInquiryStatus(null);
+            // 默认选择条件：待报价
+            this.props.changeConditionInquiryStatus({value: sysConst.INQUIRY_STATUS[0].value, label: sysConst.INQUIRY_STATUS[0].label});
         }
         this.props.getInquiryList();
     }

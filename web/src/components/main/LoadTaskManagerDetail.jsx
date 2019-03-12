@@ -234,8 +234,9 @@ class LoadTaskManagerDetail extends React.Component {
                                 </div>
                             </div>
                             <div className="col s12 padding-top15">
-                                <div className="col s6">车辆总数：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</div>
-                                <div className="col s6 right-align">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</div>
+                                <div className="col s4">车辆总数：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</div>
+                                <div className="col s4">发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}</div>
+                                <div className="col s4 right-align">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15 border-bottom-line">
                                 <div className="col s4">运费：{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price, 2)} 元</div>

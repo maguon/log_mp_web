@@ -248,6 +248,8 @@ class OrderManagerDetail extends React.Component {
                                     <img className="margin-left30 margin-right30" src="../../../assets/images/transport.png"/>
                                     {/* 目的城市 */}
                                     <span className="fz20 purple-font">{orderManagerDetailReducer.orderInfo[0].end_city}</span>
+                                    {/* 发运日期 */}
+                                    <span className="margin-left30">发运日期：{formatUtil.getDate(orderManagerDetailReducer.orderInfo[0].departure_time)}</span>
                                     {/* 服务类型 */}
                                     <span className="margin-left30">
                                         {commonUtil.getJsonValue(sysConst.SERVICE_MODE, orderManagerDetailReducer.orderInfo[0].service_type)}

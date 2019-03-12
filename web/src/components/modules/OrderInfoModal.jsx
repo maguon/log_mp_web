@@ -57,8 +57,9 @@ class OrderInfoModal extends React.Component {
                                     <i className="margin-left10 margin-right10 blue-text text-lighten-2 mdi mdi-chevron-double-right"/>
                                     {commonReducer.orderInfo[0].end_city}
                                     <span className="margin-left30 fz15 grey-text text-darken-2">
-                                    ( {commonUtil.getJsonValue(sysConst.SERVICE_MODE,commonReducer.orderInfo[0].service_type)} )
-                                </span>
+                                        ( 发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}
+                                        <span className="margin-left20">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,commonReducer.orderInfo[0].service_type)}</span> )
+                                    </span>
                                 </div>
                             </div>
                             <div className="col s6 margin-top10 right-align">

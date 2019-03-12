@@ -12,7 +12,7 @@ const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
 
-class PaymentManagerDetail extends React.Component {
+class RefundApplyManagerDetail extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -205,8 +205,11 @@ class PaymentManagerDetail extends React.Component {
                             <div className="col s12 padding-top15 padding-bottom10">
                                 {/* 线路 */}
                                 <div className="col s4 fz18 purple-font">{commonReducer.orderInfo[0].start_city} - {commonReducer.orderInfo[0].end_city}</div>
-                                {/* 服务类型 */}
-                                <div className="col s4">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</div>
+                                {/* 发运日期，服务类型 */}
+                                <div className="col s4">
+                                    发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}
+                                    <span className="margin-left20">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</span>
+                                </div>
                                 {/* 运输车辆 */}
                                 <div className="col s4 right-align">运输车辆：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</div>
                             </div>
@@ -284,4 +287,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentManagerDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(RefundApplyManagerDetail)

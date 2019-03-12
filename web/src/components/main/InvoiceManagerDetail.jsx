@@ -116,6 +116,8 @@ class InvoiceManagerDetail extends React.Component {
                                 <div className="col s6">
                                     {/* 线路 */}
                                     <span className="fz18 purple-font">{invoiceManagerDetailReducer.invoiceApplyInfo[0].route_start} - {invoiceManagerDetailReducer.invoiceApplyInfo[0].route_end}</span>
+                                    {/* 发运日期 */}
+                                    <span className="margin-left30">发运日期：{formatUtil.getDate(invoiceManagerDetailReducer.invoiceApplyInfo[0].departure_time)}</span>
                                     {/* 服务类型 */}
                                     <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, invoiceManagerDetailReducer.invoiceApplyInfo[0].service_type)}</span>
                                 </div>

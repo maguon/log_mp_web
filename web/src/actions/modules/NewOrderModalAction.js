@@ -5,6 +5,22 @@ const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
+// 新增订单 初期
+export const initNewOrderModal = () => async (dispatch) => {
+    // 起始城市
+    dispatch({type: NewOrderModalActionType.setStartCity, payload: null});
+    // 目的城市
+    dispatch({type: NewOrderModalActionType.setEndCity, payload: null});
+    // 服务方式
+    dispatch({type: NewOrderModalActionType.setServiceType, payload: null});
+    // 发运日期
+    dispatch({type: NewOrderModalActionType.setDepartDate, payload: ''});
+    // 错误路线标记
+    dispatch({type: NewOrderModalActionType.setErrorRouteFlg, payload: false});
+    // 新订单编号
+    dispatch({type: NewOrderModalActionType.setNewOrderId, payload: ''});
+};
+
 /**
  * 根据开始城市-终到城市，设定画面里程显示。
  */
@@ -38,16 +54,19 @@ export const saveOrder = () => async (dispatch, getState) => {
         const endCity = getState().NewOrderModalReducer.endCity;
         // 服务方式
         const serviceType = getState().NewOrderModalReducer.serviceType;
+        // 发运日期
+        const departDate = getState().NewOrderModalReducer.departDate.trim();
 
         if (startCity == null || startCity.value === undefined
             || endCity == null || endCity.value === undefined
-            || serviceType == null || serviceType.value === undefined) {
+            || serviceType == null || serviceType.value === undefined || departDate === '') {
             swal('保存失败', '请输入完整的订单信息！', 'warning');
         } else {
             const params = {
                 routeStartId: startCity.value,
                 routeEndId: endCity.value,
-                serviceType: serviceType.value
+                serviceType: serviceType.value,
+                departureTime : departDate
             };
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/order';

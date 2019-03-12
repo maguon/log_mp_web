@@ -138,6 +138,8 @@ class PaymentManagerDetail extends React.Component {
                                 <div className="col s6">
                                     {/* 线路 */}
                                     <span className="fz18 purple-font">{commonReducer.orderInfo[0].start_city} - {commonReducer.orderInfo[0].end_city}</span>
+                                    {/* 发运日期 */}
+                                    <span className="margin-left30">发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}</span>
                                     {/* 服务类型 */}
                                     <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</span>
                                     <span className="margin-left30">运输车辆：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</span>

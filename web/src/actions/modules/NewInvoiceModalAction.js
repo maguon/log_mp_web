@@ -77,7 +77,7 @@ export const saveInvoice = () => async (dispatch, getState) => {
         // 备注
         const remark = getState().NewInvoiceModalReducer.remark.trim();
 
-        if (invoiceTitle === '' || companyTax === '') {
+        if (invoiceTitle === '' || companyTax === '' || bank === '' || bankNum === '') {
             swal('保存失败', '请输入完整的开票信息！', 'warning');
         } else {
             const params = {

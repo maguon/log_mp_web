@@ -106,6 +106,7 @@ class TransDemandManagerDetail extends React.Component {
 
                                 <div className="margin-top10 grey-text text-darken-1">
                                     <span className="fz20 purple-font">{transDemandManagerDetailReducer.transDemandInfo[0].route_start} - {transDemandManagerDetailReducer.transDemandInfo[0].route_end}</span>
+                                    <span className="margin-left30">发运日期：{formatUtil.getDate(transDemandManagerDetailReducer.transDemandInfo[0].departure_time)}</span>
                                     <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE,transDemandManagerDetailReducer.transDemandInfo[0].service_type)}</span>
                                 </div>
 

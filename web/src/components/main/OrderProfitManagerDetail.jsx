@@ -83,6 +83,8 @@ class OrderProfitManagerDetail extends React.Component {
                                 <div className="col s8">
                                     {/* 线路 */}
                                     <span className="fz18 purple-font">{orderProfitManagerDetailReducer.orderProfitInfo[0].route_start} - {orderProfitManagerDetailReducer.orderProfitInfo[0].route_end}</span>
+                                    {/* 发运日期 */}
+                                    <span className="margin-left30">发运日期：{formatUtil.getDate(orderProfitManagerDetailReducer.orderProfitInfo[0].departure_time)}</span>
                                     {/* 服务类型 */}
                                     <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, orderProfitManagerDetailReducer.orderProfitInfo[0].service_type)}</span>
                                     <span className="margin-left30">运输车辆：{formatUtil.formatNumber(orderProfitManagerDetailReducer.orderProfitInfo[0].car_num)}</span>

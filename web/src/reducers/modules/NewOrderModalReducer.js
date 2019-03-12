@@ -9,6 +9,8 @@ const initialState = {
     endCity: '',
     // 服务方式
     serviceType: '',
+    // 发运日期
+    departDate: '',
     // 错误路线标记
     errorRouteFlg: false,
     // 保存成功后的订单编号
@@ -32,6 +34,12 @@ export default handleActions({
         return {
             ...state,
             serviceType: action.payload
+        }
+    },
+    [NewOrderModalActionType.setDepartDate]: (state, action) => {
+        return {
+            ...state,
+            departDate: action.payload
         }
     },
     [NewOrderModalActionType.setErrorRouteFlg]: (state, action) => {

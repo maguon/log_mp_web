@@ -3,11 +3,12 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {NewOrderModalActionType, OrderManagerActionType} from '../../actionTypes';
+import {OrderManagerActionType} from '../../actionTypes';
 import {NewOrderModal} from '../modules/index';
 
 const commonAction = require('../../actions/main/CommonAction');
 const orderManagerAction = require('../../actions/main/OrderManagerAction');
+const newOrderModalAction = require('../../actions/modules/NewOrderModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -260,6 +261,7 @@ class OrderManager extends React.Component {
                             <tr className="grey-text text-darken-2">
                                 <th>订单编号</th>
                                 <th>线路</th>
+                                <th>发运日期</th>
                                 <th>车辆数</th>
                                 <th>服务方式</th>
                                 <th>支付费用</th>
@@ -279,6 +281,7 @@ class OrderManager extends React.Component {
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
                                         <td>{item.start_city} - {item.end_city}</td>
+                                        <td>{formatUtil.getDate(item.departure_time)}</td>
                                         <td>{item.car_num}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.SERVICE_MODE, item.service_type)}</td>
                                         <td>{formatUtil.formatNumber(item.real_payment_price,2)}</td>
@@ -299,7 +302,7 @@ class OrderManager extends React.Component {
                             })}
                             {orderManagerReducer.orderArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
-                                <td className="no-data-tr" colSpan="13">暂无数据</td>
+                                <td className="no-data-tr" colSpan="14">暂无数据</td>
                             </tr>}
                             </tbody>
                         </table>
@@ -382,9 +385,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(OrderManagerActionType.setConditionOrderStatus(value))
     },
     initModalData: () => {
-        dispatch(NewOrderModalActionType.setStartCity(null));
-        dispatch(NewOrderModalActionType.setEndCity(null));
-        dispatch(NewOrderModalActionType.setServiceType(null));
+        dispatch(newOrderModalAction.initNewOrderModal());
     }
 });
 

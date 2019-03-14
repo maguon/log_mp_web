@@ -532,6 +532,10 @@ table.striped > tbody > tr:nth-child(odd) {
     margin-top: 50px;
 }
 
+.margin-top100 {
+    margin-top: 100px;
+}
+
 .margin-bottom0 {
     margin-bottom: 0 !important;
 }
@@ -1147,6 +1151,10 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 616px;
 }
 
+#newInvoiceModal, #editLogAddressModal{
+    max-height: 580px;
+}
+
 #editOrderCarModal{
     max-height: 550px;
 }
@@ -1155,8 +1163,8 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 538px;
 }
 
-#newInvoiceModal, #editLogAddressModal{
-    max-height: 580px;
+#newOrderModal {
+    max-height: 500px;
 }
 
 #newSupplierModal, #newOfferModal, #cancelInquiryModal, #newPaymentModal, #newPaymentModal, #editLoginUserModal,
@@ -1164,7 +1172,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 456px;
 }
 
-#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal, #newOrderModal,
+#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal,
 #cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal,
 #refuseInvoiceModal, #editDepartmentModal, #newReCommendModal, #advertisingModal, #editCustomerPhoneModal {
     max-height: 360px;

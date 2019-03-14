@@ -114,6 +114,9 @@ export const calculateFreight = () => async (dispatch, getState) => {
         }
         dispatch({type: EditOrderCarModalActionType.setFreight, payload: freight});
         dispatch({type: EditOrderCarModalActionType.setInsureFee, payload: insuranceFee});
+    } else {
+        dispatch({type: EditOrderCarModalActionType.setFreight, payload: 0});
+        dispatch({type: EditOrderCarModalActionType.setInsureFee, payload: 0});
     }
 };
 

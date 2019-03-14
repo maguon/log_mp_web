@@ -1,4 +1,4 @@
-//index.js
+
 //获取应用实例
 const app = getApp()
 const config = require('../../config.js');
@@ -11,6 +11,8 @@ Page({
     endCity:'', 
     beginCityId: '', 
     endCityId: '',
+    nullHouse: true,
+    cusList:[],
 
      //系数相关
     array:["上门服务","当地自提"],
@@ -32,7 +34,10 @@ Page({
   /**
    * 加载页面执行
    */
-  onLoad: function (query) {
+  onLoad: function () {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 
 
@@ -293,11 +298,6 @@ Page({
                   content: '该城市路线暂未开通，请联系客服安排合理路线',
                   showCancel: false,
                   confirmColor: "#a744a7",
-                  success(res) {
-                    if (res.confirm) {
-                      config.bindCustomer();
-                    }
-                  }
                 });
                 return;
              
@@ -325,14 +325,64 @@ Page({
   },
 
 
-
-
   /**
-   * 联系客服
-   */
-  bindCustomer: function () {
-    config.bindCustomer();
+    * 联系客服
+    */
+  bindCustomer:function() {
+    var userId = app.globalData.userId;
+    app.bindCustomer(userId);
   },
 
-  
+  // /**
+  //  * 联系客服
+  //  */
+  // bindCustomer: function () {
+  //   var userId=app.globalData.userId;
+  //   var that = this;
+  //   that.setData({
+  //     nullHouse: false, //弹窗显示
+  //   })
+  //   reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/customerPhone", (err, res) => {
+  //     that.setData({
+  //       cusList:res.data.result,
+  //     })
+  //   })
+   
+  // },
+
+  // /**
+  //  *拨打电话 
+  //  */
+  // customer:function(e){
+  //   var index=e.currentTarget.dataset.index;
+  //   var cusList=this.data.cusList;
+  //   var phone = cusList[index].phone;
+
+  //   wx.makePhoneCall({
+  //     phoneNumber: phone, //此号码并非真实电话号码，仅用于测试
+  //   success: function () {
+  //     console.log("拨打电话成功！")
+  //   },
+  //   fail: function () {
+  //     console.log("拨打电话失败！")
+  //   }
+  // })
+  // },
+  // /**
+  //  * 返回
+  //  */
+  // back:function(){
+  //   this.setData({
+  //     nullHouse: true, //弹窗显示
+  //   })
+  // },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+   return app.onShareApp();
+  },
+
 })
+
+

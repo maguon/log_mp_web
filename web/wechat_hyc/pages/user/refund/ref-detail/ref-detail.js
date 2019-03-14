@@ -78,7 +78,7 @@ Page({
       //保留小数
       res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
       res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
-
+      res.data.result[0].real_payment_price = config.decimal(res.data.result[0].real_payment_price)
 
       //编译时间
       res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
@@ -236,5 +236,10 @@ Page({
   onUnload: function () {
 
   },
-
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

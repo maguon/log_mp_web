@@ -19,6 +19,10 @@ Page({
     address:false,
     carflag:false,
     loadingHidden: false,
+
+    timeFlag:false,
+    dateFlag:false,
+    date: '',
   },
 
 
@@ -56,7 +60,10 @@ Page({
         if (res.data.result[0].status == 3) {
           res.data.result[0].state = 0;
         } else if (res.data.result[0].status == 1) {
+          var dateTime = config.getTime01(res.data.result[0].departure_time);
           this.setData({
+            date: dateTime,
+            dateFlag: true,
             disabled: true,
           })
         } else {
@@ -79,6 +86,8 @@ Page({
         if (res.data.result[0].remark==null){
           res.data.result[0].remark=""
         }
+  
+    
 
         this.setData({
           orderlist: res.data.result[0],
@@ -103,8 +112,15 @@ Page({
   },
 
 
-
-
+/**
+ * 发车时间
+ */
+  bindDateChange: function (e) {
+    this.setData({
+      date: e.detail.value,
+      timeFlag:true
+    })
+  },
 
 
 
@@ -158,17 +174,6 @@ var note=e.detail.value;
 
 
 
-  /**
-* 联系客服
-*/
-  bindCustomer: function () {
-    config.bindCustomer();
-  },
-
-
-
-
-
 
 
   
@@ -202,10 +207,18 @@ submit:function(e){
  var orderId=this.data.orderId;
  var userId=app.globalData.userId;
  var note=this.data.note;
+ var date=this.data.date;
 
   if (!address){
     wx.showModal({
       content: "请您添加" +service[service_type]+"中运输地址详情" ,
+      showCancel: false,
+      confirmColor: "#a744a7",
+    });
+    return;
+  } else if (date== "") {
+    wx.showModal({
+      content: "请选择您的发车时间",
       showCancel: false,
       confirmColor: "#a744a7",
     });
@@ -229,6 +242,7 @@ submit:function(e){
           //提交信息到服务器
           var params = {
             remark: note,
+            departureTime:date,
           } 
           reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/remark", params, (err, res) => { })
 
@@ -247,5 +261,11 @@ submit:function(e){
     });
   }
   },
- 
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

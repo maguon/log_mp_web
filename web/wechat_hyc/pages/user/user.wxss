@@ -120,9 +120,9 @@ width: 100%;
 border-bottom: 1px solid #e6e3e3;
 }
 .text{
-  color: #e64095;
+  color: #d4d1d3;
   font-size: 15px;
   position: fixed;
-  right: 15px;
+  left: 38%;
   bottom: 10px;
 }

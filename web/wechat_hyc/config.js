@@ -37,22 +37,15 @@ export const getTime = (times) => {
   return time;
 }
 
-
 /**
-* 联系客服
+* 编译时间
 */
-export const bindCustomer=()=> {
-  wx.makePhoneCall({
-    phoneNumber: '15840668526', //此号码并非真实电话号码，仅用于测试
-    success: function () {
-      console.log("拨打电话成功！")
-    },
-    fail: function () {
-      console.log("拨打电话失败！")
-    }
-  })
+export const getTime01 = (times) => {
+  var t = new Date(times);
+  var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate() + ' ';
+  var time = olddata.replace(/-/g, "/");
+  return time;
 }
-
 
 
 
@@ -75,4 +68,5 @@ export const textPaste=()=> {
     }
   })
 }
+
 

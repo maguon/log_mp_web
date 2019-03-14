@@ -25,8 +25,8 @@
 </view>
 
 <view class='stay-detail'>
-<view hidden='{{carFlag}}' class='stay-car'>运送车辆:{{item.car_num}}</view>
-<view hidden='{{!carFlag}}' class='stay-car'>订单金额:{{item.sumfee}}元</view>
+<view  class='stay-car'>运送车辆:{{item.car_num}}</view>
+<!-- <view hidden='{{!carFlag}}' class='stay-car'>订单金额:{{item.sumfee}}元</view> -->
 
 <view class='stay-expect'>
 <view class='stay-text'>订单金额:</view>

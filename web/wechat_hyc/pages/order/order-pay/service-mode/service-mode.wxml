@@ -12,7 +12,7 @@
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view  hidden='{{hidden}}'>
+<view>
 <view class='ress' >
 <view class='ress-people'>
 <image class='ress-img01' src='../../../../images/head_02.png'></image>
@@ -36,35 +36,34 @@
 <view class='ress-line'></view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
-<view hidden='{{!logFlag}}' class='note'>
+<!-- <view hidden='{{!logFlag}}' class='note'>
 <button  bindtap='refund' class='refund'>物流信息</button>
-</view>
+</view> -->
 
 <!--  ---------------------------------------------------------------------- -->
 <view  hidden='{{!hidden}}'>
-<view class='ress' >
+<view  hidden='{{!sendFlag}}' class='ress' >
 <view class='ress-people'>
 <image class='ress-img' src='../../../../images/location_01.png'></image>
-<view class='people'>发车地:{{orderList.send_name}}</view>
+<view class='people'>发车地:{{orderList.route_start}}</view>
 </view>
 
-<view class='phone'>电话：{{orderList.send_phone}}</view>
-<view class='address'>地址：{{orderList.send_address}}</view>
+<!-- <view class='phone'>电话：{{orderList.send_phone}}</view> -->
+<view class='address'>地址：{{orderList.send_address_point}}</view>
 </view>
 <view class='ress-line'></view>
 <!--  ---------------------------------------------------------------------- -->
-<view class='ress'>
+<view  hidden='{{!recvFlag}}' class='ress'>
 <view class='ress-people'>
 <image class='ress-img' src='../../../../images/location.png'></image>
-<view class='people'>提车地:{{orderList.recv_name}}</view>
+<view class='people'>提车地:{{orderList.route_end}}</view>
 </view>
 
-<view class='phone'>电话：{{orderList.recv_phone}}</view>
-<view class='address'>地址：{{orderList.recv_address}}</view>
+<!-- <view class='phone'>电话：{{orderList.recv_phone}}</view> -->
+<view class='address'>地址：{{orderList.recv_address_point}}</view>
 </view>
 <view class='ress-line'></view>
- <button class='ress-msg'>物流信息</button>
-
-<view class='ress-line'></view>
+ 
 </view>
+<button class='ress-msg'>物流信息</button>
 <!--  ---------------------------------------------------------------------- -->

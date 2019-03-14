@@ -10,7 +10,7 @@
 
 <view class='item'>
 <view class='cost'>支付金额:</view>
-<view class='num'>-{{item.total_fee}}</view>
+<view class='num'>{{item.total_fee}}</view>
 <view class='yuan'>元</view>
 </view>
 

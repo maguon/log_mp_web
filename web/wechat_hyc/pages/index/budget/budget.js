@@ -10,6 +10,8 @@ Page({
   data: {
     arr:[],
     carMsg:[],
+    nullHouse: true,
+    cusList: [],
 
     array: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
@@ -196,14 +198,13 @@ bindInquiry:function(e){
 },
 
 
-
   /**
-* 联系客服
-*/
+      * 联系客服
+      */
   bindCustomer: function () {
-    config.bindCustomer();
+    var userId = app.globalData.userId;
+    app.bindCustomer(userId);
   },
-
 
   /**
    * 继续询价
@@ -215,6 +216,13 @@ bindInquiry:function(e){
   },
 
 
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  
+  }
 
 
 

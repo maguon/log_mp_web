@@ -1,15 +1,15 @@
 {
-  "pages":[
-
+  "pages": [
     "pages/login/login",
     "pages/index/index",
+    "pages/new-user/new-user",
     "pages/index/submit/submit",
     "pages/index/change-car/change-car",
     "pages/index/add-car/add-car",
     "pages/index/budget/budget",
     "pages/index/prompt/prompt",
     "pages/index/citys/citys",
-   
+
     "pages/order/order",
     "pages/order/change-car/change-car",
     "pages/order/add-car/add-car",
@@ -30,10 +30,9 @@
     "pages/order/order-pay/bank-pay/card-msg/card-msg",
     "pages/order/order-pay/bank-pay/add-card/add-card",
     "pages/order/order-pay/service-mode/service-mode",
-   
-  
+
     "pages/about/about",
- 
+    
     "pages/user/user",
     "pages/user/bind/bind",
     "pages/user/refund/refund",
@@ -48,11 +47,11 @@
     "pages/user/addressList/addressList",
     "pages/user/set/set"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "permission": {
     "scope.userLocation": {
@@ -74,7 +73,7 @@
         "selectedIconPath": "images/order_full.png"
       },
       {
-        "pagePath":"pages/about/about",
+        "pagePath": "pages/about/about",
         "text": "关于",
         "iconPath": "images/about.png",
         "selectedIconPath": "images/about_full.png"

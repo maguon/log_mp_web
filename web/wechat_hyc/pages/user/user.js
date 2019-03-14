@@ -1,4 +1,4 @@
-// pages/order/order.js
+
 const app = getApp()
 const config = require('../../config.js');
 const reqUtil = require('../../utils/ReqUtil.js')
@@ -143,5 +143,12 @@ wx.navigateTo({
     wx.navigateTo({
       url: "/pages/order/order-pay/bank-pay/add-card/add-card",
     })
+  },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
   }
+
 })

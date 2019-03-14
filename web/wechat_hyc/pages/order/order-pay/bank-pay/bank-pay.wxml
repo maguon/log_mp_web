@@ -2,6 +2,7 @@
 <view class='prompt01'>请将运费汇款至以下银行</view>
 
 <view  wx:for="{{banklist}}" wx:key="u">
+<view hidden='{{item.status}}'>
 <view class='transfer-head'>
 <view class='bankname'>{{item.bank}}</view>
 </view>
@@ -10,7 +11,8 @@
 <view class='payee'>收款人:{{item.account_name}}</view>
 </view>
 </view>
-<view class='div-line'></view>
+</view>
+<view class='div-line01'></view>
 
 <view  class='cost'>
 <view class='cost-text'>剩余支付金额(元)</view>
@@ -19,8 +21,8 @@
 
 <view class='div-line'></view>
 <view  class='cost'>
-<view class='cost-text'>支付金额(元)</view>
-<input bindinput='costNum' type='digit' focu='{{true}}' class='cost-num' placeholder='输入支付金额' placeholder-style='font-size:15px;color:#8a8a8a;' value='{{cost_num}}'></input>
+<view class='cost-text01'>支付金额(元)</view>
+<input bindinput='costNum' type='digit'  class='cost-num' placeholder='请输入支付金额' placeholder-style='font-size:15px;color:#8a8a8a;'focus="{{focus}}" value='{{cost_num}}' ></input>
 </view>
 <view class='div-line'></view>
 <!-- <view class='prompt'>运费到账后，我们会尽快为您安排发运</view> -->

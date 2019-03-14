@@ -208,15 +208,7 @@ Page({
   bindAdd: function () {
     var userId = app.globalData.userId;
     console.log(this.data.modelType)
-    //判断用户输入
-    // if (this.data.modelType == '') {
-    //   wx.showModal({
-    //     content: '请选择车型',
-    //     showCancel: false,
-    //     confirmColor: "#a744a7",
-    //   });
-    //   return;
-    // }
+
     if (this.data.valuation == '') {
       wx.showModal({
         content: '请输入车辆估值',
@@ -251,4 +243,10 @@ Page({
   onUnload: function () {
   },
 
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

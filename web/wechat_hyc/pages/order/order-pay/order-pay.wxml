@@ -31,6 +31,15 @@
 <view class='dis-line'></view>
 
 <!--  ---------------------------------------------------------------------- -->
+<view  class='dis-content'>
+<view class='city'>
+<image class='city-img' src='../../../images/time.png'></image>
+<view class='city-text'>发车时间</view>
+<view class='stay-expect stay-text'>{{date}}</view>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
 <view class='dis-sum'>
 <image class='city-img' src='../../../images/money.png' style=' width:25px; height: 25px;'></image>
 <view class='sum-text'>应付费用</view>

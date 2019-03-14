@@ -1,6 +1,7 @@
 page{
    background: #f8f6f8;
 }
+
 .icon-box{
   width: 100%;
   height: 450px;

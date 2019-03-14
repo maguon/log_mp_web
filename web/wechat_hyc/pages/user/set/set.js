@@ -1,4 +1,4 @@
-// pages/order/order.js
+
 const app = getApp()
 const config = require('../../../config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
@@ -79,4 +79,10 @@ Page({
     })
     
   },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

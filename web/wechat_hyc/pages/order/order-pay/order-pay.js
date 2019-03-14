@@ -17,6 +17,7 @@ Page({
     invoicelist:[],
     refundlist:[],
     payment_status:0,
+    date:"",
 
     completeFlag: false,
     partFlag:false,  
@@ -128,6 +129,9 @@ Page({
           })
         }
       }
+      if (res.data.result[0].departure_time!=null){
+        res.data.result[0].departure_time = config.getTime01(res.data.result[0].departure_time)
+      }
       console.log(res.data.result[0])
 
       that.setData({
@@ -136,6 +140,7 @@ Page({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
         sumFee: res.data.result[0].sumFee,
+        date: res.data.result[0].departure_time,
       }) 
 
 
@@ -406,6 +411,6 @@ isInvoice: function () {
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return app.onShareApp();
   }
 })

@@ -25,14 +25,14 @@
 
 <view class='note'>
 <view class='note-text'>品牌</view>
-<input bindinput='brandInput'  class='note-input' placeholder='请输入车辆型号' value='{{brand}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<input bindinput='brandInput'  class='note-input' placeholder='车辆品牌（如：大众）' value='{{brand}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 
 <view class='note'>
 <view class='note-text'>型号</view>
-<input bindinput='modelInput'  class='note-input' placeholder='请输入车辆品牌' value='{{model}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
+<input bindinput='modelInput'  class='note-input' placeholder='车辆型号（如：宝来）' value='{{model}}' placeholder-style='font-size:15px; color:#8a8a8a; z-index:0'></input>
 </view>
 <view class='dis-line'></view>
 

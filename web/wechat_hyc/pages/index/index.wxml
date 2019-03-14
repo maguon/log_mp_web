@@ -1,3 +1,14 @@
+<!-- <view hidden="{{nullHouse}}" class='mask'>
+<view bindtap='customer' data-index='{{index}}' wx:for="{{cusList}}" wx:key="u" >
+<button class='customer01'>
+<image class='customer-img' src='../../images/customer.png'></image>
+ <view class='customer-text'>{{item.phone}}</view>
+ </button>
+</view>
+
+<button bindtap='back' class='cancel'>取消</button>
+</view> -->
+
 <!--index.wxml-->
 <view  class="weui-cells_after-title">
 <!-- 始发城市 ---------------------------------------------------------------------- -->

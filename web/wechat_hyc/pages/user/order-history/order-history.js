@@ -1,4 +1,4 @@
-// pages/order/order.js
+
 const app = getApp()
 const config = require('../../../config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
@@ -107,5 +107,11 @@ Page({
     wx.navigateTo({
       url: "/pages/order/order-pay/order-pay?orderId=" + orderId+"&name="+"",
     })
+  },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
   }
 })

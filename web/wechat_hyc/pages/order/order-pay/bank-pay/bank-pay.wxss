@@ -55,6 +55,12 @@ color: #8a8a8a;
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.div-line01{
+  border: 10px solid #efeff4;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 /* ---------------------------------------------------------------------- */
 .cost{
 height: 40px;
@@ -68,12 +74,17 @@ font-size: 15px;
 .cost-text{
   margin-left: 15px;
 }
+.cost-text01{
+  margin-left: 15px;
+  font-weight: bold;
+}
 .cost-num{
 font-size: 18px;
 position: absolute;
 right: 30px;
 text-align: right;
 }
+
 .prompt{
   height: 60px;
   background: white;

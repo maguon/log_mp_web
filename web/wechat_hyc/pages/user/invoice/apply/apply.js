@@ -29,14 +29,14 @@ Page({
       //保留小数
       res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
       res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
+      res.data.result[0].real_payment_price = config.decimal(res.data.result[0].real_payment_price)
 
 
       //编译时间
       res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
       res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
 
-
-
+   
       this.setData({
         sumfee: sumfee,
         orderlist: res.data.result[0],
@@ -123,4 +123,10 @@ Page({
       url: '/pages/user/invoice/msg-list/msg-list?applyId=' + "111",
     })
   },
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

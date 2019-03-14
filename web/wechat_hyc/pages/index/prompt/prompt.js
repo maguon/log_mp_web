@@ -1,10 +1,12 @@
-// pages/index/prompt/prompt.js
+const config = require('../../../config.js');
+const app=getApp();
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    nullHouse: true,
+    cusList: [],
   },
 
   /**
@@ -15,8 +17,19 @@ Page({
   },
 
 
-  bindCustomer:function(){
-    config.bindCustomer();
+  /**
+      * 联系客服
+      */
+  bindCustomer: function () {
+    var userId = app.globalData.userId;
+    app.bindCustomer(userId);
   },
+
   
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

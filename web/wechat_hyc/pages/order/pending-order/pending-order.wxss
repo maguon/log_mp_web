@@ -1,6 +1,10 @@
 page{
     background: #f8f6f8;
 }
+.picker{
+  width: 100%;
+  height: 50px;
+}
 .head-prompt{
   height: 40px;
   width: 100%;

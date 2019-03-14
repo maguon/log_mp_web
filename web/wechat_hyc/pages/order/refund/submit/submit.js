@@ -1,4 +1,5 @@
-// pages/order/refund/submit/submit.js
+const config = require('../../../../config.js');
+const app = getApp();
 Page({
 
   /**
@@ -73,6 +74,6 @@ this.setData({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return app.onShareApp();
   }
 })

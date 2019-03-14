@@ -1,4 +1,4 @@
-// pages/order/order-discuss/order-discuss.js
+
 const app = getApp()
 const config = require('../../../config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
@@ -11,6 +11,9 @@ Page({
   data: {
     orderlist: [],
     carlist: [],
+    nullHouse: true,
+    cusList: [],
+
     service: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
     service_type: '',
@@ -72,13 +75,15 @@ Page({
 
 
 
-  /**
- * 联系客服
- */
-  bindCustomer: function () {
-    config.bindCustomer();
-  },
 
+
+  /**
+      * 联系客服
+      */
+  bindCustomer: function () {
+    var userId = app.globalData.userId;
+    app.bindCustomer(userId);
+  },
 
 
 
@@ -145,4 +150,10 @@ Page({
   },
 
 
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

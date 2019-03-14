@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    focus:false,
     hidden: false,
     banklist:[],
     bankMsg: [],
@@ -103,6 +104,7 @@ Page({
     var orderId = that.data.orderId;
     var name=that.data.name;
     var paymentId = that.data.paymentId; 
+
 
 
     if (that.data.hidden == false) {
@@ -203,4 +205,12 @@ Page({
               })     
     }
   },
+
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

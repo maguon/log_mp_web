@@ -21,13 +21,7 @@
 <image hidden='{{!address}}' class='yes' src='../../../images/yes.png'></image>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
-<!-- 
-<view hidden='{{!disabled}}'  class='dis-way'>
-<image class='way-image' src='../../../images/car.png'></image>
-<view class='way-text'>{{service[orderlist.service_type-1]}}</view>
-<view hidden='{{address}}' class='stay-expect stay-text'>请选择运送地址</view>
-<image hidden='{{!address}}' class='yes' src='../../../images/yes.png'></image>
-</view> -->
+
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
 <view bindtap='perfect' class='dis-content'  hover-class="active" >
@@ -36,8 +30,31 @@
 <view class='city-text'>运送车辆</view>
 <view hidden='{{carflag}}' class='stay-expect stay-text'>请完善车辆信息</view>
 <image hidden='{{!carflag}}' class='yes' src='../../../images/yes.png'></image>
-<!-- <view hidden='{{!carflag}}' class='stay-expect stay-text'></view> -->
 <image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+</view>
+<view class='dis-line'></view>
+<!--  ---------------------------------------------------------------------- -->
+<view hidden='{{dateFlag}}' class="picker">
+<picker   mode="date" value="{{date}}" start="2019-03-01" end="2030-09-01" bindchange="bindDateChange">
+<view  class='dis-content'  hover-class="active" >
+<view class='city'>
+<image class='city-img' src='../../../images/time.png'></image>
+<view class='city-text'>发车时间</view>
+<view hidden='{{timeFlag}}' class='stay-expect stay-text'>请选择发车时间</view>
+<view hidden='{{!timeFlag}}' class='stay-expect stay-text'>{{date}}</view>
+<image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+</view>
+</picker>
+</view>
+
+
+<view hidden='{{!dateFlag}}' class='dis-content'>
+<view class='city'>
+<image class='city-img' src='../../../images/time.png'></image>
+<view class='city-text'>发车时间</view>
+<view class='stay-expect stay-text'>{{date}}</view>
 </view>
 </view>
 <view class='dis-line'></view>

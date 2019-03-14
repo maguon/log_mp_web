@@ -1,6 +1,7 @@
 page{
    background: #f8f6f8;
 }
+
 .head-prompt{
   height: 40px;
   width: 100%;

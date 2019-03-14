@@ -37,18 +37,7 @@ Page({
       }
     },
   })
-  //   //登录
-  //  wx.login({
-  //   success: e => {
-  //   //获取code
-  //   var code = e.code;
-  //     console.log(code)
-  //   //发送code 请求openid
-  //   reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
-  //   //保存openid 到全局
-  //   app.globalData.openid = rea.data.result.openid;
-  //     console.log(rea.data.result.openid)
-  //   app.globalData.session_key = rea.data.result.session_key;
+ 
     //获得本地存储信息
     wx.getStorage({
       key: 'user',
@@ -80,17 +69,7 @@ Page({
         }
         },
       })
-  //    })
-  //   }
-  //  })
 
-    wx.getStorageInfo({
-      success(res) {
-        console.log(res)
-        console.log(res.currentSize)
-        console.log(res.limitSize)
-      }
-    })
 },
 
 
@@ -99,9 +78,9 @@ Page({
    * 点击授权
    */
   bindGetUserInfo: function (e) {
+    console.log(e.detail.userInfo)
     var that = this;
     if (e.detail.userInfo) {
-      console.log(e.detail.userInfo.gender)
       //用户按了允许授权按钮
       if (e.detail.userInfo.gender==2){
         e.detail.userInfo.gender = 0;
@@ -137,12 +116,6 @@ Page({
               avatar: e.detail.userInfo.avatarUrl,
               recommendId: parseInt(that.data.scene),
             }
-
-            console.log(rea.data.result.openid)
-            console.log(e.detail.userInfo.nickName)
-            console.log(e.detail.userInfo.gender)
-            console.log(e.detail.userInfo.avatarUrl)
-            console.log(parseInt(that.data.scene))
             reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
 
               console.log(res)
@@ -219,5 +192,12 @@ Page({
       })
     })
   },
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })
 

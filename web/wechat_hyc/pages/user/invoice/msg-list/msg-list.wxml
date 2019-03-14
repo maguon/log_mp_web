@@ -13,7 +13,6 @@
          <view class='city' bindtap="editor" data-index="{{index}}">{{item.company_name}}</view>
           <image bindtap="del" data-index="{{index}}" class='arc' src='../../../../images/no_02.png'></image>
          </view>
-         <view class='div-line'></view>
 
  <image hidden='{{hidden}}' class='arrow01' src='../../../../images/arrow.png'></image>
 <view bindtap="editor" data-index="{{index}}">

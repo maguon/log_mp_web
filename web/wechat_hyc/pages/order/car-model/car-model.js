@@ -256,4 +256,12 @@ Page({
     reqUtil.httpDel(config.host.apiHost + "/api/user/" + userId + "/orderItem/" + orderItemId);
     wx.navigateBack({})
   },
+
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 })

@@ -24,17 +24,17 @@
 
 
 <view class='stay-detail'>
-<view class='stay-car'>运费:{{orderlist.total_trans_price}}元</view>
-<view class='stay-expect'>
+<view class='stay-car'>订单金额:{{sumfee}}元</view>
+<!-- <view class='stay-expect'>
 <view class='stay-text'>保费:{{orderlist.total_insure_price}}元</view>
-</view>
+</view> -->
 </view>
 
 <view class='dis-line'></view>
 <view class='city'>
 <view class='stay-expect'>
 <view class='stay-text'>实际支付:</view>
-<view class='stay-num-fee'>{{sumfee}}</view>
+<view class='stay-num-fee'>{{orderlist.real_payment_price}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>

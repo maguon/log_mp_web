@@ -12,6 +12,8 @@ Page({
     orderList: [],
     hidden:false,
     logFlag: false,
+    sendFlag:false,
+    recvFlag:false,
   },
 
 
@@ -33,6 +35,17 @@ Page({
         })
       }
 
+      if (res.data.result[0].recv_address_point!=null){
+        this.setData({
+          recvFlag: true,
+        })
+      }
+      if (res.data.result[0].send_address_point != null) {
+        this.setData({
+          sendFlag: true,
+        })
+      }
+
       if (res.data.result[0].log_status == 2) {
         this.setData({
           logFlag: true,
@@ -43,5 +56,11 @@ Page({
 
 
 
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
 
 })

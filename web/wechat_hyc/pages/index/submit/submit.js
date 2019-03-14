@@ -1,4 +1,4 @@
-//index.js
+
 //获取应用实例
 const app = getApp()
 const config = require('../../../config.js');
@@ -9,7 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    nullHouse: true,
+    cusList: [],
   },
 
   /**
@@ -28,11 +29,14 @@ Page({
   },
 
   /**
-   * 联系客服
-   */
+     * 联系客服
+     */
   bindCustomer: function () {
-    config.bindCustomer();
+    var userId = app.globalData.userId;
+    app.bindCustomer(userId);
   },
+
+  
   /**
    * 继续询价
    */
@@ -52,4 +56,11 @@ Page({
 
   },
 
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
+  }
+  
 })

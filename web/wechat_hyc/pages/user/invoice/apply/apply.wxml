@@ -20,8 +20,7 @@
 <view class='right-text'>运输车辆：{{orderlist.car_num}}</view>
 </view>
 <view class='city'>
-<view class='city-text'>运费：{{orderlist.total_trans_price}}元</view>
-<view class='right-text'>保费：{{orderlist.total_insure_price}}元</view>
+<view class='city-text'>订单金额：{{sumfee}}元</view>
 </view>
 </view>
 <view class='dis-line'></view>
@@ -30,7 +29,7 @@
 <view class='dis-sum'>
 <view class='stay-expect'>
 <view class='stay-text'>实际支付：</view>
-<view class='stay-num'>{{sumfee}}</view>
+<view class='stay-num'>{{orderlist.real_payment_price}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>

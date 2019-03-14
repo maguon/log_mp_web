@@ -134,5 +134,13 @@ Page({
     url: "/pages/order/refund/submit/submit?orderId=" + orderId,
   })
   }
+  },
+
+
+  /**
+ * 用户点击右上角分享
+ */
+  onShareAppMessage: function () {
+    return app.onShareApp();
   }
 })

@@ -1,2 +1,25 @@
-<!--pages/about/about.wxml-->
-<text class='no'>暂无内容</text>
+
+<view class='items'>
+<view bindtap='consign' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>托运流程</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+
+
+<view bindtap='service' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>服务优势</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+<view bindtap='deal' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>托运协议</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+
+
+<view bindtap='we' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>关于我们</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+</view>

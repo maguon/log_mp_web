@@ -108,7 +108,10 @@ Page({
         if (res.data.result[i].status == 0 || res.data.result[i].status == 1 ) {
           count_a++;
           orderState[1].hidden = true;
+        } else if (res.data.result[i].status == 8){
+
         }else if (res.data.result[i].payment_status == 0 || res.data.result[i].payment_status == 1){
+          console.log(res.data.result[i])
           count_b++;
           orderState[2].hidden = true;
         } 
@@ -247,7 +250,7 @@ Page({
         prompt: false,
      
       })
-      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?paymentStatusList=" +"0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+      reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "2,3,4,9" +"&paymentStatusList="+"0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
         if (res.data.result != '') {
 
           for (var i = 0; i < res.data.result.length; i++) {
@@ -259,7 +262,7 @@ Page({
 
            
            //判断支付状态
-            if (res.data.result[i].payment_status == 0 && res.data.result[i].status != 0 && res.data.result[i].status != 1) {
+            if (res.data.result[i].payment_status == 0) {
               res.data.result[i].stay = 4;
               res.data.result[i].payFlag = true;
               res.data.result[i].state = 1;
@@ -270,6 +273,7 @@ Page({
             } else{
               res.data.result[i].state = 0;
             }
+        
           }
 
           console.log(res.data.result)
@@ -310,6 +314,7 @@ Page({
               res.data.result[i].state = 1;
               res.data.result[i].payFlag = true;  
             }
+          
             //判断物流状态 
             if (res.data.result[i].log_status == 0) {
               res.data.result[i].stay = 7;

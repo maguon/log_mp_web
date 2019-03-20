@@ -32,6 +32,9 @@
     "pages/order/order-pay/service-mode/service-mode",
 
     "pages/about/about",
+    "pages/about/consign/consign",
+    "pages/about/service/service",
+     "pages/about/we/we",
     
     "pages/user/user",
     "pages/user/bind/bind",

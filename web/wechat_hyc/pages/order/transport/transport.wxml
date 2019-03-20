@@ -104,7 +104,7 @@
 <view class='address'>地址：辽宁省 大连市 开发区 金马路342号 凯伦国际大厦B座 2608室</view>
 </view>
 <view class='ress-line'></view>
- <button class='ress-msg'>物流信息</button>
+ <!-- <button class='ress-msg'>物流信息</button> -->
 
 <view class='null'></view>
 </view>

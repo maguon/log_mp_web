@@ -131,7 +131,7 @@ export const deleteLoadTask = (requireId, loadTaskId) => async (dispatch) => {
 };
 
 // 更新线路状态
-export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (dispatch) => {
+export const changeLoadTaskStatus = (orderId, requireId, loadTaskId, status) => async (dispatch) => {
     let cusTitle = '';
     let newStatus = 0;
     // 待发运状态时，变更
@@ -158,6 +158,9 @@ export const changeLoadTaskStatus = (requireId, loadTaskId, status) => async (di
             const res = await httpUtil.httpPut(url, {});
             if (res.success === true) {
                 dispatch(getTransDemandInfo(requireId));
+                if (orderId !== '') {
+                    dispatch(orderManagerDetailAction.getOrderInfo(orderId));
+                }
             } else if (res.success === false) {
                 swal('修改失败', res.msg, 'warning');
             }

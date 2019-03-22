@@ -1063,7 +1063,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     // 更新线路状态
     changeLoadTaskStatus: (requireId, loadTaskId, status) => {
-        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(requireId, loadTaskId, status));
+        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(ownProps.match.params.id, requireId, loadTaskId, status));
     },
 
     // TAB4：发票信息

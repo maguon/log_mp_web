@@ -339,7 +339,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     // 更新线路状态
     changeLoadTaskStatus: (loadTaskId, status) => {
-        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus(ownProps.match.params.id, loadTaskId, status));
+        dispatch(transDemandManagerDetailAction.changeLoadTaskStatus('', ownProps.match.params.id, loadTaskId, status));
     }
 });
 

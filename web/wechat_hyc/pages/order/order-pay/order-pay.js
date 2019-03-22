@@ -41,7 +41,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e)
+
     this.setData({
       orderId: e.orderId,
       name:e.name,
@@ -123,7 +123,7 @@ Page({
           })
         }
         if (!that.data.ref_Flag && !that.data.refFlag && !that.data.norefFlag && res.data.result[0].payment_status!=0) {
-          console.log("00000")
+
           that.setData({
             refundFlag: true,
           })
@@ -132,7 +132,6 @@ Page({
       if (res.data.result[0].departure_time!=null){
         res.data.result[0].departure_time = config.getTime01(res.data.result[0].departure_time)
       }
-      console.log(res.data.result[0])
 
       that.setData({
         payment_status: res.data.result[0].payment_status,
@@ -146,7 +145,7 @@ Page({
 
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId, (err, res) => {
-        console.log(res.data.result)
+    
         if (res.data.result != "") {
           //申请中
           if (res.data.result[0].status == 2) {
@@ -183,7 +182,7 @@ Page({
 
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/invoicesList?orderId=" + orderId, (err, res) => {
-        console.log(res.data.result)
+      
         if (res.data.result != "") {
           //申请中
           if (res.data.result[0].invoiced_status == 0) {
@@ -218,7 +217,7 @@ Page({
 
         }
       })
-      console.log(res.data.result)
+ 
     })
 
   },
@@ -228,7 +227,6 @@ Page({
  del: function () {
     var userId = app.globalData.userId;
    var orderId = this.data.orderId;
-   console.log(orderId)
 
     wx.showModal({
       content: '确定要删除订单吗？',
@@ -332,7 +330,7 @@ isInvoice: function () {
   cancel: function () {
     var userId = app.globalData.userId;
     var orderId =this.data.orderId
-    console.log(orderId)
+
     wx.showModal({
       content: '确定要取消订单吗？',
       confirmColor: "#a744a7",
@@ -365,7 +363,7 @@ isInvoice: function () {
         wx.getClipboardData({
           //这个api是把拿到的数据放到电脑系统中的
           success: function (res) {
-            console.log(res.data) // data
+ 
           }
         })
       }

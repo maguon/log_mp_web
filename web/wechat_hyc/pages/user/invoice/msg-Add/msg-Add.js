@@ -25,7 +25,6 @@ Page({
    */
   onLoad: function (e) {
     var invList = JSON.parse(e.invList);
-    console.log(invList)
     if (invList!= "") {
       this.setData({
         invList: invList,
@@ -130,8 +129,6 @@ Page({
     } else if (address == "") {
       warn = "请输入公司地址";
     }else {
-      console.log(that.data.invList)
-    
       flag = false;
       if (that.data.invList!= "") {
      

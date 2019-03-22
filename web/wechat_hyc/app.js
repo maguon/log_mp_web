@@ -34,15 +34,9 @@ App({
                   })
                 }
               } else if (!res.cancel) {
-                console.log(res.tapIndex)
+             
                 wx.makePhoneCall({
                   phoneNumber: cusList[res.tapIndex],
-                  success: function () {
-                    console.log("拨打电话成功！")
-                  },
-                  fail: function () {
-                    console.log("拨打电话失败！")
-                  }
                 })
               }
             }
@@ -66,10 +60,9 @@ App({
 
     return {
       title: '测试小程序',//分享内容
-      path: '/pages/new-user/new-user',//分享地址
+      path: '/pages/login/login',//分享地址
       imageUrl: '/images/share.jpg',//分享图片
       success: function (res) {
-        console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {//判断分享是否成功
           if (res.shareTickets == undefined) {//判断分享结果是否有群信息
             //分享到好友操作...

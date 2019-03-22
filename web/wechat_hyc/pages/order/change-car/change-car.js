@@ -51,7 +51,7 @@ Page({
       //读取数据
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + e.inquiryId, (err, res) => {
         var index=this.data.index;
-        console.log(res)
+
         //获取数据
         var sumPrice = (res.data.result[e.index].trans_price + res.data.result[e.index].insure_price).toFixed(2);
         var price = (sumPrice / res.data.result[e.index].car_num).toFixed(2);
@@ -81,7 +81,7 @@ Page({
  * 车辆估值
  */
   bindValuation: function (e) {
-    console.log(e)
+
     this.setData({
       valuation: e.detail.value,
     })
@@ -91,7 +91,7 @@ Page({
    * 选择车型
    */
   bindModels: function (e) {
-    console.log(e)
+
     this.setData({
       modelType: e.detail.value,
     })
@@ -204,19 +204,14 @@ Page({
       valuation: this.data.valuation,
       safeStatus: this.data.insurance,
     }
-    console.log(this.data.distance)
-    console.log(this.data.checked)
-    console.log(parseInt(this.data.modelType) + 1)
-    console.log(parseInt(this.data.serviceType) )
-    console.log(this.data.valuation)
-    console.log(this.data.insurance)
+
 
     reqUtil.httpPost(config.host.apiHost + "/api/transAndInsurePrice", params, (err, res) => {
 
       //计算价格
       var price = parseFloat(res.data.result.trans) + parseFloat(res.data.result.insure);
       var sumPrice = (price * this.data.num).toFixed(2);
-      console.log(res)
+
       this.setData({
         price: price.toFixed(2),
         sumPrice: sumPrice,

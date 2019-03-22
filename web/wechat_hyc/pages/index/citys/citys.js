@@ -85,7 +85,6 @@ Page({
  
   citySelected: function (e) {
     var cityNameTemp = e.currentTarget.dataset.cityname
-    console.log(e.currentTarget)
     if (this.data.cityType == 'begin') {
       app.globalData.trainBeginCity = cityNameTemp
     }
@@ -143,7 +142,7 @@ Page({
   * 生命周期函数--监听页面显示
   */
   onShow: function () {
-    console.log(this.data.cityResults) 
+
   },
 
 

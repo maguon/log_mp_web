@@ -24,7 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e)
+
     this.setData({
       orderId: e.orderId,
       sumFee:e.fee,
@@ -45,7 +45,7 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + orderId, (err, res) => {
      
-      console.log(res.data.result)
+   
       if (res.data.result!=''){
         var refundSum = 0;
 
@@ -77,9 +77,7 @@ Page({
             refundFlag: true,
           })
         }
-        console.log(sumFee)
-        console.log(res.data.result[0].unpaid_price)
-        console.log(res.data.result)
+
       that.setData({
       payment:res.data.result,
       remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
@@ -98,7 +96,7 @@ Page({
 
 
   bankNum: function (e) {
-    console.log(e)
+
     var mphone = e.substring(0, 4) + '**********' + e.substring(14);
     return mphone;
   },
@@ -123,7 +121,7 @@ Page({
     var userId = app.globalData.userId;
     var paymentId = that.data.payment[index].id;
 
-    console.log(index);
+
     wx.showModal({
       content: "确定要删除该笔支付？",
       confirmColor: "#a744a7",

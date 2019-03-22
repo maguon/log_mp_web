@@ -39,7 +39,7 @@ Page({
     var orderId=e.orderId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      console.log(res.data.result)
+
       this.setData({
         orderlist: res.data.result[0],
         orderId: orderId,
@@ -50,7 +50,7 @@ Page({
 
     if (chooseMsg !=""){
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + orderId, (err, res) => {
-          console.log(res.data.result)
+
         var orderItem = res.data.result[chooseMsg];
         this.setData({
           orderItemId: orderItem.id,
@@ -69,7 +69,7 @@ Page({
         hidden: true,
       })
     }
-    console.log(chooseMsg )
+
     if (chooseMsg !=""){
     wx.setNavigationBarTitle({
       title: '修改车型'
@@ -97,7 +97,7 @@ Page({
      * VIN
      */
   noteInput: function (e) {
-    console.log(e) 
+
     this.setData({
       vin: e.detail.value,
     })
@@ -121,7 +121,6 @@ Page({
    * 估值
    */
   bindValuation: function (e) {
-    console.log(e)
     this.setData({
       valuation: e.detail.value,
     })
@@ -156,7 +155,6 @@ Page({
     var orderItemId = this.data.orderItemId;
     var orderId=this.data.orderId;
 
-    console.log(parseInt(this.data.valuation))
     if (this.data.valuation == '') {
       wx.showModal({
         content: '估值不能为空',
@@ -195,7 +193,6 @@ Page({
       })
       return;
     } else {
-      console.log(chooseMsg)
       if (chooseMsg !=""){
         var params = {
           brand: this.data.brand,

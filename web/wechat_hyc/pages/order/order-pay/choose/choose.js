@@ -20,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e)
+
     this.setData({
       orderId: e.orderId,
       fee:e.fee,
@@ -30,7 +30,7 @@ Page({
     var userId = app.globalData.userId;
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + e.orderId, (err, res) => {
-      console.log(res.data.result)
+
       if (res.data.result!=''){
         this.setData({
           remainFee: config.decimal(res.data.result[0].unpaid_price),
@@ -84,7 +84,7 @@ Page({
     * 选择新车
     */
   checkboxChange: function (e) {
-    console.log(e)
+
     var name=e.currentTarget.dataset.name;
    
     if (this.data.checked == 0) {

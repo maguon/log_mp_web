@@ -140,7 +140,7 @@ background-color:#ececec;
 .stay-num{
   color: #d43286;
   font-size: 20px;
-  margin-top: -7px;
+  margin-top: -4px;
 }
 /* ---------------------------------------------------------------------- */
 .dis-sum{

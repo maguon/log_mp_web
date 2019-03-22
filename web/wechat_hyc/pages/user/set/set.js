@@ -37,7 +37,7 @@ Page({
 
   },
   name:function(e){
-   console.log(e)
+
    var name=e.detail.value;
    this.setData({
      name:name,
@@ -52,7 +52,6 @@ Page({
       success: function(res) {
         var tempFilePaths=res.tempFilePaths[0]
 
-        console.log(tempFilePaths)
         that.setData({
           imgUrl: tempFilePaths,
           imgFlag:true

@@ -49,13 +49,10 @@ Page({
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
     }
-    console.log(userId)
-    console.log(orderId)
-    console.log(that.data.totalPrice)
-    console.log(app.globalData.openid)
+
     //发送Post请求
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/wechatPayment", params, (err, res) => {
-      console.log(res)
+ 
 
       wx.requestPayment({
         timeStamp: res.data.result[0].timeStamp + "",
@@ -64,7 +61,7 @@ Page({
         signType: "MD5",
         paySign: res.data.result[0].paySign,
         success: (res) => {       
-          console.log('支付成功');
+     
           
           wx.showToast({
             title: '支付成功',
@@ -88,8 +85,6 @@ Page({
           })
         },
         fail: function (err) {
-          console.log('支付失败')
-          console.log(err)
           wx.showToast({
             title: '支付失败',
             icon: 'none',

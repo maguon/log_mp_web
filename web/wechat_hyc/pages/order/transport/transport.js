@@ -93,7 +93,7 @@ Page({
   startAddress:function(e){
     var index=e.currentTarget.dataset.index;
     var orderId = this.data.orderId;
-    console.log(e)
+ 
     wx.navigateTo({
       url: '/pages/user/addressList/addressList?index='+index+"&orderId="+orderId,
     })

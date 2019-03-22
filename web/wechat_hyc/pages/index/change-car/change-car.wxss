@@ -115,7 +115,7 @@ font-size: 15px;
 
 .stepper { 
     width: 70px; 
-    height: 26px; 
+    height: 28px; 
     border: 1px solid #ccc; 
     border-radius: 3px; 
     position: absolute;

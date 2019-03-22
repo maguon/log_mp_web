@@ -67,7 +67,7 @@ Page({
        index=i;
      }
    }
-      console.log(res.data.result)
+
       this.setData({
         invList: res.data.result[index],
       })
@@ -93,7 +93,6 @@ Page({
     var remark = this.data.remark;
     var invList = this.data.invList;
     
-    console.log(invList)
     var params = {
       title: invList.company_name,
       taxNumber: invList.tax_number,

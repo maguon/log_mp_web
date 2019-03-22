@@ -63,9 +63,6 @@ Page({
    
     reqUtil.httpPost(config.host.apiHost +"/api/transAndInsurePrice",params,(err,res)=>{
 
-
-      console.log(res.data.result.trans)
-      console.log(res.data.result.insure)
       carMsg[0].price =(res.data.result.trans+res.data.result.insure).toFixed(2);
 
       carMsg[0].price = parseFloat(carMsg[0].price);
@@ -88,7 +85,6 @@ Page({
       wx.getStorage({
         key: "addCar",
         success(res) {
-          console.log(res.data)
 
           that.setData({
             arr: res.data.arr,
@@ -97,7 +93,7 @@ Page({
 
           for (var i = 0; i < res.data.carMsg.length; i++) {
             car_num += parseInt(res.data.carMsg[i].carNum);
-            sumFee += res.data.carMsg[i].sumPrice;
+            sumFee += res.data.carMsg[i].price;
           }
 
           that.setData({
@@ -119,7 +115,6 @@ Page({
    * 点击修改
    */
   bindcarList:function(e){
-  console.log(e)
   var index=e.currentTarget.dataset.index;
   var name = e.currentTarget.dataset.name;
   var carMsg = this.data.carMsg;
@@ -138,7 +133,6 @@ Page({
    * 添加车辆
    */
   addCar:function(e){
-    console.log(this.data.carMsg)
     var name = e.currentTarget.dataset.name;
     var carMsg = JSON.stringify(this.data.carMsg);
     var arr= JSON.stringify(this.data.arr);
@@ -171,7 +165,6 @@ bindInquiry:function(e){
     carMsg[i].modelId= carMsg[i].modelType+1;
     carMsg[i].plan = carMsg[i].valuation;
   }
-    console.log(carMsg)
 
     var params={
       routeId: arr.routeId,

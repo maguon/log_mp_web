@@ -36,7 +36,7 @@ Page({
     var inquiryId = this.data.inquiryId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
-      console.log(res)
+
       res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
 
       res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
@@ -47,7 +47,7 @@ Page({
     })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiryCar?inquiryId=" + inquiryId, (err, res) => {
-      console.log(res)
+
       var sum = 0;
       var count = 0;
       for (var i = 0; i < res.data.result.length; i++) {
@@ -91,7 +91,7 @@ Page({
    * 点击修改
    */
   bindcarList: function (e) {
-    console.log(e)
+
     var index = e.currentTarget.dataset.index;
     wx.navigateTo({
       url: "/pages/order/change-car/change-car?index=" + index + "&inquiryId=" + this.data.inquiryId,
@@ -125,12 +125,12 @@ Page({
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
+    
           reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/inquiry/" + inquiryId + "/cancel", "", (err, res) => {
             wx.navigateBack({})
           })
         } else if (res.cancel) {
-          console.log('用户点击取消')
+    
         }
       }
     });

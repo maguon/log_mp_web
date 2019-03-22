@@ -44,7 +44,7 @@ Page({
     if (index==0){   
       //发送get请求
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoicesList?start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+
         if (res.data.result!=""){
        for(var i=0;i<res.data.result.length;i++){
          res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
@@ -70,7 +70,7 @@ Page({
     } else if (index == 1){
       //发送get请求
       reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/noInvoiceOrderList?start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+     
         if (res.data.result != "") {
         for (var i = 0; i < res.data.result.length; i++) {
           res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
@@ -81,7 +81,7 @@ Page({
           res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
 
         }
-          console.log("1111")
+    
         this.setData({
           invoice: res.data.result,
           carFlag: true,
@@ -107,7 +107,6 @@ Page({
  * 确认点击
  */
   chooseInvoice:function(e){
-   console.log(e)
    var invoice=this.data.invoiceList;
    var index=e.currentTarget.dataset.index;
 

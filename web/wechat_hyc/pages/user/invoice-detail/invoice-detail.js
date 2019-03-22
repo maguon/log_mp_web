@@ -70,7 +70,7 @@ Page({
 
       res.data.result[0].apply_time = config.getTime(res.data.result[0].apply_time)
       res.data.result[0].invoiced_time = config.getTime(res.data.result[0].invoiced_time)
-
+      console.log(res.data.result[0]);
       if (res.data.result[0].invoiced_status == 1) {
         this.setData({
           invoiceFlag: true,
@@ -78,10 +78,9 @@ Page({
       } else if (res.data.result[0].invoiced_status == 2) {
         this.setData({
           refuseFlag: true,
-          invoiceFlag: false,
+          invoiceFlag:false,
         })
       }
-
       this.setData({
         invoice: res.data.result[0],
       })

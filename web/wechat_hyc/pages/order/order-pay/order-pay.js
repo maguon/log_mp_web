@@ -330,18 +330,16 @@ isInvoice: function () {
 
   //取消订单
   cancel: function () {
-    var that=this;
     var userId = app.globalData.userId;
-  
+    var orderId =this.data.orderId
+    console.log(orderId)
     wx.showModal({
       content: '确定要取消订单吗？',
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
-          var param={
-            cancelMark: "",
-          }
-          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + that.data.orderId + "/cancel", param, (err, res) => { 
+        
+          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId + "/cancel", "", (err, res) => { 
             wx.navigateBack({
               
             })

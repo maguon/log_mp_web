@@ -28,7 +28,30 @@ Page({
   onShow: function () {
 
   },
-
+  /**
+   * 托运流程
+   */
+  consign:function(){
+   wx.navigateTo({
+   url: '/pages/about/consign/consign',
+    })
+  },
+  /**
+  * 跳转服务优势
+  */
+  service: function () {
+    wx.navigateTo({
+      url: '/pages/about/service/service',
+    })
+  },
+  /**
+ * 跳转关于我们
+ */
+  we: function () {
+    wx.navigateTo({
+      url: '/pages/about/we/we',
+    })
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

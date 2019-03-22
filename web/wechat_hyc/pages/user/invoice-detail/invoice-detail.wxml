@@ -88,14 +88,15 @@
 <view class='ress'>电话号码：</view>
 <view class='ress-text'>{{invoice.company_phone}}</view>
 </view>
-
 </view>
-<view hidden='{{invoiceFlag}}' class='line'></view>
-<view class='note'>
+
+<view  class='line'></view>
+<view hidden='{{!invoiceFlag}}' class='note'>
 <view class='note-right'>备注:</view>
 <view class='note-left'>{{invoice.remark}}</view>
 </view>
-<view hidden='{{!invoiceFlag}}' class='note'>
+
+<view hidden='{{invoiceFlag}}' class='note'>
 <view class='note-right'>备注:</view>
 <input bindinput='note' class="note-left" placeholder='{{invoice.remark}}'></input>
 </view>

@@ -9,6 +9,14 @@
 <button bindtap='back' class='cancel'>取消</button>
 </view> -->
 
+<swiper  class='swiper' interval='5000' autoplay='true' indicator-active-color='#ccc' indicator-dots='true'>
+<block  wx:for="{{img}}" wx:key="u">
+<swiper-item >
+<image bindtap='service' class='swiper-img' src='{{item}}'></image>
+</swiper-item>
+</block>
+</swiper>
+
 <!--index.wxml-->
 <view  class="weui-cells_after-title">
 <!-- 始发城市 ---------------------------------------------------------------------- -->
@@ -81,4 +89,5 @@
        <image class='customer' src='../../images/customer.png'></image>
        <text>联系客服</text>
        </button>
+        <view class='height'></view>
 

@@ -184,12 +184,17 @@ var note=e.detail.value;
   //取消订单
   cancel:function(){
     var userId = app.globalData.userId;
+    var orderId= this.data.orderId;
+    console.log(orderId)
     wx.showModal({
       content: '确定要取消订单吗？',
       confirmColor: "#a744a7",
       success(res) {
         if (res.confirm) {
-    reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + this.data.orderId+"/cancel", "",(err, res) => {})
+          reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/order/" + orderId+"/cancel", "",(err, res) => {
+  wx.navigateBack({
+  })
+    })
         }
       }
     })

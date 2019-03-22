@@ -24,52 +24,50 @@ Page({
        scene:scene
       })
     }
-  
-  wx.getStorage({
-    key: 'openid',
-    success: function(res) {
-      if (res.data.openid != "" && res.data.session_key != ""){
-        console.log(res.data.openid)
-        //保存openid 到全局
-        app.globalData.openid = res.data.openid;
-        app.globalData.session_key = res.data.session_key;
-        console.log(res.data.session_key)
-      }
-    },
-  })
- 
-    //获得本地存储信息
-    wx.getStorage({
-      key: 'user',
-      success: function (res) {
-       
-        if (res.data.userId != "" && res.data.accessToken != "") {
-          app.globalData.userId = res.data.userId;
-          app.globalData.accessToken = res.data.accessToken;
-          console.log(res.data.userId)
-          console.log(res.data.accessToken)
 
-       
-          reqUtil.httpGet(config.host.apiHost + "/api/user/" + res.data.userId + "/token/" + res.data.accessToken, (err, rec) => {
-       
-          if(rec.data.result){
-            wx.setStorage({
-              key: 'user',
-              data:{
-                userId: rec.data.result.userId,
-                accessToken: rec.data.result.accessToken,
-              },
-            })
+    try {
+      const value = wx.getStorageSync('openid')
+      if (value) {
+        console.log(value)
+        if (value.openid != "" && value.session_key != "") {
+          //保存openid 到全局
+          app.globalData.openid = value.openid;
+          app.globalData.session_key = value.session_key;
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+ 
+
+    try {
+      const value = wx.getStorageSync('user')
+      if (value) {
+        console.log(value)
+        if (value.userId != "" && value.accessToken != "") {
+          app.globalData.userId = value.userId;
+          app.globalData.accessToken = value.accessToken;
+        }
+
+        reqUtil.httpGet(config.host.apiHost + "/api/user/" + value.userId + "/token/" + value.accessToken, (err, rec) => {
+
+           if (rec.data.result) {
+            var userId=parseInt(rec.data.result.userId)
+            try {
+              wx.setStorageSync('user', {
+                userId: userId,
+                accessToken:rec.data.result.accessToken})
+            } catch (e) { }
             that.queryUsreInfo();
             that.setData({
               loadingHidden: true,
             })
-            }
-          }) 
-        }
-        },
-      })
-
+          }
+        }) 
+      }
+    } catch (e) {
+      console.log(e)
+    }
 },
 
 
@@ -101,13 +99,10 @@ Page({
             app.globalData.session_key = rea.data.result.session_key;
             console.log(rea.data.result.session_key)
             //保存本地
-            wx.setStorage({
-              key: 'openid',
-              data: {
-                openid: rea.data.result.openid,
-                session_key:rea.data.result.session_key,
-              },
-            })
+            try {
+              wx.setStorageSync('openid',  {openid:rea.data.result.openid,
+                session_key:rea.data.result.session_key})
+            } catch (e) { }
             //插入登录的用户的相关信息到数据库
             var params = {
               wechatId: rea.data.result.openid,
@@ -136,14 +131,11 @@ Page({
                 }
               })
 
-             //保存本地
-              wx.setStorage({
-                key: 'user',
-                data: {
-                  userId: res.data.result.userId,
-                  accessToken: res.data.result.accessToken,
-                },
-              })
+            //  //保存本地
+             try {
+                wx.setStorageSync('user', {userId:res.data.result.userId,
+                  accessToken:res.data.result.accessToken})
+              } catch (e) { }
               //从数据库获取用户信息
               that.queryUsreInfo();
             })

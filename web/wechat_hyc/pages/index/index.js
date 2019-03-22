@@ -13,7 +13,11 @@ Page({
     endCityId: '',
     nullHouse: true,
     cusList:[],
-
+    
+    img:[
+      "../../images/swiper.jpg",
+      "../../images/swiper01.jpg",
+    ],
      //系数相关
     array:["上门服务","当地自提"],
     carList: ["标准轿车", "标准SUV", "大型SUV", "标准商务车","大型商务车"],
@@ -333,6 +337,14 @@ Page({
     app.bindCustomer(userId);
   },
 
+  /**
+    * 跳转服务优势
+    */
+  service:function(){
+    wx.navigateTo({
+      url: '/pages/about/service/service',
+    })
+  },
   // /**
   //  * 联系客服
   //  */

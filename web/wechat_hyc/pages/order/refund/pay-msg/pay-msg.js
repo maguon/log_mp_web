@@ -42,7 +42,7 @@ Page({
    
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + orderId, (err, res) => {
      
-      console.log(res.data.result)
+      
       if (res.data.result != '') {
         for (var i = 0; i < res.data.result.length; i++) {
           //微信 银行支付判断
@@ -119,7 +119,7 @@ Page({
 
 
   bankNum: function (e) {
-    console.log(e)
+ 
     var mphone = e.substring(0, 4) + '**********' + e.substring(14);
     return mphone;
   },

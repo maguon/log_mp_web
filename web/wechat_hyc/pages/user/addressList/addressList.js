@@ -20,12 +20,12 @@ Page({
 
   //生命周期函数--监听页面加载
   onLoad: function (e) {
-    console.log(e)
+   
     this.setData({
       orderId :e.orderId,
       index:e.index,
     })
-    console.log(e.index)
+
     if (e.index!= ""){
       this.setData({
         hidden: true,
@@ -82,8 +82,7 @@ Page({
     var index = e.currentTarget.dataset.index;
     var userId = app.globalData.userId;
     var addressList = that.data.addressList[index];
-console.log(index)
-    console.log(that.data.addressList)
+
     wx.showModal({
       content: '确定要删除地址吗？',
       confirmColor: "#a744a7",
@@ -115,7 +114,7 @@ console.log(index)
     var orderId = that.data.orderId;
     var address= JSON.stringify(that.data.addressList[index]);
 
-    console.log(addressList)
+
     if (indexinfo == 0 && orderId!="" ) {
    
       var params = {

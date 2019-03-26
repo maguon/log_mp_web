@@ -18,7 +18,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e.applyId)
     if (e.applyId!=""){
       this.setData({
        applyId: e.applyId,
@@ -97,9 +96,6 @@ Page({
     var applyId = this.data.applyId;
     var invLists = JSON.stringify(this.data.invList[index]);
 
-  console.log(applyId)
-    console.log(id)
-    console.log(invList)
     if (applyId != "") {
      reqUtil.httpPut(config.host.apiHost + '/api/user/' + userId + "/invoice/" + id + "/defaultInvoice", "", (err, res) => {
   });

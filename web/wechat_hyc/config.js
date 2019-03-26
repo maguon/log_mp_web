@@ -61,7 +61,6 @@ export const textPaste=()=> {
       wx.getClipboardData({
         //这个api是把拿到的数据放到电脑系统中的
         success: function (res) {
-          console.log(res.data) // data
         }
       })
     }

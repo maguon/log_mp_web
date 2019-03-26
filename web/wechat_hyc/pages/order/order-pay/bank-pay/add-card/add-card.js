@@ -79,7 +79,7 @@ Page({
 
   //删除
   bankDel: function (e) {
-  console.log(e)
+ 
   var that =this;
     var index = e.currentTarget.dataset.index;
     var banklist = this.data.bankList[index];

@@ -60,8 +60,7 @@ Page({
     var refundId = this.data.refundId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/payment?paymentId=" + paymentId, (err, res) => {
-      console.log(res.data.result[0])
-      console.log(paymentId)
+
       if (res.data.result!=""){
       this.setData({
         payment: res.data.result[0] ,
@@ -73,7 +72,7 @@ Page({
 
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
-      console.log(res.data.result)
+
       var sumfee = config.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
       //保留小数
       res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
@@ -93,7 +92,7 @@ Page({
     })
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId + "&refundApplyId=" + refundId, (err, res) => {
-      console.log(res.data.result)
+
       //保留小数
       res.data.result[0].apply_fee = config.decimal(res.data.result[0].apply_fee)
       res.data.result[0].refund_fee = config.decimal(res.data.result[0].refund_fee)
@@ -123,7 +122,7 @@ Page({
           remark: res.data.result[0].apply_reason ,
         })
       }
-      console.log(res.data.result[0].status)
+
       this.setData({
         refund: res.data.result[0],
       })

@@ -31,7 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e)
+
     var userId = app.globalData.userId;
     this.setData({
       orderId:e.orderId,
@@ -95,12 +95,12 @@ Page({
           loadingHidden: false,
         })
       }
-      console.log(res.data.result)
+
     })
 
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + this.data.orderId, (err, res) => {
-      console.log(res.data.result)
+
       if (res.data.result!= "") {
         this.setData({
           orderItem: res.data.result,
@@ -129,7 +129,7 @@ Page({
     * 服务方式
     */
   service:function(e){
-    console.log(e)
+
     var name=e.currentTarget.dataset.name;
     if (this.data.disabled) {
   wx.navigateTo({
@@ -146,7 +146,7 @@ Page({
 
 //留言
 noteInput:function(e){
-console.log(e)
+
 var note=e.detail.value;
 
   this.setData({
@@ -185,7 +185,7 @@ var note=e.detail.value;
   cancel:function(){
     var userId = app.globalData.userId;
     var orderId= this.data.orderId;
-    console.log(orderId)
+
     wx.showModal({
       content: '确定要取消订单吗？',
       confirmColor: "#a744a7",
@@ -260,7 +260,7 @@ submit:function(e){
           })
 
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          // console.log('用户点击取消')
         }
       }
     });

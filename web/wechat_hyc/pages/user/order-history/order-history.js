@@ -45,7 +45,7 @@ Page({
           res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
           res.data.result[i].state = 1;
         }
-        console.log(res.data.result)
+   
         this.setData({
           orderlist: res.data.result,
           loadingHidden: true,

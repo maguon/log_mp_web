@@ -61,10 +61,7 @@ Page({
    * getPhoneNumber 信息
    */
   getPhoneNumber: function (e) {
-    console.log(e)
-    console.log(app.globalData.session_key)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
+
     var userId = app.globalData.userId;
     var that = this;
     var session_key = app.globalData.session_key;

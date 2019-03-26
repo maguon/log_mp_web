@@ -54,8 +54,6 @@ Page({
     var userId = app.globalData.userId;
 
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/inquiryBank", (err, res) => {
-
-      console.log(res)
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 1) {
           res.data.result[i].bank_code = this.bankNum(res.data.result[i].bank_code);
@@ -79,7 +77,7 @@ Page({
   },
 
   costNum: function (e) {
-    console.log(e)
+
     var num = e.detail.value;
     this.setData({
       cost_num: num,
@@ -88,7 +86,7 @@ Page({
 
 
   bankNum: function (e) {
-    console.log(e)
+
     var mphone = e.substring(0, 4) + '**********' + e.substring(14);
     return mphone;
   },

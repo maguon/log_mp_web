@@ -18,7 +18,7 @@ Page({
     var that = this;
     // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
     const scene = decodeURIComponent(query.scene)
-    console.log(scene)
+
     if (scene != "" && scene !="undefined"){
        that.setData({
        scene:scene
@@ -28,7 +28,7 @@ Page({
     try {
       const value = wx.getStorageSync('openid')
       if (value) {
-        console.log(value)
+
         if (value.openid != "" && value.session_key != "") {
           //保存openid 到全局
           app.globalData.openid = value.openid;
@@ -36,14 +36,14 @@ Page({
         }
       }
     } catch (e) {
-      console.log(e)
+
     }
  
 
     try {
       const value = wx.getStorageSync('user')
       if (value) {
-        console.log(value)
+
         if (value.userId != "" && value.accessToken != "") {
           app.globalData.userId = value.userId;
           app.globalData.accessToken = value.accessToken;
@@ -66,7 +66,7 @@ Page({
         }) 
       }
     } catch (e) {
-      console.log(e)
+
     }
 },
 
@@ -76,7 +76,6 @@ Page({
    * 点击授权
    */
   bindGetUserInfo: function (e) {
-    console.log(e.detail.userInfo)
     var that = this;
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
@@ -91,13 +90,13 @@ Page({
         success:ree => {
           //获取code
           var code = ree.code;
-          console.log(code)
+    
           //发送code 请求openid
           reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
             // //保存openid 到全局
             app.globalData.openid = rea.data.result.openid;
             app.globalData.session_key = rea.data.result.session_key;
-            console.log(rea.data.result.session_key)
+     
             //保存本地
             try {
               wx.setStorageSync('openid',  {openid:rea.data.result.openid,
@@ -113,7 +112,7 @@ Page({
             }
             reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
 
-              console.log(res)
+
               app.globalData.userId = res.data.result.userId;
               app.globalData.accessToken = res.data.result.accessToken;
 
@@ -151,7 +150,7 @@ Page({
         confirmText: '返回授权',
         success: function (res) {
           if (res.confirm) {
-            console.log('用户点击了“返回授权”')
+            // console.log('用户点击了“返回授权”')
           }
         }
       })
@@ -166,9 +165,9 @@ Page({
   */
   queryUsreInfo: function () {
     var userId = app.globalData.userId;
-    console.log(userId)
+
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
-      console.log(res)
+
       if (res.data != '') {
         app.globalData.userInfo = res.data;
       } else {

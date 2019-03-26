@@ -238,11 +238,9 @@ Page({
     }else{
      
       reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
-        console.log(res)
         if (res.data.result[0].phone != '' && res.data.result[0].phone != null ){
           //获取路线
           var route = that.data.beginCityId.toString() + that.data.endCityId.toString();
-          console.log(route)
           //获得公里数
           reqUtil.httpGet(config.host.apiHost + "/api/route?routeStartId=" + that.data.beginCityId + "&routeEndId=" + that.data.endCityId, (err, res) => {
             if (res.data.result != '' && route != '') {
@@ -276,7 +274,6 @@ Page({
               app.globalData.name="index";
               var carMsg=JSON.stringify(newArray);
               var arr = JSON.stringify(arr[0]);
-              console.log(newArray)
               wx.navigateTo({
                 url: '/pages/index/budget/budget?carMsg=' + carMsg +"&arr="+arr,
                   })

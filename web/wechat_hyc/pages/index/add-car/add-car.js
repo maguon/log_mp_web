@@ -63,7 +63,6 @@ Page({
       //计算价格
       var price = parseFloat(res.data.result.trans) + parseFloat(res.data.result.insure);
       var sumPrice = (price * this.data.num).toFixed(2);
-      console.log(res)
       this.setData({
         price: price.toFixed(2),
         sumPrice: sumPrice,

@@ -58,7 +58,7 @@ Page({
       for (var i = 0; i < res.data.result.length; i++) {
         count++;
       }
-      console.log(res.data.result)
+
       if (res.data.result != '') {
         this.setData({
           orderItem: res.data.result,
@@ -76,7 +76,7 @@ Page({
  * 添加车辆信息
  */
   addCar:function(e){
-    console.log(e)
+
     var index=e.currentTarget.dataset.index;
     var orderId = this.data.orderId;
     wx.navigateTo({
@@ -85,7 +85,7 @@ Page({
   },
   
   modifyCar:function(e){
-    console.log(e)
+
     var index = e.currentTarget.dataset.index;
     var orderId= this.data.orderId;
     wx.navigateTo({

@@ -111,7 +111,7 @@ Page({
         } else if (res.data.result[i].status == 8){
 
         }else if (res.data.result[i].payment_status == 0 || res.data.result[i].payment_status == 1){
-          console.log(res.data.result[i])
+    
           count_b++;
           orderState[2].hidden = true;
         } 
@@ -121,7 +121,6 @@ Page({
         } 
 
          if (res.data.result[i].status == 4 ) {
-           console.log("1111")
           count_d++;
           orderState[4].hidden = true;
         }
@@ -156,7 +155,7 @@ Page({
         prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+
         if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
@@ -190,7 +189,7 @@ Page({
             loadingHidden:true,
           })
         }
-        console.log(res.data.result)
+
       })
       break;
 
@@ -203,7 +202,7 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "0,1" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
@@ -228,7 +227,7 @@ Page({
               res.data.result[i].state = 0;
             } 
           }
-        console.log(res.data.result)
+
           this.setData({
             flag: false,
             orderlist: res.data.result,
@@ -276,7 +275,6 @@ Page({
         
           }
 
-          console.log(res.data.result)
           this.setData({
             flag: false,
             orderlist: res.data.result,
@@ -322,7 +320,7 @@ Page({
               res.data.result[i].stay = 8;
             } 
           }
-          console.log(res.data.result)
+
           this.setData({
             flag: false,
             orderlist: res.data.result,
@@ -368,7 +366,7 @@ Page({
               res.data.result[i].stay = 9;
             }
           }
-          console.log(res.data.result)
+
           this.setData({
             flag: false,
             orderlist: res.data.result,
@@ -435,7 +433,7 @@ Page({
   bindDetail:function(e){
     var index = e.currentTarget.dataset.index;
     var orderId = this.data.orderlist[index].id;
-    console.log(e)
+
     switch(this.data.index){
     case 0:
         wx.navigateTo({

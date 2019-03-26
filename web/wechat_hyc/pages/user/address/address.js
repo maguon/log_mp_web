@@ -24,7 +24,7 @@ Page({
    */
   onLoad: function (e) {
     var addressList = JSON.parse(e.addressList);
-    console.log(addressList)
+
     if (addressList != "") {
       this.setData({
         addressList: addressList,
@@ -43,7 +43,7 @@ Page({
 
 
   city:function(e){
-    console.log(e.detail.value)
+
     var city = e.detail.value;
     this.setData({
       city: city,

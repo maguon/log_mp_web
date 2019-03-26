@@ -70,7 +70,7 @@ Page({
 
       res.data.result[0].apply_time = config.getTime(res.data.result[0].apply_time)
       res.data.result[0].invoiced_time = config.getTime(res.data.result[0].invoiced_time)
-      console.log(res.data.result[0]);
+
       if (res.data.result[0].invoiced_status == 1) {
         this.setData({
           invoiceFlag: true,
@@ -93,7 +93,7 @@ Page({
 
   choose:function(){
     var applyId = this.data.invoice.invoice_apply_id;
-    console.log(this.data.invoice)
+
     wx.navigateTo({
       url: "/pages/user/invoice/msg-list/msg-list?applyId=" + applyId,
     })

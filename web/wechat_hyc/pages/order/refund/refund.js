@@ -103,8 +103,7 @@ Page({
     var fee= that.data.fee;
     var applyFee = that.data.applyfee;
 
-    console.log(applyFee)
-    console.log(fee)
+
 
     if (fee == "") {
       wx.showModal({

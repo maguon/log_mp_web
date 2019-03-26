@@ -36,7 +36,6 @@ Page({
     var userId = app.globalData.userId;
     var arr = JSON.parse(e.arr);
     var carMsg = JSON.parse(e.carMsg);
-    console.log(carMsg)
 
     this.setData({
       carMsg: carMsg,
@@ -72,7 +71,6 @@ Page({
  * 车辆估值
  */
   bindValuation: function (e) {
-    console.log(e)
     this.setData({
       valuation: e.detail.value,
     })
@@ -82,7 +80,6 @@ Page({
    * 选择车型
    */
   bindModels: function (e) {
-    console.log(e)
     this.setData({
       modelType: e.detail.value,
     })
@@ -201,7 +198,6 @@ Page({
       //计算价格
       var price = parseFloat(res.data.result.trans) + parseFloat(res.data.result.insure);
       var sumPrice = (price * this.data.num).toFixed(2);
-      console.log(res)
       this.setData({
         price: price.toFixed(2),
         sumPrice: sumPrice,
@@ -225,7 +221,7 @@ Page({
       carMsg[index].carNum= parseInt(this.data.num);
       carMsg[index].safeStatus=this.data.insurance;
       carMsg[index].serviceType=parseInt(this.data.serviceType);
-      carMsg[index].price = this.data.sumPrice;
+    carMsg[index].price = parseFloat(this.data.sumPrice);
       carMsg[index].sumPrice=parseFloat(this.data.sumPrice);
 
     app.globalData.name = "addCar";

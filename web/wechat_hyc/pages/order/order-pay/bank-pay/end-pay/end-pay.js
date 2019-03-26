@@ -1,5 +1,5 @@
 const reqUtil = require('../../../../../utils/ReqUtil.js')
-const config = require('../../../../../config.js');
+const config = require('../../../../../host_config.js');
 const app = getApp();
 
 Page({
@@ -66,10 +66,10 @@ Page({
         }
        
       //保留小数
-        res.data.result[i].total_fee = config.decimal(res.data.result[i].total_fee);
+        res.data.result[i].total_fee = reqUtil.decimal(res.data.result[i].total_fee);
       //编译时间
-        res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
-        res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
+        res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
+        res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
       }
 
         if (refundSum==0){
@@ -77,10 +77,11 @@ Page({
             refundFlag: true,
           })
         }
-
+      var _remain=reqUtil.decimal(sumFee - res.data.result[0].unpaid_price);
+      
       that.setData({
       payment:res.data.result,
-      remain: config.decimal(sumFee-res.data.result[0].unpaid_price),
+      remain: _remain,
       refund:refundSum,
     })
   

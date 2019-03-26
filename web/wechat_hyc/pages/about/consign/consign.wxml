@@ -1,0 +1,89 @@
+<view class='divline'></view>
+<view class='all'>
+
+
+<view class='line'></view>
+<view class='text'>
+<image class='img' src='../../../images/Group12.png'></image>
+
+<view class='titel'>询价</view>
+<text class='content'>  
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>打开小程序首页就是“询价”窗口，根据页面提示，填写车辆相关信息后，点击“询价”按钮，系统会根据客户填写的条件计算出预计费用，客户可以在此基础上继续增加车型以获得多辆车的预计运输费用，用户若想获得优惠价格，可以点击“客服协商”按钮，生成询价订单。
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 询价订单生成后，客服会在24小时之内联系客户，根据客户提出的条件进行协商。</text>
+</view>
+
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group13.png'></image>
+<view class='titel'>协商价格，生成订单</view>
+<text class='content'>  
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>询价订单生成后，会在“订单”板块的“待协商”栏目里产生一条询价记录，客户可点开记录查看询价信息。
+   <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>客服会在24小时之内联系客户协商运输费用。若协商价格双方满意，客服便将该询价订单生成运输订单。并等待客户完善车辆的详细信息。 
+   <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 若用户对协商价格不满意，也可以取消该询价。</text>
+</view>
+
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group14.png'></image>
+<view class='titel'>完善车辆信息</view>
+<text class='content'> 
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 运输订单生成后会在“订单”板块的“待完善”栏目下产生一条待完善车辆信息的记录。客户需进入记录详情完善运输的各项信息。
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 在待完善订单详情内点击“完善车辆信息按钮”，可添加多辆车辆的详情信息，完善车辆信息后，将有客服来完善详情价格。</text>
+</view>
+
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group15.png'></image>
+<view class='titel'>等待客服完善价格信息</view>
+<text class='content'> <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 客户填写运输信息后需等待客服为每辆车详情定价，待客服完善完价格后订单便会进入“未支付”状态。</text>
+</view>
+
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group16.png'></image>
+<view class='titel'>支付运费</view>
+<text class='content'>  
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>客服完善完价格后订单进入“未支付”状态，在“订单”板块里的“待付款”栏目里可找到该记录。
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 支付方式有“微信支付”和“银行转账”两种。“微信支付”则会将为支付的款项一次性付齐，“银行转账”则可分次付款。</text>
+</view>
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group17.png'></image>
+<view class='titel'>车辆待发运</view>
+<text class='content'>  
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>支付运费后，订单生成运输需求，并进入“待发运”状态。物流公司将会按照客户的需求派发调度任务，安排发车时间。若客户选择“上门服务”，物流公司将会派司机上门取车，若选择“当地自提”，客户则需将需要托运的车辆在发运时间前送到指定地点。 </text>
+</view>
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group18.png'></image>
+<view class='titel'>关注车辆发运状态</view>
+<text class='content'> 
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 车辆发出以后可在“订单”板块的“运输中”栏目里随时关注车辆的发运动向，以便即时掌握车辆的到达讯息。</text>
+</view>
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group19.png'></image>
+<view class='titel'>车辆送达</view>
+<text class='content'> 
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 若客户选择“上门服务”，车辆送达指定城市后，物流公司将派司机将托运的车辆送到客户所指定的地点，订单完成。
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 若客户选择“当地自提”，车辆到达指定城市后物流公司将电话通知客户到指定地点提车，订单完成。</text>
+</view>
+
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group20.png'></image>
+<view class='titel'>开具发票</view>
+<text class='content'> 
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 订单完成后可在“个人”板块的“历史订单”中找到相应的订单，进入订单详情可为该订单开具发票。</text>
+</view>
+
+
+</view>

@@ -1,6 +1,6 @@
 
 const app = getApp()
-const config = require('../../config.js');
+const config = require('../../host_config.js');
 const reqUtil = require('../../utils/ReqUtil.js')
 
 
@@ -159,12 +159,12 @@ Page({
         if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
-          res.data.result[i].price = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+          res.data.result[i].price = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
           //编译时间
-          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+          res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
+          res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
          //预计费用
-          res.data.result[i].fee_price = config.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
+          res.data.result[i].fee_price = reqUtil.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
           //判断显示状态
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
@@ -206,10 +206,10 @@ Page({
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
-            res.data.result[i].price = config.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            res.data.result[i].price = reqUtil.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
             //编译时间
-            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
              //判断显示状态
             if (res.data.result[i].status==0){
               res.data.result[i].status=1;
@@ -250,14 +250,15 @@ Page({
      
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "2,3,4,9" +"&paymentStatusList="+"0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+
         if (res.data.result != '') {
 
           for (var i = 0; i < res.data.result.length; i++) {
             //支付费用
-            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
 
            
            //判断支付状态
@@ -298,14 +299,15 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList=" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
+   
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
       
             //支付费用
-            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
             //  //判断显示状态
             if (res.data.result[i].status == 2 || res.data.result[i].status == 3) {
               res.data.result[i].status = 1;           
@@ -347,10 +349,10 @@ Page({
           for (var i = 0; i < res.data.result.length; i++) {
 
             //支付费用
-            res.data.result[i].sumFee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
+            res.data.result[i].sumFee = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price);
             //编译时间
-            res.data.result[i].created_on = config.getTime(res.data.result[i].created_on);
-            res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on);
+            res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
+            res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
             // //判断显示状态
             if (res.data.result[i].status == 4) {
               res.data.result[i].stay = 9;

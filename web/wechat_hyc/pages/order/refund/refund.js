@@ -1,6 +1,6 @@
 
 const reqUtil = require('../../../utils/ReqUtil.js')
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const app = getApp();
 Page({
 
@@ -101,9 +101,7 @@ Page({
     var paymentId = that.data.paymentId;
     var remark=that.data.remark;
     var fee= that.data.fee;
-    var applyFee = that.data.applyfee;
-
-
+    var applyFee =parseFloat(that.data.applyfee);
 
     if (fee == "") {
       wx.showModal({
@@ -112,18 +110,25 @@ Page({
         confirmColor: "#a744a7",
       });
       return;
-    } else if (applyFee > fee){
+    } else if (that.data.applyfee== "") {
+      wx.showModal({
+        content: '请输入申请金额',
+        showCancel: false,
+        confirmColor: "#a744a7",
+      });
+      return;
+    }else if (applyFee > fee){
       wx.showModal({
         content: '申请金额已大于支付金额',
         showCancel: false,
         confirmColor: "#a744a7",
       });
       return;
-    } else {
+    }  else {
     //获取要传递的参数
     var params={
       mark: that.data.remark,
-      applyFee: that.data.applyfee,
+      applyFee: applyFee.toFixed(2),
     }
 
     //发送Post请求

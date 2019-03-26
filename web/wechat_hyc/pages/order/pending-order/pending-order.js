@@ -1,5 +1,5 @@
 const app = getApp()
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
 
 
@@ -60,7 +60,7 @@ Page({
         if (res.data.result[0].status == 3) {
           res.data.result[0].state = 0;
         } else if (res.data.result[0].status == 1) {
-          var dateTime = config.getTime01(res.data.result[0].departure_time);
+          var dateTime = reqUtil.getTime01(res.data.result[0].departure_time);
           this.setData({
             date: dateTime,
             dateFlag: true,
@@ -77,11 +77,11 @@ Page({
         }
 
         //预计费用
-        res.data.result[0].ora_insure_price = config.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
+        res.data.result[0].ora_insure_price = reqUtil.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
         //协商费用
-        res.data.result[0].total_insure_price = config.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
+        res.data.result[0].total_insure_price = reqUtil.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
         //编译时间
-        res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
+        res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on);
 
         if (res.data.result[0].remark==null){
           res.data.result[0].remark=""

@@ -1,0 +1,19 @@
+.divline{
+  border: 5px solid #f8f6f8;
+}
+.content{
+width: 90%;
+margin: 20px 5% 0px 5%;
+}
+.text{
+  font-size: 18px;
+  color: #666466;
+
+}
+.phone{
+color: #8b5d91;
+font-size: 18px;
+font-weight: bold;
+margin-left: 30px;
+margin-top: 20px;
+}

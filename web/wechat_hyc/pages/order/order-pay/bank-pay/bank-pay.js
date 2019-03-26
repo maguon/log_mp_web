@@ -1,5 +1,5 @@
 const reqUtil = require('../../../../utils/ReqUtil.js')
-const config = require('../../../../config.js');
+const config = require('../../../../host_config.js');
 const app = getApp();
 
 Page({

@@ -1,0 +1,45 @@
+<view class='divline'></view>
+
+<view class='all'>
+
+<view class='text'>
+<image class='img' src='../../../images/Group0.png'></image>
+
+<view class='titel'>上门提送</view>
+<text class='content'>  
+上门提车，送车上门，省时、省心、省事
+</text>
+</view>
+
+
+<view class='text01'>
+<image class='img01' src='../../../images/Group1.png'></image>
+
+<view class='titel'>安全保障</view>
+<text class='content'>  
+与多家保险公司合作，安全保障，让您托运无后顾之忧
+</text>
+</view>
+
+
+<view class='text'>
+<image class='img' src='../../../images/Group2.png'></image>
+
+<view class='titel'>一对一服务</view>
+<text class='content'>  
+一对一的管家式贴心服务，随时为您解答运车疑问
+</text>
+</view>
+
+
+<view class='text01'>
+<image class='img01' src='../../../images/Group3.png'></image>
+
+<view class='titel'>全国网点覆盖</view>
+<text class='content'>  
+覆盖全国200多个城市，2000多家站点，运输业务辐射全国各地
+</text>
+</view>
+
+
+</view>

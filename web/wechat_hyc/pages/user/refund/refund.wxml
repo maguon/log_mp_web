@@ -15,7 +15,7 @@
 
 <view hidden='{{!item.hidden}}' class='stay-expect'>
 <view class='stay-text'>退款金额:</view>
-<view class='stay-num'>{{item.refund_fee*-1}}</view>
+<view class='stay-num'>{{item.refund_fee}}</view>
 <view class='stay-text'>元</view>
 </view>
 </view>

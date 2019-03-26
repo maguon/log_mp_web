@@ -1,6 +1,6 @@
 
 const app = getApp()
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
 Page({
 
@@ -41,11 +41,11 @@ Page({
       if (res.data.result != "") {
         for (var i = 0; i < res.data.result.length; i++) {
           //保留小数
-          res.data.result[i].apply_fee = config.decimal(res.data.result[i].apply_fee)
-          res.data.result[i].refund_fee = config.decimal(res.data.result[i].refund_fee)
+          res.data.result[i].apply_fee = reqUtil.decimal(res.data.result[i].apply_fee)
+          res.data.result[i].refund_fee = reqUtil.decimal(res.data.result[i].refund_fee)
           //编译时间
-          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
-          res.data.result[i].updated_on = config.getTime(res.data.result[i].updated_on)
+          res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on)
+          res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on)
           //退款金额显示
           if (res.data.result[i].status == 1) {
             res.data.result[i].hidden = true;

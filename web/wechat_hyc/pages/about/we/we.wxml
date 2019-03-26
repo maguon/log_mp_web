@@ -1,0 +1,10 @@
+<view class='divline'></view>
+<view class="content">
+<text class='text'>
+<text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>"广运车"是由鸿溧科技（大连）有限公司开发的关于车辆托运业务服务平台，该平台致力于整合企业和社会物流资源以及零散客户的车辆运输需求，打造国内首家整车物流综合信息，实现车辆运输服务与托运需求的信息化、网络化和可视化。
+ <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> “广运车”通过互联网连接电脑设备终端（或移动终端设备APP）、物流公司管理信息系统（MIS）、数据库管理系统（DBMA）及全球定位系统（GPS）、云计算（cloud computing）、条码技术（Barcode Technology）等，创建供需信息交流平台，实现客户在线下单、在途跟踪查询、线下交易的全过程。
+  <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text> 目前，公司将致力于发展思路的创新，着力打造一个关联整个汽车行业的生态产业链条，为产业链的各个单位提供全方位、优质服务。
+</text>
+
+<view class="phone">联系方式：0411-12345678</view>
+</view>

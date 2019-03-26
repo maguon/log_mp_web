@@ -1,4 +1,4 @@
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
 const app = getApp()
 
@@ -47,12 +47,12 @@ Page({
 
         if (res.data.result!=""){
        for(var i=0;i<res.data.result.length;i++){
-         res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
-         res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
+         res.data.result[i].sumfee = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
+         res.data.result[i].real_payment_price = reqUtil.decimal(res.data.result[i].real_payment_price)
 
-         res.data.result[i].apply_time = config.getTime(res.data.result[i].apply_time)
-         res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
-         res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
+         res.data.result[i].apply_time = reqUtil.getTime(res.data.result[i].apply_time)
+         res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on)
+         res.data.result[i].invoiced_time = reqUtil.getTime(res.data.result[i].invoiced_time)
 
        }
         this.setData({
@@ -73,12 +73,12 @@ Page({
      
         if (res.data.result != "") {
         for (var i = 0; i < res.data.result.length; i++) {
-          res.data.result[i].sumfee = config.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
-          res.data.result[i].real_payment_price = config.decimal(res.data.result[i].real_payment_price)
+          res.data.result[i].sumfee = reqUtil.decimal(res.data.result[i].total_trans_price + res.data.result[i].total_insure_price)
+          res.data.result[i].real_payment_price = reqUtil.decimal(res.data.result[i].real_payment_price)
 
-          res.data.result[i].apply_time = config.getTime(res.data.result[i].apply_time)
-          res.data.result[i].created_on = config.getTime(res.data.result[i].created_on)
-          res.data.result[i].invoiced_time = config.getTime(res.data.result[i].invoiced_time)
+          res.data.result[i].apply_time = reqUtil.getTime(res.data.result[i].apply_time)
+          res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on)
+          res.data.result[i].invoiced_time = reqUtil.getTime(res.data.result[i].invoiced_time)
 
         }
     

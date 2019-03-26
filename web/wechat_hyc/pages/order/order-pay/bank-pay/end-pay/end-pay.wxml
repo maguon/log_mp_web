@@ -16,7 +16,7 @@
 </view>
 <view hidden='{{refundFlag}}' class='order-cost'> 
 <view class='cost-text01'>已退款:</view>
-<view class='cost-num'>{{refund}}</view>
+<view class='cost-num'>{{refund*-1}}</view>
 <view class='yuan'>元</view>
 </view>
 </view>

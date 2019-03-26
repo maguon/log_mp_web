@@ -1,4 +1,4 @@
-const config = require('config.js');
+const config = require('host_config.js');
 const reqUtil = require('utils/ReqUtil.js');
 //app.js
 

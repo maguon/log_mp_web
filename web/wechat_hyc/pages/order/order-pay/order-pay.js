@@ -1,6 +1,6 @@
 
 const reqUtil = require('../../../utils/ReqUtil.js')
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const app = getApp();
 
 Page({
@@ -73,7 +73,7 @@ Page({
       //应付费用
       res.data.result[0].sumFee = (res.data.result[0].total_trans_price + res.data.result[0].total_insure_price).toFixed(2);
       //编译时间
-      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
+      res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on);
       if (res.data.result[0].payment_status == 1) {
         that.setData({
           loadingHidden: false,
@@ -130,7 +130,7 @@ Page({
         }
       }
       if (res.data.result[0].departure_time!=null){
-        res.data.result[0].departure_time = config.getTime01(res.data.result[0].departure_time)
+        res.data.result[0].departure_time = reqUtil.getTime01(res.data.result[0].departure_time)
       }
 
       that.setData({

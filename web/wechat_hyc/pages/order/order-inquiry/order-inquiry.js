@@ -1,6 +1,6 @@
 
 const app = getApp()
-const config = require('../../../config.js');
+const config = require('../../../host_config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
 
 
@@ -37,9 +37,9 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + inquiryId, (err, res) => {
 
-      res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
+      res.data.result[0].total_trans_price = reqUtil.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
 
-      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on);
+      res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on);
       this.setData({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,
@@ -53,17 +53,18 @@ Page({
       for (var i = 0; i < res.data.result.length; i++) {
         if (res.data.result[i].status == 1) {
           //设置单价
-          res.data.result[i].price = config.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+          res.data.result[i].price = reqUtil.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
           //设置总价
           sum += res.data.result[i].trans_price + res.data.result[i].insure_price;
           ////车辆数
           count += res.data.result[i].car_num;
         }
       }
+     var sumfee=reqUtil.decimal(sum);
       //更新显示
       this.setData({
         carlist: res.data.result,
-        sumFee: config.decimal(sum),
+        sumFee: sumfee,
         carCount: count,
       })
     })

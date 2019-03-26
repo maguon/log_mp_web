@@ -1,5 +1,5 @@
 const reqUtil = require('../../../../utils/ReqUtil.js')
-const config = require('../../../../config.js');
+const config = require('../../../../host_config.js');
 const app = getApp();
 Page({
 
@@ -33,8 +33,8 @@ Page({
 
       if (res.data.result!=''){
         this.setData({
-          remainFee: config.decimal(res.data.result[0].unpaid_price),
-          paidFee: config.decimal(e.fee - res.data.result[0].unpaid_price),
+          remainFee: reqUtil.decimal(res.data.result[0].unpaid_price),
+          paidFee: reqUtil.decimal(e.fee - res.data.result[0].unpaid_price),
         })
       }else{
         this.setData({

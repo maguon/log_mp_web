@@ -1,6 +1,6 @@
 
 const app = getApp()
-const config = require('../../../../config.js');
+const config = require('../../../../host_config.js');
 const reqUtil = require('../../../../utils/ReqUtil.js')
 Page({
 
@@ -73,15 +73,15 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?orderId=" + orderId, (err, res) => {
 
-      var sumfee = config.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
+      var sumfee = reqUtil.decimal(res.data.result[0].total_insure_price + res.data.result[0].total_trans_price);
       //保留小数
-      res.data.result[0].total_trans_price = config.decimal(res.data.result[0].total_trans_price)
-      res.data.result[0].total_insure_price = config.decimal(res.data.result[0].total_insure_price)
-      res.data.result[0].real_payment_price = config.decimal(res.data.result[0].real_payment_price)
+      res.data.result[0].total_trans_price = reqUtil.decimal(res.data.result[0].total_trans_price)
+      res.data.result[0].total_insure_price = reqUtil.decimal(res.data.result[0].total_insure_price)
+      res.data.result[0].real_payment_price = reqUtil.decimal(res.data.result[0].real_payment_price)
 
       //编译时间
-      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
-      res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
+      res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = reqUtil.getTime(res.data.result[0].updated_on)
 
 
 
@@ -94,11 +94,11 @@ Page({
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/refundApply?orderId=" + orderId + "&refundApplyId=" + refundId, (err, res) => {
 
       //保留小数
-      res.data.result[0].apply_fee = config.decimal(res.data.result[0].apply_fee)
-      res.data.result[0].refund_fee = config.decimal(res.data.result[0].refund_fee)
+      res.data.result[0].apply_fee = reqUtil.decimal(res.data.result[0].apply_fee)
+      res.data.result[0].refund_fee = reqUtil.decimal(res.data.result[0].refund_fee)
       //编译时间
-      res.data.result[0].created_on = config.getTime(res.data.result[0].created_on)
-      res.data.result[0].updated_on = config.getTime(res.data.result[0].updated_on)
+      res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on)
+      res.data.result[0].updated_on = reqUtil.getTime(res.data.result[0].updated_on)
       //退款金额显示
       if (res.data.result[0].status == 1) {
         this.setData({

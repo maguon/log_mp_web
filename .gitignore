@@ -1,7 +1,7 @@
 *.log
 *.bundle.js
 config/config.js
-wechat_hyc/config.js
+wechat_hyc/host_config.js
 config/SystemConfig.js
 conf.json
 public/docs/json/index.json

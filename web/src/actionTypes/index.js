@@ -4,6 +4,8 @@ import * as InquiryModalActionType  from './modules/InquiryModalActionType';
 import * as EditLoginUserModalActionType  from './modules/EditLoginUserModalActionType';
 
 import * as CommonActionType  from './main/CommonActionType';
+import * as FinancePanelActionType  from './main/FinancePanelActionType';
+import * as OrderPanelActionType  from './main/OrderPanelActionType';
 
 import * as OrderStatisticActionType  from './main/OrderStatisticActionType';
 import * as InvoiceStatisticActionType  from './main/InvoiceStatisticActionType';
@@ -96,6 +98,8 @@ export  {
     EditLoginUserModalActionType,
 
     CommonActionType,
+    FinancePanelActionType,
+    OrderPanelActionType,
     OrderStatisticActionType,
     InvoiceStatisticActionType,
     RefundStatisticActionType,

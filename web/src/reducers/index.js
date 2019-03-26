@@ -7,6 +7,8 @@ import InquiryModalReducer from './modules/InquiryModalReducer';
 import EditLoginUserModalReducer from './modules/EditLoginUserModalReducer';
 
 import CommonReducer from './main/CommonReducer';
+import FinancePanelReducer from './main/FinancePanelReducer';
+import OrderPanelReducer from './main/OrderPanelReducer';
 
 import OrderStatisticReducer from './main/OrderStatisticReducer';
 import InvoiceStatisticReducer from './main/InvoiceStatisticReducer';
@@ -100,6 +102,8 @@ export default combineReducers({
     EditLoginUserModalReducer,
 
     CommonReducer,
+    FinancePanelReducer,
+    OrderPanelReducer,
     OrderStatisticReducer,
     InvoiceStatisticReducer,
     RefundStatisticReducer,

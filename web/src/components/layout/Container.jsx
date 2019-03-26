@@ -3,7 +3,8 @@ import {HashRouter as Router, Route, Link} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 import {
-    Panel,
+    FinancePanel,
+    OrderPanel,
     OrderStatistic,
     InvoiceStatistic,
     RefundStatistic,
@@ -57,23 +58,23 @@ import {
 } from '../main/index';
 
 const routes = [
-    // 默认打开画面 - 主控面板
-    // {
-    //     path: "/",
-    //     exact: true,
-    //     component: MainPanel
-    // },
-    // 默认打开画面 - 暂定面板画面
+    // 默认打开画面 - 暂定财务主控面板
     {
         path: "/",
         exact: true,
-        component: Panel
+        component: FinancePanel
     },
-    // 面板
+    // 财务主控面板
     {
-        path: "/panel",
+        path: "/finance_panel",
         exact: true,
-        component: Panel
+        component: FinancePanel
+    },
+    // 订单主控面板
+    {
+        path: "/order_panel",
+        exact: true,
+        component: OrderPanel
     },
 
     // 统计
@@ -387,8 +388,12 @@ class Container extends React.Component {
                 "icon": 'mdi-speedometer',
                 "children": [
                     {
-                        "link": '/panel',
-                        "name": '管理员主控'
+                        "link": '/finance_panel',
+                        "name": '财务主控'
+                    },
+                    {
+                        "link": '/order_panel',
+                        "name": '订单主控'
                     },
                     {
                         "link": '/recommend_business',

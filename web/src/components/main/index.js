@@ -1,4 +1,5 @@
-export Panel from "./Panel";
+export FinancePanel from "./FinancePanel";
+export OrderPanel from "./OrderPanel";
 
 export OrderStatistic from "./OrderStatistic";
 export InvoiceStatistic from "./InvoiceStatistic";

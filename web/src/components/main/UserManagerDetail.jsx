@@ -111,7 +111,7 @@ class UserManagerDetail extends React.Component {
                         <div className="user-detail-header">
                             {/* 左侧：图标 */}
                             <div className="col s1 margin-top10 center grey-text text-darken-1">
-                                <div className="main-panel-icon grey lighten-1 vc-center">
+                                <div className="user-title-icon grey lighten-1 vc-center">
                                     <i className="mdi mdi-account"/>
                                 </div>
                             </div>

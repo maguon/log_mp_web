@@ -44,7 +44,7 @@ export const confirmRefund = () => async (dispatch, getState) => {
                 // 保存成功后，重新检索画面数据
                 dispatch(refundApplyManagerDetailAction.getRefundApplyInfo(refundApplyInfo.id));
             } else if (res.success === false) {
-                swal('退款失败', res.msg, 'warning');
+                swal('退款失败', res.msg.return_msg, 'warning');
             }
         }
     } catch (err) {

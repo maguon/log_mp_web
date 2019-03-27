@@ -33,6 +33,9 @@ body {
     margin-top: 15px;
     margin-left: 10px;
     height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    background: white;
 }
 
 .header-font {

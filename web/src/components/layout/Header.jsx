@@ -6,7 +6,7 @@ const localUtil = require('../../util/LocalUtil');
 const httpHeaders = require('../../util/HttpHeaders');
 const headerAction = require('../../actions/layout/HeaderAction');
 const commonAction = require('../../actions/main/CommonAction');
-const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
+// const inquiryModalAction = require('../../actions/modules/InquiryModalAction');
 const editLoginUserModalAction = require('../../actions/modules/EditLoginUserModalAction');
 const sysConst = require('../../util/SysConst');
 
@@ -59,10 +59,9 @@ class Header extends React.Component {
                         </a>
 
                         <span className="header-icon">
-                            待定图标
-                            {/*<img src="../../../assets/images/logo_ico-32.ico" alt=""/>*/}
+                            <img src="../../../assets/images/logo_48.png" alt=""/>
                         </span>
-                        <span className="header-font">车辆运输微信小程序后台管理系统</span>
+                        <span className="header-font">广运车管理系统</span>
 
                         <ul id="nav-mobile" className="right hide-on-med-and-down">
                             <li>

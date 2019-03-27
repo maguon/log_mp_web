@@ -71,14 +71,14 @@ class Login extends React.Component {
                                 </button>
                             </div>
                         </div>
-                        <div className="row" style={{marginBottom: -10}}>
-                            <div className="input-field col s6 m6 l6">
-                                <p className="margin medium-small"><Link to="/register">注册</Link></p>
-                            </div>
-                            <div className="input-field col s6 m6 l6">
-                                <p className="margin right-align medium-small"><Link to="/reset">忘记密码</Link></p>
-                            </div>
-                        </div>
+                        {/*<div className="row" style={{marginBottom: -10}}>*/}
+                            {/*<div className="input-field col s6 m6 l6">*/}
+                                {/*<p className="margin medium-small"><Link to="/register">注册</Link></p>*/}
+                            {/*</div>*/}
+                            {/*<div className="input-field col s6 m6 l6">*/}
+                                {/*<p className="margin right-align medium-small"><Link to="/reset">忘记密码</Link></p>*/}
+                            {/*</div>*/}
+                        {/*</div>*/}
                     </form>
                 </div>
             </div>

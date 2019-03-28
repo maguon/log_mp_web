@@ -1,6 +1,6 @@
 *.log
 *.bundle.js
-config/config.js
+HostConfig.js
 wechat_hyc/host_config.js
 config/SystemConfig.js
 conf.json
@@ -10,3 +10,4 @@ uploads/*
 node_modules
 .DS_Store
 .DS_Store?
+package-lock.json

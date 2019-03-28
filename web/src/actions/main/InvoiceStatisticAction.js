@@ -64,6 +64,16 @@ export const getInvoiceStatByMonth = () => async (dispatch, getState) => {
             yAxisCountData.push(outerOrderCountData);
             yAxisMoneyData.push(outerOrderMoneyData);
 
+            // 自助订单
+            let ownerOrderCountData = {name: '自助订单',data: []};
+            let ownerOrderMoneyData = {name: '自助订单',data: []};
+            for (let i = res.result.owner.length -1; i >= 0; i--) {
+                ownerOrderCountData.data.push(Math.ceil(res.result.owner[i].invoice_count));
+                ownerOrderMoneyData.data.push(Math.ceil(res.result.owner[i].invoice_price));
+            }
+            yAxisCountData.push(ownerOrderCountData);
+            yAxisMoneyData.push(ownerOrderMoneyData);
+
             // 笔数 统计
             dispatch(showCountMonthChart(xAxisData, yAxisCountData));
             // 金额 统计
@@ -125,6 +135,16 @@ export const getInvoiceStatByDay = () => async (dispatch, getState) => {
             }
             yAxisCountData.push(outerOrderCountData);
             yAxisMoneyData.push(outerOrderMoneyData);
+
+            // 自助订单
+            let ownerOrderCountData = {name: '自助订单', data: []};
+            let ownerOrderMoneyData = {name: '自助订单', data: []};
+            for (let i = res.result.owner.length -1; i >= 0; i--) {
+                ownerOrderCountData.data.push(Math.ceil(res.result.owner[i].invoice_count));
+                ownerOrderMoneyData.data.push(Math.ceil(res.result.owner[i].invoice_price));
+            }
+            yAxisCountData.push(ownerOrderCountData);
+            yAxisMoneyData.push(ownerOrderMoneyData);
 
             // 笔数 统计
             dispatch(showCountDayChart(xAxisData, yAxisCountData));

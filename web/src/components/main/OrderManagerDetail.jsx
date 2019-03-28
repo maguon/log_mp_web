@@ -255,7 +255,7 @@ class OrderManagerDetail extends React.Component {
                                         {commonUtil.getJsonValue(sysConst.SERVICE_MODE, orderManagerDetailReducer.orderInfo[0].service_type)}
                                     </span>
                                     {/* 询价信息 按钮 */}
-                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                                    {orderManagerDetailReducer.orderInfo[0].inquiry_id !== 0 &&
                                     <button type="button" className="margin-left30 btn purple-btn btn-height24 fz14" onClick={this.showInquiryInfoModal}>询价信息</button>}
                                 </div>
 
@@ -263,7 +263,7 @@ class OrderManagerDetail extends React.Component {
                                 <div className="margin-top15">
                                     {/* 订单类型 */}
                                     <span className="purple-font">{commonUtil.getJsonValue(sysConst.ORDER_TYPE, orderManagerDetailReducer.orderInfo[0].created_type)}</span>
-                                    {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                                    {orderManagerDetailReducer.orderInfo[0].created_type !== sysConst.ORDER_TYPE[0].value &&
                                     <span>
                                         {/* 用户 */}
                                         <i className="margin-left30 fz20 pink-font mdi mdi-account"/>
@@ -433,7 +433,7 @@ class OrderManagerDetail extends React.Component {
                                 <div className="col s12"><div className="col s12 margin-top5 divider bold-divider"/></div>
 
                                 {/* 外部订单，并且没有 运送车辆 时，提示文字 */}
-                                {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && commonReducer.orderCarArray.length === 0 &&
+                                {orderManagerDetailReducer.orderInfo[0].created_type !== sysConst.ORDER_TYPE[0].value && commonReducer.orderCarArray.length === 0 &&
                                 <div className="col s12 margin-top10 grey-text text-lighten-1">等待用户完善车辆信息</div>}
                             </div>
 
@@ -483,7 +483,7 @@ class OrderManagerDetail extends React.Component {
                             </div>
 
                             {/* 客户备注 (仅外部订单 显示)*/}
-                            {orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value &&
+                            {orderManagerDetailReducer.orderInfo[0].created_type !== sysConst.ORDER_TYPE[0].value &&
                              orderManagerDetailReducer.orderInfo[0].remark !== null && orderManagerDetailReducer.orderInfo[0].remark !== '' &&
                             <div className="row margin-top40 margin-left50 margin-right50">
                                 <div className="col s12 pink-font">
@@ -871,7 +871,7 @@ class OrderManagerDetail extends React.Component {
                             {((orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[0].value &&
                                 orderManagerDetailReducer.orderInfo[0].status !== sysConst.ORDER_STATUS[6].value &&
                                 orderManagerDetailReducer.invoiceArray.length === 0) ||
-                            (orderManagerDetailReducer.orderInfo[0].created_type === sysConst.ORDER_TYPE[1].value && orderManagerDetailReducer.invoiceArray.length === 0)) &&
+                            (orderManagerDetailReducer.orderInfo[0].created_type !== sysConst.ORDER_TYPE[0].value && orderManagerDetailReducer.invoiceArray.length === 0)) &&
                             <div className="row center grey-text margin-top50 fz18">
                                 暂无发票信息
                             </div>}

@@ -51,6 +51,14 @@ export const getPaymentStatByMonth = () => async (dispatch, getState) => {
                 outerOrderMoneyData.data.push(res.result.extrnal[i].payment_price);
             }
             yAxisMoneyData.push(outerOrderMoneyData);
+
+            // 自助订单
+            let ownerOrderMoneyData = {name: '自助订单金额',data: []};
+            for (let i = res.result.owner.length -1; i >= 0; i--) {
+                ownerOrderMoneyData.data.push(res.result.owner[i].payment_price);
+            }
+            yAxisMoneyData.push(ownerOrderMoneyData);
+
             // 订单金额 统计
             dispatch(showMoneyMonthChart(xAxisData, yAxisMoneyData));
         } else if (res.success === false) {
@@ -98,6 +106,14 @@ export const getPaymentStatByDay = () => async (dispatch, getState) => {
                 outerOrderMoneyData.data.push(res.result.extrnal[i].payment_price);
             }
             yAxisMoneyData.push(outerOrderMoneyData);
+
+            // 自助订单
+            let ownerOrderMoneyData = {name: '自助订单金额', data: []};
+            for (let i = res.result.owner.length -1; i >= 0; i--) {
+                ownerOrderMoneyData.data.push(res.result.owner[i].payment_price);
+            }
+            yAxisMoneyData.push(ownerOrderMoneyData);
+
             // 订单金额 统计
             dispatch(showMoneyDayChart(xAxisData, yAxisMoneyData));
         } else if (res.success === false) {

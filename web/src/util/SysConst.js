@@ -177,6 +177,10 @@ export const ORDER_TYPE = [
     {
         value: 2,
         label: "外部订单"
+    },
+    {
+        value: 3,
+        label: "自助订单"
     }
 ];
 

@@ -7,9 +7,9 @@
 </view>
 
 <view class='content'>
- <view class='item'>{{orderlist.start_city}}</view>
+ <view class='item'>{{orderlist.route_start}}</view>
  <image class='item-img' src='../../../images/arrow_02.png'></image>
-  <view class='item'>{{orderlist.end_city}}</view>
+  <view class='item'>{{orderlist.route_end}}</view>
 </view>
 
 <view bindtap='choose' class='dis-content' hover-class="active">

@@ -180,16 +180,16 @@ Page({
       })
     }
   },
- 
-
 
 
   /**
    * 询价
    */
-  bindInquiry:function(){
+  bindInquiry:function(e){
+  
     var that=this;
     var userId=app.globalData.userId;
+    var index=e.currentTarget.dataset.index;
     
 
     //判断用户输入
@@ -248,7 +248,7 @@ Page({
                 distance: res.data.result[0].distance,
               })
 
-              var arr= [{
+              var order_arr = [{
                 routeId: res.data.result[0].route_id,
                 serviceType: parseInt(that.data.index),
                 startCity: that.data.beginCity,
@@ -257,26 +257,38 @@ Page({
                 startId: that.data.beginCityId,
                 endId: that.data.endCityId,
               }];
-              var newArray=[{
-              routeId:res.data.result[0].route_id,
-              serviceType: parseInt(that.data.index),
-              modelType:parseInt(that.data.car_index),
-              oldCar: that.data.checked,
-              carNum:1,
-                valuation: parseInt(that.data.valuation),             
-              startCity:that.data.beginCity,
-              endCity:that.data.endCity,
-              safeStatus:that.data.insurance,
-              distance: that.data.distance,
+              var newArray = [{
+                routeId: res.data.result[0].route_id,
+                serviceType: parseInt(that.data.index),
+                modelType: parseInt(that.data.car_index),
+                oldCar: that.data.checked,
+                carNum: 1,
+                valuation: parseInt(that.data.valuation),
+                startCity: that.data.beginCity,
+                endCity: that.data.endCity,
+                safeStatus: that.data.insurance,
+                distance: that.data.distance,
               }];
+              app.globalData.name = "index";
+              var carMsg = JSON.stringify(newArray);
+              var arr = JSON.stringify(order_arr[0]);
 
+
+              if(index==0){
+                wx.setStorage({
+                  key: 'arr',
+                  data: order_arr,
+                })
+                wx.navigateTo({
+                  url: "/pages/order/create-order/create-order",
+                })
+
+              }else{
               
-              app.globalData.name="index";
-              var carMsg=JSON.stringify(newArray);
-              var arr = JSON.stringify(arr[0]);
               wx.navigateTo({
                 url: '/pages/index/budget/budget?carMsg=' + carMsg +"&arr="+arr,
                   })
+              }
             } else {
 
               //设置参数

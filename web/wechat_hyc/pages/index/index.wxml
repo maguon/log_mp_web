@@ -83,8 +83,11 @@
 <switch bindtap='insuranceChange' class='insurance-checked' checked='{{insurance}}'></switch>
 </view>
 <!-- 按键 ---------------------------------------------------------------------- -->
-    <button   bindtap="bindInquiry" class="btn-area" hover-class="weui-cell_active">询价</button>
+<view class='btn-list'>
+    <button   bindtap="bindInquiry" data-index='0' class="btn-area01" hover-class="weui-cell_active">创建订单</button>
 
+    <button   bindtap="bindInquiry" data-index='1'  class="btn-area" hover-class="weui-cell_active">询价</button>
+</view>
        <button bindtap="bindCustomer" class="btn-area area" hover-class="weui-cell_active">
        <image class='customer' src='../../images/customer.png'></image>
        <text>联系客服</text>

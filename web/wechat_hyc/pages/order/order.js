@@ -66,7 +66,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-
   },
 
   
@@ -165,6 +164,10 @@ Page({
           res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
          //预计费用
           res.data.result[i].fee_price = reqUtil.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
+          res.data.result[0].route_start = res.data.result[0].start_city;
+          res.data.result[0].route_end = res.data.result[0].end_city;
+
+        
           //判断显示状态
           if (res.data.result[i].status == 0) {
             res.data.result[i].stay = 0;
@@ -202,14 +205,20 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "0,1" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-
+  console.log(res.data.result)
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
             res.data.result[i].price = reqUtil.decimal(res.data.result[i].trans_price + res.data.result[i].insure_price);
+            //预计费用
+            res.data.result[i].fee_price = reqUtil.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
             //编译时间
             res.data.result[i].created_on = reqUtil.getTime(res.data.result[i].created_on);
             res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
+
+            if (res.data.result[i].created_type==3){
+              res.data.result[i].creatFlag=true;
+            }
              //判断显示状态
             if (res.data.result[i].status==0){
               res.data.result[i].status=1;
@@ -250,7 +259,6 @@ Page({
      
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "2,3,4,9" +"&paymentStatusList="+"0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-
         if (res.data.result != '') {
 
           for (var i = 0; i < res.data.result.length; i++) {
@@ -299,7 +307,7 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList=" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-   
+        console.log(res.data.result)
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
       
@@ -435,7 +443,8 @@ Page({
   bindDetail:function(e){
     var index = e.currentTarget.dataset.index;
     var orderId = this.data.orderlist[index].id;
-
+    var fee_price = this.data.orderlist[index].fee_price;
+ 
     switch(this.data.index){
     case 0:
         wx.navigateTo({
@@ -444,7 +453,7 @@ Page({
        break;
     case 1:
         wx.navigateTo({
-          url: '/pages/order/pending-order/pending-order?orderId=' + orderId,
+          url: '/pages/order/pending-order/pending-order?orderId=' + orderId + "&name=" + "" + "&ora_insure_price=" + fee_price,
         })
         break;
    case 2:

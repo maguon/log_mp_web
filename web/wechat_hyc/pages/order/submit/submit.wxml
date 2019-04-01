@@ -1,4 +1,4 @@
- <view class="icon-box">
+ <view hidden='{{hidden}}' class="icon-box">
    <icon class='icon' type="success" size="100"></icon>
       <view class="title">提交成功</view>
         <view class="desc">请等待客服审核</view>
@@ -11,3 +11,24 @@
        </button>
  </view>
  
+
+
+
+  <view hidden='{{!hidden}}' class="icon-box">
+   <icon class='icon' type="success" size="100"></icon>
+      <view class="title">订单创建成功</view>
+        <view class="desc">客服会尽快为您完善价格并与您联系，</view>
+        <view class="desc01">请耐心等待。</view>
+   
+<!-- 按键 ---------------------------------------------------------------------- -->
+<view class='button'>
+      <button bindtap="bindCustomer" class="area" hover-class="weui-cell_active">
+       <image class='customer' src='../../../images/customer.png'></image>
+       <text class='text'>联系客服</text>
+       </button>
+
+        <button bindtap="bindInquiry" class="area color" hover-class="weui-cell_active">
+       <text class='text01'>跳转到订单详情</text>
+       </button>
+       </view>
+ </view>

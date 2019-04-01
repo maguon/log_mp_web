@@ -11,9 +11,9 @@
 </view>
 <view class='dis-line'></view>
 <view class='city'>
-<view class='city-text'>{{orderlist.start_city}}</view>
+<view class='city-text'>{{orderlist.route_start}}</view>
 <image class='city-arrow' src='../../../images/arrow_02.png'></image>
-<view class='city-text'>{{orderlist.end_city}}</view>
+<view class='city-text'>{{orderlist.route_end}}</view>
 </view>
 
 <view class='stay-detail'>

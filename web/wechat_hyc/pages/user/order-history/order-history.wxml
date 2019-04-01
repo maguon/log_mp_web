@@ -7,9 +7,9 @@
 <view class='dis-line'></view>
 <view class='city'>
 <image class='city-img' src='../../../images/car_04.png'></image>
-<view class='city-text'>{{item.start_city}}</view>
+<view class='city-text'>{{item.route_start}}</view>
 <image class='city-arrow' src='../../../images/arrow_02.png'></image>
-<view class='city-text'>{{item.end_city}}</view>
+<view class='city-text'>{{item.route_end}}</view>
 <view  class='state'>已送达</view>
 <image class='arrow'src='../../../images/arrow.png'></image>
 </view>

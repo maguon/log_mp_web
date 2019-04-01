@@ -91,9 +91,25 @@ height: 25vh;
 
 .btn-area{
  margin-top: 30px;
-  height: 45px;
-  width: 90%;
+  height: 40px;
+  width: 40%;
+  line-height: 40px;
   background: #7a387a;
+  color: white;
+}
+.btn-list{
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.btn-area01{
+ margin-top: 30px;
+  height: 40px;
+  width: 40%;
+  line-height: 40px;
+  background: #ba7998;
   color: white;
 }
 button[disabled]{
@@ -101,7 +117,8 @@ button[disabled]{
   color:white !important;
 }
 .area{
-margin-top: 10px;
+ margin-top: 30px;
+ width: 90%;
   background: white;
   border: 1px solid #7a387a;
   color: #7a387a;

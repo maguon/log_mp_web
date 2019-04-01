@@ -203,8 +203,13 @@ bindInquiry:function(e){
    * 继续询价
    */
   Inquiry:function(){
-    wx.switchTab({
-      url: '/pages/index/index',
+   var order_arr=[this.data.arr];
+    wx.setStorage({
+      key: 'arr',
+      data: order_arr,
+    })
+    wx.navigateTo({
+      url: "/pages/order/create-order/create-order",
     })
   },
 

@@ -26,21 +26,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that = this;
     var userId = app.globalData.userId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
+      console.log(res)
       if (res.data.result[0].phone != "" && res.data.result[0].phone != null){
-        this.setData({
+        that.setData({
           phone: res.data.result[0].phone,
           hidden: true,
         })
       }else{
-        this.setData({
+        that.setData({
           hidden: false,
         })
       }
       //目的城市 城市ID
-      this.setData({
+      that.setData({
         user: res.data.result[0],
         url:res.data.result[0].avatar,
         name: res.data.result[0].user_name,
@@ -61,13 +63,14 @@ Page({
    * getPhoneNumber 信息
    */
   getPhoneNumber: function (e) {
-
-    var userId = app.globalData.userId;
     var that = this;
+    var userId = app.globalData.userId;
     var session_key = app.globalData.session_key;
     var iv = e.detail.iv;
     var encryptedData = e.detail.encryptedData;
-
+    console.log(session_key)
+    console.log(iv)
+    console.log(encryptedData)
 
     if (e.detail.errMsg != 'getPhoneNumber:ok') {
       wx.navigateTo({

@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+  
   },
 
   /**
@@ -14,6 +14,7 @@ Page({
   onLoad: function (options) {
 
   },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -51,6 +52,9 @@ Page({
     wx.navigateTo({
       url: '/pages/about/we/we',
     })
+    // wx.navigateTo({
+    //   url: '/pages/map/map',
+    // })
   },
   /**
    * 生命周期函数--监听页面隐藏

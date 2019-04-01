@@ -115,33 +115,49 @@ Page({
     var address= JSON.stringify(that.data.addressList[index]);
 
 
-    if (indexinfo == 0 && orderId!="" ) {
-   
+    if (indexinfo == 0) {
+      
       var params = {
         sendName: addressList[index].user_name,
         sendPhone: addressList[index].phone,
         sendAddress: addressList[index].detail_address
       }
+      if (orderId == "") {
+        try {
+          wx.setStorageSync('sendAddress', params)
+        } catch (e) { }
+        wx.navigateBack({
+        })
+       }else{
       reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/sendMsg', params, (err, res) => {
         setTimeout(function () {
           wx.navigateBack({
           })
         }, 500)
       })
+      }
       return;
-    } else if (indexinfo == 1 && orderId != "") {
+    } else if (indexinfo == 1) {
    
       var params = {
         recvName: addressList[index].user_name,
         recvPhone: addressList[index].phone,
         recvAddress: addressList[index].detail_address
       }
+      if (orderId == "") {
+        try {
+          wx.setStorageSync('recvAddress', params)
+        } catch (e) { }
+        wx.navigateBack({
+        })
+      } else {
       reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/order/' + orderId + '/recvMsg', params, (err, res) => {
         setTimeout(function () {
           wx.navigateBack({
           })
         }, 500)
       })
+      }
       return;
     }else{
     wx.navigateTo({

@@ -6,7 +6,7 @@ width: 90%;
 margin: 20px 5% 0px 5%;
 }
 .text{
-  font-size: 18px;
+  font-size: 15px;
   color: #666466;
 
 }

@@ -83,14 +83,25 @@ Page({
         encryptedData: encryptedData
       }
       reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/wechatBindPhone",params,(err,res)=>{
-        wx.showModal({
-          title: '提示',
-          showCancel: false,
-          content: '您已成功绑定',
-          success: function (res) {
-            that.onShow();
-          }
-        })
+        console.log(res)
+        console.log(err)
+        if(res.data.success){
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '您已成功绑定',
+            success: function (res) {
+              that.onShow();
+            }
+          })
+        }
+        if (res.data.code == "InternalError"){
+          wx.showModal({
+            title: '提示',
+            showCancel: false,
+            content: '检测到小程序在多台设备登录，请删除小程序后重新登录',
+          })
+        }
       })   
     }
   },

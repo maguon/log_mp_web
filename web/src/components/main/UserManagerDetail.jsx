@@ -111,9 +111,12 @@ class UserManagerDetail extends React.Component {
                         <div className="user-detail-header">
                             {/* 左侧：图标 */}
                             <div className="col s1 margin-top10 center grey-text text-darken-1">
+                                {userManagerDetailReducer.userInfo[0].avatar !== null && userManagerDetailReducer.userInfo[0].avatar !== '' &&
+                                <img className="circle height-75" src={userManagerDetailReducer.userInfo[0].avatar}/>}
+                                {(userManagerDetailReducer.userInfo[0].avatar === null || userManagerDetailReducer.userInfo[0].avatar === '') &&
                                 <div className="user-title-icon grey lighten-1 vc-center">
                                     <i className="mdi mdi-account"/>
-                                </div>
+                                </div>}
                             </div>
 
                             {/* 中间：基本信息 */}

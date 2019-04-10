@@ -12,9 +12,11 @@ Page({
     orderItem:[],
 
     orderId:'',
+
     service: ["上门服务", "当地自提"],
     carModel: ["标准轿车", "标准SUV", "大型SUV", "标准商务车", "大型商务车"],
     note:"",
+    ora_insure_price:"",
     disabled:false,
     address:false,
     carflag:false,
@@ -22,7 +24,9 @@ Page({
 
     timeFlag:false,
     dateFlag:false,
+    creatFlag:false,
     date: '',
+    name:"",
   },
 
 
@@ -34,7 +38,9 @@ Page({
 
     var userId = app.globalData.userId;
     this.setData({
+      ora_insure_price: e.ora_insure_price,
       orderId:e.orderId,
+      name:e.name,
     })
   },
 
@@ -76,12 +82,20 @@ Page({
           })
         }
 
+        if (res.data.result[0].created_type == 3) {
+         this.setData({
+           creatFlag:true,
+         })
+        } 
+        
         //预计费用
         res.data.result[0].ora_insure_price = reqUtil.decimal(res.data.result[0].ora_insure_price + res.data.result[0].ora_trans_price);
         //协商费用
         res.data.result[0].total_insure_price = reqUtil.decimal(res.data.result[0].insure_price + res.data.result[0].trans_price);
         //编译时间
         res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on);
+        res.data.result[0].start_city = res.data.result[0].route_start;
+        res.data.result[0].end_city = res.data.result[0].route_end;
 
         if (res.data.result[0].remark==null){
           res.data.result[0].remark=""
@@ -255,7 +269,7 @@ submit:function(e){
           //修改订单状态
           reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/status/" + 1, "", (err, res) => {
             wx.navigateTo({
-              url: '/pages/order/submit/submit',
+              url: '/pages/order/submit/submit?name=' + "" + "&orderId=" + orderId,
             })
           })
 
@@ -266,7 +280,17 @@ submit:function(e){
     });
   }
   },
-
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  var name=this.data.name;
+    if (name=="creat"){
+      wx.switchTab({
+        url: "/pages/index/index",
+      })
+    }
+  },
   /**
  * 用户点击右上角分享
  */

@@ -5,9 +5,9 @@
 </view>
  <view class='shadow'></view>
 <view class='dis-head'>
-<view class='head-city'>{{orderlist.start_city}}</view>
+<view class='head-city'>{{orderlist.route_start}}</view>
 <image class='head-staycar' src='../../../images/transport.png'></image>
-<view class='head-city'>{{orderlist.end_city}}</view>
+<view class='head-city'>{{orderlist.route_end}}</view>
 <view class='delivery'>{{lagstate[orderlist.log_status]}}</view>
 
 </view>

@@ -40,6 +40,9 @@ Page({
       res.data.result[0].total_trans_price = reqUtil.decimal(res.data.result[0].total_trans_price + res.data.result[0].total_insure_price);
 
       res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on);
+      res.data.result[0].route_start=res.data.result[0].start_city
+       res.data.result[0].route_end=res.data.result[0].end_city
+      console.log(res.data.result[0])
       this.setData({
         orderlist: res.data.result[0],
         service_type: res.data.result[0].service_type - 1,

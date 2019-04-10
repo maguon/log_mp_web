@@ -1,8 +1,9 @@
 <view class='dis-line'></view>
+
 <view class='dis-head'>
-<view class='head-city'>{{orderList.start_city}}</view>
+<view class='head-city'>{{route_start}}</view>
 <image class='head-staycar' src='../../../images/arrow_02.png'></image>
-<view class='head-city'>{{orderList.end_city}}</view>
+<view class='head-city'>{{route_end}}</view>
 </view>
 <view class='dis-line'></view>
 
@@ -10,7 +11,7 @@
 <!--  ---------------------------------------------------------------------- -->
 <view class='dis-way' hover-class="active">
 <image class='way-image' src='../../../images/car.png'></image>
-<view class='way-text'>{{service[orderList.service_type]}}</view>
+<view class='way-text'>{{service[service_type]}}</view>
 </view>
 <view class='dis-line'></view>
 <!--  ---------------------------------------------------------------------- -->
@@ -18,11 +19,11 @@
 <view hidden='{{!startress}}'bindtap='startAddress' data-index='{{0}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_02.png'></image>
-<view class='people01'>发车人:{{orderList.send_name}}</view>
+<view class='people01'>发车人:{{send_name}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
-<view class='phone'>电话：{{orderList.send_phone}}</view>
-<view class='address'>地址：{{orderList.send_address}}</view>
+<view class='phone'>电话：{{send_phone}}</view>
+<view class='address'>地址：{{send_address}}</view>
 </view>
 </view>
 
@@ -31,10 +32,10 @@
 <view hidden='{{!startress}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_02.png'></image>
-<view class='people01'>发车人:{{orderList.send_name}}</view>
+<view class='people01'>发车人:{{send_name}}</view>
 </view>
-<view class='phone'>电话：{{orderList.send_phone}}</view>
-<view class='address'>地址：{{orderList.send_address}}</view>
+<view class='phone'>电话：{{send_phone}}</view>
+<view class='address'>地址：{{send_address}}</view>
 </view>
 </view>
 
@@ -51,11 +52,11 @@
 <view hidden='{{!endress}}' bindtap='endAddress' data-index='{{1}}' class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_01.png'></image>
-<view class='people01'>收车人:{{orderList.recv_name}}</view>
+<view class='people01'>收车人:{{recv_name}}</view>
 <image class='arrow' src='../../../images/arrow.png'></image>
 </view>
-<view class='phone'>电话：{{orderList.recv_phone}}</view>
-<view class='address'>地址：{{orderList.recv_address}}</view>
+<view class='phone'>电话：{{recv_phone}}</view>
+<view class='address'>地址：{{recv_address}}</view>
 </view>
 </view>
 
@@ -63,10 +64,10 @@
 <view hidden='{{!endress}}'  class='ress' hover-class="weui-cell_active">
 <view class='ress-people'>
 <image class='ress-img01' src='../../../images/head_01.png'></image>
-<view class='people01'>收车人:{{orderList.recv_name}}</view>
+<view class='people01'>收车人:{{recv_name}}</view>
 </view>
-<view class='phone'>电话：{{orderList.recv_phone}}</view>
-<view class='address'>地址：{{orderList.recv_address}}</view>
+<view class='phone'>电话：{{recv_phone}}</view>
+<view class='address'>地址：{{recv_address}}</view>
 </view>
 </view>
 

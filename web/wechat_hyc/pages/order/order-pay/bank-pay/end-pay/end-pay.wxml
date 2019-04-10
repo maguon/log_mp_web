@@ -16,7 +16,7 @@
 </view>
 <view hidden='{{refundFlag}}' class='order-cost'> 
 <view class='cost-text01'>已退款:</view>
-<view class='cost-num'>{{refund*-1}}</view>
+<view class='cost-num'>{{refund}}</view>
 <view class='yuan'>元</view>
 </view>
 </view>
@@ -37,7 +37,7 @@
 
 <view hidden='{{item.type}}'  class='pay-num'>
 <view class='cost-text'>退款金额:</view>
-<view class='cost-num'>{{item.total_fee*-1}}</view>
+<view class='cost-num'>{{item.refund}}</view>
 <view class='yuan01'>元</view>
  <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
 </view>

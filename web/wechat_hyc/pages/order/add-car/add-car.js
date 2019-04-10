@@ -35,6 +35,8 @@ Page({
     })
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?inquiryId=" + e.inquiryId, (err, res) => {
+        res.data.result[0].route_start = res.data.result[0].start_city
+        res.data.result[0].route_end = res.data.result[0].end_city
         this.setData({
           orderlist: res.data.result[0],
           serviceType: res.data.result[0].service_type,

@@ -62,6 +62,7 @@ Page({
     //发送get请求
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/invoice", (err, res) => {
       var index = "";
+      if (res.data.result!=""){
    for(var i=0;i<res.data.result.length;i++){
      if(res.data.result[i].status==1){
        index=i;
@@ -71,6 +72,7 @@ Page({
       this.setData({
         invList: res.data.result[index],
       })
+      }
     })
   },
 

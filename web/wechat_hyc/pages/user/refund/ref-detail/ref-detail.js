@@ -79,6 +79,8 @@ Page({
       res.data.result[0].total_insure_price = reqUtil.decimal(res.data.result[0].total_insure_price)
       res.data.result[0].real_payment_price = reqUtil.decimal(res.data.result[0].real_payment_price)
 
+
+      console.log(res.data.result[0])
       //编译时间
       res.data.result[0].created_on = reqUtil.getTime(res.data.result[0].created_on)
       res.data.result[0].updated_on = reqUtil.getTime(res.data.result[0].updated_on)

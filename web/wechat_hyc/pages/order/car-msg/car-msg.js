@@ -22,6 +22,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    console.log(e.orderId)
     this.setData({
       orderId: e.orderId,
       name: e.name,
@@ -40,19 +41,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var that=this;
     var userId = app.globalData.userId;
-    var orderId = this.data.orderId;
-    var name=this.data.name;
+    var orderId = that.data.orderId;
+    var name = that.data.name;
 
 
  
     if (name == "delivery") {
-      this.setData({
+      that.setData({
         hidden: true,
         loadingHidden: true
       })
     }
-
+    if (orderId!=""){
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/orderItem?orderId=" + orderId, (err, res) => {
       var count = 0;
       for (var i = 0; i < res.data.result.length; i++) {
@@ -60,7 +62,7 @@ Page({
       }
 
       if (res.data.result != '') {
-        this.setData({
+        that.setData({
           orderItem: res.data.result,
           count: count,
           promptFlag:true,
@@ -68,6 +70,39 @@ Page({
         })
       }
     })
+  }else{
+
+      wx.getStorage({
+        key: 'orderItemArray',
+        success: function (res) {
+          console.log(res.data)
+          var count = 0;
+          for (var i = 0; i < res.data.length; i++) {
+            count++;
+          }
+          res.data.brand_type = res.data.brandType;
+          res.data.model_type = res.data.modelType;
+          that.setData({
+            orderItem: res.data,
+            count: count,
+            promptFlag: true,
+            loadingHidden: false,
+          })
+        },
+      })
+
+ 
+
+
+
+
+
+
+
+
+
+
+ }
   },
   
 

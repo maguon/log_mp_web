@@ -39,7 +39,7 @@ Page({
           }
         }
       }
-      console.log(newcity)
+      
     this.setData({
       newcityAZ: newcity,
       cityResults: newcity,
@@ -100,9 +100,7 @@ Page({
  * 选择城市
  */
   citySelected: function (e) {
-    console.log(this.data.cityType)
-    console.log(e.currentTarget.dataset.cityname)
-
+ 
     var cityNameTemp = e.currentTarget.dataset.cityname
     if (this.data.cityType == 'begin') {
       app.globalData.trainBeginCity = cityNameTemp

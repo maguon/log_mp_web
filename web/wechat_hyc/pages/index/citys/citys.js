@@ -13,7 +13,10 @@ Page({
     cityResults: null,
     cityAZ: [{ city_name: 'A' }, { city_name: 'B' }, { city_name: 'C' }, { city_name: 'D' }, { city_name: 'E' }, { city_name: 'F' }, { city_name: 'G' }, { city_name: 'H' }, { city_name: 'J' }, { city_name: 'K' }, { city_name: 'L' }, { city_name: 'M' }, { city_name: 'N' }, { city_name: 'P' }, { city_name: 'Q' }, { city_name: 'R' }, { city_name: 'S' }, { city_name: 'T' }, { city_name: 'W' }, { city_name: 'X' }, { city_name: 'Y' }, { city_name: 'Z' },],
     
+
+    newcityAZ: [{ letter: 'A', data: [] }, { letter: 'B', data: [] }, { letter: 'C', data: [] }, { letter: 'D', data: [] }, { letter: 'E', data: [] }, { letter: 'F', data: [] }, { letter: 'G', data: [] }, { letter: 'H', data: [] }, { letter: 'I', data: [] }, { letter: 'J', data: [] }, { letter: 'K', data: [] }, { letter: 'L', data: [] }, { letter: 'M', data: [] }, { letter: 'N', data: [] }, { letter: 'O', data: [] }, { letter: 'P', data: [] }, { letter: 'Q', data: [] }, { letter: 'R', data: [] }, { letter: 'S', data: [] }, { letter: 'T', data: [] }, { letter: 'U', data: [] }, { letter: 'V', data: [] }, { letter: 'W', data: [] }, { letter: 'X', data: [] }, { letter: 'Y', data: [] }, { letter: 'Z', data: [] },],
     citys: [],
+    flag:false,
   },
 
 
@@ -24,27 +27,37 @@ Page({
   */
   onLoad: function (options) {
     var userId = app.globalData.userId;
+    var newcity = this.data.newcityAZ;
+
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/city", (err, res) => {
-      this.setData({
-        citys:res.data.result,
-      })
+
+    var citys = res.data.result;
+     for (var i = 0; i < citys.length; i++) {
+       for (var j = 0; j < newcity.length; j++) {
+         if (citys[i].city_py.charAt(0).toUpperCase() == newcity[j].letter){
+           newcity[j].data.push(citys[i])
+          }
+        }
+      }
+      console.log(newcity)
     this.setData({
+      newcityAZ: newcity,
+      cityResults: newcity,
+      citys: res.data.result,
       cityType: options.cityType
     })
-    if (this.data.cityResults == null) {
-      this.setData({
-        cityResults: this.data.citys
-      })
-    }
   })
   },
 
 
 
-
+/**
+ * a-z检索
+ */
   bindAZ: function (e) {
     var currentCityName = e.currentTarget.dataset.id
     var that = this;
+
     //放入A-Z的scrollTop参数
     if (that.data.scrollAZ == null) {
       wx.createSelectorQuery().selectAll('.city-item-A-Z').fields({
@@ -82,8 +95,14 @@ Page({
     })
   },
 
- 
+
+/**
+ * 选择城市
+ */
   citySelected: function (e) {
+    console.log(this.data.cityType)
+    console.log(e.currentTarget.dataset.cityname)
+
     var cityNameTemp = e.currentTarget.dataset.cityname
     if (this.data.cityType == 'begin') {
       app.globalData.trainBeginCity = cityNameTemp
@@ -95,27 +114,35 @@ Page({
 
     wx.navigateBack()
   },
+
+
+
+/**
+ * 查询 
+ */
   bindSarchInput: function (e) {
     wx.pageScrollTo({
       scrollTop: 0,
       duration: 0
     })
-
     var inputVal = e.detail.value;
     var cityResultsTemp = new Array()
+    var newcity = this.data.newcityAZ;
+    var cityResults = this.data.cityResults;
     var citys = this.data.citys;
 
     if (inputVal == null || inputVal.trim() == '') {
       this.setData({
-        cityResults: citys
+        flag: false,
+        newcityAZ: cityResults
       })
       return;
     }
 
     for (var i = 0; i < citys.length; i++) {
-      if (citys[i].city_name.indexOf(inputVal) == 0 || citys[i].cityPY.indexOf(inputVal.toLowerCase()) == 0 || citys[i].cityPinYin.indexOf(inputVal.toLowerCase()) == 0) {
+      if (citys[i].city_name.indexOf(inputVal) == 0 || citys[i].city_py.indexOf(inputVal.toLowerCase()) == 0 || citys[i].city_pinyin.indexOf(inputVal.toLowerCase()) == 0) {
         //去除热门城市
-        if (citys[i].cityPY.indexOf("#") != -1) {
+        if (citys[i].city_py.indexOf("#") != -1) {
           continue;
         }
         var ifHas = false;
@@ -131,7 +158,8 @@ Page({
       }
     }
     this.setData({
-      cityResults: cityResultsTemp
+      flag:true,
+      newcityAZ: cityResultsTemp
     })
   },
 

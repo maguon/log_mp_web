@@ -12,9 +12,18 @@
 </view>
 <!-- 城市列表 ---------------------------------------------------------------------- -->
 <view class='city-item-content'>
- <view wx:for="{{cityResults}}" wx:key="unique">
- <view wx:if="{{item.cityPinYin.length > 1}}" class='city-item' data-cityname='{{item.id}}' bindtap='citySelected'>{{item.city_name}}</view>
- <view wx:else class='city-item-A-Z' data-cityname='{{item.city_name}}'>{{item.city_name}}</view>
- <!-- <view data-cityname='{{item.cityName}}' bindtap='citySelected' >{{item.cityName}}</view> -->
+ <!-- <view wx:for="{{cityResults}}" wx:key="unique">
+ <view wx:if="{{item.city_pinyin.length > 1}}" class='city-item' data-cityname='{{item.id}}' bindtap='citySelected'>{{item.city_name}}</view>
+ <view wx:else class='city-item-A-Z' data-cityname='{{item.city_name}}'>{{item.city_name}}</view> -->
+  <view hidden='{{flag}}' wx:for="{{newcityAZ}}" wx:key="unique" wx:for-item='letterItem' wx:for-index='letterIndex'>
+
+ <view  class='city-item-A-Z' data-cityname='{{letterItem.letter}}'>{{letterItem.letter}}</view>
+  <view wx:for='{{letterItem.data}}' wx:key='unique'  class='city-item' data-cityname='{{item.id}}' bindtap='citySelected'>{{item.city_name}}</view>
  </view>
+
+  <view  hidden='{{!flag}}' wx:for="{{newcityAZ}}" wx:key="unique">
+  <view  class='city-item' data-cityname='{{item.id}}' bindtap='citySelected'>{{item.city_name}}</view>
+ </view>
+
+ 
 </view>

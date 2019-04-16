@@ -153,7 +153,7 @@ export const saveOrderCar = () => async (dispatch, getState) => {
         // 实际保费
         const actInsureFee = getState().EditOrderCarModalReducer.actInsureFee;
 
-        if (orderId === undefined || vin === '' || carModel == null || valuation === '' || actFreight === '' || actInsureFee === '') {
+        if (orderId === undefined || vin === '' || carBrand === ''  || carModel === '' || carGrade == null || valuation === '' || actFreight === '' || actInsureFee === '') {
             swal('保存失败', '请输入完整的车辆信息！', 'warning');
         } else {
             const params = {

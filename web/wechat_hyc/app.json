@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+      "pages/about/insurance/insurance",
     "pages/login/login",
     "pages/index/index",
     "pages/new-user/new-user",
@@ -38,7 +38,9 @@
     "pages/about/about",
     "pages/about/consign/consign",
     "pages/about/service/service",
-     "pages/about/we/we",
+  
+    "pages/about/we/we",
+
     
     "pages/user/user",
     "pages/user/bind/bind",

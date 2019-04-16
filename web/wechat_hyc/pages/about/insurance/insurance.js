@@ -1,11 +1,11 @@
-const app = getApp()
+// pages/about/insurance/insurance.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+
   },
 
   /**
@@ -14,7 +14,6 @@ Page({
   onLoad: function (options) {
 
   },
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -29,38 +28,7 @@ Page({
   onShow: function () {
 
   },
-  /**
-   * 托运流程
-   */
-  consign:function(){
-   wx.navigateTo({
-   url: '/pages/about/consign/consign',
-    })
-  },
-  /**
-  * 跳转服务优势
-  */
-  service: function () {
-    wx.navigateTo({
-      url: '/pages/about/service/service',
-    })
-  },
-  /**
- * 跳转关于我们
- */
-  we: function () {
-    wx.navigateTo({
-      url: '/pages/about/we/we',
-    })
-    // wx.navigateTo({
-    //   url: '/pages/map/map',
-    // })
-  },
-  insurance:function(){
-    wx.navigateTo({
-      url: '/pages/about/insurance/insurance',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -93,6 +61,6 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    return app.onShareApp();
+
   }
 })

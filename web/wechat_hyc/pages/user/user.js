@@ -31,6 +31,7 @@ Page({
 
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
       console.log(res)
+      console.log(userId)
       if (res.data.result[0].phone != "" && res.data.result[0].phone != null){
         that.setData({
           phone: res.data.result[0].phone,
@@ -68,6 +69,7 @@ Page({
     var session_key = app.globalData.session_key;
     var iv = e.detail.iv;
     var encryptedData = e.detail.encryptedData;
+    console.log(e)
     console.log(session_key)
     console.log(iv)
     console.log(encryptedData)

@@ -1,7 +1,7 @@
-
 page{
 background: #f8f6f8;
 }
+
 
 .content{
 width: 90%;
@@ -12,10 +12,15 @@ margin: 20px 5% 0px 5%;
   color: #a79fa8;
 
 }
-.phone{
-color: #8b5d91;
-font-size: 15px;
+.title{
+width: 100%;
+color: #6b3772;
+font-size: 16px;
 font-weight: bold;
-margin-left: 10px;
-margin-top: 10px;
+text-align: center;
+}
+.period{
+font-size: 14px;
+font-weight: bold;
+color: #8b5d91;
 }

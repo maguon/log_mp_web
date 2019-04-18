@@ -41,7 +41,7 @@ Page({
     var userId = app.globalData.userId;
     //发送请求
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
-console.log(res)
+
       if (res.data.result[0].wechat_name != '' && res.data.result[0].wechat_name!= null) {
         this.setData({
           hidden: true,
@@ -144,7 +144,7 @@ console.log(res)
    */
   code: function (e) {
     var userCode = e.detail.value;
-    console.log(e.detail.value)
+   
     //判断用户输入
     if (e.detail.value.length != 4) {
       this.setData({
@@ -174,7 +174,7 @@ console.log(res)
   
     //发送请求
     reqUtil.httpPut(config.host.apiHost + "/api/user/" + userId + '/phone/' + userPhone + "/code/" + userCode, '', (err, res) => {
-      console.log(res)
+
       if (res.data.success != true) {
         wx.showModal({
           title: '提示',

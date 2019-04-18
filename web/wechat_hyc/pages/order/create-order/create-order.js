@@ -44,7 +44,6 @@ Page({
     wx.getStorage({
       key: 'arr',
       success: function(res) {
-        console.log(res)
         that.setData({
           orderItem: res.data[0]
         })
@@ -156,9 +155,6 @@ Page({
     var recvAddress = this.data.recvAddress;
     var sendAddress = this.data.sendAddress;
  
-
- console.log(recvAddress)
-  console.log(sendAddress)
     if (!address) {
       wx.showModal({
         content: "请您选择运输地址",
@@ -224,14 +220,13 @@ Page({
               wx.removeStorage({ key: 'orderItemArray' })
               wx.removeStorage({ key: 'arr', })
 
-             console.log(res)
               wx.navigateTo({
                 url: '/pages/order/submit/submit?name=' + "create" + "&orderId=" + res.data.id,
               })
              })
 
           } else if (res.cancel) {
-            // console.log('用户点击取消')
+
           }
         }
       });

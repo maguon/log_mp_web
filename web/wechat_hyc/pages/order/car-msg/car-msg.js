@@ -22,7 +22,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
-    console.log(e.orderId)
     this.setData({
       orderId: e.orderId,
       name: e.name,
@@ -75,7 +74,6 @@ Page({
       wx.getStorage({
         key: 'orderItemArray',
         success: function (res) {
-          console.log(res.data)
           var count = 0;
           for (var i = 0; i < res.data.length; i++) {
             count++;

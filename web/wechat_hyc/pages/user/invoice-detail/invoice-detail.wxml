@@ -50,7 +50,7 @@
 <image class='arrow'src='../../../images/arrow.png'></image>
 </view>
 
-<view hidden="{{!invoiceFlag}}" bindtap='choose'  class='item'>
+<view hidden="{{!invoiceFlag}}"   class='item'>
 <view class='invoice-head'>选择发票信息</view>
 </view>
 

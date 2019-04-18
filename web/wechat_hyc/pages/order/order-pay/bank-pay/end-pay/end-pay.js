@@ -79,9 +79,7 @@ Page({
           })
         }
       // var _remain=reqUtil.decimal(sumFee - res.data.result[0].unpaid_price);
-        console.log(res.data.result)
-        console.log(res.data.result[0].unpaid_price)
-        console.log(sumFee)
+  
         var refundsum = reqUtil.decimal(refundSum * -1);
       that.setData({
       payment:res.data.result,

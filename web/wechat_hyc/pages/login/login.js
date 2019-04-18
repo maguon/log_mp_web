@@ -150,7 +150,7 @@ Page({
         confirmText: '返回授权',
         success: function (res) {
           if (res.confirm) {
-            // console.log('用户点击了“返回授权”')
+
           }
         }
       })

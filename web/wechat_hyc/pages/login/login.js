@@ -48,7 +48,7 @@ Page({
           app.globalData.userId = value.userId;
           app.globalData.accessToken = value.accessToken;
         }
-
+        //更换新的Token
         reqUtil.httpGet(config.host.apiHost + "/api/user/" + value.userId + "/token/" + value.accessToken, (err, rec) => {
 
            if (rec.data.result) {

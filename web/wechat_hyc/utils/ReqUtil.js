@@ -1,11 +1,16 @@
 const config = require('../host_config.js')
 
 export const httpGet = (url,callback) => {
+  var headerObj ={
+    'Content-Type': 'application/json'
+  }
+  var storageUserInfo = wx.getStorageSync('user');
+  if(storageUserInfo && storageUserInfo.accessToken){
+    headerObj['auth-token'] = storageUserInfo.accessToken
+  }
   wx.request({
     url: url,
-    header: {
-      'Content-Type': 'application/json'
-    },
+    header: headerObj,
     method : "GET",
     success:  (res) =>{
       callback(null,res)
@@ -16,10 +21,18 @@ export const httpGet = (url,callback) => {
   })
 }
 export const httpPost = (url, params,callback) => {
+  var headerObj = {
+    'Content-Type': 'application/json'
+  }
+  var storageUserInfo = wx.getStorageSync('user');
+  if (storageUserInfo && storageUserInfo.accessToken) {
+    headerObj['auth-token'] = storageUserInfo.accessToken
+  }
   wx.request({
     url: url,
     header: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth-token': headerObj,
     },
     method: "POST",
     data:params,
@@ -32,11 +45,18 @@ export const httpPost = (url, params,callback) => {
   })
 }
 export const httpPut = (url, params, callback) => {
-
+  var headerObj = {
+    'Content-Type': 'application/json'
+  }
+  var storageUserInfo = wx.getStorageSync('user');
+  if (storageUserInfo && storageUserInfo.accessToken) {
+    headerObj['auth-token'] = storageUserInfo.accessToken
+  }
   wx.request({
     url: url,
     header: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'auth-token': headerObj,
     },
     method: "PUT",
     data: params,
@@ -52,7 +72,7 @@ export const httpDel = (url) => {
   wx.request({
     url: url,
     header: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     method: "DELETE",
   })

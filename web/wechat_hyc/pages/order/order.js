@@ -205,7 +205,6 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/order?statusList=" + "0,1" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-  console.log(res.data.result)
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
                //协商费用
@@ -307,7 +306,7 @@ Page({
     
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId +"/order?statusList=" +"2,3" + "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+
         if (res.data.result != '') {
           for (var i = 0; i < res.data.result.length; i++) {
       

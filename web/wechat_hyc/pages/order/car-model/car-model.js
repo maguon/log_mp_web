@@ -71,7 +71,6 @@ Page({
       wx.getStorage({
         key: 'arr',
         success: function (res) {
-          console.log(res)
           that.setData({
             route_start: res.data[0].startCity,
             route_end: res.data[0].endCity,

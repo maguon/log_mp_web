@@ -41,7 +41,6 @@ Page({
    */
   onLoad: function (e) {
     var userId = app.globalData.userId;
-    console.log(e.orderId)
     this.setData({
       orderId: e.orderId,
       name:e.name,
@@ -91,7 +90,7 @@ Page({
         })
 
       }
-      console.log(orderlist)
+
       that.setData({
         route_start: orderlist.route_start,
         route_end: orderlist.route_end,
@@ -110,7 +109,7 @@ Page({
       wx.getStorage({
         key: 'arr',
         success: function (res) {
-          console.log(res)
+
           that.setData({
             route_start: res.data[0].startCity,
             route_end: res.data[0].endCity,
@@ -122,7 +121,7 @@ Page({
     try {
         const value = wx.getStorageSync('sendAddress')
         if (value) {
-          console.log(value)
+
           that.setData({
             startress: true,
             send_name: value.sendName,
@@ -137,7 +136,7 @@ Page({
       try {
         const value = wx.getStorageSync('recvAddress')
         if (value) {
-          console.log(value)
+
           that.setData({
             endress: true,
             recv_name: value.recvName,

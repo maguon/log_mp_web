@@ -12,8 +12,12 @@
 <image class='item-img' src='../../images/arrow.png'></image>
 </view>
 
-<view bindtap='deal' class='item' hover-class='weui-cell_active'>
-<view class='item-text'>托运协议</view>
+<view bindtap='contract' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>运输合同</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
+<view bindtap='insurance' class='item' hover-class='weui-cell_active'>
+<view class='item-text'>保险条款</view>
 <image class='item-img' src='../../images/arrow.png'></image>
 </view>
 

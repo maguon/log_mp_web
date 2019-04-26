@@ -274,7 +274,7 @@ submit:function(e){
           })
 
         } else if (res.cancel) {
-          // console.log('用户点击取消')
+
         }
       }
     });

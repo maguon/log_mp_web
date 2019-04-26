@@ -1,11 +1,10 @@
-<view class='divline'></view>
+
 <view class='all'>
 
 
 <view class='line'></view>
 <view class='text'>
 <image class='img' src='../../../images/Group12.png'></image>
-
 <view class='titel'>询价</view>
 <text class='content'>  
 <text decode="{{true}}" space="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;</text>打开小程序首页就是“询价”窗口，根据页面提示，填写车辆相关信息后，点击“询价”按钮，系统会根据客户填写的条件计算出预计费用，客户可以在此基础上继续增加车型以获得多辆车的预计运输费用，用户若想获得优惠价格，可以点击“客服协商”按钮，生成询价订单。

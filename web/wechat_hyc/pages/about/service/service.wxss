@@ -1,12 +1,13 @@
-.divline{
-  border: 5px solid #f8f6f8;
+page{
+background: #f8f6f8;
 }
+
 
 
 .all{
   width: 100%;
   height:100vh;
-  background: white;
+  background: #f8f6f8;
 }
 .text{
   margin: 20px 8% 40px 40%;

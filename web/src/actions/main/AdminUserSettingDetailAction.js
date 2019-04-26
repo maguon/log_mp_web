@@ -8,7 +8,7 @@ const sysConst = require('../../util/SysConst');
 export const getAdminInfo = (adminId) => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/adminUser?isSuperUserFlag=0&adminId=' + adminId;
+        let url = apiHost + '/api/admin?isSuperUserFlag=0&adminId=' + adminId;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             if (res.result.length > 0) {

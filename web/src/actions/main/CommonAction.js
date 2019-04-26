@@ -55,7 +55,7 @@ export const getDepartmentList = () => async (dispatch) => {
 export const getAdminUserList = () => async (dispatch) => {
     try {
         // 基本检索URL
-        let url = apiHost + '/api/adminUser?isSuperUserFlag=0';
+        let url = apiHost + '/api/admin?isSuperUserFlag=0';
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
             dispatch({type: CommonActionType.getAdminUserList, payload: res.result})

@@ -8,7 +8,7 @@ const localUtil = require('../../util/LocalUtil');
 export const getUserDetail = (params) => async (dispatch) => {
     try {
         // admin用户 检索 URL
-        const url = apiHost + '/api/adminUser?adminId=' + params.userId;
+        const url = apiHost + '/api/admin?adminId=' + params.userId;
 
         // 发送 get 请求
         const res = await httpUtil.httpGet(url);

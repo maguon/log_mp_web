@@ -154,7 +154,7 @@ Page({
         prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-
+   
         if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
          //协商费用
@@ -164,8 +164,8 @@ Page({
           res.data.result[i].updated_on = reqUtil.getTime(res.data.result[i].updated_on);
          //预计费用
           res.data.result[i].fee_price = reqUtil.decimal(res.data.result[i].ora_trans_price + res.data.result[i].ora_insure_price);
-          res.data.result[0].route_start = res.data.result[0].start_city;
-          res.data.result[0].route_end = res.data.result[0].end_city;
+          res.data.result[i].route_start = res.data.result[i].start_city;
+          res.data.result[i].route_end = res.data.result[i].end_city;
 
         
           //判断显示状态

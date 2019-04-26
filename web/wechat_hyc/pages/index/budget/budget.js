@@ -178,6 +178,7 @@ bindInquiry:function(e){
       distance: arr.distance,
     }
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId +"/inquiry",params,(err,res)=>{
+    
       wx.redirectTo({
         url: '/pages/index/submit/submit',
       })

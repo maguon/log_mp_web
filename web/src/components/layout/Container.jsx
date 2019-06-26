@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter as Router, Route, Link} from "react-router-dom";
+import {HashRouter as Router, Route, Link, NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 import {
@@ -581,8 +581,8 @@ class Container extends React.Component {
                                                     {item.children.map(function (menu) {
                                                         return (
                                                             <ul>
-                                                                <li><Link to={menu.link}><i className="mdi mdi-chevron-right"/>{menu.name}
-                                                                </Link></li>
+                                                                <li><NavLink to={menu.link} activeClassName="active"><i className="mdi mdi-chevron-right"/>{menu.name}
+                                                                </NavLink></li>
                                                                 <li><div className="divider"/></li>
                                                             </ul>
                                                         )

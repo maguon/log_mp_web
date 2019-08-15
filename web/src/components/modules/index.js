@@ -34,3 +34,4 @@ export OrderPaymentDetailModal from "./OrderPaymentDetailModal";
 export LoadTaskInfoModal from "./LoadTaskInfoModal";
 export NewRecommenderModal from "./NewRecommenderModal";
 export AdvertisingModal from "./AdvertisingModal";
+export EditCouponModal from "./EditCouponModal";

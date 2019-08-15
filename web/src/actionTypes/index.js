@@ -57,6 +57,7 @@ import * as RecommenderSettingActionType  from './main/RecommenderSettingActionT
 import * as RecommenderSettingDetailActionType  from './main/RecommenderSettingDetailActionType';
 import * as RecommendBusinessManagerActionType  from './main/RecommendBusinessManagerActionType';
 import * as RecommendBusinessManagerDetailActionType  from './main/RecommendBusinessManagerDetailActionType';
+import * as CouponSettingActionType  from './main/CouponSettingActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -90,6 +91,7 @@ import * as OrderPaymentDetailModalActionType  from './modules/OrderPaymentDetai
 import * as LoadTaskInfoModalActionType  from './modules/LoadTaskInfoModalActionType';
 import * as NewRecommenderModalActionType  from './modules/NewRecommenderModalActionType';
 import * as AdvertisingModalActionType  from './modules/AdvertisingModalActionType';
+import * as EditCouponModalActionType  from './modules/EditCouponModalActionType';
 
 export  {
     LoginActionType,
@@ -150,6 +152,7 @@ export  {
     RecommenderSettingDetailActionType,
     RecommendBusinessManagerActionType,
     RecommendBusinessManagerDetailActionType,
+    CouponSettingActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -182,5 +185,6 @@ export  {
     OrderPaymentDetailModalActionType,
     LoadTaskInfoModalActionType,
     NewRecommenderModalActionType,
-    AdvertisingModalActionType
+    AdvertisingModalActionType,
+    EditCouponModalActionType
 }

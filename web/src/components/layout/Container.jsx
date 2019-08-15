@@ -55,6 +55,7 @@ import {
     RecommenderSettingDetail,
     RecommendBusinessManager,
     RecommendBusinessManagerDetail,
+    CouponSetting
 } from '../main/index';
 
 const routes = [
@@ -351,7 +352,7 @@ const routes = [
         component: AdminUserSettingDetail
     },
     {
-        // 员工管理
+        // 推荐人管理
         path: "/recommend_setting",
         exact: true,
         component: RecommenderSetting
@@ -361,6 +362,12 @@ const routes = [
         exact: true,
         component: RecommenderSettingDetail
     },
+    {
+        // 优惠券设置
+        path: "/coupon_setting",
+        exact: true,
+        component: CouponSetting
+    }
 ];
 
 class Container extends React.Component {
@@ -549,6 +556,10 @@ class Container extends React.Component {
                     {
                         "link": '/recommend_setting',
                         "name": '推荐人管理'
+                    },
+                    {
+                        "link": '/coupon_setting',
+                        "name": '优惠券管理'
                     },
                     {
                         "link": '/call_center_setting',

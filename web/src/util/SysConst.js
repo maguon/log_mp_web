@@ -420,6 +420,18 @@ export const SUPPLIER_LOAD_TASK_STATUS = [
     }
 ];
 
+// 天数/有效日期 标记
+export const VALIDITY_PERIOD_TYPE = [
+    {
+        value: 1,
+        label: "天数"
+    },
+    {
+        value: 2,
+        label: "有效日期"
+    }
+];
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

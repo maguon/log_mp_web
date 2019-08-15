@@ -60,6 +60,7 @@ import RecommenderSettingReducer from './main/RecommenderSettingReducer';
 import RecommenderSettingDetailReducer from './main/RecommenderSettingDetailReducer';
 import RecommendBusinessManagerReducer from './main/RecommendBusinessManagerReducer';
 import RecommendBusinessManagerDetailReducer from './main/RecommendBusinessManagerDetailReducer';
+import CouponSettingReducer from './main/CouponSettingReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -93,6 +94,7 @@ import OrderPaymentDetailModalReducer from './modules/OrderPaymentDetailModalRed
 import LoadTaskInfoModalReducer from './modules/LoadTaskInfoModalReducer';
 import NewRecommenderModalReducer from './modules/NewRecommenderModalReducer';
 import AdvertisingModalReducer from './modules/AdvertisingModalReducer';
+import EditCouponModalReducer from './modules/EditCouponModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -154,6 +156,7 @@ export default combineReducers({
     RecommenderSettingDetailReducer,
     RecommendBusinessManagerReducer,
     RecommendBusinessManagerDetailReducer,
+    CouponSettingReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
@@ -186,5 +189,6 @@ export default combineReducers({
     OrderPaymentDetailModalReducer,
     LoadTaskInfoModalReducer,
     NewRecommenderModalReducer,
-    AdvertisingModalReducer
+    AdvertisingModalReducer,
+    EditCouponModalReducer
 })

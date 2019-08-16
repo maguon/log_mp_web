@@ -1,6 +1,7 @@
 import {createAction} from 'redux-actions';
 
 export const setCouponId = createAction('SET_EDIT_COUPON_ID');
+export const setCouponStatus = createAction('SET_EDIT_COUPON_STATUS');
 export const setCouponName = createAction('SET_EDIT_COUPON_NAME');
 export const setCouponAmount = createAction('SET_EDIT_COUPON_AMOUNT');
 export const setCouponThreshold = createAction('SET_EDIT_COUPON_THRESHOLD');

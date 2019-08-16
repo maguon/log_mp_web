@@ -1162,7 +1162,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 580px;
 }
 
-#editOrderCarModal{
+#editOrderCarModal,#editCouponModal{
     max-height: 550px;
 }
 

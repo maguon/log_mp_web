@@ -24,7 +24,7 @@ export const getCouponList = () => async (dispatch, getState) => {
         // 检索条件
         let conditionsObj = {
             // 检索条件：编号
-            adminId: conditionNo,
+            couponId: conditionNo,
             // 检索条件：状态
             status: conditionStatus === null ? '' : conditionStatus.value
         };
@@ -86,7 +86,7 @@ export const deleteCoupon = (id) => async (dispatch) => {
         }).then(async function (isConfirm) {
             if (isConfirm && isConfirm.value === true) {
                 // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/coupon/' + id;
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/coupon/' + id + '/showStatus';
                 const res = await httpUtil.httpDelete(url);
                 if (res.success === true) {
                     dispatch(getCouponList());

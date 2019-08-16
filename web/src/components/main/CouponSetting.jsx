@@ -63,8 +63,8 @@ class CouponSetting extends React.Component {
     /**
      * 显示 新建/修改优惠券信息
      */
-    showEditCouponModal = (type, companyBank) => {
-        this.props.initCouponModalData(type, companyBank);
+    showEditCouponModal = (type, coupon) => {
+        this.props.initCouponModalData(type, coupon);
         $('#editCouponModal').modal('open');
     };
 
@@ -127,8 +127,8 @@ class CouponSetting extends React.Component {
                                 <th>有效日期(终)</th>
                                 <th>门槛费用</th>
                                 <th>金额(元)</th>
-                                <th className="center">状态</th>
-                                <th className="center">操作</th>
+                                <th className="right-align padding-right30">状态</th>
+                                <th className="right-align padding-right30">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -138,12 +138,12 @@ class CouponSetting extends React.Component {
                                         <td>{item.id}</td>
                                         <td>{item.coupon_name}</td>
                                         <td>{item.effective_days}</td>
-                                        <td>{formatUtil.getDate(item.valid_date_from)}</td>
-                                        <td>{formatUtil.getDate(item.valid_date_to)}</td>
-                                        <td>{formatUtil.formatNumber(item.threshold_cost, 2)}</td>
+                                        <td>{formatUtil.getDate(item.start_date)}</td>
+                                        <td>{formatUtil.getDate(item.end_date)}</td>
+                                        <td>{formatUtil.formatNumber(item.floor_price, 2)}</td>
                                         <td>{formatUtil.formatNumber(item.price, 2)}</td>
                                         {/* 状态：开关 */}
-                                        <td className="center">
+                                        <td className="right-align">
                                             <span className="switch">
                                                 <label>
                                                   <input type="checkbox" checked={item.status === 1} onClick={() => {changeStatus(item.id, item.status)}}/>
@@ -151,7 +151,7 @@ class CouponSetting extends React.Component {
                                                 </label>
                                             </span>
                                         </td>
-                                        <td className="operation center">
+                                        <td className="operation right-align padding-right20">
                                             {item.del_status === 0 &&
                                             <i className="mdi mdi-close margin-right20 pink-font pointer" onClick={() => {deleteCoupon(item.id)}}/>}
                                             <i className="mdi mdi-table-search purple-font pointer" onClick={() => {this.showEditCouponModal('edit',item)}}/>
@@ -213,8 +213,8 @@ const mapDispatchToProps = (dispatch) => ({
     deleteCoupon: (id) => {
         dispatch(couponSettingAction.deleteCoupon(id));
     },
-    initCouponModalData: (type, companyBank) => {
-        dispatch(editCouponModalAction.initEditCouponModal(type, companyBank));
+    initCouponModalData: (type, coupon) => {
+        dispatch(editCouponModalAction.initEditCouponModal(type, coupon));
     }
 });
 

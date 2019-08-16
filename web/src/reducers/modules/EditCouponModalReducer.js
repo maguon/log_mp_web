@@ -5,6 +5,8 @@ import {EditCouponModalActionType} from '../../actionTypes';
 const initialState = {
     // 优惠券ID
     couponId: '',
+    // 优惠券状态
+    couponStatus: '',
 
     // 优惠券名称
     couponName: '',
@@ -14,7 +16,7 @@ const initialState = {
     threshold: '',
 
     // 有效期类型
-    validityPeriodType: {value: 1, label: '天数'},
+    validityPeriodType: '',
     // 有效期天数
     effectiveDays: '',
     // 有效日期(始)
@@ -30,6 +32,12 @@ export default handleActions({
         return {
             ...state,
             couponId: action.payload
+        }
+    },
+    [EditCouponModalActionType.setCouponStatus]: (state, action) => {
+        return {
+            ...state,
+            couponStatus: action.payload
         }
     },
     [EditCouponModalActionType.setCouponName]: (state, action) => {

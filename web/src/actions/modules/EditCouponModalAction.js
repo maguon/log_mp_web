@@ -1,6 +1,5 @@
 import {apiHost} from '../../config/HostConfig';
-import {CouponSettingActionType, EditCouponModalActionType} from "../../actionTypes";
-import {getCouponList} from "../main/CouponSettingAction";
+import {EditCouponModalActionType} from "../../actionTypes";
 
 const couponSettingAction = require('../../actions/main/CouponSettingAction');
 const httpUtil = require('../../util/HttpUtil');
@@ -8,10 +7,12 @@ const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
 // 修改账户信息画面 初期
-export const initEditCouponModal = (type, companyBankInfo) => async (dispatch) => {
+export const initEditCouponModal = (type, coupon) => async (dispatch) => {
     if (type === 'new') {
         // 优惠券ID
         dispatch({type: EditCouponModalActionType.setCouponId, payload: ''});
+        // 优惠券状态
+        dispatch({type: EditCouponModalActionType.setCouponStatus, payload: ''});
         // 优惠券名称
         dispatch({type: EditCouponModalActionType.setCouponName, payload: ''});
         // 优惠券金额
@@ -20,7 +21,7 @@ export const initEditCouponModal = (type, companyBankInfo) => async (dispatch) =
         dispatch({type: EditCouponModalActionType.setCouponThreshold, payload: ''});
 
         // 有效期类型
-        dispatch({type: EditCouponModalActionType.setValidityPeriodType, payload: {value: 1, label: '天数'}});
+        dispatch({type: EditCouponModalActionType.setValidityPeriodType, payload: {value: 0, label: '天数'}});
         // 有效期天数
         dispatch({type: EditCouponModalActionType.setEffectiveDays, payload: ''});
         // 有效日期(始)
@@ -31,95 +32,111 @@ export const initEditCouponModal = (type, companyBankInfo) => async (dispatch) =
         dispatch({type: EditCouponModalActionType.setRemark, payload: ''});
     } else {
         // 优惠券ID
-        dispatch({type: EditCouponModalActionType.setCouponId, payload: '1111'});
+        dispatch({type: EditCouponModalActionType.setCouponId, payload: coupon.id});
+        // 优惠券状态
+        dispatch({type: EditCouponModalActionType.setCouponStatus, payload: coupon.status});
         // 优惠券名称
-        dispatch({type: EditCouponModalActionType.setCouponName, payload: ''});
+        dispatch({type: EditCouponModalActionType.setCouponName, payload: coupon.coupon_name});
         // 优惠券金额
-        dispatch({type: EditCouponModalActionType.setCouponAmount, payload: ''});
+        dispatch({type: EditCouponModalActionType.setCouponAmount, payload: coupon.price});
         // 门槛
-        dispatch({type: EditCouponModalActionType.setCouponThreshold, payload: ''});
+        dispatch({type: EditCouponModalActionType.setCouponThreshold, payload: coupon.floor_price});
 
         // 有效期类型
-        dispatch({type: EditCouponModalActionType.setValidityPeriodType, payload: {value: 2, label: '有效日期'}});
+        dispatch({type: EditCouponModalActionType.setValidityPeriodType, payload: {value: coupon.coupon_type, label: sysConst.VALIDITY_PERIOD_TYPE[coupon.coupon_type].label}});
         // 有效期天数
-        dispatch({type: EditCouponModalActionType.setEffectiveDays, payload: ''});
+        dispatch({type: EditCouponModalActionType.setEffectiveDays, payload: coupon.effective_days});
         // 有效日期(始)
-        dispatch({type: EditCouponModalActionType.setValidityPeriodStart, payload: ''});
+        dispatch({type: EditCouponModalActionType.setValidityPeriodStart, payload: coupon.start_date});
         // 有效日期(终)
-        dispatch({type: EditCouponModalActionType.setValidityPeriodEnd, payload: ''});
+        dispatch({type: EditCouponModalActionType.setValidityPeriodEnd, payload: coupon.end_date});
         // 备注
-        dispatch({type: EditCouponModalActionType.setRemark, payload: ''});
+        dispatch({type: EditCouponModalActionType.setRemark, payload: coupon.remarks});
     }
 };
 
-export const saveCompanyBank = () => async (dispatch, getState) => {
+export const saveCoupon = () => async (dispatch, getState) => {
     try {
-        // 银行ID
-        const companyBankId = getState().EditCouponModalReducer.companyBankId;
-        // 银行名称
-        const companyBank = getState().EditCouponModalReducer.companyBank.trim();
-        // 卡号
-        const companyBankCode = getState().EditCouponModalReducer.companyBankCode.trim();
-        // 收款人
-        const companyBankUser = getState().EditCouponModalReducer.companyBankUser.trim();
+        // 优惠券编号
+        const couponId = getState().EditCouponModalReducer.couponId;
 
-        if (companyBank === '' || companyBankCode === ''|| companyBankUser === '') {
-            swal('保存失败', '请输入完整的银行账户信息！', 'warning');
+        // 优惠券名称
+        const couponName = getState().EditCouponModalReducer.couponName.trim();
+        // 优惠券金额
+        const couponAmount = getState().EditCouponModalReducer.couponAmount;
+        // 门槛
+        const threshold = getState().EditCouponModalReducer.threshold;
+
+        // 有效期类型
+        const validityPeriodType = getState().EditCouponModalReducer.validityPeriodType;
+        // 有效期天数
+        const effectiveDays = getState().EditCouponModalReducer.effectiveDays;
+        // 有效日期(始)
+        const validityPeriodStart = getState().EditCouponModalReducer.validityPeriodStart;
+        // 有效日期(终)
+        const validityPeriodEnd = getState().EditCouponModalReducer.validityPeriodEnd;
+        // 备注
+        const remark = getState().EditCouponModalReducer.remark.trim();
+
+
+        if (couponName === '' || couponAmount === '' || threshold === '') {
+            swal('保存失败', '请输入完整的优惠券信息！', 'warning');
         } else {
-            const params = {
-                bank: companyBank,
-                bankCode: companyBankCode,
-                accountName: companyBankUser
-            };
+            let params = {};
+
+            // 有效期类型：天数
+            console.log('validityPeriodType.value', validityPeriodType.value);
+            if (validityPeriodType.value === sysConst.VALIDITY_PERIOD_TYPE[0].value) {
+                console.log('effectiveDays', effectiveDays);
+
+                if (effectiveDays === '' || effectiveDays <= 0) {
+                    swal('保存失败', '优惠券天数请输入大于0的整数！', 'warning');
+                    return;
+                } else {
+                    params = {
+                        couponName: couponName,
+                        couponType: validityPeriodType.value,
+                        effectiveDays: effectiveDays,
+                        floorPrice: threshold,
+                        price: couponAmount,
+                        remarks: remark
+                    };
+                }
+            } else if (validityPeriodType.value === sysConst.VALIDITY_PERIOD_TYPE[1].value) {
+                if (validityPeriodStart === '' || validityPeriodEnd === '') {
+                    swal('保存失败', '请输入完整的优惠券有效日期！', 'warning');
+                    return;
+                } else {
+                    params = {
+                        couponName: couponName,
+                        couponType: validityPeriodType.value,
+                        startDate: validityPeriodStart,
+                        endDate: validityPeriodEnd,
+                        floorPrice: threshold,
+                        price: couponAmount,
+                        remarks: remark
+                    };
+                }
+            }
 
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                + '/companyBank/' + companyBankId;
-            let res = await httpUtil.httpPut(url, params);
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/coupon';
+            let res = null;
+            // 新建时
+            if (couponId === '') {
+                res = await httpUtil.httpPost(url, params);
+            } else {
+                // 编辑时
+                url = url + '/' + couponId;
+                res = await httpUtil.httpPut(url, params);
+            }
             if (res.success === true) {
-                $('#editCompanyBankModal').modal('close');
+                $('#editCouponModal').modal('close');
                 swal("保存成功", "", "success");
                 // 保存成功后，重新检索画面数据
                 dispatch(couponSettingAction.getCouponList());
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
-            }
-        }
-    } catch (err) {
-        swal('操作失败', err.message, 'error');
-    }
-};
-
-export const addCompanyBank = () => async (dispatch, getState) => {
-    try {
-        // 银行
-        const companyBank = getState().CouponSettingReducer.companyBank.trim();
-        // 卡号
-        const companyBankCode = getState().CouponSettingReducer.companyBankCode.trim();
-        // 收款人
-        const companyBankUser = getState().CouponSettingReducer.companyBankUser.trim();
-
-        if (companyBank === '' || companyBankCode === '' || companyBankUser === '') {
-            swal('添加失败', '请输入完整的收款账户信息！', 'warning');
-        } else {
-            const params = {
-                bank: companyBank,
-                bankCode: companyBankCode,
-                accountName: companyBankUser
-            };
-            // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/companyBank';
-            let res = await httpUtil.httpPost(url, params);
-            if (res.success === true) {
-                swal("添加成功", "", "success");
-                // 清空输入内容
-                dispatch({type: CouponSettingActionType.setCompanyBank, payload: ''});
-                dispatch({type: CouponSettingActionType.setCompanyBankCode, payload: ''});
-                dispatch({type: CouponSettingActionType.setCompanyBankUser, payload: ''});
-                // 保存成功后，重新检索画面数据
-                dispatch(getCouponList());
-            } else if (res.success === false) {
-                swal('添加失败', res.msg, 'warning');
             }
         }
     } catch (err) {

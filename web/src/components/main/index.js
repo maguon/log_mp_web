@@ -53,3 +53,4 @@ export AdminUserSetting from "./AdminUserSetting";
 export AdminUserSettingDetail from "./AdminUserSettingDetail";
 export CallCenterSetting from "./CallCenterSetting";
 export CouponSetting from "./CouponSetting";
+export CouponManager from "./CouponManager";

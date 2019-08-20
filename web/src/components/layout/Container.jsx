@@ -55,6 +55,7 @@ import {
     RecommenderSettingDetail,
     RecommendBusinessManager,
     RecommendBusinessManagerDetail,
+    CouponManager,
     CouponSetting
 } from '../main/index';
 
@@ -363,6 +364,12 @@ const routes = [
         component: RecommenderSettingDetail
     },
     {
+        // 优惠券领取
+        path: "/coupon_manager",
+        exact: true,
+        component: CouponManager
+    },
+    {
         // 优惠券设置
         path: "/coupon_setting",
         exact: true,
@@ -500,6 +507,10 @@ class Container extends React.Component {
                     {
                         "link": '/refund',
                         "name": '订单退款'
+                    },
+                    {
+                        "link": '/coupon_manager',
+                        "name": '优惠券领取'
                     }
                 ]
             },
@@ -559,7 +570,7 @@ class Container extends React.Component {
                     },
                     {
                         "link": '/coupon_setting',
-                        "name": '优惠券管理'
+                        "name": '优惠券设置'
                     },
                     {
                         "link": '/call_center_setting',

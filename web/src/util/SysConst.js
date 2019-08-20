@@ -9,6 +9,11 @@ export const INQUIRY_PARAMS = {
     valuationRate: 0.05
 };
 
+export const DEFAULT_USER_COUPON = [{
+    value: 0,
+    label: "专属优惠券"
+}];
+
 export const SERVICE_MODE = [
     {
         value: 1,
@@ -429,6 +434,22 @@ export const VALIDITY_PERIOD_TYPE = [
     {
         value: 1,
         label: "有效日期"
+    }
+];
+
+// 未使用/已使用/已过期 标记
+export const USED_FLAG = [
+    {
+        value: 0,
+        label: "未使用"
+    },
+    {
+        value: 1,
+        label: "已使用"
+    },
+    {
+        value: 2,
+        label: "已过期"
     }
 ];
 

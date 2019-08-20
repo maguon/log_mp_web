@@ -78,17 +78,12 @@ export const saveCoupon = () => async (dispatch, getState) => {
         // 备注
         const remark = getState().EditCouponModalReducer.remark.trim();
 
-
         if (couponName === '' || couponAmount === '' || threshold === '') {
             swal('保存失败', '请输入完整的优惠券信息！', 'warning');
         } else {
             let params = {};
-
             // 有效期类型：天数
-            console.log('validityPeriodType.value', validityPeriodType.value);
             if (validityPeriodType.value === sysConst.VALIDITY_PERIOD_TYPE[0].value) {
-                console.log('effectiveDays', effectiveDays);
-
                 if (effectiveDays === '' || effectiveDays <= 0) {
                     swal('保存失败', '优惠券天数请输入大于0的整数！', 'warning');
                     return;

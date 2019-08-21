@@ -24,7 +24,12 @@ const initialState = {
     // 有效日期(终)
     validityPeriodEnd: '',
     // 备注
-    remark: ''
+    remark: '',
+
+    // 领取
+    receiveNum: 0,
+    // 使用
+    useNum: 0
 };
 
 export default handleActions({
@@ -86,6 +91,18 @@ export default handleActions({
         return {
             ...state,
             remark: action.payload
+        }
+    },
+    [EditCouponModalActionType.setReceiveNum]: (state, action) => {
+        return {
+            ...state,
+            receiveNum: action.payload
+        }
+    },
+    [EditCouponModalActionType.setUseNum]: (state, action) => {
+        return {
+            ...state,
+            useNum: action.payload
         }
     }
 }, initialState)

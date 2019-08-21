@@ -7,6 +7,7 @@ import Select from "react-select";
 const editCouponModalAction = require('../../actions/modules/EditCouponModalAction');
 const sysConst = require('../../util/SysConst');
 const commonUtil = require('../../util/CommonUtil');
+const formatUtil = require('../../util/FormatUtil');
 
 /**
  * UI组件：新建/修改 优惠券信息 模块。
@@ -96,7 +97,9 @@ class EditCouponModal extends React.Component {
                             <div className="col s6 pink-font fz36">{editCouponModalReducer.couponId}</div>
                             <div className="col s6 right-align padding-top10">{commonUtil.getJsonValue(sysConst.USE_FLAG, editCouponModalReducer.couponStatus)}</div>
                         </div>
-                        <div className="col s12 right-align">使用/领取<span className="pink-font fz36 padding-left10">TODO/TODO</span></div>
+                        <div className="col s12 right-align">使用/领取
+                            <span className="pink-font fz36 padding-left10">{formatUtil.formatNumber(editCouponModalReducer.useNum)}/{formatUtil.formatNumber(editCouponModalReducer.receiveNum)}</span>
+                        </div>
                     </div>}
 
                     <div className="row margin-top30">

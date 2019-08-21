@@ -52,6 +52,28 @@ export const initEditCouponModal = (type, coupon) => async (dispatch) => {
         dispatch({type: EditCouponModalActionType.setValidityPeriodEnd, payload: coupon.end_date});
         // 备注
         dispatch({type: EditCouponModalActionType.setRemark, payload: coupon.remarks});
+
+        // 取得 优惠券 使用/领取 统计
+        dispatch(getCouponStatistics(coupon.id));
+    }
+};
+
+export const getCouponStatistics = (couponId) => async (dispatch, getState) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/coupon/' + couponId + '/count';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: EditCouponModalActionType.setReceiveNum, payload: res.result.receiveNum});
+            dispatch({type: EditCouponModalActionType.setUseNum, payload: res.result.useNum});
+        } else if (res.success === false) {
+            dispatch({type: EditCouponModalActionType.setReceiveNum, payload: 0});
+            dispatch({type: EditCouponModalActionType.setUseNum, payload: 0});
+            swal('获取优惠券使用，领取信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
     }
 };
 

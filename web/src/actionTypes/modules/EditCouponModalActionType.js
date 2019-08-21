@@ -10,3 +10,5 @@ export const setEffectiveDays = createAction('SET_EDIT_COUPON_EFFECTIVE_DAYS');
 export const setValidityPeriodStart = createAction('SET_EDIT_COUPON_VALIDITY_PERIOD_START');
 export const setValidityPeriodEnd = createAction('SET_EDIT_COUPON_VALIDITY_PERIOD_END');
 export const setRemark = createAction('SET_EDIT_COUPON_REMARK');
+export const setReceiveNum = createAction('SET_EDIT_COUPON_RECEIVE_NUM');
+export const setUseNum = createAction('SET_EDIT_COUPON_USE_NUM');

@@ -81,7 +81,7 @@ class EditUserCouponModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {editUserCouponModalReducer, closeModal, changeValidityPeriodType, addCouponUser, delCouponUser, saveCoupon} = this.props;
+        const {editUserCouponModalReducer, commonReducer, closeModal, changeValidityPeriodType, addCouponUser, delCouponUser, showOrderInfo, saveCoupon} = this.props;
         return (
             <div id="editUserCouponModal" className="modal modal-fixed-footer row">
 
@@ -119,6 +119,73 @@ class EditUserCouponModal extends React.Component {
                                 <div className="margin-top10">有效期：{formatUtil.getDate(editUserCouponModalReducer.userCouponInfo.start_date)} 至 {formatUtil.getDate(editUserCouponModalReducer.userCouponInfo.end_date)}</div>
                             </div>
                             <div className="col s12 margin-top10">备注：{editUserCouponModalReducer.userCouponInfo.remarks}</div>
+
+                            {/* 分割线 */}
+                            <div className="col s12 margin-top10"><div className="col s12 margin-top10 divider"/></div>
+                        </div>
+
+                        <div className="row margin-top30">
+                            <div className="col s12 no-padding pink-font">
+                                <div className="col s6 fz16">订单信息</div>
+                                <div className="col s6 right-align">
+                                    <span className="margin-left20 pink-font pointer" onClick={showOrderInfo}>
+                                        详情 {editUserCouponModalReducer.showOrderInfoFlag ? <i className="mdi mdi-chevron-up fz15"/> : <i className="mdi mdi-chevron-down fz15"/>}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* 分割线 */}
+                            {!editUserCouponModalReducer.showOrderInfoFlag &&
+                            <div className="col s12 margin-top10"><div className="col s12 margin-top10 divider"/></div>}
+
+                            {editUserCouponModalReducer.showOrderInfoFlag && commonReducer.orderInfo.length > 0 &&
+                            <div className="col s12 no-padding margin-top10 detail-box z-depth-1">
+
+                                <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
+                                    <div className="col s6 purple-font">
+                                        {commonUtil.getJsonValue(sysConst.ORDER_TYPE, commonReducer.orderInfo[0].created_type)}
+                                        <span className="margin-left10 grey-text">编号：{commonReducer.orderInfo[0].id}</span>
+                                    </div>
+                                    {/* 订单状态 */}
+                                    <div className="col s6 pink-font right-align">
+                                        {commonUtil.getJsonValue(sysConst.ORDER_STATUS, commonReducer.orderInfo[0].status)}
+                                    </div>
+                                </div>
+                                <div className="col s12 padding-top15">
+                                    <div className="col s6">
+                                        {/* 线路 */}
+                                        <span className="fz18 purple-font">{commonReducer.orderInfo[0].start_city} - {commonReducer.orderInfo[0].end_city}</span>
+                                        {/* 服务类型 */}
+                                        <span className="margin-left30">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</span>
+                                        <span className="margin-left30">运输车辆：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</span>
+                                    </div>
+                                    <div className="col s6 right-align">发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}</div>
+                                </div>
+                                <div className="col s12 padding-top10">
+                                    <div className="col s6">创建人：{commonReducer.orderInfo[0].admin_name}</div>
+                                    <div className="col s6 right-align">创建时间：{formatUtil.getDateTime(commonReducer.orderInfo[0].created_on)}</div>
+                                </div>
+                                <div className="col s12 padding-top10 padding-bottom10 border-bottom-dotted-line">
+                                    <div className="col s4">
+                                        运费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price, 2)}</span> 元
+                                    </div>
+                                    <div className="col s4">
+                                        保费：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_insure_price, 2)}</span> 元
+                                    </div>
+                                    <div className="col s4 right-align">
+                                        订单金额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price + commonReducer.orderInfo[0].total_insure_price, 2)}</span> 元
+                                    </div>
+                                </div>
+
+                                {/* 支付信息 */}
+                                {commonReducer.paymentInfo.length > 0 &&
+                                <div className="col s12 padding-top15 padding-bottom15">
+                                    <div className="col s6">支付编号：{commonReducer.paymentInfo[0].id}</div>
+                                    <div className="col s6 right-align">支付方式：{commonUtil.getJsonValue(sysConst.PAYMENT_MODE, commonReducer.paymentInfo[0].payment_type)}</div>
+                                    <div className="col s6 margin-top10">支付时间：{formatUtil.getDateTime(commonReducer.paymentInfo[0].created_on)}</div>
+                                    <div className="col s6 margin-top10 right-align">实付金额：<span className="fz16 pink-font">{formatUtil.formatNumber(commonReducer.paymentInfo[0].total_fee, 2)}</span> 元</div>
+                                </div>}
+                            </div>}
                         </div>
                     </div>}
 
@@ -126,7 +193,7 @@ class EditUserCouponModal extends React.Component {
                     {editUserCouponModalReducer.userCouponId === '' &&
                     <div>
                         {/* 接收人手机号 */}
-                        <div className="row margin-top40 margin-bottom0 position-relative">
+                        <div className="row margin-bottom0 position-relative">
                             {editUserCouponModalReducer.userInfo.length === 0 &&
                             <Input s={12} label="接收人手机号" value={editUserCouponModalReducer.userPhone} onChange={this.changeUserPhone}/>}
                             {editUserCouponModalReducer.userInfo.length > 0 &&
@@ -211,7 +278,8 @@ class EditUserCouponModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        editUserCouponModalReducer: state.EditUserCouponModalReducer
+        editUserCouponModalReducer: state.EditUserCouponModalReducer,
+        commonReducer: state.CommonReducer
     }
 };
 
@@ -243,7 +311,9 @@ const mapDispatchToProps = (dispatch) => ({
     setRemark: (value) => {
         dispatch(EditUserCouponModalActionType.setRemark(value));
     },
-
+    showOrderInfo: () => {
+        dispatch(editUserCouponModalAction.showOrderInfo());
+    },
     addCouponUser: () => {
         dispatch(editUserCouponModalAction.addCouponUser());
     },

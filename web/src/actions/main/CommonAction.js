@@ -84,6 +84,23 @@ export const getOrderInfo = (orderId) => async (dispatch) => {
     }
 };
 
+// 检索支付基本信息
+export const getPaymentInfo = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/payment?paymentId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getPaymentInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取支付详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 export const getOrderCarList = (orderId) => async (dispatch) => {
     try {
         // 基本检索URL

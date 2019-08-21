@@ -7,6 +7,8 @@ const initialState = {
     userCouponId: '',
     // 领取优惠券信息
     userCouponInfo: null,
+    // 优惠券领取详情：是否显示订单信息
+    showOrderInfoFlag: false,
     // 接收人手机号
     userPhone: '',
     // 用户信息
@@ -39,6 +41,12 @@ export default handleActions({
         return {
             ...state,
             userCouponInfo: action.payload
+        }
+    },
+    [EditUserCouponModalActionType.setShowOrderInfoFlag]: (state, action) => {
+        return {
+            ...state,
+            showOrderInfoFlag: action.payload
         }
     },
     [EditUserCouponModalActionType.setUserPhone]: (state, action) => {

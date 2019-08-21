@@ -2,6 +2,7 @@ import {apiHost} from '../../config/HostConfig';
 import {EditUserCouponModalActionType} from "../../actionTypes";
 
 const couponManagerAction = require('../../actions/main/CouponManagerAction');
+const commonAction = require('../../actions/main/CommonAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
@@ -11,11 +12,8 @@ export const initEditUserCouponModal = (type, userCoupon) => async (dispatch) =>
     if (type === 'new') {
         // 领取优惠券ID
         dispatch({type: EditUserCouponModalActionType.setUserCouponId, payload: ''});
-
         // 接收人手机号
         dispatch({type: EditUserCouponModalActionType.setUserPhone, payload: ''});
-        // 是否有用户信息
-        dispatch({type: EditUserCouponModalActionType.setHasUser, payload: false});
         // 用户信息
         dispatch({type: EditUserCouponModalActionType.setUserInfo, payload: []});
 
@@ -23,7 +21,6 @@ export const initEditUserCouponModal = (type, userCoupon) => async (dispatch) =>
         dispatch({type: EditUserCouponModalActionType.setCouponAmount, payload: ''});
         // 门槛
         dispatch({type: EditUserCouponModalActionType.setCouponThreshold, payload: ''});
-
         // 有效期类型
         dispatch({type: EditUserCouponModalActionType.setValidityPeriodType, payload: {value: 0, label: '天数'}});
         // 有效期天数
@@ -39,6 +36,32 @@ export const initEditUserCouponModal = (type, userCoupon) => async (dispatch) =>
         dispatch({type: EditUserCouponModalActionType.setUserCouponId, payload: userCoupon.id});
         // 领取优惠券信息
         dispatch({type: EditUserCouponModalActionType.setUserCouponInfo, payload: userCoupon});
+        // 是否显示订单信息
+        dispatch({type: EditUserCouponModalActionType.setShowOrderInfoFlag, payload: false});
+        // // 订单信息
+        // dispatch(commonAction.getOrderInfo(userCoupon.order_id));
+        // // 支付信息
+        // dispatch(commonAction.getPaymentInfo(userCoupon.payment_id));
+    }
+};
+
+export const showOrderInfo = () => async (dispatch, getState) => {
+    try {
+        // 优惠券领取详情
+        const userCouponInfo = getState().EditUserCouponModalReducer.userCouponInfo;
+        // 优惠券领取详情：是否显示订单信息
+        const showOrderInfoFlag = getState().EditUserCouponModalReducer.showOrderInfoFlag;
+
+        if (!showOrderInfoFlag) {
+            // 订单信息
+            dispatch(commonAction.getOrderInfo(userCouponInfo.order_id));
+            // 支付信息
+            dispatch(commonAction.getPaymentInfo(userCouponInfo.payment_id));
+        }
+        // 是否显示订单信息
+        dispatch({type: EditUserCouponModalActionType.setShowOrderInfoFlag, payload: !showOrderInfoFlag});
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
     }
 };
 

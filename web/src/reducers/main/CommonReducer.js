@@ -13,6 +13,8 @@ const initialState = {
 
     // 订单信息
     orderInfo: [],
+    // 支付信息
+    paymentInfo: [],
     // 是否显示订单车辆列表
     showOrderCarListFlag: false,
     // 订单信息：运送车辆列表
@@ -77,6 +79,12 @@ export default handleActions({
         return {
             ...state,
             orderInfo: action.payload
+        }
+    },
+    [CommonActionType.getPaymentInfo]: (state, action) => {
+        return {
+            ...state,
+            paymentInfo: action.payload
         }
     },
     [CommonActionType.setShowOrderCarListFlag]: (state, action) => {

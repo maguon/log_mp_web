@@ -2,6 +2,7 @@ import {createAction} from 'redux-actions';
 
 export const setUserCouponId = createAction('SET_EDIT_USER_COUPON_ID');
 export const setUserCouponInfo = createAction('SET_EDIT_USER_COUPON_INFO');
+export const setShowOrderInfoFlag = createAction('SET_EDIT_USER_COUPON_SHOW_ORDER_INFO');
 export const setUserPhone = createAction('SET_EDIT_USER_COUPON_PHONE');
 export const setUserInfo = createAction('SET_EDIT_USER_COUPON_USER_INFO');
 export const setCouponAmount = createAction('SET_EDIT_USER_COUPON_AMOUNT');

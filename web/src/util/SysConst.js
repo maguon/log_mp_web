@@ -453,6 +453,52 @@ export const USED_FLAG = [
     }
 ];
 
+// 商品销售类型
+export const PRODUCT_SALE_TYPE = [
+    {
+        value: 1,
+        label: "全款购车"
+    },
+    {
+        value: 2,
+        label: "定金购车"
+    },
+    {
+        value: 3,
+        label: "货到付款"
+    }
+];
+
+// 销售状态
+export const SALE_STATUS = [
+    {
+        value: 0,
+        label: "下架"
+    },
+    {
+        value: 1,
+        label: "销售中"
+    }
+];
+
+/**
+ * rich-text 自定义 toolbar
+ */
+export const RICH_TEXT_MODULES = {
+    toolbar: [
+        [{size: []} ],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{'list': 'ordered'}, {'list': 'bullet'},
+            {'indent': '-1'}, {'indent': '+1'}],
+        [{ 'color': [] }],
+        ['clean']
+    ],
+    clipboard: {
+        // toggle to add extra line breaks when pasting HTML:
+        matchVisual: false,
+    }
+};
+
 export const DATE_PICKER_OPTION = {
     // selectMonths: true,
     // selectYears: 15,

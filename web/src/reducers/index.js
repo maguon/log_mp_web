@@ -62,6 +62,8 @@ import RecommendBusinessManagerReducer from './main/RecommendBusinessManagerRedu
 import RecommendBusinessManagerDetailReducer from './main/RecommendBusinessManagerDetailReducer';
 import CouponSettingReducer from './main/CouponSettingReducer';
 import CouponManagerReducer from './main/CouponManagerReducer';
+import ProductReducer from './main/ProductReducer';
+import ProductDetailReducer from './main/ProductDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -160,6 +162,8 @@ export default combineReducers({
     RecommendBusinessManagerDetailReducer,
     CouponSettingReducer,
     CouponManagerReducer,
+    ProductReducer,
+    ProductDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

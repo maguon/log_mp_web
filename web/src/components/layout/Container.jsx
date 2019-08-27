@@ -56,7 +56,9 @@ import {
     RecommendBusinessManager,
     RecommendBusinessManagerDetail,
     CouponManager,
-    CouponSetting
+    CouponSetting,
+    Product,
+    ProductDetail
 } from '../main/index';
 
 const routes = [
@@ -284,6 +286,18 @@ const routes = [
         path: '/recommend_business/:id',
         exact: true,
         component: RecommendBusinessManagerDetail
+    },
+
+    // 商品信息
+    {
+        path: "/product",
+        exact: true,
+        component: Product
+    },
+    {
+        path: '/product/:id',
+        exact: true,
+        component: ProductDetail
     },
 
     // 设置模块
@@ -529,6 +543,16 @@ class Container extends React.Component {
                     {
                         "link": '/order_profit',
                         "name": '订单利润'
+                    }
+                ]
+            },
+            {
+                "label": '商品信息',
+                "icon": 'mdi-store-24-hour',
+                "children": [
+                    {
+                        "link": '/product',
+                        "name": '商品管理'
                     }
                 ]
             },

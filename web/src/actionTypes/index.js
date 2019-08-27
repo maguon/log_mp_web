@@ -59,6 +59,8 @@ import * as RecommendBusinessManagerActionType  from './main/RecommendBusinessMa
 import * as RecommendBusinessManagerDetailActionType  from './main/RecommendBusinessManagerDetailActionType';
 import * as CouponSettingActionType  from './main/CouponSettingActionType';
 import * as CouponManagerActionType  from './main/CouponManagerActionType';
+import * as ProductActionType  from './main/ProductActionType';
+import * as ProductDetailActionType  from './main/ProductDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -156,6 +158,8 @@ export  {
     RecommendBusinessManagerDetailActionType,
     CouponSettingActionType,
     CouponManagerActionType,
+    ProductActionType,
+    ProductDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,

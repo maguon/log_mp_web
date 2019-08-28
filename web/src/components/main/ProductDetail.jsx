@@ -80,7 +80,6 @@ class ProductDetail extends React.Component {
      * 更新 商品信息：商品介绍
      */
     changeProductDes = (value) => {
-        console.log('value',value);
         this.props.setProductDes(value);
     };
 
@@ -136,7 +135,10 @@ class ProductDetail extends React.Component {
                             {productDetailReducer.productInfo.length > 0 &&
                             <div className="row detail-box-header">
                                 <div className="col s6">商品编号：{productDetailReducer.productInfo[0].id}</div>
-                                <div className="col s6 fz14 right-align grey-text">上架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].created_on)}</div>
+                                {productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[0].value &&
+                                <div className="col s6 fz14 right-align grey-text">上架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].created_on)}</div>}
+                                {productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[1].value &&
+                                <div className="col s6 fz14 right-align grey-text">下架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].updated_on)}</div>}
                             </div>}
 
                             {/* 商品信息：商品基本信息 */}

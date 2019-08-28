@@ -1,7 +1,6 @@
 import {apiHost, fileHost} from '../../config/HostConfig';
 import {ProductDetailActionType} from '../../actionTypes';
 
-const productAction = require('../../actions/main/ProductAction');
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -49,7 +48,6 @@ export const saveProductInfo = () => async (dispatch, getState) => {
     const quantity = getState().ProductDetailReducer.quantity;
     // 商品管理详细：城市
     const city = getState().ProductDetailReducer.city;
-
     // 商品管理详细：生产日期
     const productionDate = getState().ProductDetailReducer.productionDate;
     // 商品管理详细：销售类型
@@ -83,6 +81,8 @@ export const saveProductInfo = () => async (dispatch, getState) => {
             let res = await httpUtil.httpPut(url, params);
             if (res.success === true) {
                 swal("保存成功", "", "success");
+                // 修改成功后，刷新页面
+                dispatch(getProductInfo(productId));
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }

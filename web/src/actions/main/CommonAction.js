@@ -20,6 +20,21 @@ export const getCityList = () => async (dispatch) => {
     }
 };
 
+// 取得系统 商品列表
+export const getProductList = () => async (dispatch) => {
+    try {
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getProductList, payload: res.result})
+        } else if (res.success === false) {
+            swal('获取商品信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 // 取得系统 供应商列表
 export const getSupplierList = () => async (dispatch) => {
     try {

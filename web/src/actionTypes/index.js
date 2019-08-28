@@ -96,6 +96,7 @@ import * as NewRecommenderModalActionType  from './modules/NewRecommenderModalAc
 import * as AdvertisingModalActionType  from './modules/AdvertisingModalActionType';
 import * as EditCouponModalActionType  from './modules/EditCouponModalActionType';
 import * as EditUserCouponModalActionType  from './modules/EditUserCouponModalActionType';
+import * as NewProductModalActionType  from './modules/NewProductModalActionType';
 
 export  {
     LoginActionType,
@@ -194,5 +195,6 @@ export  {
     NewRecommenderModalActionType,
     AdvertisingModalActionType,
     EditCouponModalActionType,
-    EditUserCouponModalActionType
+    EditUserCouponModalActionType,
+    NewProductModalActionType
 }

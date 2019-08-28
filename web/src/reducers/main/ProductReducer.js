@@ -8,12 +8,14 @@ const initialState = {
     size: 11,
     // 检索结果数量
     dataSize: 0,
-    // 检索条件：编号
-    conditionNo: '',
+    // 检索条件：商品编号
+    conditionProduct: null,
+    // 检索条件：城市
+    conditionCity: null,
     // 检索条件：销售类型
     conditionSaleType: null,
     // 检索条件：销售状态
-    conditionSaleStatus: null,
+    conditionProductSaleStatus: null,
     // 商品检索结果列表
     productArray: []
 };
@@ -37,10 +39,16 @@ export default handleActions({
             dataSize: action.payload
         }
     },
-    [ProductActionType.setConditionNo]: (state, action) => {
+    [ProductActionType.setConditionProduct]: (state, action) => {
         return {
             ...state,
-            conditionNo: action.payload
+            conditionProduct: action.payload
+        }
+    },
+    [ProductActionType.setConditionCity]: (state, action) => {
+        return {
+            ...state,
+            conditionCity: action.payload
         }
     },
     [ProductActionType.setConditionSaleType]: (state, action) => {
@@ -49,10 +57,10 @@ export default handleActions({
             conditionSaleType: action.payload
         }
     },
-    [ProductActionType.setConditionSaleStatus]: (state, action) => {
+    [ProductActionType.setConditionProductSaleStatus]: (state, action) => {
         return {
             ...state,
-            conditionSaleStatus: action.payload
+            conditionProductSaleStatus: action.payload
         }
     }
 }, initialState)

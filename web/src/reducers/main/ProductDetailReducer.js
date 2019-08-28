@@ -2,12 +2,10 @@ import {handleActions} from 'redux-actions';
 import {ProductDetailActionType} from '../../actionTypes';
 
 const initialState = {
-    // 画面区分
-    pageType: '',
     // 商品信息 - 商品基本信息(编辑画面用)
     productInfo: [],
-    // 商品信息 - 新建商品id
-    newProductId: '',
+    // 商品信息 - 商品id
+    productId: '',
 
     // 商品信息 - 商品名称
     productName: '',
@@ -15,46 +13,35 @@ const initialState = {
     quantity: '',
     // 商品信息 - 城市
     city: {},
-
     // 商品信息 - 生产日期
     productionDate: '',
     // 商品信息 - 销售类型
     productSaleType: {},
     // 商品信息 - 定金
-    earnestMoney: '',
-
+    earnestMoney: 0,
     // 商品信息 - 指导价
     originalPrice: '',
     // 商品信息 - 实际售价
     actualPrice: '',
-
     // 商品图片
     productImg: '',
-
     // 商品介绍
     productDes: ''
 };
 
 export default handleActions({
-    [ProductDetailActionType.setPageType]: (state, action) => {
-        return {
-            ...state,
-            pageType: action.payload
-        }
-    },
     [ProductDetailActionType.getProductInfo]: (state, action) => {
         return {
             ...state,
             productInfo: action.payload
         }
     },
-    [ProductDetailActionType.setNewProductId]: (state, action) => {
+    [ProductDetailActionType.setProductId]: (state, action) => {
         return {
             ...state,
-            newProductId: action.payload
+            productId: action.payload
         }
     },
-
     [ProductDetailActionType.setProductName]: (state, action) => {
         return {
             ...state,
@@ -73,7 +60,6 @@ export default handleActions({
             city: action.payload
         }
     },
-
     [ProductDetailActionType.setProductionDate]: (state, action) => {
         return {
             ...state,
@@ -92,10 +78,6 @@ export default handleActions({
             earnestMoney: action.payload
         }
     },
-
-
-
-
     [ProductDetailActionType.setOriginalPrice]: (state, action) => {
         return {
             ...state,
@@ -108,8 +90,6 @@ export default handleActions({
             actualPrice: action.payload
         }
     },
-
-
     [ProductDetailActionType.setProductImg]: (state, action) => {
         return {
             ...state,

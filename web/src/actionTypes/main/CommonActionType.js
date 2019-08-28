@@ -1,6 +1,7 @@
 import {createAction} from 'redux-actions';
 
-export const getCityList = createAction('GET_CITY_LIST');
+export const getCityList = createAction('GET_COMMON_CITY_LIST');
+export const getProductList = createAction('GET_COMMON_PRODUCT_LIST');
 export const getSupplierList = createAction('GET_SUPPLIER_LIST');
 export const getDepartmentList = createAction('GET_DEPARTMENT_LIST');
 export const getAdminUserList = createAction('GET_ADMIN_USER_LIST');

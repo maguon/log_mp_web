@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
 import {reduxForm} from "redux-form";
-import {ProductDetailActionType} from '../../actionTypes';
+import {NewProductModalActionType, ProductDetailActionType} from '../../actionTypes';
 import {fileHost} from "../../config/HostConfig";
 
 const productDetailAction = require('../../actions/main/ProductDetailAction');
@@ -87,11 +87,11 @@ class ProductDetail extends React.Component {
     /**
      * 新建画面 跳转到 商品介绍TAB
      */
-    goNextPage = () => {
-        $("ul.tabs li").removeClass("disabled");
-        $('ul.tabs').tabs('select_tab', 'tab-desc');
-        $("ul.tabs li").addClass("disabled");
-    };
+    // goNextPage = () => {
+    //     $("ul.tabs li").removeClass("disabled");
+    //     $('ul.tabs').tabs('select_tab', 'tab-desc');
+    //     $("ul.tabs li").addClass("disabled");
+    // };
 
     render() {
         const {productDetailReducer, commonReducer, changeProductCity, changeProductSaleType, saveProductInfo, changeProductStatus, saveProductDesc, handleSubmit} = this.props;
@@ -114,7 +114,7 @@ class ProductDetail extends React.Component {
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">{productDetailReducer.pageType === 'new' ? '商品管理 - 商品发布' : '商品管理 - 商品详情'}</span>
+                        <span className="page-title margin-left30">商品管理 - 商品详情</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -132,10 +132,9 @@ class ProductDetail extends React.Component {
                     {/* TAB 1 : 商品信息TAB */}
                     <div id="tab-base" className="col s12">
                         <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
-                            {/* 商品信息：商品编号 上架时间 (编辑画面显示) */}
-                            {productDetailReducer.pageType === 'edit' && productDetailReducer.productInfo.length > 0 &&
+                            {/* 商品信息：商品编号 上架时间 */}
+                            {productDetailReducer.productInfo.length > 0 &&
                             <div className="row detail-box-header">
-                                {/* 商品信息：商品编号 */}
                                 <div className="col s6">商品编号：{productDetailReducer.productInfo[0].id}</div>
                                 <div className="col s6 fz14 right-align grey-text">上架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].created_on)}</div>
                             </div>}
@@ -143,11 +142,19 @@ class ProductDetail extends React.Component {
                             {/* 商品信息：商品基本信息 */}
                             <div>
                                 <div className="row margin-left20 margin-right20 margin-top40">
-                                    <Input s={6} label="商品名称" maxLength="50" value={productDetailReducer.productName} onChange={this.changeProductName}/>
-                                    <Input s={3} label="数量" type="number" className="right-align fz16 red-font" value={productDetailReducer.quantity} onChange={this.changeQuantity}/>
+                                    <Input s={8} label="商品名称" maxLength="50" value={productDetailReducer.productName} onChange={this.changeProductName}/>
+                                    <Input s={4} label="数量" type="number" className="right-align fz16 red-font" value={productDetailReducer.quantity} onChange={this.changeQuantity}/>
+                                </div>
+
+                                <div className="row margin-left20 margin-right20 margin-top20">
+                                    {/* 生产日期 */}
+                                    <div className="input-field col s4 custom-input-field">
+                                        <Input s={12} label="生产日期" type='date' options={sysConst.DATE_PICKER_OPTION} value={productDetailReducer.productionDate} onChange={this.changeProductionDate} />
+                                        <span className="mdi data-icon mdi-table-large"/>
+                                    </div>
 
                                     {/* 查询条件：所在城市 */}
-                                    <div className="input-field col s3">
+                                    <div className="input-field col s4">
                                         <Select
                                             options={commonReducer.cityList}
                                             onChange={changeProductCity}
@@ -159,14 +166,6 @@ class ProductDetail extends React.Component {
                                             backspaceRemovesValue={false}
                                         />
                                         <label className="active">城市</label>
-                                    </div>
-                                </div>
-
-                                <div className="row margin-left20 margin-right20 margin-top20">
-                                    {/* 生产日期 */}
-                                    <div className="input-field col s4 custom-input-field">
-                                        <Input s={12} label="生产日期" type='date' options={sysConst.DATE_PICKER_OPTION} value={productDetailReducer.productionDate} onChange={this.changeProductionDate} />
-                                        <span className="mdi data-icon mdi-table-large"/>
                                     </div>
 
                                     {/* 销售类型 */}
@@ -183,30 +182,24 @@ class ProductDetail extends React.Component {
                                         />
                                         <label className="active">销售类型</label>
                                     </div>
-
-                                    {productDetailReducer.productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value &&
-                                    <Input s={4} label="定金" type="number" className="right-align fz16 red-font" value={productDetailReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
-
                                 </div>
 
                                 <div className="row margin-left20 margin-right20 margin-top20 margin-bottom40">
-                                    <Input s={4} label="指导价" type="number" className="right-align fz16 red-font" value={productDetailReducer.originalPrice} onChange={this.changeOriginalPrice}/>
-                                    <Input s={4} label="实际售价" type="number" className="right-align fz16 red-font" value={productDetailReducer.actualPrice} onChange={this.changeActualPrice}/>
+                                    <Input s={4} label="指导价（万元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.originalPrice} onChange={this.changeOriginalPrice}/>
+                                    <Input s={4} label="实际售价（万元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.actualPrice} onChange={this.changeActualPrice}/>
+                                    {productDetailReducer.productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value &&
+                                    <Input s={4} label="定金（元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
                                 </div>
                             </div>
-
                         </div>
 
-                        {/* 下一步 按钮 */}
+                        {/* 按钮 */}
+                        {productDetailReducer.productInfo.length > 0 &&
                         <div className="col s12 right-align padding-right70">
-                            {productDetailReducer.pageType === 'new' && <button type="button" className="btn confirm-btn" onClick={saveProductInfo}>下一步</button>}
-                            {productDetailReducer.pageType === 'edit' && productDetailReducer.productInfo.length > 0 &&
-                                 <div>
-                                    <button type="button" className="btn orange-btn" onClick={changeProductStatus}>{productDetailReducer.productInfo[0].status === 0 ? '重新上架' : '下架'}</button>
-                                    <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductInfo}>确定</button>
-                                </div>
-                            }
-                        </div>
+                            {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[0].value &&
+                            <button type="button" className="btn orange-btn" onClick={changeProductStatus}>确认售罄</button>}
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductInfo}>保存</button>
+                        </div>}
                     </div>
 
                     {/* TAB 2 : 商品图片TAB */}
@@ -233,35 +226,32 @@ class ProductDetail extends React.Component {
                         </div>
 
                         {/* 按钮 */}
-                        <div className="col s12 right-align margin-top40 padding-right70">
-                            {productDetailReducer.pageType === 'new' && <button type="button" className="btn confirm-btn" onClick={this.goNextPage}>下一步</button>}
-                            {/*{productDetailReducer.pageType === 'edit' && productDetailReducer.productInfo.length > 0 &&*/}
-                                {/*<button type="button" className="btn confirm-btn margin-left20" onClick={saveProductImg}>确定</button>}*/}
-                        </div>
+                        {/*<div className="col s12 right-align margin-top40 padding-right70">*/}
+                        {/*    {productDetailReducer.pageType === 'new' && <button type="button" className="btn confirm-btn" onClick={this.goNextPage}>下一步</button>}*/}
+                        {/*    /!*{productDetailReducer.pageType === 'edit' && productDetailReducer.productInfo.length > 0 &&*!/*/}
+                        {/*        /!*<button type="button" className="btn confirm-btn margin-left20" onClick={saveProductImg}>确定</button>}*!/*/}
+                        {/*</div>*/}
                     </div>
 
                     {/* TAB 3 : 商品介绍TAB */}
                     <div id="tab-desc" className="col s12">
+                        {productDetailReducer.productInfo.length > 0 &&
                         <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50 min-height500">
                             <div className="row detail-box-header margin-bottom0">
                                 {/* 商品介绍：商品名称 */}
-                                <div className="col s12 no-padding">{productDetailReducer.productName}</div>
+                                <div className="col s12 no-padding">{productDetailReducer.productInfo[0].commodity_name}</div>
                             </div>
                             <div className="row margin-bottom0">
                                 <ReactQuill modules={sysConst.RICH_TEXT_MODULES} value={productDetailReducer.productDes} onChange={this.changeProductDes} />
                                 {/*<Input s={12} type='textarea' placeholder="请输入文字介绍" className="no-border-bottom" value={productDetailReducer.productDes} onChange={this.changeProductDes}/>*/}
                             </div>
-                        </div>
+                        </div>}
                         {/* 完成 按钮 */}
+                        {productDetailReducer.productInfo.length > 0 &&
                         <div className="col s12 right-align padding-right70">
-                            {productDetailReducer.pageType === 'new' && <button type="button" className="btn confirm-btn" onClick={saveProductDesc}>完成</button>}
-                            {productDetailReducer.pageType === 'edit' && productDetailReducer.productInfo.length > 0 &&
-                            <div>
-                                <button type="button" className="btn orange-btn" onClick={()=>{this.changeProductDes('')}}>清空</button>
-                                <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductDesc}>确定</button>
-                            </div>
-                            }
-                        </div>
+                            <button type="button" className="btn orange-btn" onClick={()=>{this.changeProductDes('')}}>清空</button>
+                            <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductDesc}>保存</button>
+                        </div>}
                     </div>
                 </div>
             </div>
@@ -278,46 +268,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getProductInfo: () => {
+        // 清除新增商品编号
+        dispatch(NewProductModalActionType.setNewProductId(''));
         // 取得城市列表
         dispatch(commonAction.getCityList());
-
-        // 商品id
-        let productId = ownProps.match.params.id;
-        // 画面区分：新建
-        if (productId === 'new') {
-            // 新建画面 TAB 不可操作
-            $("ul.tabs li").addClass("disabled");
-            // 画面区分：新建
-            dispatch(ProductDetailActionType.setPageType('new'));
-            // 初期化数据
-            dispatch(ProductDetailActionType.setProductName(''));
-            dispatch(ProductDetailActionType.setQuantity(''));
-            dispatch(ProductDetailActionType.setProductCity(''));
-
-            dispatch(ProductDetailActionType.setProductionDate(''));
-            dispatch(ProductDetailActionType.setProductSaleType({}));
-            dispatch(ProductDetailActionType.setEarnestMoney(''));
-            dispatch(ProductDetailActionType.setOriginalPrice(''));
-            dispatch(ProductDetailActionType.setActualPrice(''));
-
-
-            dispatch(ProductDetailActionType.setProductImg(''));
-            dispatch(ProductDetailActionType.setProductDes(''));
-        } else {
-            // 画面区分：编辑
-            dispatch(ProductDetailActionType.setPageType('edit'));
-            dispatch(productDetailAction.getProductInfo(productId));
-        }
+        // 取得商品详情
+        dispatch(productDetailAction.getProductInfo(ownProps.match.params.id));
     },
-    saveProductInfo: () => {
-        dispatch(productDetailAction.saveProductInfo());
-    },
-    changeProductStatus: () => {
-        dispatch(productDetailAction.changeProductStatus());
-    },
-
-
-
     setProductName: (value) => {
         dispatch(ProductDetailActionType.setProductName(value))
     },
@@ -327,8 +284,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     changeProductCity: (value) => {
         dispatch(ProductDetailActionType.setProductCity(value))
     },
-
-
     setProductionDate: (value) => {
         dispatch(ProductDetailActionType.setProductionDate(value))
     },
@@ -344,19 +299,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     setActualPrice: (value) => {
         dispatch(ProductDetailActionType.setActualPrice(value))
     },
-
-    setFreight: (value) => {
-        dispatch(ProductDetailActionType.setFreight(value))
+    saveProductInfo: () => {
+        dispatch(productDetailAction.saveProductInfo());
     },
-    setRemark: (value) => {
-        dispatch(ProductDetailActionType.setRemark(value))
-    },
-    setProductDes: (value) => {
-        dispatch(ProductDetailActionType.setProductDes(value))
+    changeProductStatus: () => {
+        dispatch(productDetailAction.changeProductStatus());
     },
     // saveProductImg: () => {
     //     dispatch(productDetailAction.saveProductImg(formData));
     // },
+    setProductDes: (value) => {
+        dispatch(ProductDetailActionType.setProductDes(value))
+    },
     saveProductDesc: () => {
         dispatch(productDetailAction.saveProductDesc());
     }

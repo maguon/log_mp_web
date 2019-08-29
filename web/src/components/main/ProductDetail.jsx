@@ -187,10 +187,10 @@ class ProductDetail extends React.Component {
                                 </div>
 
                                 <div className="row margin-left20 margin-right20 margin-top20 margin-bottom40">
-                                    <Input s={4} label="指导价（万元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.originalPrice} onChange={this.changeOriginalPrice}/>
-                                    <Input s={4} label="实际售价（万元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.actualPrice} onChange={this.changeActualPrice}/>
+                                    <Input s={4} label="指导价 (元)" type="number" className="right-align fz16 red-font" value={productDetailReducer.originalPrice} onChange={this.changeOriginalPrice}/>
+                                    <Input s={4} label="实际售价 (元)" type="number" className="right-align fz16 red-font" value={productDetailReducer.actualPrice} onChange={this.changeActualPrice}/>
                                     {productDetailReducer.productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value &&
-                                    <Input s={4} label="定金（元）" type="number" className="right-align fz16 red-font" value={productDetailReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
+                                    <Input s={4} label="定金 (元)" type="number" className="right-align fz16 red-font" value={productDetailReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
                                 </div>
                             </div>
                         </div>

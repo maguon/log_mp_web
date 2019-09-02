@@ -37,3 +37,4 @@ export AdvertisingModal from "./AdvertisingModal";
 export EditCouponModal from "./EditCouponModal";
 export EditUserCouponModal from "./EditUserCouponModal";
 export NewProductModal from "./NewProductModal";
+export EditProductRemindModal from "./EditProductRemindModal";

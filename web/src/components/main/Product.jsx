@@ -256,7 +256,7 @@ const mapDispatchToProps = (dispatch) => ({
     initConditionData: () => {
         // 取得城市列表
         dispatch(commonAction.getCityList());
-        // 取得城市列表
+        // 取得商品列表
         dispatch(commonAction.getProductList());
     },
     getProductList: () => {

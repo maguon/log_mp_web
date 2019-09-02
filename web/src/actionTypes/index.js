@@ -61,6 +61,9 @@ import * as CouponSettingActionType  from './main/CouponSettingActionType';
 import * as CouponManagerActionType  from './main/CouponManagerActionType';
 import * as ProductActionType  from './main/ProductActionType';
 import * as ProductDetailActionType  from './main/ProductDetailActionType';
+import * as ProductOrderActionType  from './main/ProductOrderActionType';
+import * as ProductOrderDetailActionType  from './main/ProductOrderDetailActionType';
+import * as ProductRemindActionType  from './main/ProductRemindActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -97,6 +100,7 @@ import * as AdvertisingModalActionType  from './modules/AdvertisingModalActionTy
 import * as EditCouponModalActionType  from './modules/EditCouponModalActionType';
 import * as EditUserCouponModalActionType  from './modules/EditUserCouponModalActionType';
 import * as NewProductModalActionType  from './modules/NewProductModalActionType';
+import * as EditProductRemindModalActionType  from './modules/EditProductRemindModalActionType';
 
 export  {
     LoginActionType,
@@ -161,6 +165,9 @@ export  {
     CouponManagerActionType,
     ProductActionType,
     ProductDetailActionType,
+    ProductOrderActionType,
+    ProductOrderDetailActionType,
+    ProductRemindActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -196,5 +203,6 @@ export  {
     AdvertisingModalActionType,
     EditCouponModalActionType,
     EditUserCouponModalActionType,
-    NewProductModalActionType
+    NewProductModalActionType,
+    EditProductRemindModalActionType
 }

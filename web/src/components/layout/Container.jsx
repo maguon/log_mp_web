@@ -58,7 +58,9 @@ import {
     CouponManager,
     CouponSetting,
     Product,
-    ProductDetail
+    ProductDetail,
+    ProductOrder,
+    ProductRemind
 } from '../main/index';
 
 const routes = [
@@ -298,6 +300,21 @@ const routes = [
         path: '/product/:id',
         exact: true,
         component: ProductDetail
+    },
+    {
+        path: "/product_order",
+        exact: true,
+        component: ProductOrder
+    },
+    {
+        path: '/product_order/:id',
+        exact: true,
+        component: ProductOrder
+    },
+    {
+        path: "/product_remind",
+        exact: true,
+        component: ProductRemind
     },
 
     // 设置模块
@@ -553,6 +570,14 @@ class Container extends React.Component {
                     {
                         "link": '/product',
                         "name": '商品管理'
+                    },
+                    {
+                        "link": '/product_order',
+                        "name": '商品订单'
+                    },
+                    {
+                        "link": '/product_remind',
+                        "name": '商品提醒'
                     }
                 ]
             },

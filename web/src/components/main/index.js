@@ -56,3 +56,5 @@ export CouponSetting from "./CouponSetting";
 export CouponManager from "./CouponManager";
 export Product from "./Product";
 export ProductDetail from "./ProductDetail";
+export ProductOrder from "./ProductOrder";
+export ProductRemind from "./ProductRemind";

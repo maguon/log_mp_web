@@ -64,6 +64,9 @@ import CouponSettingReducer from './main/CouponSettingReducer';
 import CouponManagerReducer from './main/CouponManagerReducer';
 import ProductReducer from './main/ProductReducer';
 import ProductDetailReducer from './main/ProductDetailReducer';
+import ProductOrderReducer from './main/ProductOrderReducer';
+import ProductOrderDetailReducer from './main/ProductOrderDetailReducer';
+import ProductRemindReducer from './main/ProductRemindReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -100,6 +103,7 @@ import AdvertisingModalReducer from './modules/AdvertisingModalReducer';
 import EditCouponModalReducer from './modules/EditCouponModalReducer';
 import EditUserCouponModalReducer from './modules/EditUserCouponModalReducer';
 import NewProductModalReducer from './modules/NewProductModalReducer';
+import EditProductRemindModalReducer from './modules/EditProductRemindModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -165,6 +169,9 @@ export default combineReducers({
     CouponManagerReducer,
     ProductReducer,
     ProductDetailReducer,
+    ProductOrderReducer,
+    ProductOrderDetailReducer,
+    ProductRemindReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
@@ -200,5 +207,6 @@ export default combineReducers({
     AdvertisingModalReducer,
     EditCouponModalReducer,
     EditUserCouponModalReducer,
-    NewProductModalReducer
+    NewProductModalReducer,
+    EditProductRemindModalReducer
 })

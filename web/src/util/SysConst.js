@@ -469,7 +469,7 @@ export const PRODUCT_SALE_TYPE = [
     }
 ];
 
-// 销售状态
+// 商品状态
 export const PRODUCT_SALE_STATUS = [
     {
         value: 0,
@@ -494,6 +494,18 @@ export const SALE_STATUS = [
     {
         value: 1,
         label: "下架"
+    }
+];
+
+// 提醒状态
+export const PRODUCT_REMIND_FLAG = [
+    {
+        value: 1,
+        label: "未联系"
+    },
+    {
+        value: 2,
+        label: "已联系"
     }
 ];
 

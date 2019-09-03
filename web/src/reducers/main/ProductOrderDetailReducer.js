@@ -1,25 +1,33 @@
 import {handleActions} from 'redux-actions';
-import {LoadTaskPaymentManagerDetailActionType} from '../../actionTypes';
+import {ProductOrderDetailActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 线路安排基本信息
-    loadTaskInfo: [],
-    // 安排车辆列表
-    scheduledCarList: []
+    // 订单详细信息
+    productOrderInfo: [],
+    // 订单备注
+    orderRemark: '',
+    // 订单支付信息
+    productOrderPaymentInfo: []
 };
 
 export default handleActions({
-    [LoadTaskPaymentManagerDetailActionType.getLoadTaskInfo]: (state, action) => {
+    [ProductOrderDetailActionType.getProductOrderInfo]: (state, action) => {
         return {
             ...state,
-            loadTaskInfo: action.payload
+            productOrderInfo: action.payload
         }
     },
-    [LoadTaskPaymentManagerDetailActionType.getScheduledCarList]: (state, action) => {
+    [ProductOrderDetailActionType.setProductOrderRemark]: (state, action) => {
         return {
             ...state,
-            scheduledCarList: action.payload
+            orderRemark: action.payload
+        }
+    },
+    [ProductOrderDetailActionType.getProductOrderPaymentInfo]: (state, action) => {
+        return {
+            ...state,
+            productOrderPaymentInfo: action.payload
         }
     }
 }, initialState)

@@ -1,7 +1,7 @@
-export const USER_ID ='user-id';
-export const USER_TYPE ='user-type';
-export const USER_STATUS='user-status';
-export const AUTH_TOKEN ='auth-token';
+export const USER_ID = 'user-id';
+export const USER_TYPE = 'user-type';
+export const USER_STATUS = 'user-status';
+export const AUTH_TOKEN = 'auth-token';
 
 export const INQUIRY_PARAMS = {
     label: "估值计算用参数",
@@ -509,16 +509,52 @@ export const PRODUCT_REMIND_FLAG = [
     }
 ];
 
+// 订单状态 1:待发货 4:已发货 6:已取消  8:已送达
+export const PRODUCT_ORDER_STATUS = [
+    {
+        value: 1,
+        label: "待发货"
+    },
+    {
+        value: 4,
+        label: "已发货"
+    },
+    {
+        value: 6,
+        label: "已取消"
+    },
+    {
+        value: 8,
+        label: "已送达"
+    }
+];
+
+// 商品支付状态
+export const PRODUCT_PAYMENT_STATUS = [
+    {
+        value: 1,
+        label: "未支付"
+    },
+    {
+        value: 2,
+        label: "已支付"
+    },
+    {
+        value: 3,
+        label: "已退款"
+    }
+];
+
 /**
  * rich-text 自定义 toolbar
  */
 export const RICH_TEXT_MODULES = {
     toolbar: [
-        [{size: []} ],
+        [{size: []}],
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{'list': 'ordered'}, {'list': 'bullet'},
             {'indent': '-1'}, {'indent': '+1'}],
-        [{ 'color': [] }],
+        [{'color': []}],
         ['clean']
     ],
     clipboard: {
@@ -565,11 +601,11 @@ export const CUSTOM_REACT_SELECT_STYLE = {
         }
     }),
     // 下拉菜单和输入框距离
-    menu: styles => ({ ...styles, marginTop:'1px'}),
+    menu: styles => ({...styles, marginTop: '1px'}),
     // 指示器（删除/下拉）分隔符(竖线)
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     // 检索输入框
-    input: styles => ({...styles, margin: '0', paddingTop: '0',paddingBottom: '0',height: 'calc(3rem)'}),
+    input: styles => ({...styles, margin: '0', paddingTop: '0', paddingBottom: '0', height: 'calc(3rem)'}),
     // 选中内容显示区域
     valueContainer: styles => ({
         ...styles,
@@ -595,9 +631,9 @@ export const STATISTIC_SELECT_STYLE = {
         }
     }),
     // 下拉菜单和输入框距离
-    menu: styles => ({ ...styles, marginTop:'1px'}),
+    menu: styles => ({...styles, marginTop: '1px'}),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
-    valueContainer: styles => ({...styles, paddingLeft: '0',height: '38px'})
+    valueContainer: styles => ({...styles, paddingLeft: '0', height: '38px'})
 };
 
 /**
@@ -620,12 +656,12 @@ export const CUSTOM_REACT_SELECT_STYLE_FOR_MODAL = {
         }
     }),
     // 下拉菜单和输入框距离
-    menu: styles => ({ ...styles, marginTop:'1px'}),
+    menu: styles => ({...styles, marginTop: '1px'}),
     // 下拉菜单最大高度
-    menuList: styles => ({ ...styles, maxHeight: '120px' }),
+    menuList: styles => ({...styles, maxHeight: '120px'}),
     indicatorSeparator: styles => ({...styles, display: 'none'}),
     // 检索输入框
-    input: styles => ({...styles, margin: '0', paddingTop: '0',paddingBottom: '0',height: 'calc(3rem)'}),
+    input: styles => ({...styles, margin: '0', paddingTop: '0', paddingBottom: '0', height: 'calc(3rem)'}),
     // 选中内容显示区域
     valueContainer: styles => ({
         ...styles,

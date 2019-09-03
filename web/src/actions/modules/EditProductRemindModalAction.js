@@ -26,7 +26,7 @@ export const saveProductRemind = () => async (dispatch, getState) => {
             status: sysConst.PRODUCT_REMIND_FLAG[1].value
         };
         // 基本url
-        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/reminders/' + productRemindId + '/';
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/reminders/' + productRemindId;
         let res = await httpUtil.httpPut(url, params);
         if (res.success === true) {
             $('#editProductRemindModal').modal('close');

@@ -1,4 +1,5 @@
 import {createAction} from 'redux-actions';
 
-export const getLoadTaskInfo = createAction('GET_LOAD_TASK_PAYMENT_INFO');
-export const getScheduledCarList = createAction('GET_LOAD_TASK_PAYMENT_SCHEDULED_CAR_LIST');
+export const getProductOrderInfo = createAction('GET_PRODUCT_ORDER_INFO');
+export const setProductOrderRemark = createAction('SET_PRODUCT_ORDER_REMARK');
+export const getProductOrderPaymentInfo = createAction('GET_PRODUCT_ORDER_PAYMENT_INFO');

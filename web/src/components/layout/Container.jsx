@@ -60,6 +60,7 @@ import {
     Product,
     ProductDetail,
     ProductOrder,
+    ProductOrderDetail,
     ProductRemind
 } from '../main/index';
 
@@ -309,7 +310,7 @@ const routes = [
     {
         path: '/product_order/:id',
         exact: true,
-        component: ProductOrder
+        component: ProductOrderDetail
     },
     {
         path: "/product_remind",

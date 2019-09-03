@@ -1,4 +1,4 @@
-import {LoadTaskPaymentManagerDetailActionType} from "../../actionTypes";
+import {ProductOrderDetailActionType} from "../../actionTypes";
 import {apiHost} from '../../config/HostConfig';
 
 const commonAction = require('../../actions/main/CommonAction');
@@ -6,72 +6,92 @@ const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
 
-// 取得线路安排基本信息
-export const getLoadTaskInfo = (loadTaskId) => async (dispatch) => {
+// 取得订单详情基本信息
+export const getProductOrderInfo = (id) => async (dispatch) => {
     try {
         // 基本检索URL
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/routeLoadTask?loadTaskId=' + loadTaskId;
+            + '/productOrder?productOrderId=' + id;
         const res = await httpUtil.httpGet(url);
         if (res.success === true) {
-            dispatch({type: LoadTaskPaymentManagerDetailActionType.getLoadTaskInfo, payload: res.result});
+            dispatch({type: ProductOrderDetailActionType.getProductOrderInfo, payload: res.result});
             // 若 有数据
             if (res.result.length > 0) {
-                // 已安排车辆列表
-                dispatch(getScheduledCarList(res.result[0].order_id, loadTaskId));
-                // 订单信息
-                dispatch(commonAction.getOrderInfo(res.result[0].order_id));
+                dispatch({type: ProductOrderDetailActionType.setProductOrderRemark, payload: res.result[0].remark});
             }
         } else if (res.success === false) {
-            swal('获取线路安排基本信息失败', res.msg, 'warning');
+            swal('获取订单详情失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-// 已安排车辆列表
-export const getScheduledCarList = (orderId, loadTaskId) => async (dispatch) => {
+export const saveProductOrderRemark = (id) => async (dispatch, getState) => {
     try {
-        // 基本检索URL
+        // 备注
+        const orderRemark = getState().ProductOrderDetailReducer.orderRemark.trim();
+        // 请求body
+        const params = {
+            remark: orderRemark
+        };
+        // 基本url
         let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-            + '/order/' + orderId + '/loadTask/' + loadTaskId + '/loadTaskDetail?arrangeFlag=2';
-
-        const res = await httpUtil.httpGet(url);
+            + '/productOrder/' + id + '/remark';
+        let res = await httpUtil.httpPut(url, params);
         if (res.success === true) {
-            dispatch({type: LoadTaskPaymentManagerDetailActionType.getScheduledCarList, payload: res.result});
+            swal("保存成功", "", "success");
+            // 保存成功后，重新检索画面数据
+            dispatch(getProductOrderInfo(id));
         } else if (res.success === false) {
-            swal('获取已安排车辆列表失败', res.msg, 'warning');
+            swal('保存失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }
 };
 
-// 付款指定线路
-export const paymentLoadTask = (loadTaskId) => async (dispatch) => {
+// 修改订单状态
+export const changeProductOrderStatus = (id, newStatus) => async (dispatch) => {
     try {
-        swal({
-            title: "确定该线路已付款？",
-            text: "",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: '#724278',
-            confirmButtonText: '确定',
-            cancelButtonText: '取消'
-        }).then(async function (isConfirm) {
-            if (isConfirm && isConfirm.value === true) {
-                // 基本检索URL
-                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/loadTask/' + loadTaskId + '/payment';
-                const res = await httpUtil.httpPut(url);
-                if (res.success === true) {
-                    dispatch(getLoadTaskInfo(loadTaskId));
-                } else if (res.success === false) {
-                    swal('修改线路付款状态失败', res.msg, 'warning');
-                }
-            }
-        });
+        console.log('id',id);
+        console.log('newStatus',newStatus);
+        let text = '';
+        switch(newStatus) {
+            case sysConst.PRODUCT_ORDER_STATUS[0].value:
+                text = '确定该商品车已发货？';
+                break;
+            case sysConst.PRODUCT_ORDER_STATUS[1].value:
+                text = '确定该商品车已送达？';
+                break;
+            case sysConst.PRODUCT_ORDER_STATUS[2].value:
+                text = '确定取消该订单？';
+                break;
+            default:
+                text = '';
+        }
+
+        // swal({
+        //     title: text,
+        //     text: "",
+        //     type: "warning",
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#724278',
+        //     confirmButtonText: '确定',
+        //     cancelButtonText: '取消'
+        // }).then(async function (isConfirm) {
+        //     if (isConfirm && isConfirm.value === true) {
+        //         // 基本检索URL
+        //         const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+        //             + '/productOrder/' + id + '/status/' + newStatus;
+        //         const res = await httpUtil.httpPut(url);
+        //         if (res.success === true) {
+        //             dispatch(getProductOrderInfo(id));
+        //         } else if (res.success === false) {
+        //             swal('修改订单状态失败', res.msg, 'warning');
+        //         }
+        //     }
+        // });
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

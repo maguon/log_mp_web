@@ -26,87 +26,87 @@ class ProductOrder extends React.Component {
     componentDidMount() {
         if (!this.props.fromDetail) {
             this.props.setStartNumber(0);
-            this.props.setConditionLoadTaskId('');
-            this.props.changeConditionSupplier(null);
-            this.props.changeConditionStartCity(null);
-            this.props.changeConditionEndCity(null);
-            this.props.setConditionOrderId('');
-            this.props.setConditionPaymentOnStart('');
-            this.props.setConditionPaymentOnEnd('');
+            this.props.setConditionId('');
+            this.props.changeConditionProduct(null);
+            this.props.changeConditionCity(null);
+            this.props.changeConditionOrderStatus(null);
+            this.props.setConditionUserId('');
+            this.props.setConditionNickname('');
+            this.props.setConditionPhone('');
             this.props.changeConditionPaymentStatus(null);
         }
-        this.props.getLoadTaskPaymentList();
+        this.props.initConditionData();
+        this.props.getProductOrderList();
     }
-
-    /**
-     * 更新 检索条件：线路编号
-     */
-    changeConditionLoadTaskId = (event) => {
-        this.props.setConditionLoadTaskId(event.target.value);
-    };
 
     /**
      * 更新 检索条件：订单编号
      */
-    changeConditionOrderId = (event) => {
-        this.props.setConditionOrderId(event.target.value);
+    changeConditionId = (event) => {
+        this.props.setConditionId(event.target.value);
     };
 
     /**
-     * 更新 检索条件：付款时间(始)
+     * 更新 检索条件：用户ID
      */
-    changeConditionPaymentOnStart = (event, value) => {
-        this.props.setConditionPaymentOnStart(value);
+    changeConditionUserId = (event) => {
+        this.props.setConditionUserId(event.target.value);
     };
 
     /**
-     * 更新 检索条件：付款时间(始)
+     * 更新 检索条件：昵称
      */
-    changeConditionPaymentOnEnd = (event, value) => {
-        this.props.setConditionPaymentOnEnd(value);
+    changeConditionNickname = (event) => {
+        this.props.setConditionNickname(event.target.value);
     };
 
     /**
-     * 查询线路列表
+     * 更新 检索条件：手机
      */
-    queryLoadTaskPaymentList = () => {
+    changeConditionPhone = (event) => {
+        this.props.setConditionPhone(event.target.value);
+    };
+
+    /**
+     * 查询商品订单列表
+     */
+    queryProductOrderList = () => {
         // 默认第一页
         this.props.setStartNumber(0);
-        this.props.getLoadTaskPaymentList();
+        this.props.getProductOrderList();
     };
 
     /**
      * 上一页
      */
     preBtn = () => {
-        this.props.setStartNumber(this.props.loadTaskPaymentManagerReducer.start - (this.props.loadTaskPaymentManagerReducer.size - 1));
-        this.props.getLoadTaskPaymentList();
+        this.props.setStartNumber(this.props.productOrderReducer.start - (this.props.productOrderReducer.size - 1));
+        this.props.getProductOrderList();
     };
 
     /**
      * 下一页
      */
     nextBtn = () => {
-        this.props.setStartNumber(this.props.loadTaskPaymentManagerReducer.start + (this.props.loadTaskPaymentManagerReducer.size - 1));
-        this.props.getLoadTaskPaymentList();
+        this.props.setStartNumber(this.props.productOrderReducer.start + (this.props.productOrderReducer.size - 1));
+        this.props.getProductOrderList();
     };
 
     render() {
         const {
-            loadTaskPaymentManagerReducer,
+            productOrderReducer,
             commonReducer,
-            changeConditionSupplier,
-            changeConditionStartCity,
-            changeConditionEndCity,
-            changeConditionPaymentStatus,
-            paymentLoadTask
+            changeConditionProduct,
+            changeConditionCity,
+            changeConditionOrderStatus,
+            changeConditionPaymentStatus
         } = this.props;
         return (
             <div>
                 {/* 标题部分 */}
                 <div className="row">
                     <div className="input-field col s12 page-title">
-                        <span className="margin-left10">线路结算</span>
+                        <span className="margin-left10">商品订单</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -117,90 +117,81 @@ class ProductOrder extends React.Component {
 
                         {/* 查询条件：第一行 */}
                         <div>
-                            {/* 查询条件：线路编号 */}
-                            <Input s={3} label="线路编号" value={loadTaskPaymentManagerReducer.conditionLoadTaskId} onChange={this.changeConditionLoadTaskId}/>
+                            {/* 查询条件：订单编号 */}
+                            <Input s={3} label="订单编号" value={productOrderReducer.conditionId} onChange={this.changeConditionId}/>
 
-                            {/* 查询条件：供应商 */}
+                            {/* 查询条件：商品编号 */}
                             <div className="input-field col s3">
                                 <Select
-                                    options={commonReducer.supplierList}
-                                    onChange={changeConditionSupplier}
-                                    value={loadTaskPaymentManagerReducer.conditionSupplier}
+                                    options={commonReducer.productList}
+                                    onChange={changeConditionProduct}
+                                    value={productOrderReducer.conditionProduct}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                     isClearable={true}
+                                    backspaceRemovesValue={false}
                                 />
-                                <label className="active">供应商</label>
+                                <label className="active">商品名称</label>
                             </div>
 
-                            {/* 查询条件：起始城市 */}
+                            {/* 查询条件：城市 */}
                             <div className="input-field col s3">
                                 <Select
                                     options={commonReducer.cityList}
-                                    onChange={changeConditionStartCity}
-                                    value={loadTaskPaymentManagerReducer.conditionStartCity}
+                                    onChange={changeConditionCity}
+                                    value={productOrderReducer.conditionCity}
                                     isSearchable={true}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                     isClearable={true}
+                                    backspaceRemovesValue={false}
                                 />
-                                <label className="active">起始城市</label>
+                                <label className="active">城市</label>
                             </div>
 
-                            {/* 查询条件：目的城市 */}
+                            {/* 查询条件：订单状态 */}
                             <div className="input-field col s3">
                                 <Select
-                                    options={commonReducer.cityList}
-                                    onChange={changeConditionEndCity}
-                                    value={loadTaskPaymentManagerReducer.conditionEndCity}
-                                    isSearchable={true}
+                                    options={sysConst.PRODUCT_ORDER_STATUS}
+                                    onChange={changeConditionOrderStatus}
+                                    value={productOrderReducer.conditionOrderStatus}
+                                    isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                     isClearable={true}
+                                    backspaceRemovesValue={false}
                                 />
-                                <label className="active">目的城市</label>
+                                <label className="active">订单状态</label>
                             </div>
                         </div>
 
                         {/* 查询条件：第二行 */}
                         <div>
-                            {/* 查询条件：订单编号 */}
-                            <Input s={3} label="订单编号" value={loadTaskPaymentManagerReducer.conditionOrderId} onChange={this.changeConditionOrderId}/>
+                            <Input s={3} label="用户ID" value={productOrderReducer.conditionUserId} onChange={this.changeConditionUserId}/>
+                            <Input s={3} label="昵称" value={productOrderReducer.conditionNickname} onChange={this.changeConditionNickname}/>
+                            <Input s={3} label="手机" value={productOrderReducer.conditionPhone} onChange={this.changeConditionPhone}/>
 
-                            {/* 查询条件：付款时间(始) */}
-                            <div className="input-field col s3 custom-input-field">
-                                <Input s={12} label="付款时间(始)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={loadTaskPaymentManagerReducer.conditionPaymentOnStart} onChange={this.changeConditionPaymentOnStart} />
-                                <span className="mdi data-icon mdi-table-large"/>
-                            </div>
-
-                            {/* 查询条件：付款时间(终) */}
-                            <div className="input-field col s3 custom-input-field">
-                                <Input s={12} label="付款时间(终)" type='date' options={sysConst.DATE_PICKER_OPTION}
-                                       value={loadTaskPaymentManagerReducer.conditionPaymentOnEnd} onChange={this.changeConditionPaymentOnEnd} />
-                                <span className="mdi data-icon mdi-table-large"/>
-                            </div>
-
-                            {/* 查询条件：结算状态 */}
+                            {/* 查询条件：支付状态 */}
                             <div className="input-field col s3">
                                 <Select
-                                    options={sysConst.PAYMENT_FLAG}
+                                    options={sysConst.PRODUCT_PAYMENT_STATUS}
                                     onChange={changeConditionPaymentStatus}
-                                    value={loadTaskPaymentManagerReducer.conditionPaymentStatus}
+                                    value={productOrderReducer.conditionPaymentStatus}
                                     isSearchable={false}
                                     placeholder={"请选择"}
                                     styles={sysConst.CUSTOM_REACT_SELECT_STYLE}
                                     isClearable={true}
+                                    backspaceRemovesValue={false}
                                 />
-                                <label className="active">结算状态</label>
+                                <label className="active">支付状态</label>
                             </div>
                         </div>
                     </div>
 
                     {/* 查询按钮 */}
                     <div className="col s1">
-                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryLoadTaskPaymentList}>
+                        <a className="btn-floating btn-large waves-light waves-effect btn margin-top40 query-btn" onClick={this.queryProductOrderList}>
                             <i className="mdi mdi-magnify"/>
                         </a>
                     </div>
@@ -212,46 +203,44 @@ class ProductOrder extends React.Component {
                         <table className="bordered striped">
                             <thead className="custom-dark-grey table-top-line">
                             <tr className="grey-text text-darken-2">
-                                <th>线路编号</th>
-                                <th>线路</th>
-                                <th className="right-align">车辆数</th>
-                                <th className="center">订单编号</th>
-                                <th>供应商</th>
-                                <th className="right-align">供应商运费</th>
-                                <th className="right-align">供应商保费</th>
-                                <th className="right-align">支付供应商</th>
-                                <th className="center">发运状态</th>
-                                <th className="center">结算状态</th>
-                                <th className="center">付款时间</th>
+                                <th>订单编号</th>
+                                <th className="ellipsis-td context-ellipsis">商品车名称</th>
+                                <th>城市</th>
+                                <th>销售类型</th>
+                                <th>用户ID</th>
+                                <th>昵称</th>
+                                <th>手机</th>
+                                <th className="right-align">已付/金额 (元)</th>
+                                <th className="center">创建时间</th>
+                                <th className="center">支付状态</th>
+                                <th className="center">订单状态</th>
                                 <th className="center">操作</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {loadTaskPaymentManagerReducer.loadTaskArray.map(function (item) {
+                            {productOrderReducer.productOrderArray.map(function (item) {
                                 return (
                                     <tr className="grey-text text-darken-1">
                                         <td>{item.id}</td>
-                                        <td>{item.route_start} - {item.route_end}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.car_count)}</td>
-                                        <td className="center">{item.order_id}</td>
-                                        <td>{item.supplier_short}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_trans_price, 2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_insure_price, 2)}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.supplier_trans_price + item.supplier_insure_price, 2)}</td>
-                                        <td className="center">{commonUtil.getJsonValue(sysConst.LOAD_TASK_STATUS,item.load_task_status)}</td>
-                                        <td className="center">{commonUtil.getJsonValue(sysConst.PAYMENT_FLAG,item.payment_flag)}</td>
-                                        <td className="center">{formatUtil.getDateTime(item.payment_on)}</td>
+                                        <td className="ellipsis-td context-ellipsis">{item.commodity_name}</td>
+                                        <td>{item.city_name}</td>
+                                        <td>{commonUtil.getJsonValue(sysConst.PRODUCT_SALE_TYPE,item.type)}</td>
+                                        <td>{item.user_id}</td>
+                                        <td>{item.user_name}</td>
+                                        <td>{item.phone}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.payment_earnest_money)}/{formatUtil.formatNumber(item.earnest_money)}</td>
+                                        <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_PAYMENT_STATUS,item.payment_status)}</td>
+                                        <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_STATUS,item.status)}</td>
                                         <td className="operation right-align padding-right20">
-                                            {item.payment_flag === sysConst.PAYMENT_FLAG[0].value &&
-                                            <button type="button" className="btn purple-btn margin-right10 btn-height24 fz14" onClick={() => {paymentLoadTask(item.id)}}>付款</button>}
-                                            <Link to={{pathname: '/load_task_payment/' + item.id}}>
+                                            <Link to={{pathname: '/product_order/' + item.id}}>
                                                 <i className="mdi mdi-table-search purple-font"/>
                                             </Link>
                                         </td>
                                     </tr>
                                 )
                             })}
-                            { loadTaskPaymentManagerReducer.loadTaskArray.length === 0 &&
+                            { productOrderReducer.productOrderArray.length === 0 &&
                                 <tr className="grey-text text-darken-1">
                                     <td className="no-data-tr" colSpan="12">暂无数据</td>
                                 </tr>
@@ -263,11 +252,11 @@ class ProductOrder extends React.Component {
                     {/* 上下页按钮 */}
                     <div className="col s12 margin-top10">
                         <div className="right">
-                            {loadTaskPaymentManagerReducer.start > 0 && loadTaskPaymentManagerReducer.dataSize > 0 &&
+                            {productOrderReducer.start > 0 && productOrderReducer.dataSize > 0 &&
                             <a className="waves-light waves-effect custom-blue btn margin-right10" id="pre" onClick={this.preBtn}>
                                 上一页
                             </a>}
-                            {loadTaskPaymentManagerReducer.dataSize >= loadTaskPaymentManagerReducer.size &&
+                            {productOrderReducer.dataSize >= productOrderReducer.size &&
                             <a className="waves-light waves-effect custom-blue btn" id="next" onClick={this.nextBtn}>
                                 下一页
                             </a>}
@@ -285,48 +274,48 @@ const mapStateToProps = (state, ownProps) => {
         fromDetail = true;
     }
     return {
-        loadTaskPaymentManagerReducer: state.ProductOrderReducer,
+        productOrderReducer: state.ProductOrderReducer,
         commonReducer: state.CommonReducer,
         fromDetail: fromDetail
     }
 };
 
 const mapDispatchToProps = (dispatch) => ({
-    getLoadTaskPaymentList: () => {
+    initConditionData: () => {
+        // 取得城市列表
         dispatch(commonAction.getCityList());
-        dispatch(commonAction.getSupplierList());
-        dispatch(productOrderAction.getLoadTaskPaymentList())
+        // 取得商品列表
+        dispatch(commonAction.getProductList());
+    },
+    getProductOrderList: () => {
+        dispatch(productOrderAction.getProductOrderList())
     },
     setStartNumber: (start) => {
         dispatch(ProductOrderActionType.setStartNumber(start))
     },
-    setConditionLoadTaskId: (value) => {
-        dispatch(ProductOrderActionType.setConditionLoadTaskId(value))
+    setConditionId: (value) => {
+        dispatch(ProductOrderActionType.setConditionId(value))
     },
-    changeConditionSupplier: (value) => {
-        dispatch(ProductOrderActionType.setConditionSupplier(value))
+    changeConditionProduct: (value) => {
+        dispatch(ProductOrderActionType.setConditionProduct(value))
     },
-    changeConditionStartCity: (value) => {
-        dispatch(ProductOrderActionType.setConditionStartCity(value))
+    changeConditionCity: (value) => {
+        dispatch(ProductOrderActionType.setConditionCity(value))
     },
-    changeConditionEndCity: (value) => {
-        dispatch(ProductOrderActionType.setConditionEndCity(value))
+    changeConditionOrderStatus: (value) => {
+        dispatch(ProductOrderActionType.setConditionOrderStatus(value))
     },
-    setConditionOrderId: (value) => {
-        dispatch(ProductOrderActionType.setConditionOrderId(value))
+    setConditionUserId: (value) => {
+        dispatch(ProductOrderActionType.setConditionUserId(value))
     },
-    setConditionPaymentOnStart: (value) => {
-        dispatch(ProductOrderActionType.setConditionPaymentOnStart(value))
+    setConditionNickname: (value) => {
+        dispatch(ProductOrderActionType.setConditionNickname(value))
     },
-    setConditionPaymentOnEnd: (value) => {
-        dispatch(ProductOrderActionType.setConditionPaymentOnEnd(value))
+    setConditionPhone: (value) => {
+        dispatch(ProductOrderActionType.setConditionPhone(value))
     },
     changeConditionPaymentStatus: (value) => {
         dispatch(ProductOrderActionType.setConditionPaymentStatus(value))
-    },
-    // 付款
-    paymentLoadTask: (loadTaskId) => {
-        dispatch(productOrderAction.paymentLoadTask(loadTaskId));
     }
 });
 

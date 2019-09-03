@@ -4,13 +4,15 @@ import {Link} from "react-router-dom";
 import {Input} from "react-materialize";
 import Select from "react-select";
 import ReactQuill from "react-quill";
+import {ProductOrderDetailActionType} from "../../actionTypes";
+import {fileHost} from "../../config/HostConfig";
 
-const loadTaskPaymentManagerDetailAction = require('../../actions/main/LoadTaskPaymentManagerDetailAction');
+const productOrderDetailAction = require('../../actions/main/ProductOrderDetailAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
 
-class LoadTaskPaymentManagerDetail extends React.Component {
+class ProductOrderDetail extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -25,22 +27,29 @@ class LoadTaskPaymentManagerDetail extends React.Component {
     componentDidMount() {
         $('ul.tabs').tabs();
         // 取得订单信息
-        this.props.getLoadTaskInfo();
+        this.props.getProductOrderInfo();
     }
 
+    /**
+     * 订单信息TAB：更新 订单备注
+     */
+    changeOrderRemark = (event) => {
+        this.props.setOrderRemark(event.target.value);
+    };
+
     render() {
-        const {loadTaskPaymentManagerDetailReducer, commonReducer, paymentLoadTask} = this.props;
+        const {productOrderDetailReducer, showProductDetailModal, saveProductOrderRemark, changeProductOrderStatus, cancelProductOrderStatus} = this.props;
         return (
             <div>
                 {/* 标题部分 */}
                 <div className="row margin-bottom0">
                     <div className="input-field col s12">
-                        <Link to={{pathname: '/load_task_payment', state: {fromDetail: true}}}>
+                        <Link to={{pathname: '/product_order', state: {fromDetail: true}}}>
                             <a className="btn-floating btn waves-effect custom-blue waves-light fz15">
                                 <i className="mdi mdi-arrow-left-bold"/>
                             </a>
                         </Link>
-                        <span className="page-title margin-left30">商品管理 - 商品详情</span>
+                        <span className="page-title margin-left30">商品订单 - 订单详情</span>
                         <div className="divider custom-divider margin-top10"/>
                     </div>
                 </div>
@@ -49,150 +58,88 @@ class LoadTaskPaymentManagerDetail extends React.Component {
                     {/* TAB 头部 */}
                     <div className="col s12">
                         <ul className="tabs">
-                            <li className="tab col s6"><a href="#tab-base" className="active">商品信息</a></li>
-                            <li className="tab col s6"><a href="#tab-img">商品图片</a></li>
+                            <li className="tab col s6"><a href="#tab-base" className="active">订单信息</a></li>
+                            <li className="tab col s6"><a href="#tab-payment">支付信息</a></li>
                         </ul>
                     </div>
 
-                    {/* TAB 1 : 商品信息TAB */}
+                    {/* TAB 1 : 订单信息 */}
                     <div id="tab-base" className="col s12">
-                        ffffffffffffffffffffffff
-                    </div>
-
-                    {/* TAB 2 : 商品图片TAB */}
-                    <div id="tab-img" className="col s12">
-                        {loadTaskPaymentManagerDetailReducer.loadTaskInfo.length > 0 &&
-                        <div className="row">
-
-                            {/* 主体 */}
-                            <div className="col s12 margin-top20 padding-left50 padding-right50">
-                                <div className="row margin-top20 detail-box z-depth-1 grey-text">
-                                    <div className="col s12 padding-bottom10 custom-grey border-bottom-line">
-                                        <div className="col s6 margin-top15 grey-text text-darken-2">
-                                            线路编号：{loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].id}
-                                        </div>
-                                        <div className="col s6 pink-font margin-top15 right-align">
-                                            {commonUtil.getJsonValue(sysConst.PAYMENT_FLAG,loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].payment_flag)}
-                                        </div>
-                                    </div>
-
-                                    <div className="col s12 padding-top15 padding-bottom10">
-                                        <div className="col s6">
-                                    <span className="fz16 purple-font bold-font">
-                                        {loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].route_start} -- {loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].route_end}
-                                    </span>
-                                            {loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].trans_type === 1 && <i className="mdi mdi-truck-fast fz20 pink-font margin-left30"/>}
-                                            {loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].trans_type === 2 && <i className="mdi mdi-ferry fz20 pink-font margin-left30"/>}
-                                            {/*<span className="margin-left30 grey-text text-darken-2">{loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].supplier_short}</span>*/}
-                                        </div>
-                                        <div className="col s6 pink-font right-align">
-                                            {commonUtil.getJsonValue(sysConst.LOAD_TASK_STATUS,loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].load_task_status)}
-                                        </div>
-                                    </div>
-
-                                    <div className="col s12 padding-bottom15 grey-text text-darken-2">
-                                        <div className="col s6">计划发货日期：{loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].plan_date}</div>
-                                        <div className="col s6 right-align">线路创建时间：{formatUtil.getDateTime(loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].created_on)}</div>
-                                    </div>
-
-                                    <div className="col s12 padding-bottom15 border-bottom-line grey-text text-darken-2">
-                                        <div className="col s12">发运日期：{loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].load_date}</div>
-                                    </div>
-
-                                    <div className="col s12 padding-top15 padding-bottom15 border-bottom-line">
-                                        <div className="col s4">供应商运费：<span className="fz16 pink-font">{formatUtil.formatNumber(loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].supplier_trans_price, 2)}</span> 元</div>
-                                        <div className="col s4">供应商保费：<span className="fz16 pink-font">{formatUtil.formatNumber(loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].supplier_insure_price, 2)}</span> 元</div>
-                                        <div className="col s4 right-align">
-                                            支付供应商：<span className="fz16 pink-font">{formatUtil.formatNumber(loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].supplier_trans_price + loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].supplier_insure_price, 2)}</span> 元
-                                        </div>
-                                    </div>
-
-                                    <div className="col s12 padding-bottom10 custom-grey border-bottom-line">
-                                        <div className="col s12 margin-top10 pink-font">
-                                            安排车辆：{formatUtil.formatNumber(loadTaskPaymentManagerDetailReducer.loadTaskInfo[0].car_count)}
-                                        </div>
-                                    </div>
-
-                                    {loadTaskPaymentManagerDetailReducer.scheduledCarList.length > 0 &&
-                                    <div className="col s12">
-                                        <table className="bordered">
-                                            <thead className="">
-                                            <tr className="grey-text text-darken-2">
-                                                <th className="padding-left10">VIN</th>
-                                                <th className="center">车型</th>
-                                                <th className="center">品牌</th>
-                                                <th className="center">型号</th>
-                                                <th className="right-align">估值</th>
-                                                <th className="center">新车</th>
-                                                <th className="center">保险</th>
-                                                <th className="right-align">供应商运费</th>
-                                                <th className="right-align">供应商保费</th>
-                                                <th className="right-align">总运费</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {loadTaskPaymentManagerDetailReducer.scheduledCarList.map(function (item, key) {
-                                                return (
-                                                    <tr className="grey-text text-darken-1">
-                                                        <td className="padding-left10">{item.vin}</td>
-                                                        <td className="center">{commonUtil.getJsonValue(sysConst.CAR_MODEL, item.model_type)}</td>
-                                                        <td className="center">{item.brand}</td>
-                                                        <td className="center">{item.brand_type}</td>
-                                                        <td className="right-align">{formatUtil.formatNumber(item.valuation,2)}</td>
-                                                        {/* 是否新车 */}
-                                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.old_car)}</td>
-                                                        {/* 是否保险 */}
-                                                        <td className="center">{commonUtil.getJsonValue(sysConst.YES_NO, item.safe_status)}</td>
-                                                        {/* 供应商运费 */}
-                                                        <td className="right-align pink-font">
-                                                            {formatUtil.formatNumber(item.supplier_trans_price, 2)}
-                                                        </td>
-                                                        {/* 供应商保费 */}
-                                                        <td className="right-align pink-font">
-                                                            {formatUtil.formatNumber(item.supplier_insure_price, 2)}
-                                                        </td>
-                                                        <td className="right-align pink-font">
-                                                            {formatUtil.formatNumber(item.supplier_trans_price + item.supplier_insure_price, 2)}
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            }, this)}
-                                            </tbody>
-                                        </table>
-                                    </div>}
+                        {productOrderDetailReducer.productOrderInfo.length > 0 &&
+                        <div>
+                            {/* 订单信息 */}
+                            <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1">
+                                <div className="col s12 padding-top10 padding-bottom10 custom-grey border-bottom-line">
+                                    <div className="col s6 purple-font">订单编号：{productOrderDetailReducer.productOrderInfo[0].id}</div>
+                                    <div className="col s6 grey-text right-align">创建时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderInfo[0].created_on)}</div>
                                 </div>
 
-                                {commonReducer.orderInfo.length > 0 &&
-                                <div className="col s12 no-padding margin-top20 detail-box z-depth-1">
+                                {/* 订单基本信息 */}
+                                <div className="col s12 margin-top5 padding-top20 padding-bottom20 border-bottom-line">
+                                    <div className="col s9">
+                                        {productOrderDetailReducer.productOrderInfo[0].user_name} (ID：{productOrderDetailReducer.productOrderInfo[0].user_id})
+                                        <span className="margin-left20">手机：{productOrderDetailReducer.productOrderInfo[0].phone}</span>
+                                    </div>
+                                    <div className="col s3 right-align pink-font">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_STATUS,productOrderDetailReducer.productOrderInfo[0].status)}</div>
 
-                                    <div className="col s12 padding-top15 padding-bottom15 custom-grey border-bottom-line">
-                                        <div className="col s6 purple-font">
-                                            {commonUtil.getJsonValue(sysConst.ORDER_TYPE, commonReducer.orderInfo[0].created_type)}
-                                            <span className="margin-left10 grey-text">编号：{commonReducer.orderInfo[0].id}</span>
-                                        </div>
-                                        {/* 订单状态 */}
-                                        <div className="col s6 pink-font right-align">
-                                            {commonUtil.getJsonValue(sysConst.ORDER_STATUS, commonReducer.orderInfo[0].status)}
-                                        </div>
+                                    <div className="col s12 margin-top10 fz14 grey-text">
+                                        收货信息：{productOrderDetailReducer.productOrderInfo[0].send_address} {productOrderDetailReducer.productOrderInfo[0].send_name} {productOrderDetailReducer.productOrderInfo[0].send_phone}
                                     </div>
-                                    <div className="col s12 padding-top15">
-                                        <div className="col s4">车辆总数：{formatUtil.formatNumber(commonReducer.orderInfo[0].car_num)}</div>
-                                        <div className="col s4">发运日期：{formatUtil.getDate(commonReducer.orderInfo[0].departure_time)}</div>
-                                        <div className="col s4 right-align">{commonUtil.getJsonValue(sysConst.SERVICE_MODE, commonReducer.orderInfo[0].service_type)}</div>
+                                    <div className="col s6 margin-top10 grey-text">
+                                        应付金额：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money)}</span> 元
                                     </div>
-                                    <div className="col s12 padding-top15 padding-bottom15 border-bottom-line">
-                                        <div className="col s4">运费：{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price, 2)} 元</div>
-                                        <div className="col s4">保费：{formatUtil.formatNumber(commonReducer.orderInfo[0].total_insure_price, 2)} 元</div>
-                                        <div className="col s4 right-align">订单总费用：{formatUtil.formatNumber(commonReducer.orderInfo[0].total_trans_price + commonReducer.orderInfo[0].total_insure_price, 2)} 元</div>
+                                    <div className="col s6 margin-top10 grey-text right-align">
+                                        已支付：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].payment_earnest_money)}</span> 元
                                     </div>
-                                    <div className="col s12 padding-top15 padding-bottom15">
-                                        <div className="col s6">订单创建人：{commonReducer.orderInfo[0].admin_name}</div>
-                                        <div className="col s6 right-align">订单创建时间：{formatUtil.getDateTime(commonReducer.orderInfo[0].created_on)}</div>
-                                    </div>
-                                </div>}
+                                </div>
 
+                                {/* 商品基本信息 */}
+                                <div className="col s12 margin-top5 padding-top20 padding-bottom20">
+                                    <div className="col s6">商品编号：{productOrderDetailReducer.productOrderInfo[0].commodity_id}</div>
+                                    <div className="col s6 right-align">
+                                        <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
+                                                onClick={() => {showProductDetailModal(productOrderDetailReducer.productOrderInfo[0].commodity_id)}}>商品详情
+                                        </button>
+                                    </div>
+
+                                    <div className="col s12 margin-top10">{productOrderDetailReducer.productOrderInfo[0].commodity_name}</div>
+                                    <div className="col s5 margin-top10 grey-text">
+                                        城市：{productOrderDetailReducer.productOrderInfo[0].city_name}
+                                        <span className="margin-left20">销售类型：{commonUtil.getJsonValue(sysConst.PRODUCT_SALE_TYPE,productOrderDetailReducer.productOrderInfo[0].type)}</span>
+                                    </div>
+                                    <div className="col s7 margin-top10 grey-text right-align">
+                                        <span className="fz14 grey-text">定金：{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money)}元</span>
+                                        <span className="fz14 grey-text margin-left20">指导价：{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].ora_trans_price/10000,2)}万元</span>
+                                        <span className="margin-left20">
+                                            实际售价：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].act_trans_price/10000,2)}</span>万元
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 备注 */}
+                            <div className="row margin-top40 margin-left150 margin-right150 padding-top10 detail-box z-depth-1 position-relative">
+                                <Input s={12} label="备注" value={productOrderDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
+                                <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveProductOrderRemark}/>
+                            </div>
+
+                            {/* 按钮 */}
+                            <div className="row margin-top40 margin-right150 right-align">
+                                {productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[0].value &&
+                                <button type="button" className="btn confirm-btn" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[1].value )}}>发货</button>}
+                                {productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[1].value &&
+                                <button type="button" className="btn confirm-btn" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[3].value )}}>送达</button>}
+                                <button type="button" className="btn purple-btn margin-left20 width-100" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[2].value )}}>取消订单</button>
                             </div>
                         </div>}
+                    </div>
+
+                    {/* TAB 2 : 支付信息 */}
+                    <div id="tab-payment" className="col s12">
+                        ffffffffffffffffffffffff反反复复付付付
+                        {/*{productOrderDetailReducer.productOrderInfo.length > 0 &&*/}
+                        {/*<div className="row">*/}
+
                     </div>
 
                 </div>
@@ -208,20 +155,35 @@ class LoadTaskPaymentManagerDetail extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loadTaskPaymentManagerDetailReducer: state.LoadTaskPaymentManagerDetailReducer,
+        productOrderDetailReducer: state.ProductOrderDetailReducer,
         commonReducer: state.CommonReducer
     }
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    // 取得线路详情
-    getLoadTaskInfo: () => {
-        dispatch(loadTaskPaymentManagerDetailAction.getLoadTaskInfo(ownProps.match.params.id));
+    // 取得商品订单详情
+    getProductOrderInfo: () => {
+        dispatch(productOrderDetailAction.getProductOrderInfo(ownProps.match.params.id));
     },
-    // 付款
-    paymentLoadTask: () => {
-        dispatch(loadTaskPaymentManagerDetailAction.paymentLoadTask(ownProps.match.params.id));
+    setOrderRemark: (value) => {
+        dispatch(ProductOrderDetailActionType.setProductOrderRemark(value))
+    },
+    showProductDetailModal: (id) => {
+        console.log('id',id);
+    },
+    // 保存订单备注
+    saveProductOrderRemark: () => {
+        dispatch(productOrderDetailAction.saveProductOrderRemark(ownProps.match.params.id));
+    },
+    // 修改订单状态
+    changeProductOrderStatus: (newStatus) => {
+        dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, newStatus));
+    },
+    // 取消订单
+    cancelProductOrderStatus: () => {
+        console.log('cancelProductOrderStatus');
+        // dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, true));
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoadTaskPaymentManagerDetail)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductOrderDetail)

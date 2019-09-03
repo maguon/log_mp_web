@@ -45,7 +45,7 @@ class EditProductRemindModal extends React.Component {
                 {/** Modal主体 */}
                 <div className="modal-content padding-bottom0 white grey-text text-darken-2">
                     <div className="row margin-top40">
-                        <Input s={12} label="提醒" maxLength="200" value={editProductRemindModalReducer.remark} onChange={this.changeRemark}/>
+                        <Input s={12} label="提醒描述" maxLength="200" value={editProductRemindModalReducer.remark} onChange={this.changeRemark}/>
                     </div>
                 </div>
 

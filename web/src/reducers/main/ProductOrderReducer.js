@@ -1,5 +1,5 @@
 import {handleActions} from 'redux-actions';
-import {LoadTaskPaymentManagerActionType} from '../../actionTypes';
+import {ProductOrderActionType} from '../../actionTypes';
 
 const initialState = {
     // 开始位置
@@ -9,89 +9,89 @@ const initialState = {
     // 检索结果数量
     dataSize: 0,
 
-    // 检索条件：线路编号
-    conditionLoadTaskId: '',
-    // 检索条件：供应商
-    conditionSupplier: null,
-    // 检索条件：起始城市
-    conditionStartCity: null,
-    // 检索条件：目的城市
-    conditionEndCity: null,
-    // 检索条件：订单编号
-    conditionOrderId: '',
-    // 检索条件：付款时间(始)
-    conditionPaymentOnStart: '',
-    // 检索条件：付款时间(终)
-    conditionPaymentOnEnd: '',
-    // 检索条件：状态
+    // 检索条件：编号
+    conditionId: '',
+    // 检索条件：商品
+    conditionProduct: null,
+    // 检索条件：城市
+    conditionCity: null,
+    // 检索条件：订单状态
+    conditionOrderStatus: null,
+    // 检索条件：用户ID
+    conditionUserId: '',
+    // 检索条件：昵称
+    conditionNickname: '',
+    // 检索条件：手机
+    conditionPhone: '',
+    // 检索条件：支付状态
     conditionPaymentStatus: null,
 
-    // 线路列表
-    loadTaskArray: []
+    // 商品订单列表
+    productOrderArray: []
 };
 
 export default handleActions({
-    [LoadTaskPaymentManagerActionType.getLoadTaskList]: (state, action) => {
+    [ProductOrderActionType.getProductOrderList]: (state, action) => {
         return {
             ...state,
-            loadTaskArray: action.payload
+            productOrderArray: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setStartNumber]: (state, action) => {
+    [ProductOrderActionType.setStartNumber]: (state, action) => {
         return {
             ...state,
             start: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setDataSize]: (state, action) => {
+    [ProductOrderActionType.setDataSize]: (state, action) => {
         return {
             ...state,
             dataSize: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionLoadTaskId]: (state, action) => {
+    [ProductOrderActionType.setConditionId]: (state, action) => {
         return {
             ...state,
-            conditionLoadTaskId: action.payload
+            conditionId: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionSupplier]: (state, action) => {
+    [ProductOrderActionType.setConditionProduct]: (state, action) => {
         return {
             ...state,
-            conditionSupplier: action.payload
+            conditionProduct: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionStartCity]: (state, action) => {
+    [ProductOrderActionType.setConditionCity]: (state, action) => {
         return {
             ...state,
-            conditionStartCity: action.payload
+            conditionCity: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionEndCity]: (state, action) => {
+    [ProductOrderActionType.setConditionOrderStatus]: (state, action) => {
         return {
             ...state,
-            conditionEndCity: action.payload
+            conditionOrderStatus: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionOrderId]: (state, action) => {
+    [ProductOrderActionType.setConditionUserId]: (state, action) => {
         return {
             ...state,
-            conditionOrderId: action.payload
+            conditionUserId: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionPaymentOnStart]: (state, action) => {
+    [ProductOrderActionType.setConditionNickname]: (state, action) => {
         return {
             ...state,
-            conditionPaymentOnStart: action.payload
+            conditionNickname: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionPaymentOnEnd]: (state, action) => {
+    [ProductOrderActionType.setConditionPhone]: (state, action) => {
         return {
             ...state,
-            conditionPaymentOnEnd: action.payload
+            conditionPhone: action.payload
         }
     },
-    [LoadTaskPaymentManagerActionType.setConditionPaymentStatus]: (state, action) => {
+    [ProductOrderActionType.setConditionPaymentStatus]: (state, action) => {
         return {
             ...state,
             conditionPaymentStatus: action.payload

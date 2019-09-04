@@ -104,6 +104,7 @@ import EditCouponModalReducer from './modules/EditCouponModalReducer';
 import EditUserCouponModalReducer from './modules/EditUserCouponModalReducer';
 import NewProductModalReducer from './modules/NewProductModalReducer';
 import EditProductRemindModalReducer from './modules/EditProductRemindModalReducer';
+import ProductInfoModalReducer from './modules/ProductInfoModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -208,5 +209,6 @@ export default combineReducers({
     EditCouponModalReducer,
     EditUserCouponModalReducer,
     NewProductModalReducer,
-    EditProductRemindModalReducer
+    EditProductRemindModalReducer,
+    ProductInfoModalReducer
 })

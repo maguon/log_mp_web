@@ -101,6 +101,7 @@ import * as EditCouponModalActionType  from './modules/EditCouponModalActionType
 import * as EditUserCouponModalActionType  from './modules/EditUserCouponModalActionType';
 import * as NewProductModalActionType  from './modules/NewProductModalActionType';
 import * as EditProductRemindModalActionType  from './modules/EditProductRemindModalActionType';
+import * as ProductInfoModalActionType  from './modules/ProductInfoModalActionType';
 
 export  {
     LoginActionType,
@@ -204,5 +205,6 @@ export  {
     EditCouponModalActionType,
     EditUserCouponModalActionType,
     NewProductModalActionType,
-    EditProductRemindModalActionType
+    EditProductRemindModalActionType,
+    ProductInfoModalActionType
 }

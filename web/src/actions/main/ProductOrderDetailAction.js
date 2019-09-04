@@ -54,14 +54,12 @@ export const saveProductOrderRemark = (id) => async (dispatch, getState) => {
 // 修改订单状态
 export const changeProductOrderStatus = (id, newStatus) => async (dispatch) => {
     try {
-        console.log('id',id);
-        console.log('newStatus',newStatus);
         let text = '';
         switch(newStatus) {
-            case sysConst.PRODUCT_ORDER_STATUS[0].value:
+            case sysConst.PRODUCT_ORDER_STATUS[1].value:
                 text = '确定该商品车已发货？';
                 break;
-            case sysConst.PRODUCT_ORDER_STATUS[1].value:
+            case sysConst.PRODUCT_ORDER_STATUS[3].value:
                 text = '确定该商品车已送达？';
                 break;
             case sysConst.PRODUCT_ORDER_STATUS[2].value:
@@ -71,27 +69,27 @@ export const changeProductOrderStatus = (id, newStatus) => async (dispatch) => {
                 text = '';
         }
 
-        // swal({
-        //     title: text,
-        //     text: "",
-        //     type: "warning",
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#724278',
-        //     confirmButtonText: '确定',
-        //     cancelButtonText: '取消'
-        // }).then(async function (isConfirm) {
-        //     if (isConfirm && isConfirm.value === true) {
-        //         // 基本检索URL
-        //         const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-        //             + '/productOrder/' + id + '/status/' + newStatus;
-        //         const res = await httpUtil.httpPut(url);
-        //         if (res.success === true) {
-        //             dispatch(getProductOrderInfo(id));
-        //         } else if (res.success === false) {
-        //             swal('修改订单状态失败', res.msg, 'warning');
-        //         }
-        //     }
-        // });
+        swal({
+            title: text,
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#724278',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                // 基本检索URL
+                const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+                    + '/productOrder/' + id + '/status/' + newStatus;
+                const res = await httpUtil.httpPut(url);
+                if (res.success === true) {
+                    dispatch(getProductOrderInfo(id));
+                } else if (res.success === false) {
+                    swal('修改订单状态失败', res.msg, 'warning');
+                }
+            }
+        });
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

@@ -2,12 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from "react-materialize";
-import Select from "react-select";
-import ReactQuill from "react-quill";
+import {ProductInfoModal} from '../modules/index';
 import {ProductOrderDetailActionType} from "../../actionTypes";
-import {fileHost} from "../../config/HostConfig";
 
 const productOrderDetailAction = require('../../actions/main/ProductOrderDetailAction');
+const productInfoModalAction = require('../../actions/modules/ProductInfoModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -89,7 +88,7 @@ class ProductOrderDetail extends React.Component {
                                         应付金额：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money)}</span> 元
                                     </div>
                                     <div className="col s6 margin-top10 grey-text right-align">
-                                        已支付：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].payment_earnest_money)}</span> 元
+                                        已支付：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].real_payment_price)}</span> 元
                                     </div>
                                 </div>
 
@@ -100,6 +99,7 @@ class ProductOrderDetail extends React.Component {
                                         <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
                                                 onClick={() => {showProductDetailModal(productOrderDetailReducer.productOrderInfo[0].commodity_id)}}>商品详情
                                         </button>
+                                        <ProductInfoModal/>
                                     </div>
 
                                     <div className="col s12 margin-top10">{productOrderDetailReducer.productOrderInfo[0].commodity_name}</div>
@@ -129,7 +129,8 @@ class ProductOrderDetail extends React.Component {
                                 <button type="button" className="btn confirm-btn" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[1].value )}}>发货</button>}
                                 {productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[1].value &&
                                 <button type="button" className="btn confirm-btn" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[3].value )}}>送达</button>}
-                                <button type="button" className="btn purple-btn margin-left20 width-100" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[2].value )}}>取消订单</button>
+                                {productOrderDetailReducer.productOrderInfo[0].status !== sysConst.PRODUCT_ORDER_STATUS[2].value &&
+                                <button type="button" className="btn purple-btn margin-left20 width-100" onClick={() => {changeProductOrderStatus(sysConst.PRODUCT_ORDER_STATUS[2].value )}}>取消订单</button>}
                             </div>
                         </div>}
                     </div>
@@ -139,16 +140,9 @@ class ProductOrderDetail extends React.Component {
                         ffffffffffffffffffffffff反反复复付付付
                         {/*{productOrderDetailReducer.productOrderInfo.length > 0 &&*/}
                         {/*<div className="row">*/}
-
                     </div>
-
                 </div>
             </div>
-
-
-
-
-
         )
     }
 }
@@ -169,7 +163,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(ProductOrderDetailActionType.setProductOrderRemark(value))
     },
     showProductDetailModal: (id) => {
-        console.log('id',id);
+        dispatch(productInfoModalAction.initProductInfo(id));
+        $('#productInfoModal').modal('open');
     },
     // 保存订单备注
     saveProductOrderRemark: () => {
@@ -178,11 +173,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // 修改订单状态
     changeProductOrderStatus: (newStatus) => {
         dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, newStatus));
-    },
-    // 取消订单
-    cancelProductOrderStatus: () => {
-        console.log('cancelProductOrderStatus');
-        // dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, true));
     }
 });
 

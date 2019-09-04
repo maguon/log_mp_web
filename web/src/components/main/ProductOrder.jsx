@@ -228,7 +228,7 @@ class ProductOrder extends React.Component {
                                         <td>{item.user_id}</td>
                                         <td>{item.user_name}</td>
                                         <td>{item.phone}</td>
-                                        <td className="right-align">{formatUtil.formatNumber(item.payment_earnest_money)}/{formatUtil.formatNumber(item.earnest_money)}</td>
+                                        <td className="right-align">{formatUtil.formatNumber(item.real_payment_price)}/{formatUtil.formatNumber(item.earnest_money)}</td>
                                         <td className="center">{formatUtil.getDateTime(item.created_on)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_PAYMENT_STATUS,item.payment_status)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_STATUS,item.status)}</td>

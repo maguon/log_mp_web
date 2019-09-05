@@ -6,6 +6,7 @@ export const getSupplierList = createAction('GET_SUPPLIER_LIST');
 export const getDepartmentList = createAction('GET_DEPARTMENT_LIST');
 export const getAdminUserList = createAction('GET_ADMIN_USER_LIST');
 export const getOrderInfo = createAction('GET_ORDER_INFO');
+export const getProductOrderInfo = createAction('GET_PRODUCT_ORDER_INFO');
 export const getPaymentInfo = createAction('GET_PAYMENT_INFO');
 export const setShowOrderCarListFlag = createAction('SET_SHOW_ORDER_CAR_LIST_FLAG');
 export const getOrderCarList = createAction('GET_ORDER_CAR_LIST');

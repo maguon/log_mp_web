@@ -99,6 +99,23 @@ export const getOrderInfo = (orderId) => async (dispatch) => {
     }
 };
 
+// 检索商品订单基本信息
+export const getProductOrderInfo = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/productOrder?productOrderId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getProductOrderInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取商品订单详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 // 检索支付基本信息
 export const getPaymentInfo = (id) => async (dispatch) => {
     try {

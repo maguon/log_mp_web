@@ -39,3 +39,4 @@ export EditUserCouponModal from "./EditUserCouponModal";
 export NewProductModal from "./NewProductModal";
 export EditProductRemindModal from "./EditProductRemindModal";
 export ProductInfoModal from "./ProductInfoModal";
+export ProductOrderRefundModal from "./ProductOrderRefundModal";

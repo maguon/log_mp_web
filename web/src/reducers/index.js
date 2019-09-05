@@ -67,6 +67,8 @@ import ProductDetailReducer from './main/ProductDetailReducer';
 import ProductOrderReducer from './main/ProductOrderReducer';
 import ProductOrderDetailReducer from './main/ProductOrderDetailReducer';
 import ProductRemindReducer from './main/ProductRemindReducer';
+import ProductPaymentReducer from './main/ProductPaymentReducer';
+import ProductPaymentDetailReducer from './main/ProductPaymentDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -173,6 +175,8 @@ export default combineReducers({
     ProductOrderReducer,
     ProductOrderDetailReducer,
     ProductRemindReducer,
+    ProductPaymentReducer,
+    ProductPaymentDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,

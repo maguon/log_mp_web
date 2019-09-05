@@ -64,6 +64,8 @@ import * as ProductDetailActionType  from './main/ProductDetailActionType';
 import * as ProductOrderActionType  from './main/ProductOrderActionType';
 import * as ProductOrderDetailActionType  from './main/ProductOrderDetailActionType';
 import * as ProductRemindActionType  from './main/ProductRemindActionType';
+import * as ProductPaymentActionType  from './main/ProductPaymentActionType';
+import * as ProductPaymentDetailActionType  from './main/ProductPaymentDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -102,6 +104,7 @@ import * as EditUserCouponModalActionType  from './modules/EditUserCouponModalAc
 import * as NewProductModalActionType  from './modules/NewProductModalActionType';
 import * as EditProductRemindModalActionType  from './modules/EditProductRemindModalActionType';
 import * as ProductInfoModalActionType  from './modules/ProductInfoModalActionType';
+import * as ProductOrderRefundModalActionType  from './modules/ProductOrderRefundModalActionType';
 
 export  {
     LoginActionType,
@@ -169,6 +172,8 @@ export  {
     ProductOrderActionType,
     ProductOrderDetailActionType,
     ProductRemindActionType,
+    ProductPaymentActionType,
+    ProductPaymentDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -206,5 +211,6 @@ export  {
     EditUserCouponModalActionType,
     NewProductModalActionType,
     EditProductRemindModalActionType,
-    ProductInfoModalActionType
+    ProductInfoModalActionType,
+    ProductOrderRefundModalActionType
 }

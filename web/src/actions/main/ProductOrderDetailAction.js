@@ -27,6 +27,23 @@ export const getProductOrderInfo = (id) => async (dispatch) => {
     }
 };
 
+// 取得订单支付基本信息
+export const getProductOrderPaymentInfo = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/productOrderPayment?productOrderId=' + id + '&statusArr=' + sysConst.PRODUCT_PAYMENT_FLAG[1].value;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: ProductOrderDetailActionType.getProductOrderPaymentInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取订单支付详情失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 export const saveProductOrderRemark = (id) => async (dispatch, getState) => {
     try {
         // 备注

@@ -15,6 +15,8 @@ const initialState = {
 
     // 订单信息
     orderInfo: [],
+    // 商品订单信息
+    productOrderInfo: [],
     // 支付信息
     paymentInfo: [],
     // 是否显示订单车辆列表
@@ -91,6 +93,12 @@ export default handleActions({
         return {
             ...state,
             orderInfo: action.payload
+        }
+    },
+    [CommonActionType.getProductOrderInfo]: (state, action) => {
+        return {
+            ...state,
+            productOrderInfo: action.payload
         }
     },
     [CommonActionType.getPaymentInfo]: (state, action) => {

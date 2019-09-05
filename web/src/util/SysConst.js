@@ -545,6 +545,30 @@ export const PRODUCT_PAYMENT_STATUS = [
     }
 ];
 
+// 商品订单支付类型
+export const PRODUCT_ORDER_PAYMENT_TYPE = [
+    {
+        value: 1,
+        label: "支付"
+    },
+    {
+        value: 2,
+        label: "退款"
+    }
+];
+
+// 商品订单支付状态
+export const PRODUCT_PAYMENT_FLAG = [
+    {
+        value: 1,
+        label: "未付款"
+    },
+    {
+        value: 2,
+        label: "已付款"
+    }
+];
+
 /**
  * rich-text 自定义 toolbar
  */

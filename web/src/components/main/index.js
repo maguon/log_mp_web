@@ -59,3 +59,5 @@ export ProductDetail from "./ProductDetail";
 export ProductOrder from "./ProductOrder";
 export ProductOrderDetail from "./ProductOrderDetail";
 export ProductRemind from "./ProductRemind";
+export ProductPayment from "./ProductPayment";
+export ProductPaymentDetail from "./ProductPaymentDetail";

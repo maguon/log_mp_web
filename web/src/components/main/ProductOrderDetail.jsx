@@ -37,7 +37,16 @@ class ProductOrderDetail extends React.Component {
     };
 
     render() {
-        const {productOrderDetailReducer, showProductDetailModal, saveProductOrderRemark, changeProductOrderStatus, cancelProductOrderStatus} = this.props;
+        const {
+            productOrderDetailReducer,
+            getProductOrderInfo,
+            getProductOrderPaymentInfo,
+            showProductDetailModal,
+            saveProductOrderRemark,
+            changeProductOrderStatus,
+            cancelProductOrderStatus,
+            showProductOrderRefundModal
+        } = this.props;
         return (
             <div>
                 {/* 标题部分 */}
@@ -57,8 +66,8 @@ class ProductOrderDetail extends React.Component {
                     {/* TAB 头部 */}
                     <div className="col s12">
                         <ul className="tabs">
-                            <li className="tab col s6"><a href="#tab-base" className="active">订单信息</a></li>
-                            <li className="tab col s6"><a href="#tab-payment">支付信息</a></li>
+                            <li className="tab col s6"><a href="#tab-base" className="active" onClick={getProductOrderInfo}>订单信息</a></li>
+                            <li className="tab col s6"><a href="#tab-payment" onClick={getProductOrderPaymentInfo}>支付信息</a></li>
                         </ul>
                     </div>
 
@@ -117,8 +126,21 @@ class ProductOrderDetail extends React.Component {
                                 </div>
                             </div>
 
+                            {/* 各种处理时间 待发货 以外状态时，显示 */}
+                            {productOrderDetailReducer.productOrderInfo[0].status !== sysConst.PRODUCT_ORDER_STATUS[0].value &&
+                            <div className="row margin-top20 margin-left150 margin-right150">
+                                {(productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[1].value
+                                    || productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[3].value) &&
+                                <div className="col s6">发货时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderInfo[0].departure_time)}</div>}
+                                {productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[3].value &&
+                                <div className="col s6 right-align">送达时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderInfo[0].arrive_time)}</div>}
+
+                                {productOrderDetailReducer.productOrderInfo[0].status === sysConst.PRODUCT_ORDER_STATUS[2].value &&
+                                <div className="col s12">取消时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderInfo[0].cancel_time)}</div>}
+                            </div>}
+
                             {/* 备注 */}
-                            <div className="row margin-top40 margin-left150 margin-right150 padding-top10 detail-box z-depth-1 position-relative">
+                            <div className="row margin-top20 margin-left150 margin-right150 padding-top10 detail-box z-depth-1 position-relative">
                                 <Input s={12} label="备注" value={productOrderDetailReducer.orderRemark} onChange={this.changeOrderRemark}/>
                                 <i className="mdi mdi-checkbox-marked-circle confirm-icon fz30 purple-font pointer" onClick={saveProductOrderRemark}/>
                             </div>
@@ -137,9 +159,35 @@ class ProductOrderDetail extends React.Component {
 
                     {/* TAB 2 : 支付信息 */}
                     <div id="tab-payment" className="col s12">
-                        ffffffffffffffffffffffff反反复复付付付
-                        {/*{productOrderDetailReducer.productOrderInfo.length > 0 &&*/}
-                        {/*<div className="row">*/}
+                        {productOrderDetailReducer.productOrderPaymentInfo.map(function (item) {
+                            return (
+                                <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1">
+                                    <div className="col s12 padding-top10 padding-bottom10 custom-grey border-bottom-line">
+                                        <div className="col s6 purple-font">支付编号：{productOrderDetailReducer.productOrderPaymentInfo[0].id}</div>
+                                        <div className="col s6 pink-font right-align">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_PAYMENT_TYPE, productOrderDetailReducer.productOrderPaymentInfo[0].type)}</div>
+                                    </div>
+
+                                    <div className="col s12 margin-top5 padding-top10 padding-bottom20">
+                                        <div className="col s6 grey-text">
+                                            {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? '支付金额：' : '退款金额：'}
+                                            <span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderPaymentInfo[0].total_fee)}</span> 元
+                                        </div>
+                                        <div className="col s6 grey-text right-align">支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_time)}</div>
+
+                                        {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value &&
+                                        (productOrderDetailReducer.productOrderPaymentInfo[0].p_id == null || productOrderDetailReducer.productOrderPaymentInfo[0].p_id === '')}
+                                        <div className="col s12 margin-top10 grey-text right-align">
+                                            <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
+                                                    onClick={() => {showProductOrderRefundModal(productOrderDetailReducer.productOrderPaymentInfo[0].commodity_id)}}>退款
+                                            </button>
+                                            <ProductInfoModal/>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        },this)}
+                        {productOrderDetailReducer.productOrderPaymentInfo.length === 0 &&
+                        <div className="row center margin-top50 grey-text fz18">暂无支付信息</div>}
                     </div>
                 </div>
             </div>
@@ -159,6 +207,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getProductOrderInfo: () => {
         dispatch(productOrderDetailAction.getProductOrderInfo(ownProps.match.params.id));
     },
+    // 取得商品订单详情
+    getProductOrderPaymentInfo: () => {
+        dispatch(productOrderDetailAction.getProductOrderPaymentInfo(ownProps.match.params.id));
+    },
     setOrderRemark: (value) => {
         dispatch(ProductOrderDetailActionType.setProductOrderRemark(value))
     },
@@ -173,7 +225,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     // 修改订单状态
     changeProductOrderStatus: (newStatus) => {
         dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, newStatus));
-    }
+    },
+    showProductOrderRefundModal: (id) => {
+        dispatch(productInfoModalAction.initProductInfo(id));
+        $('#productInfoModal').modal('open');
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductOrderDetail)

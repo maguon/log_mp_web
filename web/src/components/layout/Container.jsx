@@ -61,7 +61,9 @@ import {
     ProductDetail,
     ProductOrder,
     ProductOrderDetail,
-    ProductRemind
+    ProductRemind,
+    ProductPayment,
+    ProductPaymentDetail
 } from '../main/index';
 
 const routes = [
@@ -311,6 +313,16 @@ const routes = [
         path: '/product_order/:id',
         exact: true,
         component: ProductOrderDetail
+    },
+    {
+        path: "/product_payment",
+        exact: true,
+        component: ProductPayment
+    },
+    {
+        path: '/product_payment/:id',
+        exact: true,
+        component: ProductPaymentDetail
     },
     {
         path: "/product_remind",
@@ -575,6 +587,10 @@ class Container extends React.Component {
                     {
                         "link": '/product_order',
                         "name": '商品订单'
+                    },
+                    {
+                        "link": '/product_payment',
+                        "name": '商品支付'
                     },
                     {
                         "link": '/product_remind',

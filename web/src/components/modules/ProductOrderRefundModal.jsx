@@ -1,15 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Input} from 'react-materialize';
-import {RefuseRefundModalActionType} from "../../actionTypes";
+import {ProductOrderRefundModalActionType} from "../../actionTypes";
 
-const refuseRefundModalAction = require('../../actions/modules/RefuseRefundModalAction');
-const formatUtil = require('../../util/FormatUtil');
+const productOrderRefundModalAction = require('../../actions/modules/ProductOrderRefundModalAction');
 
 /**
- * UI组件：拒绝退款 模块。
+ * UI组件：商品退款 模块。
  */
-class RefuseRefundModal extends React.Component {
+class ProductOrderRefundModal extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -26,19 +25,19 @@ class RefuseRefundModal extends React.Component {
     }
 
     /**
-     * 更新 拒绝原因
+     * 更新 退款金额
      */
-    changeRefuseReason = (event) => {
-        this.props.setRefuseReason(event.target.value);
+    changeRefundFee = (event) => {
+        this.props.setRefundFee(event.target.value);
     };
 
     /**
      * 渲染(挂载)画面。
      */
     render() {
-        const {refuseRefundModalReducer, closeModal, refuseRefund} = this.props;
+        const {productOrderRefundModalReducer, closeModal, refuseRefund} = this.props;
         return (
-            <div id="refuseRefundModal" className="modal modal-fixed-footer row">
+            <div id="productOrderRefundModal" className="modal modal-fixed-footer row">
 
                 {/** Modal头部：Title */}
                 <div className="modal-title center-align white-text">退款</div>
@@ -47,7 +46,7 @@ class RefuseRefundModal extends React.Component {
                 <div className="modal-content white grey-text text-darken-2">
                     <div className="row margin-top20">
                         <div className="col s12">
-                            <Input s={12} label="退款金额(元)" type="number" value={refuseRefundModalReducer.refundRemark} onChange={this.changeRefuseReason}/>
+                            <Input s={12} label="退款金额(元)" type="number" value={productOrderRefundModalReducer.refundFee} onChange={this.changeRefundFee}/>
                         </div>
                     </div>
                 </div>
@@ -67,7 +66,7 @@ class RefuseRefundModal extends React.Component {
  */
 const mapStateToProps = (state) => {
     return {
-        refuseRefundModalReducer: state.RefuseRefundModalReducer
+        productOrderRefundModalReducer: state.ProductOrderRefundModalReducer
     }
 };
 
@@ -75,15 +74,15 @@ const mapStateToProps = (state) => {
  * 输出逻辑：用户发出的动作变为 Action 对象，从 UI 组件传出去。
  */
 const mapDispatchToProps = (dispatch) => ({
-    setRefuseReason: (value) => {
-        dispatch(RefuseRefundModalActionType.setRefuseReason(value))
+    setRefundFee: (value) => {
+        dispatch(ProductOrderRefundModalActionType.setRefundFee(value))
     },
     refuseRefund: () => {
-        dispatch(refuseRefundModalAction.refuseRefund())
+        dispatch(productOrderRefundModalAction.productOrderRefund())
     },
     closeModal: () => {
-        $('#refuseRefundModal').modal('close');
+        $('#productOrderRefundModal').modal('close');
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(RefuseRefundModal);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductOrderRefundModal);

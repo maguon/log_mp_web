@@ -549,7 +549,7 @@ export const PRODUCT_PAYMENT_STATUS = [
 export const PRODUCT_ORDER_PAYMENT_TYPE = [
     {
         value: 1,
-        label: "支付"
+        label: "收款"
     },
     {
         value: 2,

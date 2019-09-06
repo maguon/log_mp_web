@@ -3,23 +3,31 @@ import {ProductOrderRefundModalActionType} from '../../actionTypes';
 
 // 画面用初期数据
 const initialState = {
-    // 退款申请 基本信息
-    refundApplyInfo: [],
-    // 拒绝原因
-    refuseReason: ''
+    // 商品订单编号
+    productOrderId: '',
+    // 商品订单支付编号
+    productPaymentId: '',
+    // 退款金额
+    refundFee: ''
 };
 
 export default handleActions({
-    [ProductOrderRefundModalActionType.setRefundApplyInfo]: (state, action) => {
+    [ProductOrderRefundModalActionType.setProductOrderId]: (state, action) => {
         return {
             ...state,
-            refundApplyInfo: action.payload
+            productOrderId: action.payload
         }
     },
-    [ProductOrderRefundModalActionType.setRefuseReason]: (state, action) => {
+    [ProductOrderRefundModalActionType.setProductPaymentId]: (state, action) => {
         return {
             ...state,
-            refuseReason: action.payload
+            productPaymentId: action.payload
+        }
+    },
+    [ProductOrderRefundModalActionType.setRefundFee]: (state, action) => {
+        return {
+            ...state,
+            refundFee: action.payload
         }
     }
 }, initialState)

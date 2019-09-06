@@ -2,11 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from "react-materialize";
-import {ProductInfoModal} from '../modules/index';
+import {ProductInfoModal, ProductOrderRefundModal} from '../modules/index';
 import {ProductOrderDetailActionType} from "../../actionTypes";
 
 const productOrderDetailAction = require('../../actions/main/ProductOrderDetailAction');
 const productInfoModalAction = require('../../actions/modules/ProductInfoModalAction');
+const productOrderRefundModalAction = require('../../actions/modules/ProductOrderRefundModalAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
@@ -178,9 +179,9 @@ class ProductOrderDetail extends React.Component {
                                         (productOrderDetailReducer.productOrderPaymentInfo[0].p_id == null || productOrderDetailReducer.productOrderPaymentInfo[0].p_id === '')}
                                         <div className="col s12 margin-top10 grey-text right-align">
                                             <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
-                                                    onClick={() => {showProductOrderRefundModal(productOrderDetailReducer.productOrderPaymentInfo[0].commodity_id)}}>退款
+                                                    onClick={() => {showProductOrderRefundModal(productOrderDetailReducer.productOrderPaymentInfo[0].id, productOrderDetailReducer.productOrderPaymentInfo[0].product_order_id)}}>退款
                                             </button>
-                                            <ProductInfoModal/>
+                                            <ProductOrderRefundModal/>
                                         </div>
                                     </div>
                                 </div>
@@ -226,9 +227,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     changeProductOrderStatus: (newStatus) => {
         dispatch(productOrderDetailAction.changeProductOrderStatus(ownProps.match.params.id, newStatus));
     },
-    showProductOrderRefundModal: (id) => {
-        dispatch(productInfoModalAction.initProductInfo(id));
-        $('#productInfoModal').modal('open');
+    showProductOrderRefundModal: (paymentId, orderId) => {
+        dispatch(productOrderRefundModalAction.initProductOrderRefundModal(paymentId, orderId));
+        $('#productOrderRefundModal').modal('open');
     },
 });
 

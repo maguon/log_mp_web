@@ -35,7 +35,7 @@ class ProductOrderRefundModal extends React.Component {
      * 渲染(挂载)画面。
      */
     render() {
-        const {productOrderRefundModalReducer, closeModal, refuseRefund} = this.props;
+        const {productOrderRefundModalReducer, closeModal, productRefund} = this.props;
         return (
             <div id="productOrderRefundModal" className="modal modal-fixed-footer row">
 
@@ -44,7 +44,7 @@ class ProductOrderRefundModal extends React.Component {
 
                 {/** Modal主体 */}
                 <div className="modal-content white grey-text text-darken-2">
-                    <div className="row margin-top20">
+                    <div className="row margin-top40">
                         <div className="col s12">
                             <Input s={12} label="退款金额(元)" type="number" value={productOrderRefundModalReducer.refundFee} onChange={this.changeRefundFee}/>
                         </div>
@@ -54,7 +54,7 @@ class ProductOrderRefundModal extends React.Component {
                 {/** Modal固定底部：取消/确定按钮 */}
                 <div className="modal-footer">
                     <button type="button" className="btn close-btn" onClick={closeModal}>取消</button>
-                    <button type="button" className="btn confirm-btn margin-left20" onClick={refuseRefund}>确定</button>
+                    <button type="button" className="btn confirm-btn margin-left20" onClick={productRefund}>确定</button>
                 </div>
             </div>
         );
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
     setRefundFee: (value) => {
         dispatch(ProductOrderRefundModalActionType.setRefundFee(value))
     },
-    refuseRefund: () => {
+    productRefund: () => {
         dispatch(productOrderRefundModalAction.productOrderRefund())
     },
     closeModal: () => {

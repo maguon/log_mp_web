@@ -1219,7 +1219,7 @@ table.striped > tbody > tr:nth-child(odd) {
 
 #routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal,#editProductRemindModal,
 #cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal,
-#refuseInvoiceModal, #editDepartmentModal, #newReCommendModal, #advertisingModal, #editCustomerPhoneModal {
+#refuseInvoiceModal, #editDepartmentModal, #newReCommendModal, #advertisingModal, #editCustomerPhoneModal, #productOrderRefundModal {
     max-height: 360px;
 }
 
@@ -1389,6 +1389,16 @@ img.responsive-img {
     height: auto;
 }
 
+.img_close{
+    width: 20px;
+    height: 20px;
+    /*background: rgba(0,0,0,0.5);*/
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 15px;
+}
+
 /*删除照片*/
 .delete-img {
     position: absolute;
@@ -1466,3 +1476,4 @@ img.responsive-img {
     /*-webkit-box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5);*/
     /*box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5);*/
 }
+

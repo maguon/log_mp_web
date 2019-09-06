@@ -48,6 +48,13 @@ class ProductPayment extends React.Component {
     };
 
     /**
+     * 更新 检索条件：手机
+     */
+    changeConditionUserPhone = (event) => {
+        this.props.setConditionUserPhone(event.target.value);
+    };
+
+    /**
      * 查询商品支付列表
      */
     queryProductPaymentList = () => {
@@ -87,9 +94,16 @@ class ProductPayment extends React.Component {
                 {/* 上部分：检索条件输入区域 */}
                 <div className="row grey-text text-darken-1">
                     <div className="col s11 search-condition-box">
-                        <Input s={3} label="支付编号" value={productPaymentReducer.conditionNo} onChange={this.changeConditionNo}/>
-                        <Input s={3} label="订单编号" value={productPaymentReducer.conditionOrderId} onChange={this.changeConditionOrderId}/>
-                        <div className="input-field col s3">
+                        <div className="custom-input-field col s-percent-20">
+                            <Input s={12} label="支付编号" value={productPaymentReducer.conditionNo} onChange={this.changeConditionNo}/>
+                        </div>
+                        <div className="custom-input-field col s-percent-20">
+                            <Input s={12} label="订单编号" value={productPaymentReducer.conditionOrderId} onChange={this.changeConditionOrderId}/>
+                        </div>
+                        <div className="custom-input-field col s-percent-20">
+                            <Input s={12} label="手机" value={productPaymentReducer.conditionUserPhone} onChange={this.changeConditionUserPhone}/>
+                        </div>
+                        <div className="input-field col s-percent-20">
                             <Select
                                 options={sysConst.PRODUCT_ORDER_PAYMENT_TYPE}
                                 onChange={changeConditionPaymentType}
@@ -102,7 +116,7 @@ class ProductPayment extends React.Component {
                             />
                             <label className="active">支付类型</label>
                         </div>
-                        <div className="input-field col s3">
+                        <div className="input-field col s-percent-20">
                             <Select
                                 options={sysConst.PRODUCT_PAYMENT_FLAG}
                                 onChange={changeConditionPaymentStatus}
@@ -135,8 +149,10 @@ class ProductPayment extends React.Component {
                                 <th>订单编号</th>
                                 <th>支付类型</th>
                                 <th>支付金额 (元)</th>
+                                <th>上级编号</th>
                                 <th>用户ID</th>
                                 <th>昵称</th>
+                                <th>手机</th>
                                 <th className="center">支付时间</th>
                                 <th className="center">支付状态</th>
                                 <th className="center">操作</th>
@@ -150,8 +166,10 @@ class ProductPayment extends React.Component {
                                         <td>{item.product_order_id}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_PAYMENT_TYPE, item.type)}</td>
                                         <td>{formatUtil.formatNumber(item.total_fee)}</td>
+                                        <td>{item.p_id}</td>
                                         <td>{item.user_id}</td>
                                         <td>{item.user_name}</td>
+                                        <td>{item.phone}</td>
                                         <td className="center">{formatUtil.getDateTime(item.payment_time)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_PAYMENT_FLAG,item.status)}</td>
                                         <td className="operation center">
@@ -164,7 +182,7 @@ class ProductPayment extends React.Component {
                             },this)}
                             {productPaymentReducer.productPaymentArray.length === 0 &&
                             <tr className="grey-text text-darken-1">
-                                <td className="no-data-tr" colSpan="9">暂无数据</td>
+                                <td className="no-data-tr" colSpan="11">暂无数据</td>
                             </tr>}
                             </tbody>
                         </table>
@@ -212,6 +230,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setConditionOrderId: (value) => {
         dispatch(ProductPaymentActionType.setConditionOrderId(value))
+    },
+    setConditionUserPhone: (value) => {
+        dispatch(ProductPaymentActionType.setConditionUserPhone(value))
     },
     changeConditionPaymentType: (value) => {
         dispatch(ProductPaymentActionType.setConditionPaymentType(value))

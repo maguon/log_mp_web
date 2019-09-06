@@ -70,7 +70,8 @@ class ProductPaymentDetail extends React.Component {
                                 </div>
 
                                 <div className="col s7 no-padding">
-                                    {productPaymentDetailReducer.productPaymentInfo[0].user_name} (用户ID：{productPaymentDetailReducer.productPaymentInfo[0].user_id})
+                                    {productPaymentDetailReducer.productPaymentInfo[0].user_name} (ID：{productPaymentDetailReducer.productPaymentInfo[0].user_id})
+                                    <span className="margin-left20">手机：{productPaymentDetailReducer.productPaymentInfo[0].phone}</span>
                                 </div>
 
                                 <div className="col s3 right-align">
@@ -78,7 +79,11 @@ class ProductPaymentDetail extends React.Component {
                                 </div>
                             </div>
                             <div className="col s12 padding-top15 padding-bottom15">
-                                <div className="col s12 right-align">
+                                <div className="col s6">
+                                    {productPaymentDetailReducer.productPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[1].value &&
+                                    <div>上级编号：{productPaymentDetailReducer.productPaymentInfo[0].p_id}</div>}
+                                </div>
+                                <div className="col s6 right-align">
                                     支付时间：{formatUtil.getDateTime(productPaymentDetailReducer.productPaymentInfo[0].payment_time)}
                                 </div>
                             </div>

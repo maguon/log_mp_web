@@ -13,6 +13,8 @@ const initialState = {
     conditionNo: '',
     // 检索条件：订单编号
     conditionOrderId: '',
+    // 检索条件：手机
+    conditionUserPhone: '',
     // 检索条件：支付类型
     conditionPaymentType: null,
     // 检索条件：支付状态
@@ -51,6 +53,12 @@ export default handleActions({
         return {
             ...state,
             conditionOrderId: action.payload
+        }
+    },
+    [ProductPaymentActionType.setConditionUserPhone]: (state, action) => {
+        return {
+            ...state,
+            conditionUserPhone: action.payload
         }
     },
     [ProductPaymentActionType.setConditionPaymentType]: (state, action) => {

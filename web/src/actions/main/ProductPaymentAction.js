@@ -16,6 +16,8 @@ export const getProductPaymentList = () => async (dispatch, getState) => {
         const conditionNo = getState().ProductPaymentReducer.conditionNo.trim();
         // 检索条件：订单编号
         const conditionOrderId = getState().ProductPaymentReducer.conditionOrderId.trim();
+        // 检索条件：手机
+        const conditionUserPhone = getState().ProductPaymentReducer.conditionUserPhone.trim();
         // 检索条件：支付类型
         const conditionPaymentType = getState().ProductPaymentReducer.conditionPaymentType;
         // 检索条件：支付状态
@@ -31,6 +33,8 @@ export const getProductPaymentList = () => async (dispatch, getState) => {
             productPaymentId: conditionNo,
             // 检索条件：订单编号
             productOrderId: conditionOrderId,
+            // 检索条件：手机
+            phone: conditionUserPhone,
             // 检索条件：交易类型
             type: conditionPaymentType === null ? '' : conditionPaymentType.value,
             // 检索条件：支付状态

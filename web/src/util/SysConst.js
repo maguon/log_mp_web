@@ -536,11 +536,11 @@ export const PRODUCT_PAYMENT_STATUS = [
         label: "未支付"
     },
     {
-        value: 2,
+        value: 3,
         label: "已支付"
     },
     {
-        value: 3,
+        value: 4,
         label: "已退款"
     }
 ];

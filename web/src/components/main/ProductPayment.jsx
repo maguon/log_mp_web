@@ -165,7 +165,7 @@ class ProductPayment extends React.Component {
                                         <td>{item.id}</td>
                                         <td>{item.product_order_id}</td>
                                         <td>{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_PAYMENT_TYPE, item.type)}</td>
-                                        <td>{formatUtil.formatNumber(item.total_fee)}</td>
+                                        <td>{formatUtil.formatNumber(item.total_fee,2)}</td>
                                         <td>{item.p_id}</td>
                                         <td>{item.user_id}</td>
                                         <td>{item.user_name}</td>

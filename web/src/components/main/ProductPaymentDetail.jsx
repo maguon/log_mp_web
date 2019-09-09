@@ -119,10 +119,10 @@ class ProductPaymentDetail extends React.Component {
                                     收货信息：{commonReducer.productOrderInfo[0].send_address} {commonReducer.productOrderInfo[0].send_name} {commonReducer.productOrderInfo[0].send_phone}
                                 </div>
                                 <div className="col s6 margin-top10 grey-text">
-                                    应付金额：<span className="red-text fz18">{formatUtil.formatNumber(commonReducer.productOrderInfo[0].earnest_money)}</span> 元
+                                    应付金额：<span className="red-text fz18">{formatUtil.formatNumber(commonReducer.productOrderInfo[0].earnest_money, 2)}</span> 元
                                 </div>
                                 <div className="col s6 margin-top10 grey-text right-align">
-                                    已支付：<span className="red-text fz18">{formatUtil.formatNumber(commonReducer.productOrderInfo[0].real_payment_price)}</span> 元
+                                    已支付：<span className="red-text fz18">{formatUtil.formatNumber(commonReducer.productOrderInfo[0].real_payment_price, 2)}</span> 元
                                 </div>
                             </div>
                         </div>}

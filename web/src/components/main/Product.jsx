@@ -193,7 +193,7 @@ class Product extends React.Component {
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_SALE_TYPE, item.type)}</td>
                                         <td>{formatUtil.formatNumber(item.original_price/10000,2)}</td>
                                         <td>{formatUtil.formatNumber(item.actual_price/10000,2)}</td>
-                                        <td>{formatUtil.formatNumber(item.earnest_money)}</td>
+                                        <td>{formatUtil.formatNumber(item.earnest_money,2)}</td>
                                         <td>{formatUtil.formatNumber(item.quantity)}</td>
                                         <td>{formatUtil.formatNumber(item.saled_quantity)}</td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_SALE_STATUS, item.status)}</td>

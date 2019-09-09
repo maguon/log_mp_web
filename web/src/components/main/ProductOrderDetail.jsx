@@ -95,10 +95,10 @@ class ProductOrderDetail extends React.Component {
                                         收货信息：{productOrderDetailReducer.productOrderInfo[0].send_address} {productOrderDetailReducer.productOrderInfo[0].send_name} {productOrderDetailReducer.productOrderInfo[0].send_phone}
                                     </div>
                                     <div className="col s6 margin-top10 grey-text">
-                                        应付金额：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money)}</span> 元
+                                        应付金额：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money,2)}</span> 元
                                     </div>
                                     <div className="col s6 margin-top10 grey-text right-align">
-                                        已支付：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].real_payment_price)}</span> 元
+                                        已支付：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].real_payment_price,2)}</span> 元
                                     </div>
                                 </div>
 
@@ -118,7 +118,7 @@ class ProductOrderDetail extends React.Component {
                                         <span className="margin-left20">销售类型：{commonUtil.getJsonValue(sysConst.PRODUCT_SALE_TYPE,productOrderDetailReducer.productOrderInfo[0].type)}</span>
                                     </div>
                                     <div className="col s7 margin-top10 grey-text right-align">
-                                        <span className="fz14 grey-text">定金：{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money)}元</span>
+                                        <span className="fz14 grey-text">定金：{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].earnest_money,2)}元</span>
                                         <span className="fz14 grey-text margin-left20">指导价：{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].ora_trans_price/10000,2)}万元</span>
                                         <span className="margin-left20">
                                             实际售价：<span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderInfo[0].act_trans_price/10000,2)}</span>万元

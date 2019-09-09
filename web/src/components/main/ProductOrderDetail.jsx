@@ -171,7 +171,7 @@ class ProductOrderDetail extends React.Component {
                                     <div className="col s12 margin-top5 padding-top10 padding-bottom20">
                                         <div className="col s6 grey-text">
                                             {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? '支付金额：' : '退款金额：'}
-                                            <span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderPaymentInfo[0].total_fee)}</span> 元
+                                            <span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderPaymentInfo[0].total_fee, 2)}</span> 元
                                         </div>
                                         <div className="col s6 grey-text right-align">支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_time)}</div>
 

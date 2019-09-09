@@ -25,7 +25,16 @@ export const getProductInfo = (id) => async (dispatch) => {
                 dispatch({type: ProductDetailActionType.setEarnestMoney, payload: res.result[0].earnest_money});
                 dispatch({type: ProductDetailActionType.setOriginalPrice, payload: res.result[0].original_price});
                 dispatch({type: ProductDetailActionType.setActualPrice, payload: res.result[0].actual_price});
+                // TAB2：商品基本图片
                 dispatch({type: ProductDetailActionType.setProductImg, payload: res.result[0].image});
+                // TAB2：商品描述图片
+                if (res.result[0].pord_images == null || res.result[0].pord_images === ""){
+                    dispatch({type: ProductDetailActionType.setProductDescImgList, payload: []});
+                } else {
+                    dispatch({type: ProductDetailActionType.setProductDescImgList, payload: res.result[0].pord_images.split(",")});
+                }
+
+                // TAB3：商品介绍
                 dispatch({type: ProductDetailActionType.setProductDes, payload: res.result[0].info});
             } else {
                 swal('未获取商品信息，请重新查询', res.msg, 'warning');
@@ -124,15 +133,17 @@ export const changeProductStatus = () => async (dispatch, getState) => {
     }
 };
 
-export const uploadProductImg = (formData) => (dispatch) => {
+export const uploadProductImg = (type, formData) => (dispatch) => {
     try {
         // 基本url
         let url = fileHost + '/api/user/' + localUtil.getSessionItem(sysConst.USER_ID) + '/image?imageType=1';
         httpUtil.httpAsyncFormPost(url, formData, function (result) {
             if (result.success === true) {
-                // 上传图片成功后，刷新画面显示图片
-                dispatch({type: ProductDetailActionType.setProductImg, payload: result.imageId});
-                dispatch(saveProductImg());
+                if (type === "base") {
+                    dispatch(saveProductImg(result.imageId));
+                } else {
+                    dispatch(saveProductDescImg('add',result.imageId));
+                }
             } else {
                 swal('上传图片失败', result.msg, 'warning');
             }
@@ -144,24 +155,65 @@ export const uploadProductImg = (formData) => (dispatch) => {
     }
 };
 
-export const saveProductImg = () => async (dispatch, getState) => {
+export const saveProductImg = (imageId) => async (dispatch, getState) => {
     try {
         // 商品管理详细：商品id
         let productId = getState().ProductDetailReducer.productId;
-        // 商品管理详细：商品照片id
-        let productImg = getState().ProductDetailReducer.productImg;
 
         if (productId === '') {
             swal('修改失败', '未找到对应的商品信息，请重新检索！', 'warning');
         } else {
             const params = {
-                image: productImg
+                image: imageId
             };
             // 基本url
             let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity/' + productId + '/image';
             let res = await httpUtil.httpPut(url, params);
             if (res.success === true) {
                 swal("保存成功", "", "success");
+                // 修改成功后，刷新页面
+                dispatch(getProductInfo(productId));
+            } else if (res.success === false) {
+                swal('保存失败', res.msg, 'warning');
+            }
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+export const saveProductDescImg = (opFlag, imageId) => async (dispatch, getState) => {
+    try {
+        // 商品id
+        let productId = getState().ProductDetailReducer.productId;
+
+        // 商品描述图片
+        let productDescImgList = getState().ProductDetailReducer.productDescImgList;
+
+        // 添加新描述图片
+        if (opFlag === 'add') {
+            productDescImgList.push(imageId);
+        } else {
+            // 删除描述图片
+            let index = productDescImgList.indexOf(imageId);
+            if (index > -1) {
+                productDescImgList.splice(index, 1);
+            }
+        }
+
+        if (productId === '') {
+            swal('修改失败', '未找到对应的商品信息，请重新检索！', 'warning');
+        } else {
+            const params = {
+                prodImages: productDescImgList.join(',')
+            };
+            // 基本url
+            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity/' + productId + '/prodImages';
+            let res = await httpUtil.httpPut(url, params);
+            if (res.success === true) {
+                swal("保存成功", "", "success");
+                // 修改成功后，刷新页面
+                dispatch(getProductInfo(productId));
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }

@@ -11,4 +11,5 @@ export const setEarnestMoney = createAction('SET_EARNEST_MONEY');
 export const setOriginalPrice = createAction('SET_ORIGINAL_PRICE');
 export const setActualPrice = createAction('SET_ACTUAL_PRICE');
 export const setProductImg = createAction('SET_PRODUCT_IMG');
+export const setProductDescImgList = createAction('SET_PRODUCT_DESC_IMG');
 export const setProductDes = createAction('SET_PRODUCT_DES');

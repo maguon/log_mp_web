@@ -25,6 +25,8 @@ const initialState = {
     actualPrice: '',
     // 商品图片
     productImg: '',
+    // 商品描述图片
+    productDescImgList: [],
     // 商品介绍
     productDes: ''
 };
@@ -94,6 +96,12 @@ export default handleActions({
         return {
             ...state,
             productImg: action.payload
+        }
+    },
+    [ProductDetailActionType.setProductDescImgList]: (state, action) => {
+        return {
+            ...state,
+            productDescImgList: action.payload
         }
     },
     [ProductDetailActionType.setProductDes]: (state, action) => {

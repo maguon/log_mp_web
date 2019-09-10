@@ -1,5 +1,5 @@
 import React from 'react';
-import {HashRouter as Router, Route, Link} from "react-router-dom";
+import {HashRouter as Router, Route, Link, NavLink} from "react-router-dom";
 import {connect} from 'react-redux';
 import {fileHost} from '../../config/HostConfig';
 import {
@@ -55,6 +55,15 @@ import {
     RecommenderSettingDetail,
     RecommendBusinessManager,
     RecommendBusinessManagerDetail,
+    CouponManager,
+    CouponSetting,
+    Product,
+    ProductDetail,
+    ProductOrder,
+    ProductOrderDetail,
+    ProductRemind,
+    ProductPayment,
+    ProductPaymentDetail
 } from '../main/index';
 
 const routes = [
@@ -284,6 +293,43 @@ const routes = [
         component: RecommendBusinessManagerDetail
     },
 
+    // 商品信息
+    {
+        path: "/product",
+        exact: true,
+        component: Product
+    },
+    {
+        path: '/product/:id',
+        exact: true,
+        component: ProductDetail
+    },
+    {
+        path: "/product_order",
+        exact: true,
+        component: ProductOrder
+    },
+    {
+        path: '/product_order/:id',
+        exact: true,
+        component: ProductOrderDetail
+    },
+    {
+        path: "/product_payment",
+        exact: true,
+        component: ProductPayment
+    },
+    {
+        path: '/product_payment/:id',
+        exact: true,
+        component: ProductPaymentDetail
+    },
+    {
+        path: "/product_remind",
+        exact: true,
+        component: ProductRemind
+    },
+
     // 设置模块
     {
         // 城市
@@ -351,7 +397,7 @@ const routes = [
         component: AdminUserSettingDetail
     },
     {
-        // 员工管理
+        // 推荐人管理
         path: "/recommend_setting",
         exact: true,
         component: RecommenderSetting
@@ -361,6 +407,18 @@ const routes = [
         exact: true,
         component: RecommenderSettingDetail
     },
+    {
+        // 优惠券领取
+        path: "/coupon_manager",
+        exact: true,
+        component: CouponManager
+    },
+    {
+        // 优惠券设置
+        path: "/coupon_setting",
+        exact: true,
+        component: CouponSetting
+    }
 ];
 
 class Container extends React.Component {
@@ -493,6 +551,10 @@ class Container extends React.Component {
                     {
                         "link": '/refund',
                         "name": '订单退款'
+                    },
+                    {
+                        "link": '/coupon_manager',
+                        "name": '优惠券领取'
                     }
                 ]
             },
@@ -511,6 +573,28 @@ class Container extends React.Component {
                     {
                         "link": '/order_profit',
                         "name": '订单利润'
+                    }
+                ]
+            },
+            {
+                "label": '商品信息',
+                "icon": 'mdi-store-24-hour',
+                "children": [
+                    {
+                        "link": '/product',
+                        "name": '商品管理'
+                    },
+                    {
+                        "link": '/product_order',
+                        "name": '商品订单'
+                    },
+                    {
+                        "link": '/product_payment',
+                        "name": '商品支付'
+                    },
+                    {
+                        "link": '/product_remind',
+                        "name": '商品提醒'
                     }
                 ]
             },
@@ -551,6 +635,10 @@ class Container extends React.Component {
                         "name": '推荐人管理'
                     },
                     {
+                        "link": '/coupon_setting',
+                        "name": '优惠券设置'
+                    },
+                    {
                         "link": '/call_center_setting',
                         "name": '客服电话'
                     }
@@ -581,8 +669,8 @@ class Container extends React.Component {
                                                     {item.children.map(function (menu) {
                                                         return (
                                                             <ul>
-                                                                <li><Link to={menu.link}><i className="mdi mdi-chevron-right"/>{menu.name}
-                                                                </Link></li>
+                                                                <li><NavLink to={menu.link} activeClassName="active"><i className="mdi mdi-chevron-right"/>{menu.name}
+                                                                </NavLink></li>
                                                                 <li><div className="divider"/></li>
                                                             </ul>
                                                         )

@@ -60,6 +60,15 @@ import RecommenderSettingReducer from './main/RecommenderSettingReducer';
 import RecommenderSettingDetailReducer from './main/RecommenderSettingDetailReducer';
 import RecommendBusinessManagerReducer from './main/RecommendBusinessManagerReducer';
 import RecommendBusinessManagerDetailReducer from './main/RecommendBusinessManagerDetailReducer';
+import CouponSettingReducer from './main/CouponSettingReducer';
+import CouponManagerReducer from './main/CouponManagerReducer';
+import ProductReducer from './main/ProductReducer';
+import ProductDetailReducer from './main/ProductDetailReducer';
+import ProductOrderReducer from './main/ProductOrderReducer';
+import ProductOrderDetailReducer from './main/ProductOrderDetailReducer';
+import ProductRemindReducer from './main/ProductRemindReducer';
+import ProductPaymentReducer from './main/ProductPaymentReducer';
+import ProductPaymentDetailReducer from './main/ProductPaymentDetailReducer';
 
 import InquiryInfoModalReducer from './modules/InquiryInfoModalReducer';
 import NewSupplierModalReducer from './modules/NewSupplierModalReducer';
@@ -93,6 +102,12 @@ import OrderPaymentDetailModalReducer from './modules/OrderPaymentDetailModalRed
 import LoadTaskInfoModalReducer from './modules/LoadTaskInfoModalReducer';
 import NewRecommenderModalReducer from './modules/NewRecommenderModalReducer';
 import AdvertisingModalReducer from './modules/AdvertisingModalReducer';
+import EditCouponModalReducer from './modules/EditCouponModalReducer';
+import EditUserCouponModalReducer from './modules/EditUserCouponModalReducer';
+import NewProductModalReducer from './modules/NewProductModalReducer';
+import EditProductRemindModalReducer from './modules/EditProductRemindModalReducer';
+import ProductInfoModalReducer from './modules/ProductInfoModalReducer';
+import ProductOrderRefundModalReducer from './modules/ProductOrderRefundModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -154,6 +169,15 @@ export default combineReducers({
     RecommenderSettingDetailReducer,
     RecommendBusinessManagerReducer,
     RecommendBusinessManagerDetailReducer,
+    CouponSettingReducer,
+    CouponManagerReducer,
+    ProductReducer,
+    ProductDetailReducer,
+    ProductOrderReducer,
+    ProductOrderDetailReducer,
+    ProductRemindReducer,
+    ProductPaymentReducer,
+    ProductPaymentDetailReducer,
 
     InquiryInfoModalReducer,
     NewSupplierModalReducer,
@@ -186,5 +210,11 @@ export default combineReducers({
     OrderPaymentDetailModalReducer,
     LoadTaskInfoModalReducer,
     NewRecommenderModalReducer,
-    AdvertisingModalReducer
+    AdvertisingModalReducer,
+    EditCouponModalReducer,
+    EditUserCouponModalReducer,
+    NewProductModalReducer,
+    EditProductRemindModalReducer,
+    ProductInfoModalReducer,
+    ProductOrderRefundModalReducer
 })

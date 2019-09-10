@@ -20,6 +20,21 @@ export const getCityList = () => async (dispatch) => {
     }
 };
 
+// 取得系统 商品列表
+export const getProductList = () => async (dispatch) => {
+    try {
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getProductList, payload: res.result})
+        } else if (res.success === false) {
+            swal('获取商品信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 // 取得系统 供应商列表
 export const getSupplierList = () => async (dispatch) => {
     try {
@@ -78,6 +93,40 @@ export const getOrderInfo = (orderId) => async (dispatch) => {
             dispatch({type: CommonActionType.getOrderInfo, payload: res.result});
         } else if (res.success === false) {
             swal('获取订单详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+// 检索商品订单基本信息
+export const getProductOrderInfo = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/productOrder?productOrderId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getProductOrderInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取商品订单详细信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+// 检索支付基本信息
+export const getPaymentInfo = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/payment?paymentId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getPaymentInfo, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取支付详细信息失败', res.msg, 'warning');
         }
     } catch (err) {
         swal('操作失败', err.message, 'error');

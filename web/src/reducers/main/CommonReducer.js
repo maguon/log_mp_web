@@ -4,6 +4,8 @@ import {CommonActionType} from '../../actionTypes';
 const initialState = {
     // 城市列表
     cityList: [],
+    // 商品列表
+    productList: [],
     // 供应商列表
     supplierList: [],
     // 部门列表
@@ -13,6 +15,10 @@ const initialState = {
 
     // 订单信息
     orderInfo: [],
+    // 商品订单信息
+    productOrderInfo: [],
+    // 支付信息
+    paymentInfo: [],
     // 是否显示订单车辆列表
     showOrderCarListFlag: false,
     // 订单信息：运送车辆列表
@@ -41,6 +47,16 @@ export default handleActions({
         return {
             ...state,
             cityList: cityList
+        }
+    },
+    [CommonActionType.getProductList]: (state, action) => {
+        let productList = [];
+        action.payload.forEach((value) => {
+            productList.push({value: value.id, label: value.commodity_name})
+        });
+        return {
+            ...state,
+            productList: productList
         }
     },
     [CommonActionType.getSupplierList]: (state, action) => {
@@ -77,6 +93,18 @@ export default handleActions({
         return {
             ...state,
             orderInfo: action.payload
+        }
+    },
+    [CommonActionType.getProductOrderInfo]: (state, action) => {
+        return {
+            ...state,
+            productOrderInfo: action.payload
+        }
+    },
+    [CommonActionType.getPaymentInfo]: (state, action) => {
+        return {
+            ...state,
+            paymentInfo: action.payload
         }
     },
     [CommonActionType.setShowOrderCarListFlag]: (state, action) => {

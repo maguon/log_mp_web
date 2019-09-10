@@ -15,6 +15,10 @@ body {
     font-size: 15px;
 }
 
+strong {
+    font-weight: bold;
+}
+
 .display-block {
     display: block !important;
 }
@@ -993,6 +997,40 @@ table.striped > tbody > tr:nth-child(odd) {
     color: #724278;
 }
 
+.list-pink-btn {
+    padding: 0 10px !important;
+    color: white;
+    background-color: #C54C88;
+    border: 1px solid #C54C88;
+}
+
+.list-pink-btn:hover {
+    background-color: #a94275 !important;
+    color: white;
+}
+
+.list-pink-btn:focus {
+    background-color: #a94275 !important;
+    color: white;
+}
+
+.list-pink-border-btn {
+    padding: 0 10px !important;
+    color: #C54C88;
+    background-color: white;
+    border: 1px solid #C54C88;
+}
+
+.list-pink-border-btn:hover {
+    background-color: #efefef !important;
+    color: #C54C88;
+}
+
+.list-pink-border-btn:focus {
+    background-color: #efefef !important;
+    color: #C54C88;
+}
+
 .query-btn {
     margin-left: 20px;
     margin-right: 10px;
@@ -1162,7 +1200,7 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 580px;
 }
 
-#editOrderCarModal{
+#editOrderCarModal,#editCouponModal,#editUserCouponModal{
     max-height: 550px;
 }
 
@@ -1179,9 +1217,9 @@ table.striped > tbody > tr:nth-child(odd) {
     max-height: 456px;
 }
 
-#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal,
+#routeModal, #newSupplierContactModal, #newSupplierBankModal, #newLogSiteContactModal,#editProductRemindModal,
 #cancelOrderModal, #editUserAddressModal, #confirmPaymentModal, #confirmRefundModal, #refuseRefundModal,
-#refuseInvoiceModal, #editDepartmentModal, #newReCommendModal, #advertisingModal, #editCustomerPhoneModal {
+#refuseInvoiceModal, #editDepartmentModal, #newReCommendModal, #advertisingModal, #editCustomerPhoneModal, #productOrderRefundModal {
     max-height: 360px;
 }
 
@@ -1351,6 +1389,16 @@ img.responsive-img {
     height: auto;
 }
 
+.img_close{
+    width: 20px;
+    height: 20px;
+    /*background: rgba(0,0,0,0.5);*/
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 15px;
+}
+
 /*删除照片*/
 .delete-img {
     position: absolute;
@@ -1417,3 +1465,15 @@ img.responsive-img {
     height: 180px;
     width: 180px;
 }
+
+.collapsible-body li a.active
+{
+    color: #fff;
+    /*background: -webkit-linear-gradient(45deg, #8e24aa, #ff6e40);*/
+    /*background: -moz- oldlinear-gradient(45deg, #8e24aa, #ff6e40);*/
+    /*background:      -o-linear-gradient(45deg, #8e24aa, #ff6e40);*/
+    background:         linear-gradient(45deg, #9866aa, #9866aa);
+    /*-webkit-box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5);*/
+    /*box-shadow: 3px 3px 20px 0 rgba(255, 110, 64, .5);*/
+}
+

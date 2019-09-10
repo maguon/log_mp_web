@@ -57,6 +57,15 @@ import * as RecommenderSettingActionType  from './main/RecommenderSettingActionT
 import * as RecommenderSettingDetailActionType  from './main/RecommenderSettingDetailActionType';
 import * as RecommendBusinessManagerActionType  from './main/RecommendBusinessManagerActionType';
 import * as RecommendBusinessManagerDetailActionType  from './main/RecommendBusinessManagerDetailActionType';
+import * as CouponSettingActionType  from './main/CouponSettingActionType';
+import * as CouponManagerActionType  from './main/CouponManagerActionType';
+import * as ProductActionType  from './main/ProductActionType';
+import * as ProductDetailActionType  from './main/ProductDetailActionType';
+import * as ProductOrderActionType  from './main/ProductOrderActionType';
+import * as ProductOrderDetailActionType  from './main/ProductOrderDetailActionType';
+import * as ProductRemindActionType  from './main/ProductRemindActionType';
+import * as ProductPaymentActionType  from './main/ProductPaymentActionType';
+import * as ProductPaymentDetailActionType  from './main/ProductPaymentDetailActionType';
 
 import * as InquiryInfoModalActionType  from './modules/InquiryInfoModalActionType';
 import * as NewSupplierModalActionType  from './modules/NewSupplierModalActionType';
@@ -90,6 +99,12 @@ import * as OrderPaymentDetailModalActionType  from './modules/OrderPaymentDetai
 import * as LoadTaskInfoModalActionType  from './modules/LoadTaskInfoModalActionType';
 import * as NewRecommenderModalActionType  from './modules/NewRecommenderModalActionType';
 import * as AdvertisingModalActionType  from './modules/AdvertisingModalActionType';
+import * as EditCouponModalActionType  from './modules/EditCouponModalActionType';
+import * as EditUserCouponModalActionType  from './modules/EditUserCouponModalActionType';
+import * as NewProductModalActionType  from './modules/NewProductModalActionType';
+import * as EditProductRemindModalActionType  from './modules/EditProductRemindModalActionType';
+import * as ProductInfoModalActionType  from './modules/ProductInfoModalActionType';
+import * as ProductOrderRefundModalActionType  from './modules/ProductOrderRefundModalActionType';
 
 export  {
     LoginActionType,
@@ -150,6 +165,15 @@ export  {
     RecommenderSettingDetailActionType,
     RecommendBusinessManagerActionType,
     RecommendBusinessManagerDetailActionType,
+    CouponSettingActionType,
+    CouponManagerActionType,
+    ProductActionType,
+    ProductDetailActionType,
+    ProductOrderActionType,
+    ProductOrderDetailActionType,
+    ProductRemindActionType,
+    ProductPaymentActionType,
+    ProductPaymentDetailActionType,
 
     InquiryInfoModalActionType,
     NewSupplierModalActionType,
@@ -182,5 +206,11 @@ export  {
     OrderPaymentDetailModalActionType,
     LoadTaskInfoModalActionType,
     NewRecommenderModalActionType,
-    AdvertisingModalActionType
+    AdvertisingModalActionType,
+    EditCouponModalActionType,
+    EditUserCouponModalActionType,
+    NewProductModalActionType,
+    EditProductRemindModalActionType,
+    ProductInfoModalActionType,
+    ProductOrderRefundModalActionType
 }

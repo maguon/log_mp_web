@@ -117,10 +117,10 @@ class SupplierSettingDetail extends React.Component {
                         </div>
 
                         <div className="col s7 no-padding position-relative">
-                            <span className="map-info fz14"><i className="mdi mdi-map-marker fz15 grey-text margin-right10"/>
+                            <div className="map-info fz14"><i className="mdi mdi-map-marker fz15 grey-text margin-right10"/>
                                 经度：<span className="fz16 red-font margin-right10">{logSiteSettingDetailReducer.logSiteLon}</span>
                                 纬度：<span className="fz16 red-font">{logSiteSettingDetailReducer.logSiteLat}</span>
-                            </span>
+                            </div>
                             <div id="log-site-map" className="col s12 border-left-line"/>
                         </div>
                     </div>

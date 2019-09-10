@@ -110,13 +110,13 @@ Page({
     var userId = app.globalData.userId;
     var addressList = that.data.addressList;
     var shipAddressId = addressList[index].id;
-    var indexinfo = that.data.index;
+    var indexinfo = parseInt(that.data.index);
     var orderId = that.data.orderId;
     var address= JSON.stringify(that.data.addressList[index]);
 
-
+    console.log(indexinfo)
     if (indexinfo == 0) {
-      
+
       var params = {
         sendName: addressList[index].user_name,
         sendPhone: addressList[index].phone,
@@ -137,8 +137,8 @@ Page({
       })
       }
       return;
-    } else if (indexinfo == 1) {
-   
+    } else if (indexinfo ==1) {
+
       var params = {
         recvName: addressList[index].user_name,
         recvPhone: addressList[index].phone,
@@ -159,10 +159,19 @@ Page({
       })
       }
       return;
+    } else if(indexinfo == 3){
+      var params = {
+        name: addressList[index].user_name,
+        phone: addressList[index].phone,
+        address: addressList[index].detail_address
+      }
+      wx.setStorageSync('address', params)
+      wx.navigateBack({
+      })
     }else{
-    wx.navigateTo({
-      url: '../address/address?addressList=' + address,
-    });
+      wx.navigateTo({
+        url: '../address/address?addressList=' + address,
+      });
     }
   },
 

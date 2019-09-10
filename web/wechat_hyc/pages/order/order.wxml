@@ -1,74 +1,74 @@
-<view class='head' >
-  <view bindtap='selectButton' data-index='{{index}}' class='items' wx:for='{{orderState}}' wx:key='u' >
-   <view hidden='{{!item.status}}'  class='item' style="opacity:{{item.number}}">
-    <image class='item-img' src='{{item.url}}'>
-    <view hidden='{{!item.hidden}}' class='item-point'></view>
-    </image>
-    
-    <view class='item-text'>{{item.name}}</view>
-     <view class='divline'></view>
-   </view>
-   
-   <loading hidden="{{loadingHidden}}">加载中</loading>
+<view class='head'>
+  <view bindtap='selectButton' data-index='{{index}}' class='items' wx:for='{{orderState}}' wx:key='u'>
+    <view hidden='{{!item.status}}' class='item' style="opacity:{{item.number}}">
+      <image class='item-img' src='{{item.url}}'>
+        <view hidden='{{!item.hidden}}' class='item-point'></view> 
+      </image>
 
-    <view hidden='{{item.status}}'  class='item' style="opacity:{{item.number}}">
-    <image class='item-img' src='{{item.url}}'>
-     <view hidden='{{!item.hidden}}' class='item-point'></view>
-    </image>
-    <view class='item-text'>{{item.name}}</view>
-   </view> 
- </view>
+      <view class='item-text'>{{item.name}}</view>
+      <view class='divline'></view>
+    </view>
+
+    <loading hidden="{{loadingHidden}}">加载中</loading>
+
+    <view hidden='{{item.status}}' class='item' style="opacity:{{item.number}}">
+      <image class='item-img' src='{{item.url}}'>
+        <view hidden='{{!item.hidden}}' class='item-point'></view>
+      </image>
+      <view class='item-text'>{{item.name}}</view>
+    </view>
+  </view>
 </view>
 <!--  ---------------------------------------------------------------------- -->
- <view hidden='{{!prompt}}' class='prompt'>已送达的订单请到个人里面的历史订单中查看</view>
- <view class='null'></view>
- <view class='shadow'></view>
+<view hidden='{{!prompt}}' class='prompt'>已送达的订单请到个人里面的历史订单中查看</view>
+<view class='null'></view>
+<view class='shadow'></view>
 <view hidden='{{flag}}' wx:for="{{orderlist}}" wx:key='u'>
-<view hidden='{{!item.state}}' bindtap='bindDetail' data-index='{{index}}' data-name='orderlist' class='content' hover-class="active">
-<view class='city'>
-<view  hidden='{{item.status}}' class='num'>询价编号：{{item.id}}</view>
-<view hidden='{{!item.status}}' class='num'>订单编号：{{item.id}}</view>
-<view hidden='{{item.status}}' class='num-time'>{{item.created_on}}</view>
-<view hidden='{{!item.status}}' class='num-time'>{{item.updated_on}}</view>
-</view>
-<!-- <view class='dis-line'></view> -->
-<view class='city'>
-<image class='city-img' src='../../images/car_04.png'></image>
-<view class='city-text'>{{item.route_start}}</view>
-<image class='city-arrow' src='../../images/arrow_02.png'></image>
-<view class='city-text'>{{item.route_end}}</view>
-<view hidden='{{item.is}}' class='state'>{{state[item.stay]}}</view>
-<view hidden='{{!item.is}}' class='state01'>{{state[item.stay]}}</view>
-<image class='arrow'src='../../images/arrow.png'></image>
-</view>
+  <view hidden='{{!item.state}}' bindtap='bindDetail' data-index='{{index}}' data-name='orderlist' class='content' hover-class="active">
+    <view class='city'>
+      <view hidden='{{item.status}}' class='num'>询价编号：{{item.id}}</view>
+      <view hidden='{{!item.status}}' class='num'>订单编号：{{item.id}}</view>
+      <view hidden='{{item.status}}' class='num-time'>{{item.created_on}}</view>
+      <view hidden='{{!item.status}}' class='num-time'>{{item.updated_on}}</view>
+    </view>
+    <!-- <view class='dis-line'></view> -->
+    <view class='city'>
+      <image class='city-img' src='../../images/car_04.png'></image>
+      <view class='city-text'>{{item.route_start}}</view>
+      <image class='city-arrow' src='../../images/arrow_02.png'></image>
+      <view class='city-text'>{{item.route_end}}</view>
+      <view hidden='{{item.is}}' class='state'>{{state[item.stay]}}</view>
+      <view hidden='{{!item.is}}' class='state01'>{{state[item.stay]}}</view>
+      <image class='arrow' src='../../images/arrow.png'></image>
+    </view>
 
-<view class='stay-detail'>
- <view class='stay-car'>运送车辆:{{item.car_num}}</view>
+    <view class='stay-detail'>
+      <view class='stay-car'>运送车辆:{{item.car_num}}</view>
 
- <view hidden='{{!item.status}}'>
- <view hidden='{{item.payFlag}}' class='stay-expect'>
- <!-- <view class='stay-text'>协商费用:</view> -->
- <view hidden='{{item.creatFlag}}' class='stay-num'>协商费用:{{item.price}}元</view>
- <view hidden='{{!item.creatFlag}}' class='stay-num'>预计费用:{{item.fee_price}}元</view>
- <!-- <view class='stay-text'>元</view> -->
- </view>
+      <view hidden='{{!item.status}}'>
+        <view hidden='{{item.payFlag}}' class='stay-expect'>
+          <!-- <view class='stay-text'>协商费用:</view> -->
+          <view hidden='{{item.creatFlag}}' class='stay-num'>协商费用:{{item.price}}元</view>
+          <view hidden='{{!item.creatFlag}}' class='stay-num'>预计费用:{{item.fee_price}}元</view>
+          <!-- <view class='stay-text'>元</view> -->
+        </view>
 
-<view hidden='{{!item.payFlag}}' class='stay-expect'>
- <!-- <view class='stay-text'>应付金额:</view> -->
- <view class='stay-num'>应付金额:{{item.sumFee}}元</view>
- <!-- <view class='stay-text'>元</view> -->
-</view>
-</view>
+        <view hidden='{{!item.payFlag}}' class='stay-expect'>
+          <!-- <view class='stay-text'>应付金额:</view> -->
+          <view class='stay-num'>应付金额:{{item.sumFee}}元</view>
+          <!-- <view class='stay-text'>元</view> -->
+        </view>
+      </view>
 
 
-<view hidden='{{item.status}}'class='stay-expect'>
-<view class='stay-text'>预计费用:</view>
-<view class='stay-num01'>{{item.fee_price}}</view>
-<view class='stay-text'>元</view>
-</view>
+      <view hidden='{{item.status}}' class='stay-expect'>
+        <view class='stay-text'>预计费用:</view>
+        <view class='stay-num01'>{{item.fee_price}}</view>
+        <view class='stay-text'>元</view>
+      </view>
 
-</view>
-</view>
+    </view>
+  </view>
 </view>
 
 <view class='content-text' hidden='{{!flag}}'>～暂无内容请先进行询价</view>

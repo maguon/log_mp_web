@@ -27,6 +27,7 @@ Page({
 
     try {
       const value = wx.getStorageSync('openid')
+      console.log(value)
       if (value) {
 
         if (value.openid != "" && value.session_key != "") {
@@ -36,7 +37,7 @@ Page({
         }
       }
     } catch (e) {
-
+      console.log("000000")
     }
  
 
@@ -48,6 +49,7 @@ Page({
           app.globalData.userId = value.userId;
           app.globalData.accessToken = value.accessToken;
         }
+        console.log(value.accessToken)
         //更换新的Token
         reqUtil.httpGet(config.host.apiHost + "/api/user/" + value.userId + "/token/" + value.accessToken, (err, rec) => {
 
@@ -90,9 +92,10 @@ Page({
         success:ree => {
           //获取code
           var code = ree.code;
-    
+          console.log(code)
           //发送code 请求openid
           reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
+            console.log(rea.data.result.openid)
             // //保存openid 到全局
             app.globalData.openid = rea.data.result.openid;
             app.globalData.session_key = rea.data.result.session_key;

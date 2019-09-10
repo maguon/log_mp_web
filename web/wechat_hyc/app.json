@@ -1,6 +1,7 @@
 {
   "pages": [
-   
+
+
     "pages/login/login",
     "pages/index/index",
     "pages/new-user/new-user",
@@ -10,8 +11,7 @@
     "pages/index/budget/budget",
     "pages/index/prompt/prompt",
     "pages/index/citys/citys",
-
-     "pages/map/map",
+    "pages/map/map",
 
     "pages/order/order",
     "pages/order/create-order/create-order",
@@ -34,6 +34,13 @@
     "pages/order/order-pay/bank-pay/card-msg/card-msg",
     "pages/order/order-pay/bank-pay/add-card/add-card",
     "pages/order/order-pay/service-mode/service-mode",
+
+    "pages/special/order/order",
+    "pages/special/record/record",
+    "pages/special/pay/pay",
+    "pages/special/wxpay/wxpay",
+    "pages/special/detail/detail",
+    "pages/special/special",
 
     "pages/about/about",
     "pages/about/consign/consign",
@@ -82,12 +89,19 @@
         "iconPath": "images/order.png",
         "selectedIconPath": "images/order_full.png"
       },
+        {
+          "pagePath": "pages/special/special",
+          "text": "特价车",
+          "iconPath": "images/SpecialCar.png",
+          "selectedIconPath": "images/SpecialCar_full.png"
+        },
       {
         "pagePath": "pages/about/about",
         "text": "关于",
         "iconPath": "images/about.png",
         "selectedIconPath": "images/about_full.png"
       },
+      
       {
         "pagePath": "pages/user/user",
         "text": "个人",

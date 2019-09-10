@@ -49,10 +49,9 @@ Page({
       openid: app.globalData.openid,
       totalFee: that.data.totalPrice, //支付金额
     }
-
+   
     //发送Post请求
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/order/" + orderId + "/wechatPayment", params, (err, res) => {
- 
 
       wx.requestPayment({
         timeStamp: res.data.result[0].timeStamp + "",
@@ -61,7 +60,7 @@ Page({
         signType: "MD5",
         paySign: res.data.result[0].paySign,
         success: (res) => {       
-     
+       
           
           wx.showToast({
             title: '支付成功',

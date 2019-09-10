@@ -1,38 +1,38 @@
-<view  wx:for="{{orderlist}}" wx:key='u'>
-<view hidden='{{!item.state}}'  bindtap='orderHistory' data-index='{{index}}' class='content' hover-class="active">
-<view class='city'>
-<view  class='num'>订单编号：{{item.id}}</view>
-<view  class='num-time'>{{item.created_on}}</view>
-</view>
-<view class='dis-line'></view>
-<view class='city'>
-<image class='city-img' src='../../../images/car_04.png'></image>
-<view class='city-text'>{{item.route_start}}</view>
-<image class='city-arrow' src='../../../images/arrow_02.png'></image>
-<view class='city-text'>{{item.route_end}}</view>
-<view  class='state'>已送达</view>
-<image class='arrow'src='../../../images/arrow.png'></image>
-</view>
+<view wx:for="{{orderlist}}" wx:key='u'>
+  <view hidden='{{!item.state}}' bindtap='orderHistory' data-index='{{index}}' class='content' hover-class="active">
+    <view class='city'>
+      <view class='num'>订单编号：{{item.id}}</view>
+      <view class='num-time'>{{item.created_on}}</view>
+    </view>
+    <view class='dis-line'></view>
+    <view class='city'>
+      <image class='city-img' src='../../../images/car_04.png'></image>
+      <view class='city-text'>{{item.route_start}}</view>
+      <image class='city-arrow' src='../../../images/arrow_02.png'></image>
+      <view class='city-text'>{{item.route_end}}</view>
+      <view class='state'>已送达</view>
+      <image class='arrow' src='../../../images/arrow.png'></image>
+    </view>
 
-<view class='stay-detail'>
-<view class='stay-car'>运送车辆:{{item.car_num}}</view>
+    <view class='stay-detail'>
+      <view class='stay-car'>运送车辆:{{item.car_num}}</view>
 
-<view class='stay-expect'>
-<view class='stay-text'>订单金额:{{item.sumFee}}元</view>
-<!-- <view class='stay-num'>3000.00</view>
+      <view class='stay-expect'>
+        <view class='stay-text'>订单金额:{{item.sumFee}}元</view>
+        <!-- <view class='stay-num'>3000.00</view>
 <view class='stay-text'>元</view> -->
-</view>
-</view>
-<view class='dis-line'></view>
-<view class='city'>
-<view class='stay-expect'>
-<view class='stay-text'>实际支付:</view>
-<view class='stay-num'>{{item.real_payment_price}}</view>
-<view class='stay-text'>元</view>
-</view>
-</view>
+      </view>
+    </view>
+    <view class='dis-line'></view>
+    <view class='city'>
+      <view class='stay-expect'>
+        <view class='stay-text'>实际支付:</view>
+        <view class='stay-num'>{{item.real_payment_price}}</view>
+        <view class='stay-text'>元</view>
+      </view>
+    </view>
 
-</view>
+  </view>
 </view>
 <view class='content-text' hidden='{{flag}}'>～暂无历史订单</view>
 <view class='null'></view>

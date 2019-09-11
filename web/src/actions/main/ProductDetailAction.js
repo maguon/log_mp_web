@@ -117,7 +117,7 @@ export const changeProductStatus = () => async (dispatch, getState) => {
             if (isConfirm && isConfirm.value === true) {
                 // 基本url
                 let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/commodity/' + productId  + '/status/' + sysConst.PRODUCT_SALE_STATUS[0].value;
+                    + '/commodity/' + productId  + '/status/' + sysConst.PRODUCT_SALE_STATUS[2].value;
                 let res = await httpUtil.httpPut(url, {});
                 if (res.success === true) {
                     swal("修改成功", "", "success");

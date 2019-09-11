@@ -206,7 +206,7 @@ class ProductDetail extends React.Component {
                         {/* 按钮 */}
                         {productDetailReducer.productInfo.length > 0 &&
                         <div className="col s12 right-align padding-right70">
-                            {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[0].value &&
+                            {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[2].value &&
                             <button type="button" className="btn orange-btn" onClick={changeProductStatus}>确认售罄</button>}
                             <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductInfo}>保存</button>
                         </div>}
@@ -296,6 +296,15 @@ class ProductDetail extends React.Component {
 
                     {/* TAB 4 : 微信推广  有加号，可以加 推广数据(名称，推广人小程序码，备注) */}
                     <div id="tab-we" className="col s12">
+
+                        {/** 新建按钮 */}
+                        <div className="row margin-top40 margin-left50 margin-right50 right-align">
+                            <a className="btn-floating btn-large waves-light waves-effect btn add-btn" onClick={() => {this.showEditCouponModal('new',null)}}>
+                                <i className="mdi mdi-plus"/>
+                            </a>
+                        </div>
+
+
                         {productDetailReducer.productInfo.length > 0 &&
                         <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50 min-height500">
                             <div className="row detail-box-header margin-bottom0">
@@ -307,12 +316,8 @@ class ProductDetail extends React.Component {
                                 {/*<Input s={12} type='textarea' placeholder="请输入文字介绍" className="no-border-bottom" value={productDetailReducer.productDes} onChange={this.changeProductDes}/>*/}
                             </div>
                         </div>}
-                        {/* 完成 按钮 */}
-                        {productDetailReducer.productInfo.length > 0 &&
-                        <div className="col s12 right-align padding-right70">
-                            <button type="button" className="btn orange-btn" onClick={()=>{this.changeProductDes('')}}>清空</button>
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductDesc}>保存</button>
-                        </div>}
+
+
                     </div>
                 </div>
             </div>

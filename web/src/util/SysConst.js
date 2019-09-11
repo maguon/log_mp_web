@@ -472,16 +472,16 @@ export const PRODUCT_SALE_TYPE = [
 // 商品状态
 export const PRODUCT_SALE_STATUS = [
     {
-        value: 0,
-        label: "售罄"
-    },
-    {
         value: 1,
         label: "在售"
     },
     {
         value: 2,
         label: "已预定"
+    },
+    {
+        value: 4,
+        label: "售罄"
     }
 ];
 

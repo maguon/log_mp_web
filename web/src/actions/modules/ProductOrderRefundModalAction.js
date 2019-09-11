@@ -36,7 +36,7 @@ export const productOrderRefund = (orderId) => async (dispatch, getState) => {
                 refundFee: refundFee
             };
 
-            let res = await httpUtil.httpPut(url, params);
+            let res = await httpUtil.httpPost(url, params);
             if (res.success === true) {
                 $('#productOrderRefundModal').modal('close');
                 swal("退款成功", "", "success");

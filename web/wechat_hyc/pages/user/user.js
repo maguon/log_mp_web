@@ -9,6 +9,7 @@ Page({
    */
   data: {
     user:[],
+    version:"0.0.8",
     headFlag:false,
     url:"",
     name:"",
@@ -30,8 +31,7 @@ Page({
     var userId = app.globalData.userId;
 
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
-      console.log(res)
-      console.log(userId)
+    
       if (res.data.result[0].phone != "" && res.data.result[0].phone != null){
         that.setData({
           phone: res.data.result[0].phone,
@@ -98,11 +98,24 @@ Page({
           })
         }
         if (res.data.code == "InternalError"){
+
           wx.showModal({
-            title: '提示',
+            content: '无法获取，请手动绑定',
             showCancel: false,
-            content: '检测到小程序在多台设备登录，请删除小程序后重新登录',
-          })
+            confirmColor: "#a744a7",
+            success(res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: "/pages/user/user",
+                })
+              }
+            }
+          });
+          // wx.showModal({
+          //   title: '提示',
+          //   showCancel: false,
+          //   content: '检测到小程序在多台设备登录，请删除小程序后重新登录',
+          // })
         }
       })   
     }
@@ -127,7 +140,11 @@ Page({
       url: '/pages/user/order-history/order-history',
     })
   },
-
+  carRecord:function(){
+wx.navigateTo({
+  url: '/pages/special/record/record',
+})
+  },
 /**
  * 发票管理
  */

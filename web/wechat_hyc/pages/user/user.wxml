@@ -26,6 +26,10 @@
 <view class='item-text'>历史订单</view>
 <image class='item-img' src='../../images/arrow.png'></image>
 </view>
+<view bindtap='carRecord' class='items' hover-class='weui-cell_active'>
+<view class='item-text'>购车记录</view>
+<image class='item-img' src='../../images/arrow.png'></image>
+</view>
 <view class='period'></view>
 
 <view bindtap='invoice' class='items' hover-class='weui-cell_active'>
@@ -57,4 +61,4 @@
 <image class='item-img' src='../../images/arrow.png'></image>
 </view>
 
-<view class='text'>version：0.0.7</view>
+<view class='text'>version：{{version}}</view>

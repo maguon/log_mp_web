@@ -57,12 +57,12 @@ App({
     wx.showShareMenu({
       withShareTicket: true
     })
-
     return {
-      title: '测试小程序',//分享内容
+      title: '广运车',//分享内容
       path: '/pages/login/login',//分享地址
       imageUrl: '/images/share.jpg',//分享图片
       success: function (res) {
+        console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {//判断分享是否成功
           if (res.shareTickets == undefined) {//判断分享结果是否有群信息
             //分享到好友操作...

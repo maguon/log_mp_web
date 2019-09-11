@@ -170,7 +170,9 @@ class ProductPayment extends React.Component {
                                         <td>{item.user_id}</td>
                                         <td>{item.user_name}</td>
                                         <td>{item.phone}</td>
-                                        <td className="center">{formatUtil.getDateTime(item.payment_time)}</td>
+                                        <td className="center">
+                                            {item.type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? formatUtil.getDateTime(item.payment_time) : formatUtil.getDateTime(item.payment_refund_time)}
+                                        </td>
                                         <td className="center">{commonUtil.getJsonValue(sysConst.PRODUCT_PAYMENT_FLAG,item.status)}</td>
                                         <td className="operation center">
                                             <Link to={{pathname: '/product_payment/' + item.id}}>

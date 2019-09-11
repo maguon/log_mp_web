@@ -173,16 +173,21 @@ class ProductOrderDetail extends React.Component {
                                             {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? '支付金额：' : '退款金额：'}
                                             <span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderPaymentInfo[0].total_fee, 2)}</span> 元
                                         </div>
-                                        <div className="col s6 grey-text right-align">支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_time)}</div>
+                                        <div className="col s6 grey-text right-align">
+                                            {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value &&
+                                            <div>支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_time)}</div>}
+                                            {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[1].value &&
+                                            <div>支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_refund_time)}</div>}
+                                        </div>
 
                                         {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value &&
-                                        (productOrderDetailReducer.productOrderPaymentInfo[0].p_id == null || productOrderDetailReducer.productOrderPaymentInfo[0].p_id === '')}
+                                        (productOrderDetailReducer.productOrderPaymentInfo[0].p_id == null || productOrderDetailReducer.productOrderPaymentInfo[0].p_id === '') &&
                                         <div className="col s12 margin-top10 grey-text right-align">
                                             <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
                                                     onClick={() => {showProductOrderRefundModal(productOrderDetailReducer.productOrderPaymentInfo[0].id, productOrderDetailReducer.productOrderPaymentInfo[0].product_order_id)}}>退款
                                             </button>
                                             <ProductOrderRefundModal/>
-                                        </div>
+                                        </div>}
                                     </div>
                                 </div>
                             )

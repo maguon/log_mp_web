@@ -255,7 +255,20 @@ class ProductDetail extends React.Component {
                                     <div className="center grey-text">上传商品描述照片</div>
                                 </div>
                             </div>
+
                             {/* 图片展示 */}
+                            {productDetailReducer.productDescImgList.length === 0 &&
+                            <div className="col s4 margin-top40">
+                                <div className="upload-img-box z-depth-1 detail-box">
+                                    <ul id="viewer" className="margin-top0">
+                                        <li className="picture-list vc-center">
+                                            <img src="../../../assets/images/no_pic.png" className="responsive-img"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>}
+
+                            {productDetailReducer.productDescImgList.length > 0 &&
                             <ul id="viewer_desc" className="margin-top0">
                             {productDetailReducer.productDescImgList.map(function (item) {
                                 return (
@@ -269,7 +282,7 @@ class ProductDetail extends React.Component {
                                     </div>
                                 )
                             },this)}
-                            </ul>
+                            </ul>}
                         </div>
                     </div>
 

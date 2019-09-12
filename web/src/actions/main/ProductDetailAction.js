@@ -223,6 +223,26 @@ export const saveProductDescImg = (opFlag, imageId) => async (dispatch, getState
     }
 };
 
+export const delCurrentImg = (opFlag, imageId) => async (dispatch, getState) => {
+    try {
+        swal({
+            title: "确认删除该描述图片？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                dispatch(saveProductDescImg(opFlag, imageId));
+            }
+        });
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 export const saveProductDesc = () => async (dispatch, getState) => {
     try {
         // 商品管理详细：商品id

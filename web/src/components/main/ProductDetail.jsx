@@ -389,7 +389,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(productDetailAction.uploadProductImg('desc',formData));
     },
     delCurrentImg: (imageId) => {
-        dispatch(productDetailAction.saveProductDescImg('del', imageId));
+        dispatch(productDetailAction.delCurrentImg('del', imageId));
     },
 
     // TAB3 商品介绍

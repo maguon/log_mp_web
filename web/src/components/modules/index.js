@@ -40,3 +40,4 @@ export NewProductModal from "./NewProductModal";
 export EditProductRemindModal from "./EditProductRemindModal";
 export ProductInfoModal from "./ProductInfoModal";
 export ProductOrderRefundModal from "./ProductOrderRefundModal";
+export NewProductRecommenderModal from "./NewProductRecommenderModal";

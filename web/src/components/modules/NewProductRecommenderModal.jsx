@@ -13,7 +13,7 @@ const formatUtil = require('../../util/FormatUtil');
 /**
  * UI组件：新增商品 模块。
  */
-class NewProductModal extends React.Component {
+class NewProductRecommendModal extends React.Component {
 
     /**
      * 组件准备要挂载的最一开始，调用执行
@@ -80,15 +80,15 @@ class NewProductModal extends React.Component {
             return <Redirect push to={{pathname: '/product/' + newProductModalReducer.newProductId}}/>;
         }
         return (
-            <div id="newProductModal" className="modal modal-fixed-footer row">
+            <div id="newProductRecommendModal" className="modal modal-fixed-footer row">
 
                 {/** Modal头部：Title */}
-                <div className="modal-title center-align white-text">商品发布</div>
+                <div className="modal-title center-align white-text">新增微信推广</div>
 
                 {/** Modal主体 */}
                 <div className="modal-content padding-bottom0 white grey-text text-darken-2">
                     <div className="row margin-top40">
-                        <Input s={8} label="商品名称" maxLength="50" value={newProductModalReducer.productName} onChange={this.changeProductName}/>
+                        <Input s={8} label="名称" maxLength="50" value={newProductModalReducer.productName} onChange={this.changeProductName}/>
                         <Input s={4} label="数量" type="number" className="right-align fz16 red-font" value={newProductModalReducer.quantity} onChange={this.changeQuantity}/>
                     </div>
 
@@ -192,8 +192,8 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(newProductModalAction.addProduct());
     },
     closeModal: () => {
-        $('#newProductModal').modal('close');
+        $('#newProductRecommendModal').modal('close');
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewProductModal);
+export default connect(mapStateToProps, mapDispatchToProps)(NewProductRecommendModal);

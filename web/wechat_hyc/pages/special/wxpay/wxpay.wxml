@@ -1,0 +1,14 @@
+<view class='content'>
+
+<view class='center'> 
+  <view class='center-text'>转账金额</view>
+   <view class='center-pay'>
+    <image class='center-image' src='../../../../images/yuan.png'></image>
+    <view class='center-input'>{{totalPrice}}</view>
+   </view>
+</view>
+<view class='div-line'></view>
+
+<button class="weui-btn" bindtap='payment' type="primary">付款</button>
+
+</view>

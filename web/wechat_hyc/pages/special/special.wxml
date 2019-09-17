@@ -1,0 +1,24 @@
+  <page>
+  <view class='item' bindtap='bindDetail' data-index='{{index}}' wx:for='{{specialList}}' wx:key='key'>
+ 
+    <image class='item-img' lazy-load="true" src='http://stg.myxxjs.com:9002/api/image/{{item.image}}'>
+ 
+    <view hidden='{{item.status!=2}}' class='flag'>
+    <view class='flag-text'>已预订</view>
+    </view>
+     <view hidden='{{item.status!=4}}' class='flag sold'>
+    <view class='flag-text'>已售罄</view>
+    </view> 
+    </image>
+
+    <view class='text'>
+      <view class='text-title'>{{item.commodity_name}}</view>
+      <view class='price'>
+        <view class='original'>原价：¥{{item.original_price/10000}}万</view>
+        <view class='special'>特价：¥{{item.actual_price/10000}}万</view>
+      </view>
+    </view>
+    <view class='line'></view>
+  </view>
+      </page>
+         <loading hidden="{{!loadingHidden}}">加载中</loading>

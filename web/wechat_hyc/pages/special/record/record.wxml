@@ -1,0 +1,37 @@
+<view class='content' bindtap='bindRecord' data-index='{{index}}' wx:for='{{recordList}}' wx:key='u'>
+  <view class='head'>
+    <view class='num'>订单编号：{{item.id}}</view>
+    <view hidden='{{item.payment_status!=1}}' class='state'>待付款</view>
+        <view hidden='{{item.payment_status!=4}}' class='state'>已退款</view>
+    <view hidden='{{item.payment_status==1||item.payment_status==4}}'>
+      <view hidden='{{item.status!=1}}' class='state'>待发货</view>
+      <view hidden='{{item.status!=4}}' class='state'>已发货</view>
+      <view hidden='{{item.status!=8}}' class='state'>已送达</view>
+      <view hidden='{{item.status!=6}}' class='state'>已取消</view>
+    </view>
+  </view>
+  <view class='item'>
+    <view class='text-title'>{{item.commodity_name}}</view>
+
+    <view class='price'>
+      <view class='original'>定金：¥{{item.earnest_money}}元</view>
+      <view class='original'>原价：¥{{item.ora_trans_price/10000}}万</view>
+    </view>
+
+    <view class='price'>
+      <view class='address'>
+        <image class='add-img' src='../../../images/location_01.png'></image>
+        <view class='iphone'> {{item.send_address}}</view>
+      </view>
+      <view class='special'>特价：¥{{item.act_trans_price/10000}}万</view>
+    </view>
+  </view>
+   <view hidden='{{item.payment_status!=1}}'  class='pay-content '>
+    <view class='original'></view>
+      <view class='pay'>
+        <view class='pay-text'>支 付</view>
+      </view>
+    </view>
+</view>
+
+<loading hidden="{{!loadingHidden}}">加载中</loading>

@@ -1,0 +1,149 @@
+<view hidden='{{order.payment_status==1||order.status==6}}' class='header'>
+  <view bindtap='selectButton' data-index='{{index}}' class='items' wx:for='{{orderState}}' wx:key='u'>
+    <view class='item' style="opacity:{{item.number}}">
+      <image class='item-img' src='{{item.url}}'></image>
+      <view class='item-text'>{{item.name}}</view>
+    </view>
+  </view>
+  <view class='line'></view>
+  <view class='line01'></view>
+  <view class='line02'></view>
+</view>
+
+
+<view class='content'>
+  <view class='head'>
+    <view class='num'>订单编号：{{order.id}}</view>
+    <view hidden='{{order.payment_status!=1}}' class='state'>待付款</view>
+    <view hidden='{{order.status!=6}}' class='state'>已取消</view>
+  </view>
+  <view class='content-item' wx:for='{{orderItem}}' wx:key='u'>
+    <image class='content-img' src='http://stg.myxxjs.com:9002/api/image/{{item.image}}'>
+    </image>
+
+    <view class='text'>
+      <view class='text-title'>{{item.commodity_name}}</view>
+       <view class='price'>
+        <view class='original'></view>
+        <view class='original'>原价：¥{{item.original_price/10000}}万</view>
+      </view>
+      <view class='price'>
+        <view class='original'>定金：¥{{item.earnest_money}}元</view>
+        <view class='special'>特价：¥{{item.actual_price/10000}}万</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view hidden='{{order.payment_status!=1}}' class='address'  bindtap='address'>
+  <view class='left'>
+    <image class='add-img' src='../../../images/location_01.png'></image>
+    <view class='add-text'>收货人:{{order.send_name}}</view>
+  </view>
+  <view hidden='{{flag}}' >
+  <view class='iphone'>电话：{{order.send_phone}}</view>
+  <view class='iphone'>地址：{{order.send_address}}</view>
+   </view>
+  <image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+
+<view hidden='{{order.payment_status==1}}'class='address'>
+  <view class='left'>
+    <image class='add-img' src='../../../images/location_01.png'></image>
+    <view class='add-text'>收货人:{{order.send_name}}</view>
+  </view>
+  <view hidden='{{flag}}' >
+  <view class='iphone'>电话：{{order.send_phone}}</view>
+  <view class='iphone'>地址：{{order.send_address}}</view>
+   </view>
+</view>
+
+<view hidden='{{order.payment_status!=1}}'>
+<view class='weixin-pay'>
+  <image class='add-img' src='../../../images/money.png'></image>
+  <view class='add-text'>待支付</view>
+   <view class='fee-text01'>¥ {{order.earnest_money}}元</view>
+</view>
+
+<view class='prompt'>
+<view class='prompt-text'>定金未支付成功，选定车辆未被锁定仍在正常销售中，请尽快支付定金以保证顺利购买。</view>
+</view>
+
+
+<view class='button'>
+<view class='pay pay-color' bindtap='bindCustomer'>
+<image class='cus-img' src='../../../images/customer.png'></image>
+  <view class='cus-text'>联系客服</view>
+</view>
+<view class='pay' bindtap='wxpay'>
+  <view class='pay-text'>支付</view>
+</view>
+</view>
+</view>
+
+
+
+
+
+<view hidden='{{order.payment_status==1}}'>
+<view class='fee'>
+  <view class='fee-item'>
+    <view class='fee-text'>已支付</view>
+    <view class='fee-num'>¥ {{order.real_payment_price}}元</view>
+  </view>
+  <view class='fee-item'>
+    <view class='fee-text'>尾款</view>
+    <view class='fee-num special'>¥ {{order.act_trans_price-order.real_payment_price}}元</view>
+  </view>
+</view>
+
+
+
+<view hidden='{{order.payment_status!=4}}' class='fee-item'>
+<view class='fee-text'>退款信息</view>
+ <view class='fee-num special01'>已退款</view>
+</view>
+<view hidden='{{refundTime==""}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>退款时间</view>
+  <view class='fee-num time'>{{refundTime}}</view>
+</view>
+
+
+
+
+
+<view hidden='{{paymentTime==""}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>支付时间</view>
+  <view class='fee-num time'>{{paymentTime}}</view>
+</view>
+<view hidden='{{order.departure_time==null}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>发货时间</view>
+  <view class='fee-num time'>{{order.departure_time}}</view>
+</view>
+
+<view hidden='{{order.arrive_time==null}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>送达时间</view>
+  <view class='fee-num time'>{{order.arrive_time}}</view>
+</view>
+<view  hidden='{{order.cancel_time==null}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>订单取消时间</view>
+  <view  class='fee-num time'>{{order.cancel_time}}</view>
+</view>
+
+<!-- 
+<view hidden='{{order.updated_on!=null}}' class='fee-item fee-item-time'>
+  <view class='fee-text time'>支付尾款时间</view>
+  <view class='fee-num time'>2019-08-24 16:53:00</view>
+</view> -->
+
+
+
+
+<view class='customer' bindtap='bindCustomer'>
+  <image class='cus-img' src='../../../images/customer.png'></image>
+  <view class='cus-text'>联系客服</view>
+</view>
+</view>
+
+
+<loading hidden="{{!loadingHidden}}">加载中</loading>

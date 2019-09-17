@@ -1,0 +1,320 @@
+page {
+  background: #f8f6f8;
+}
+
+.header {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(#7a387a, #7a387a);
+}
+
+.line {
+  border: 0.5px solid #ad80ad;
+  position: absolute;
+  top: 25px;
+  left: 17%;
+  right: 71%;
+}
+
+.line01 {
+  border: 0.5px solid #ad80ad;
+  position: absolute;
+  top: 25px;
+  left: 44%;
+  right: 44%;
+}
+
+.line02 {
+  border: 0.5px solid #ad80ad;
+  position: absolute;
+  top: 25px;
+  left: 71%;
+  right: 17%;
+}
+
+.items {
+  width: 20%;
+  height: 80px;
+}
+
+.item {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-img {
+  width: 30px;
+  height: 28px;
+  margin-left: 2px;
+  margin-top: 10px;
+}
+
+.item-text {
+  font-size: 12px;
+  margin-top: 10px;
+  color: white;
+}
+
+.content {
+  width: 100%;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f7fa;
+}
+
+.num {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #c3c4c5;
+}
+
+.state {
+  font-size: 12px;
+  color: #cf64cf;
+  margin-right: 20px;
+}
+
+.content-item {
+  height: 100px;
+  background: white;
+  border-bottom: 2px #f8f6f8 solid;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.content-img {
+  width: 80px;
+  height: 80px;
+  margin-left: 10px;
+  background: #dcddde;
+}
+
+.text {
+  width: 70%;
+  height: 100px;
+  margin-left: 10px;
+}
+
+.text-title {
+  margin-top: 10px;
+  font-size: 15px;
+  height: 45px;
+  color: #8a8a8a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.price {
+  width: 100%;
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.original {
+  font-size: 12px;
+  color: #c3c4c5;
+}
+
+/* .content-msg{
+   width: 100%;
+   height: 200px;
+   background: white;
+} */
+
+.fee {
+  width: 100%;
+  height: 60px;
+  margin-top: 2px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #faf7fa;
+}
+
+.fee-item {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+}
+
+.fee-item-time {
+  height: 20px;
+}
+
+.fee-text {
+  margin-left: 10px;
+  font-size: 12px;
+  color: #8a8a8a;
+}
+
+.fee-num {
+  margin-right: 10px;
+  font-size: 15px;
+  color: #8a8a8a;
+}
+
+.time {
+  font-size: 10px;
+  color: #c3c4c5;
+}
+
+.customer {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: #f8f6f8;
+  border-top: 1px #dcddde solid;
+}
+
+.cus-img {
+  width: 30px;
+  height: 25px;
+}
+
+.cus-text {
+  font-size: 16px;
+  color: #8a8a8a;
+  margin-left: 15px;
+}
+
+.address {
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.left {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.iphone {
+  font-size: 12px;
+  color: #c3c4c5;
+  margin: 0px 5px 5px 40px;
+}
+
+.weixin-pay {
+  width: 100%;
+  height: 40px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.fee-text01 {
+  font-size: 14px;
+  color: #d43286;
+  position: absolute;
+  right: 10px;
+}
+
+.add-img {
+  width: 15px;
+  height: 15px;
+  margin-left: 15px;
+}
+
+.add-text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.arrow {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 5px;
+}
+
+.prompt {
+  margin: 10px 10px 0px 10px;
+  background: white;
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.prompt-text {
+  font-size: 12px;
+  color: #af7caff6;
+  margin: 0px 10px 0px 10px;
+}
+
+.button {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  bottom: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+.pay {
+  width: 50%;
+  height: 40px;
+  background: #854287;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pay-color {
+  background: white;
+}
+
+.special {
+  font-size: 15px;
+  color: #d43286;
+}
+
+.special01 {
+  font-size: 12px;
+  color: #d43286;
+}
+
+.pay-text {
+  color: white;
+  font-size: 16px;
+}

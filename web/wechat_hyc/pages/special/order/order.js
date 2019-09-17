@@ -44,7 +44,8 @@ Page({
     paymentTime: "",
     refundTime: "",
     loadingHidden: true,
-  
+    url: config.host.imageHost,
+    imglist:[],
   },
 
   /**
@@ -72,6 +73,7 @@ Page({
     var orderState = that.data.orderState;
     var id = that.data.id;
     var index = 0;
+    var url=that.data.url;
 
     wx.getStorage({
       key: 'address',
@@ -156,7 +158,14 @@ Page({
     })
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/productOrder/" + id + "/productOrderItem", (err, res) => {
       var orderItem = res.data.result;
+      var imglist=[];
+      for (var i = 0; i < orderItem.length; i++) {
+        imglist.push(url + orderItem[i].image)
+      } 
+      console.log(imglist)
+    
       that.setData({
+        imglist: imglist,
         orderItem: orderItem,
       })
     })

@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    url: config.host.imageHost,
     specialList:[],
     imageList:[],
     index:0,

@@ -1,7 +1,7 @@
 <swiper class="container" indicator-dots="{{indicatordots}}" autoplay="{{autoplay}}" interval="{{5000}}" duration="{{duration}}" bindchange='onSlideChange'>
 <block>
   <swiper-item >
-      <image  lazy-load="true" class="vol-picture"  src="http://stg.myxxjs.com:9002/api/image/{{detail.image}}"></image>
+      <image  lazy-load="true" class="vol-picture"  src="{{image}}"></image>
   </swiper-item>
 </block>
 </swiper>
@@ -79,7 +79,7 @@
 
     </view>
     <view class="content" hidden="{{activeIndex != 1}}">
-      <scroll-view class='imgList' wx:for="{{imgList}}" wx:key="u" >
+      <scroll-view class='imgList' wx:for="{{imgList}}" wx:key="u" wx:if="{{imgList.length>0}}">
         <image lass="vol-picture" lazy-load="true" src="{{item}}"   data-index='{{index}}' bindtap='previewImg'></image>
       </scroll-view>
     </view>

@@ -9,6 +9,7 @@ Page({
   data: {
     content: "",
     url: config.host.imageHost,
+    image:"",
     imgList:[],
     autoplay: false,
     indicatordots: false,
@@ -42,11 +43,11 @@ Page({
       for (var i = 0; i < res.pord_images.length;i++){
         imglist.push( url+res.pord_images[i])
       }
-      console.log(res.image)
-      console.log(res.pord_images)
+      var image =url + res.image;
 
       that.setData({
         detail: res,
+        image: image,
         imgList: imglist,
         content: info,
         loadingHidden: false

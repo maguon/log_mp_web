@@ -1,0 +1,30 @@
+<view class='head'>
+  <view class='head-text'>支付金额</view>
+  <view class='head-fee'>¥
+    <view class='fee'>{{price}}</view>元
+  </view>
+</view>
+
+<view class='address'  bindtap='address'>
+  <view class='left'>
+    <image class='add-img' src='../../../images/location.png'></image>
+    <view  hidden='{{!flag}}' class='add-text'>收货地址</view>
+    <view hidden='{{flag}}' class='add-text'>收货人:{{address.name}}</view>
+  </view>
+  <view hidden='{{flag}}' >
+  <view class='iphone'>电话：{{address.phone}}</view>
+  <view class='iphone'>地址：{{address.address}}</view>
+   </view>
+  <image class='arrow' src='../../../images/arrow.png'></image>
+</view>
+
+<view class='weixin-pay'>
+  <image class='add-img' src='../../../images/wepay.png'></image>
+  <view class='add-text'>微信支付</view>
+</view>
+
+<view class='pay' bindtap='wxpay'>
+  <view hidden='{{type==3}}' class='pay-text'>支付</view>
+   <view hidden='{{type!=3}}' class='pay-text'>生成订单</view>
+</view>
+

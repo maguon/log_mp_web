@@ -1,0 +1,99 @@
+page {
+  background: #efeff4;
+}
+
+.head {
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+  background:white;
+}
+
+.head-text {
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.head-fee {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  color: #d43286;
+   font-size: 30px;
+}
+
+.fee {
+
+}
+
+.address {
+  width: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+.left {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.iphone {
+  font-size: 12px;
+  color: #c3c4c5;
+  margin: 0px 5px 5px 40px;
+}
+
+.weixin-pay {
+  width: 100%;
+  height: 40px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.add-img {
+  width: 15px;
+  height: 15px;
+  margin-left: 15px;
+}
+
+.add-text {
+  margin-left: 10px;
+  font-size: 14px;
+  color: #8a8a8a;
+}
+
+.arrow {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  right: 5px;
+}
+
+.pay {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  bottom: 0px;
+  background: #854287;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.pay-text {
+  color: white;
+  font-size: 16px;
+}

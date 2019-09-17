@@ -260,7 +260,7 @@ class ProductDetail extends React.Component {
                             {productDetailReducer.productDescImgList.length === 0 &&
                             <div className="col s4 margin-top40">
                                 <div className="upload-img-box z-depth-1 detail-box">
-                                    <ul id="viewer" className="margin-top0">
+                                    <ul className="margin-top0">
                                         <li className="picture-list vc-center">
                                             <img src="../../../assets/images/no_pic.png" className="responsive-img"/>
                                         </li>

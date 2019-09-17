@@ -206,7 +206,7 @@ class ProductDetail extends React.Component {
                         {/* 按钮 */}
                         {productDetailReducer.productInfo.length > 0 &&
                         <div className="col s12 right-align padding-right70">
-                            {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[0].value &&
+                            {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[2].value &&
                             <button type="button" className="btn orange-btn" onClick={changeProductStatus}>确认售罄</button>}
                             <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductInfo}>保存</button>
                         </div>}
@@ -255,7 +255,20 @@ class ProductDetail extends React.Component {
                                     <div className="center grey-text">上传商品描述照片</div>
                                 </div>
                             </div>
+
                             {/* 图片展示 */}
+                            {productDetailReducer.productDescImgList.length === 0 &&
+                            <div className="col s4 margin-top40">
+                                <div className="upload-img-box z-depth-1 detail-box">
+                                    <ul className="margin-top0">
+                                        <li className="picture-list vc-center">
+                                            <img src="../../../assets/images/no_pic.png" className="responsive-img"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>}
+
+                            {productDetailReducer.productDescImgList.length > 0 &&
                             <ul id="viewer_desc" className="margin-top0">
                             {productDetailReducer.productDescImgList.map(function (item) {
                                 return (
@@ -269,7 +282,7 @@ class ProductDetail extends React.Component {
                                     </div>
                                 )
                             },this)}
-                            </ul>
+                            </ul>}
                         </div>
                     </div>
 
@@ -296,6 +309,15 @@ class ProductDetail extends React.Component {
 
                     {/* TAB 4 : 微信推广  有加号，可以加 推广数据(名称，推广人小程序码，备注) */}
                     <div id="tab-we" className="col s12">
+
+                        {/** 新建按钮 */}
+                        <div className="row margin-top40 margin-left50 margin-right50 right-align">
+                            <a className="btn-floating btn-large waves-light waves-effect btn add-btn" onClick={() => {this.showEditCouponModal('new',null)}}>
+                                <i className="mdi mdi-plus"/>
+                            </a>
+                        </div>
+
+
                         {productDetailReducer.productInfo.length > 0 &&
                         <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50 min-height500">
                             <div className="row detail-box-header margin-bottom0">
@@ -307,12 +329,8 @@ class ProductDetail extends React.Component {
                                 {/*<Input s={12} type='textarea' placeholder="请输入文字介绍" className="no-border-bottom" value={productDetailReducer.productDes} onChange={this.changeProductDes}/>*/}
                             </div>
                         </div>}
-                        {/* 完成 按钮 */}
-                        {productDetailReducer.productInfo.length > 0 &&
-                        <div className="col s12 right-align padding-right70">
-                            <button type="button" className="btn orange-btn" onClick={()=>{this.changeProductDes('')}}>清空</button>
-                            <button type="button" className="btn confirm-btn margin-left20" onClick={saveProductDesc}>保存</button>
-                        </div>}
+
+
                     </div>
                 </div>
             </div>
@@ -384,7 +402,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(productDetailAction.uploadProductImg('desc',formData));
     },
     delCurrentImg: (imageId) => {
-        dispatch(productDetailAction.saveProductDescImg('del', imageId));
+        dispatch(productDetailAction.delCurrentImg('del', imageId));
     },
 
     // TAB3 商品介绍

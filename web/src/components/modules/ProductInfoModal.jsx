@@ -56,7 +56,7 @@ class ProductInfoModal extends React.Component {
                             实际售价：<span className="red-text fz18">{formatUtil.formatNumber(productInfoModalReducer.productInfo[0].act_trans_price/10000,2)}</span>万元
                         </div>
                         <div className="col s6 margin-top10">
-                            定金：<span className="red-text fz18">{formatUtil.formatNumber(productInfoModalReducer.productInfo[0].earnest_money)}</span>元
+                            定金：<span className="red-text fz18">{formatUtil.formatNumber(productInfoModalReducer.productInfo[0].earnest_money,2)}</span>元
                         </div>
 
                         {/* 分割线 */}

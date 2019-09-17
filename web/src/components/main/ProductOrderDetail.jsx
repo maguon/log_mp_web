@@ -164,25 +164,25 @@ class ProductOrderDetail extends React.Component {
                             return (
                                 <div className="row margin-top40 margin-left150 margin-right150 detail-box z-depth-1">
                                     <div className="col s12 padding-top10 padding-bottom10 custom-grey border-bottom-line">
-                                        <div className="col s6 purple-font">支付编号：{productOrderDetailReducer.productOrderPaymentInfo[0].id}</div>
-                                        <div className="col s6 pink-font right-align">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_PAYMENT_TYPE, productOrderDetailReducer.productOrderPaymentInfo[0].type)}</div>
+                                        <div className="col s6 purple-font">支付编号：{item.id}</div>
+                                        <div className="col s6 pink-font right-align">{commonUtil.getJsonValue(sysConst.PRODUCT_ORDER_PAYMENT_TYPE, item.type)}</div>
                                     </div>
 
                                     <div className="col s12 margin-top5 padding-top10 padding-bottom20">
                                         <div className="col s6 grey-text">
-                                            {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? '支付金额：' : '退款金额：'}
-                                            <span className="red-text fz18">{formatUtil.formatNumber(productOrderDetailReducer.productOrderPaymentInfo[0].total_fee, 2)}</span> 元
+                                            {item.type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value ? '支付金额：' : '退款金额：'}
+                                            <span className="red-text fz18">{formatUtil.formatNumber(item.total_fee, 2)}</span> 元
                                         </div>
-                                        <div className="col s6 grey-text right-align">支付时间：{formatUtil.getDateTime(productOrderDetailReducer.productOrderPaymentInfo[0].payment_time)}</div>
+                                        <div className="col s6 grey-text right-align">
+                                            {item.type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value && <div>支付时间：{formatUtil.getDateTime(item.payment_time)}</div>}
+                                            {item.type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[1].value && <div>支付时间：{formatUtil.getDateTime(item.payment_refund_time)}</div>}
+                                        </div>
 
-                                        {productOrderDetailReducer.productOrderPaymentInfo[0].type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value &&
-                                        (productOrderDetailReducer.productOrderPaymentInfo[0].p_id == null || productOrderDetailReducer.productOrderPaymentInfo[0].p_id === '')}
+                                        {item.type === sysConst.PRODUCT_ORDER_PAYMENT_TYPE[0].value && (item.payment_refund_time == null || item.payment_refund_time === '') &&
                                         <div className="col s12 margin-top10 grey-text right-align">
-                                            <button type="button" className="btn list-pink-border-btn btn-height24 fz14"
-                                                    onClick={() => {showProductOrderRefundModal(productOrderDetailReducer.productOrderPaymentInfo[0].id, productOrderDetailReducer.productOrderPaymentInfo[0].product_order_id)}}>退款
-                                            </button>
+                                            <button type="button" className="btn list-pink-border-btn btn-height24 fz14" onClick={() => {showProductOrderRefundModal(item.id, item.product_order_id)}}>退款</button>
                                             <ProductOrderRefundModal/>
-                                        </div>
+                                        </div>}
                                     </div>
                                 </div>
                             )

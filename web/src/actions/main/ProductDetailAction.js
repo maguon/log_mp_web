@@ -117,7 +117,7 @@ export const changeProductStatus = () => async (dispatch, getState) => {
             if (isConfirm && isConfirm.value === true) {
                 // 基本url
                 let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
-                    + '/commodity/' + productId  + '/status/' + sysConst.PRODUCT_SALE_STATUS[0].value;
+                    + '/commodity/' + productId  + '/status/' + sysConst.PRODUCT_SALE_STATUS[2].value;
                 let res = await httpUtil.httpPut(url, {});
                 if (res.success === true) {
                     swal("修改成功", "", "success");
@@ -218,6 +218,26 @@ export const saveProductDescImg = (opFlag, imageId) => async (dispatch, getState
                 swal('保存失败', res.msg, 'warning');
             }
         }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
+export const delCurrentImg = (opFlag, imageId) => async (dispatch, getState) => {
+    try {
+        swal({
+            title: "确认删除该描述图片？",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(async function (isConfirm) {
+            if (isConfirm && isConfirm.value === true) {
+                dispatch(saveProductDescImg(opFlag, imageId));
+            }
+        });
     } catch (err) {
         swal('操作失败', err.message, 'error');
     }

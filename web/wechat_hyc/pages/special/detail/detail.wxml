@@ -5,11 +5,6 @@
   </swiper-item>
 </block>
 </swiper>
-<!-- 
-   <view class="vol-card">
-        <image class="vol-picture" src="http://stg.myxxjs.com:9002/api/image/{{detail.image}}" ></image>
-      </view> -->
-
 
 <view class='title'>
   <view class='car-text'>

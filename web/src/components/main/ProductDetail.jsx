@@ -4,10 +4,12 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
+import {NewProductRecommenderModal} from '../modules/index';
 import {NewProductModalActionType, ProductDetailActionType} from '../../actionTypes';
 import {fileHost} from "../../config/HostConfig";
 
 const productDetailAction = require('../../actions/main/ProductDetailAction');
+const newProductRecommendModalAction = require('../../actions/modules/NewProductRecommendModalAction');
 const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
 const formatUtil = require('../../util/FormatUtil');
@@ -93,6 +95,14 @@ class ProductDetail extends React.Component {
      */
     changeProductDes = (value) => {
         this.props.setProductDes(value);
+    };
+
+    /**
+     * 显示 新建/修改 微信推广信息
+     */
+    showEditProductRecommendModal = (type, productRecommend) => {
+        this.props.initProductRecommendModalData(type, productRecommend);
+        $('#newProductRecommendModal').modal('open');
     };
 
     render() {
@@ -312,23 +322,25 @@ class ProductDetail extends React.Component {
 
                         {/** 新建按钮 */}
                         <div className="row margin-top40 margin-left50 margin-right50 right-align">
-                            <a className="btn-floating btn-large waves-light waves-effect btn add-btn" onClick={() => {this.showEditCouponModal('new',null)}}>
+                            <a className="btn-floating btn-large waves-light waves-effect btn add-btn" onClick={() => {this.showEditProductRecommendModal('new',null)}}>
                                 <i className="mdi mdi-plus"/>
                             </a>
+                            <NewProductRecommenderModal/>
                         </div>
 
 
-                        {productDetailReducer.productInfo.length > 0 &&
-                        <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50 min-height500">
-                            <div className="row detail-box-header margin-bottom0">
-                                {/* 商品介绍：商品名称 */}
-                                <div className="col s12 no-padding">{productDetailReducer.productInfo[0].commodity_name}</div>
-                            </div>
-                            <div className="row margin-bottom0">
-                                <ReactQuill modules={sysConst.RICH_TEXT_MODULES} value={productDetailReducer.productDes} onChange={this.changeProductDes} />
-                                {/*<Input s={12} type='textarea' placeholder="请输入文字介绍" className="no-border-bottom" value={productDetailReducer.productDes} onChange={this.changeProductDes}/>*/}
-                            </div>
-                        </div>}
+                        {/*{productDetailReducer.productDescImgList.map(function (item) {*/}
+                        {/*    return (*/}
+                        {/*        <div className="col s4 margin-top40">*/}
+                        {/*            <div className="upload-img-box z-depth-1 detail-box">*/}
+                        {/*                <li className="picture-list vc-center">*/}
+                        {/*                    <img src={item !== '' ? "http://" + fileHost + "/api/image/" + item : ""} className="responsive-img"/>*/}
+                        {/*                    <b className="img_close vc-center" onClick={() => {delCurrentImg(item)}}><i className="mdi mdi-close"/></b>*/}
+                        {/*                </li>*/}
+                        {/*            </div>*/}
+                        {/*        </div>*/}
+                        {/*    )*/}
+                        {/*},this)}*/}
 
 
                     </div>
@@ -414,7 +426,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 
     // TAB4 微信推广
-
+    initProductRecommendModalData: (type, productRecommend) => {
+        dispatch(newProductRecommendModalAction.initNewProductRecommendModal(type, productRecommend));
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail)

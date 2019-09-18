@@ -18,6 +18,7 @@ export const getRecommendInfo = (recommendId) => async (dispatch) => {
                 dispatch({type: RecommenderSettingDetailActionType.setRecommendId, payload: res.result[0].id});
                 dispatch({type: RecommenderSettingDetailActionType.setRecommendName, payload: res.result[0].name});
                 dispatch({type: RecommenderSettingDetailActionType.setIntroduction, payload: res.result[0].introduction});
+                dispatch({type: RecommenderSettingDetailActionType.setPageUrl, payload: res.result[0].page_url});
                 dispatch({type: RecommenderSettingDetailActionType.setMpUrl, payload: res.result[0].mp_url});
                 dispatch({type: RecommenderSettingDetailActionType.setContent, payload: res.result[0].content});
             }
@@ -38,13 +39,16 @@ export const saveRecommend = () => async (dispatch, getState) => {
         const recommendName = getState().RecommenderSettingDetailReducer.recommendName.trim();
         // 推荐人简介
         const introduction = getState().RecommenderSettingDetailReducer.introduction.trim();
+        // 推荐码首页URL
+        const pageUrl = getState().RecommenderSettingDetailReducer.pageUrl.trim();
 
         if (recommendName === '') {
             swal('保存失败', '请输入推荐人名称！', 'warning');
         } else {
             const params = {
                 name: recommendName,
-                introduction: introduction
+                introduction: introduction,
+                pageUrl: pageUrl
             };
 
             // 基本url

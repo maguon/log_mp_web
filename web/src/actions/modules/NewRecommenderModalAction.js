@@ -13,6 +13,8 @@ export const initNewReCommendModal = () => async (dispatch) => {
     dispatch({type: NewRecommenderModalActionType.setCommendName, payload: ''});
     // 推荐人简介
     dispatch({type: NewRecommenderModalActionType.setCommendIntroduction, payload: ''});
+    // 推荐码首页URL
+    dispatch({type: NewRecommenderModalActionType.setCommendPageUrl, payload: ''});
 };
 
 export const addReCommend = () => async (dispatch, getState) => {
@@ -21,13 +23,16 @@ export const addReCommend = () => async (dispatch, getState) => {
         const recommendName = getState().NewRecommenderModalReducer.recommendName.trim();
         // 推荐人简介
         const introduction = getState().NewRecommenderModalReducer.introduction.trim();
+        // 推荐码首页URL
+        const pageUrl = getState().NewRecommenderModalReducer.pageUrl.trim();
 
         if (recommendName === '') {
             swal('保存失败', '请输入推荐人名称！', 'warning');
         } else {
             const params = {
                 name: recommendName,
-                introduction: introduction
+                introduction: introduction,
+                pageUrl: pageUrl
             };
 
             // 基本url

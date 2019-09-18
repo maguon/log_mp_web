@@ -4,9 +4,9 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {Link} from "react-router-dom";
 import {Input} from 'react-materialize';
-import {NewProductRecommenderModal} from '../modules/index';
+import {NewProductRecommendModal} from '../modules/index';
 import {NewProductModalActionType, ProductDetailActionType} from '../../actionTypes';
-import {fileHost} from "../../config/HostConfig";
+import {fileHost, apiHost} from "../../config/HostConfig";
 
 const productDetailAction = require('../../actions/main/ProductDetailAction');
 const newProductRecommendModalAction = require('../../actions/modules/NewProductRecommendModalAction');
@@ -117,7 +117,8 @@ class ProductDetail extends React.Component {
             uploadProductImg,
             uploadProductDescImg,
             delCurrentImg,
-            saveProductDesc
+            saveProductDesc,
+            getProductRecommendList
         } = this.props;
 
         return (
@@ -140,9 +141,9 @@ class ProductDetail extends React.Component {
                     <div className="col s12">
                         <ul className="tabs">
                             <li className="tab col s3"><a href="#tab-base" className="active" onClick={getProductInfo}>商品信息</a></li>
-                            <li className="tab col s3"><a href="#tab-img">商品图片</a></li>
-                            <li className="tab col s3"><a href="#tab-desc">商品介绍</a></li>
-                            <li className="tab col s3"><a href="#tab-we">微信推广</a></li>
+                            <li className="tab col s3"><a href="#tab-img" onClick={getProductInfo}>商品图片</a></li>
+                            <li className="tab col s3"><a href="#tab-desc" onClick={getProductInfo}>商品介绍</a></li>
+                            <li className="tab col s3"><a href="#tab-we" onClick={getProductRecommendList}>微信推广</a></li>
                         </ul>
                     </div>
 
@@ -321,28 +322,50 @@ class ProductDetail extends React.Component {
                     <div id="tab-we" className="col s12">
 
                         {/** 新建按钮 */}
-                        <div className="row margin-top40 margin-left50 margin-right50 right-align">
+                        <div className="row margin-top20 right-align">
                             <a className="btn-floating btn-large waves-light waves-effect btn add-btn" onClick={() => {this.showEditProductRecommendModal('new',null)}}>
                                 <i className="mdi mdi-plus"/>
                             </a>
-                            <NewProductRecommenderModal/>
+                            <NewProductRecommendModal/>
                         </div>
 
-
-                        {/*{productDetailReducer.productDescImgList.map(function (item) {*/}
-                        {/*    return (*/}
-                        {/*        <div className="col s4 margin-top40">*/}
-                        {/*            <div className="upload-img-box z-depth-1 detail-box">*/}
-                        {/*                <li className="picture-list vc-center">*/}
-                        {/*                    <img src={item !== '' ? "http://" + fileHost + "/api/image/" + item : ""} className="responsive-img"/>*/}
-                        {/*                    <b className="img_close vc-center" onClick={() => {delCurrentImg(item)}}><i className="mdi mdi-close"/></b>*/}
-                        {/*                </li>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*    )*/}
-                        {/*},this)}*/}
-
-
+                        <div className="row margin-top20">
+                            <div className="col s12">
+                                <div className="divider custom-divider"/>
+                                <table className="bordered striped">
+                                    <thead className="blue-grey lighten-5">
+                                    <tr className="grey-text text-darken-2">
+                                        <th>推广编号</th>
+                                        <th>推广名称</th>
+                                        <th>推广人</th>
+                                        <th>访问URL</th>
+                                        <th>访问次数</th>
+                                        <th className="center">操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {productDetailReducer.productRecommendList.map(function (item) {
+                                        return (
+                                            <tr className="grey-text text-darken-1">
+                                                <td>{item.id}</td>
+                                                <td>{item.title}</td>
+                                                <td>{item.name}</td>
+                                                <td>{"http://" + apiHost + "/api/commodity/" + item.commodity_id + "/recommend/" + item.recommend_id + "/view"}</td>
+                                                <td>{formatUtil.formatNumber(item.view_count)}</td>
+                                                <td className="operation center">
+                                                    <i className="mdi mdi-pencil fz20 pointer pink-font" onClick={() => {this.showEditProductRecommendModal('edit',item)}}/>
+                                                </td>
+                                            </tr>
+                                        )
+                                    },this)}
+                                    {productDetailReducer.productRecommendList.length === 0 &&
+                                    <tr className="grey-text text-darken-1">
+                                        <td className="no-data-tr" colSpan="6">暂无数据</td>
+                                    </tr>}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -426,9 +449,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
 
     // TAB4 微信推广
-    initProductRecommendModalData: (type, productRecommend) => {
-        dispatch(newProductRecommendModalAction.initNewProductRecommendModal(type, productRecommend));
+    getProductRecommendList: () => {
+        dispatch(productDetailAction.getProductRecommendList(ownProps.match.params.id));
     },
+    initProductRecommendModalData: (pageType, productRecommend) => {
+        dispatch(newProductRecommendModalAction.initNewProductRecommendModal(pageType, ownProps.match.params.id, productRecommend));
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail)

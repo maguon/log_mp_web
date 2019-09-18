@@ -108,6 +108,7 @@ import NewProductModalReducer from './modules/NewProductModalReducer';
 import EditProductRemindModalReducer from './modules/EditProductRemindModalReducer';
 import ProductInfoModalReducer from './modules/ProductInfoModalReducer';
 import ProductOrderRefundModalReducer from './modules/ProductOrderRefundModalReducer';
+import NewProductRecommendModalReducer from './modules/NewProductRecommendModalReducer';
 
 export default combineReducers({
     form: reduxFormReducer,
@@ -216,5 +217,6 @@ export default combineReducers({
     NewProductModalReducer,
     EditProductRemindModalReducer,
     ProductInfoModalReducer,
-    ProductOrderRefundModalReducer
+    ProductOrderRefundModalReducer,
+    NewProductRecommendModalReducer
 })

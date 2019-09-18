@@ -82,6 +82,21 @@ export const getAdminUserList = () => async (dispatch) => {
     }
 };
 
+// 取得系统 推广人列表
+export const getRecommendList = () => async (dispatch) => {
+    try {
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/recommend';
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: CommonActionType.getRecommendList, payload: res.result})
+        } else if (res.success === false) {
+            swal('获取推广人列表失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};
+
 // 检索订单基本信息
 export const getOrderInfo = (orderId) => async (dispatch) => {
     try {

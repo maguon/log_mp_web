@@ -269,3 +269,19 @@ export const saveProductDesc = () => async (dispatch, getState) => {
         swal('操作失败', err.message, 'error');
     }
 };
+
+export const getProductRecommendList = (id) => async (dispatch) => {
+    try {
+        // 基本检索URL
+        const url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID)
+            + '/poster?commodityId=' + id;
+        const res = await httpUtil.httpGet(url);
+        if (res.success === true) {
+            dispatch({type: ProductDetailActionType.getProductRecommendList, payload: res.result});
+        } else if (res.success === false) {
+            swal('获取商品微信推广信息失败', res.msg, 'warning');
+        }
+    } catch (err) {
+        swal('操作失败', err.message, 'error');
+    }
+};

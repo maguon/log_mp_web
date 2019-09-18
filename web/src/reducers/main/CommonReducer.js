@@ -12,6 +12,8 @@ const initialState = {
     departmentList: [],
     // 员工列表
     adminUserList: [],
+    // 推广人列表
+    recommendList: [],
 
     // 订单信息
     orderInfo: [],
@@ -87,6 +89,16 @@ export default handleActions({
         return {
             ...state,
             adminUserList: adminUserList
+        }
+    },
+    [CommonActionType.getRecommendList]: (state, action) => {
+        let recommendList = [];
+        action.payload.forEach((value) => {
+            recommendList.push({value: value.id, label: value.name})
+        });
+        return {
+            ...state,
+            recommendList: recommendList
         }
     },
     [CommonActionType.getOrderInfo]: (state, action) => {

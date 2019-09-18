@@ -105,6 +105,7 @@ import * as NewProductModalActionType  from './modules/NewProductModalActionType
 import * as EditProductRemindModalActionType  from './modules/EditProductRemindModalActionType';
 import * as ProductInfoModalActionType  from './modules/ProductInfoModalActionType';
 import * as ProductOrderRefundModalActionType  from './modules/ProductOrderRefundModalActionType';
+import * as NewProductRecommendModalActionType  from './modules/NewProductRecommendModalActionType';
 
 export  {
     LoginActionType,
@@ -212,5 +213,6 @@ export  {
     NewProductModalActionType,
     EditProductRemindModalActionType,
     ProductInfoModalActionType,
-    ProductOrderRefundModalActionType
+    ProductOrderRefundModalActionType,
+    NewProductRecommendModalActionType
 }

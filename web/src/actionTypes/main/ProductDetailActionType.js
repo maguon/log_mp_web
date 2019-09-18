@@ -13,3 +13,4 @@ export const setActualPrice = createAction('SET_ACTUAL_PRICE');
 export const setProductImg = createAction('SET_PRODUCT_IMG');
 export const setProductDescImgList = createAction('SET_PRODUCT_DESC_IMG');
 export const setProductDes = createAction('SET_PRODUCT_DES');
+export const getProductRecommendList = createAction('GET_PRODUCT_RECOMMEND_LIST');

@@ -28,7 +28,10 @@ const initialState = {
     // 商品描述图片
     productDescImgList: [],
     // 商品介绍
-    productDes: ''
+    productDes: '',
+
+    // 微信推广 - 推广列表
+    productRecommendList: [],
 };
 
 export default handleActions({
@@ -108,6 +111,12 @@ export default handleActions({
         return {
             ...state,
             productDes: action.payload
+        }
+    },
+    [ProductDetailActionType.getProductRecommendList]: (state, action) => {
+        return {
+            ...state,
+            productRecommendList: action.payload
         }
     }
 }, initialState)

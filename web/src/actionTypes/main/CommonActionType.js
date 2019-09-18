@@ -5,6 +5,7 @@ export const getProductList = createAction('GET_COMMON_PRODUCT_LIST');
 export const getSupplierList = createAction('GET_SUPPLIER_LIST');
 export const getDepartmentList = createAction('GET_DEPARTMENT_LIST');
 export const getAdminUserList = createAction('GET_ADMIN_USER_LIST');
+export const getRecommendList = createAction('GET_RECOMMEND_LIST');
 export const getOrderInfo = createAction('GET_ORDER_INFO');
 export const getProductOrderInfo = createAction('GET_PRODUCT_ORDER_INFO');
 export const getPaymentInfo = createAction('GET_PAYMENT_INFO');

@@ -1,78 +1,81 @@
 import {apiHost} from '../../config/HostConfig';
-import {NewProductModalActionType} from "../../actionTypes";
+import {NewProductRecommendModalActionType} from "../../actionTypes";
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
 const sysConst = require('../../util/SysConst');
+const productDetailAction = require('../../actions/main/ProductDetailAction');
 const commonAction = require('../../actions/main/CommonAction');
 
 // 新增商品 初期化
-export const initNewProductRecommendModal = (type, productRecommend) => async (dispatch) => {
-    // 取得城市列表
-    dispatch(commonAction.getCityList());
+export const initNewProductRecommendModal = (pageType, productId, productRecommend) => async (dispatch) => {
+    // 取得推广人列表
+    dispatch(commonAction.getRecommendList());
+    // 画面区分 新建 / 修改
+    dispatch({type: NewProductRecommendModalActionType.setPageType, payload: pageType});
     // 商品ID
-    dispatch({type: NewProductModalActionType.setNewProductId, payload: ''});
-    // 商品名称
-    dispatch({type: NewProductModalActionType.setProductName, payload: ''});
-    // 数量
-    dispatch({type: NewProductModalActionType.setQuantity, payload: ''});
-    // 城市
-    dispatch({type: NewProductModalActionType.setProductCity, payload: null});
-    // 生产日期
-    dispatch({type: NewProductModalActionType.setProductionDate, payload: ''});
-    // 销售类型
-    dispatch({type: NewProductModalActionType.setProductSaleType, payload: null});
-    // 定金
-    dispatch({type: NewProductModalActionType.setEarnestMoney, payload: 0});
-    // 指导价
-    dispatch({type: NewProductModalActionType.setOriginalPrice, payload: ''});
-    // 实际售价
-    dispatch({type: NewProductModalActionType.setActualPrice, payload: ''});
+    dispatch({type: NewProductRecommendModalActionType.setProductId, payload: productId});
+
+    if (pageType === 'new') {
+        // 推广名称
+        dispatch({type: NewProductRecommendModalActionType.setTitle, payload: ''});
+        // 推广人
+        dispatch({type: NewProductRecommendModalActionType.setRecommend, payload: null});
+        // 备注
+        dispatch({type: NewProductRecommendModalActionType.setRemark, payload: ''});
+    } else {
+        // 海报ID
+        dispatch({type: NewProductRecommendModalActionType.setPosterId, payload: productRecommend.id});
+        // 推广名称
+        dispatch({type: NewProductRecommendModalActionType.setTitle, payload: productRecommend.title});
+        // 推广人
+        dispatch({type: NewProductRecommendModalActionType.setRecommend, payload: {value: productRecommend.recommend_id, label: productRecommend.name}});
+        // 备注
+        dispatch({type: NewProductRecommendModalActionType.setRemark, payload: productRecommend.remark});
+    }
 };
 
-export const addProduct = () => async (dispatch, getState) => {
+export const saveProductRecommend = () => async (dispatch, getState) => {
     try {
-        // 商品管理详细：商品名称
-        const productName = getState().NewProductModalReducer.productName.trim();
-        // 商品管理详细：数量
-        const quantity = getState().NewProductModalReducer.quantity;
-        // 商品管理详细：城市
-        const city = getState().NewProductModalReducer.city;
-        // 商品管理详细：生产日期
-        const productionDate = getState().NewProductModalReducer.productionDate;
-        // 商品管理详细：销售类型
-        const productSaleType = getState().NewProductModalReducer.productSaleType;
-        // 商品管理详细：定金
-        const earnestMoney = getState().NewProductModalReducer.earnestMoney;
-        // 商品管理详细：指导价
-        const originalPrice = getState().NewProductModalReducer.originalPrice;
-        // 商品管理详细：实际售价
-        const actualPrice = getState().NewProductModalReducer.actualPrice;
+        // 画面区分 新建 / 修改
+        const pageType = getState().NewProductRecommendModalReducer.pageType;
+        // 商品ID
+        const productId = getState().NewProductRecommendModalReducer.productId;
+        // 海报ID
+        const posterId = getState().NewProductRecommendModalReducer.posterId;
+        // 推广名称
+        const title = getState().NewProductRecommendModalReducer.title.trim();
+        // 推广人
+        const recommend = getState().NewProductRecommendModalReducer.recommend;
+        // 备注
+        const remark = getState().NewProductRecommendModalReducer.remark.trim();
 
-        if (productName === '' || quantity === '' || city == null || productionDate === '' || productSaleType == null || originalPrice === '' || actualPrice === '') {
-            swal('保存失败', '请输入完整的商品信息！', 'warning');
+        if (title === '' || recommend == null) {
+            swal('保存失败', '请输入完整的商品微信推广信息！', 'warning');
         } else {
-            if (productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value && earnestMoney === '') {
-                swal('保存失败', '请输入定金金额！', 'warning');
-                return;
-            }
             const params = {
-                commodityName: productName,
-                quantity: quantity,
-                cityId: city.value,
-                productionDate: productionDate,
-                type: productSaleType.value,
-                earnestMoney: productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value ? earnestMoney : 0,
-                originalPrice: originalPrice,
-                actualPrice: actualPrice
+                title: title,
+                recommendId: recommend.value,
+                remark: remark
             };
+
             // 基本url
-            let url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity';
-            let res = await httpUtil.httpPost(url, params);
+            let url = null;
+            let res = null;
+            // 新建时
+            if (pageType === 'new') {
+                // 基本url
+                url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/commodity/' + productId;
+                res = await httpUtil.httpPost(url, params);
+            } else {
+                url = apiHost + '/api/admin/' + localUtil.getSessionItem(sysConst.USER_ID) + '/poster/' + posterId;
+                res = await httpUtil.httpPut(url, params);
+            }
             if (res.success === true) {
-                $('#newProductModal').modal('close');
+                $('#newProductRecommendModal').modal('close');
                 swal("保存成功", "", "success");
-                dispatch({type: NewProductModalActionType.setNewProductId, payload: res.id});
+                // 保存成功后，重新检索画面数据
+                dispatch(productDetailAction.getProductRecommendList(productId));
             } else if (res.success === false) {
                 swal('保存失败', res.msg, 'warning');
             }

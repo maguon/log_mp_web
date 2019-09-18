@@ -19,7 +19,7 @@
   </view>
   <view class='content-item' wx:for='{{orderItem}}' wx:key='u'>
   <view  wx:for='{{imglist}}' wx:key='u'>
-    <image class='content-img' src='{{item}}'>
+    <image class='content-img'mode="aspectFill" src='{{item}}'>
     </image>
 </view>
     <view class='text'>

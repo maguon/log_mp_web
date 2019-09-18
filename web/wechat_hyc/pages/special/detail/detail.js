@@ -83,12 +83,19 @@ Page({
           imglist.push(url + res.pord_images[i])
         }
       }
+      //编译时间
+      if (res.sell_out_time!=null){
+      var t = new Date(res.sell_out_time);
+      var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate();
+      var time = olddata.replace(/-/g, "/");
+      res.sell_out_time=time;
+      }
 
       that.data.timer = setInterval(() => {
         that.setData({
-          timeLeft: util.getTimeLeft(that.data.datetimeTo)
+          timeLeft: util.getTimeLeft(res.sale_time)
         });
-
+        
         if (that.data.timeLeft == "0") {
           that.setData({
             timeflag: false

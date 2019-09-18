@@ -100,7 +100,7 @@ page {
 }
 
 .content-img {
-  width: 80px;
+  width: 100px;
   height: 80px;
   margin-left: 10px;
   background: #dcddde;

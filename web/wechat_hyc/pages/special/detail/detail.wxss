@@ -3,10 +3,11 @@
   background: #dcddde;
 }
 
-
 .vol-picture {
-   width: 100%;
-  height: 100%;
+  width: 100%;
+}
+.padding{
+  padding-bottom: 55px;
 }
 
 .title {
@@ -21,7 +22,6 @@
   font-size: 15px;
   color: #8a8a8a;
   margin: 5px 10px 0px 10px;
-
 }
 
 .hot {
@@ -45,7 +45,6 @@
 .hot-text {
   width: 80%;
   margin-left: 10px;
-
 }
 
 .address {
@@ -159,7 +158,7 @@
 }
 
 .tab-panel {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -169,6 +168,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: cadetblue;
 }
 
 .content {
@@ -244,9 +244,23 @@ button::after {
   align-items: center;
 }
 
+.payway {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #854287;
+}
+
 .pay-text {
   color: white;
   font-size: 20px;
+}
+.buy-text {
+  color: white;
+  font-size: 16px;
 }
 
 .cancel-text {

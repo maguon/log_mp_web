@@ -1,7 +1,8 @@
 const app = getApp()
 const config = require('../../../host_config.js');
 const reqUtil = require('../../../utils/ReqUtil.js')
-var htmlToWxml = require('../../../utils/htmlToWxml.js');
+const htmlToWxml = require('../../../utils/htmlToWxml.js');
+const util = require('../../../utils/util.js')
 
 var sliderWidth = 96; // 需要设置slider的宽度，用于计算中间位置
 Page({
@@ -14,6 +15,9 @@ Page({
     autoplay: false,
     indicatordots: false,
     duration: 500,
+    datetimeTo: "2019/09/18 09:46:00 GMT+0800", // 秒杀开始时间 后台数据
+    timeLeft: "" ,  
+    timeflag:false,
 
     tabs: ["车辆信息", "车辆图片"],
     activeIndex: 0,
@@ -29,29 +33,6 @@ Page({
     var that = this;
     that.setData({
       id: e.id
-    })
-  
-    var userId = app.globalData.userId;
-    var url=that.data.url;
-    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/commodity?commodityId=" +e.id, (err, res) => {
-      var res = res.data.result[0];
-      var imglist=[];
-      var info = htmlToWxml.html2json(res.info);
-      if (res.pord_images != null && res.pord_images != "") {
-        res.pord_images = res.pord_images.split(",")
-      }
-      for (var i = 0; i < res.pord_images.length;i++){
-        imglist.push( url+res.pord_images[i])
-      }
-      var image =url + res.image;
-
-      that.setData({
-        detail: res,
-        image: image,
-        imgList: imglist,
-        content: info,
-        loadingHidden: false
-      })
     })
 
     wx.getSystemInfo({
@@ -88,12 +69,52 @@ Page({
    */
   onShow: function() {
     var that = this;
-    
+    var userId = app.globalData.userId;
+    var url = that.data.url;
+    var id = that.data.id;
+    reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/commodity?commodityId=" + id, (err, res) => {
+      var res = res.data.result[0];
+      var imglist = [];
+      var image = url + res.image;
+      var info = htmlToWxml.html2json(res.info);
+      if (res.pord_images != null && res.pord_images != "") {
+        res.pord_images = res.pord_images.split(",")
+        for (var i = 0; i < res.pord_images.length; i++) {
+          imglist.push(url + res.pord_images[i])
+        }
+      }
 
+      that.data.timer = setInterval(() => {
+        that.setData({
+          timeLeft: util.getTimeLeft(that.data.datetimeTo)
+        });
+
+        if (that.data.timeLeft == "0") {
+          that.setData({
+            timeflag: false
+          })
+        }else{
+          that.setData({
+            timeflag: true
+          })
+        }
+      }, 1000);
+
+      that.setData({
+        detail: res,
+        image: image,
+        imgList: imglist,
+        content: info,
+        loadingHidden: false
+      })
+    })
   },
 
 
 
+  /**
+   * 预览
+   */
   previewImg: function(e) {
     var index = e.currentTarget.dataset.index;
     // var url=this.data.url;

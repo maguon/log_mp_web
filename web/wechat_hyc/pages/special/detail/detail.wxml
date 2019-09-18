@@ -1,7 +1,7 @@
 <swiper class="container" indicator-dots="{{indicatordots}}" autoplay="{{autoplay}}" interval="{{5000}}" duration="{{duration}}" bindchange='onSlideChange'>
 <block>
-  <swiper-item >
-      <image  lazy-load="true" class="vol-picture"  src="{{image}}"></image>
+  <swiper-item>
+      <image mode="aspectFill" lazy-load="true" class="vol-picture"  src="{{image}}"></image>
   </swiper-item>
 </block>
 </swiper>
@@ -73,11 +73,10 @@
       </block>
 
     </view>
-    <view class="content" hidden="{{activeIndex != 1}}">
-      <scroll-view class='imgList' wx:for="{{imgList}}" wx:key="u" wx:if="{{imgList.length>0}}">
-        <image lass="vol-picture" lazy-load="true" src="{{item}}"   data-index='{{index}}' bindtap='previewImg'></image>
-      </scroll-view>
+    <view class="content" hidden="{{activeIndex != 1}}"wx:for="{{imgList}}" wx:key="u" wx:if="{{imgList.length>0}}">
+        <image class="vol-picture" mode="widthFix" lazy-load="true" src="{{item}}"   data-index='{{index}}' bindtap='previewImg'></image>
     </view>
+      <view class='padding'></view>
   </view>
 
 </view>
@@ -93,10 +92,18 @@
     <image class='share-img share-img01' src='../../../images/customer.png'> </image>
     <view class='share-text'>联系客服</view>
   </view>
-  <view hidden='{{detail.status!=1}}' bindtap='pay' class='pay'>
+
+
+
+  <view hidden='{{detail.status!=1}}'  class='pay'>
+  <view hidden='{{timeflag}}'bindtap='pay' class='payway'>
     <view hidden='{{detail.type!=2}}' class='pay-text'>支付定金</view>
      <view hidden='{{detail.type!=1}}' class='pay-text'>购买</view>
        <view hidden='{{detail.type!=3}}' class='pay-text'>预定</view>
+       </view>
+       <view hidden='{{!timeflag}}' class='buy-text'>
+       <text>距开售：{{timeLeft}}</text>
+       </view>
   </view>
 
   <view hidden='{{detail.status!=2}}' bindtap='remind' class='pay'>

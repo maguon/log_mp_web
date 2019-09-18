@@ -47,12 +47,12 @@
         <view class="nav-title">{{item}}</view>
       </view>
     </block>
-    <view class="nav-slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    <!-- <view class="nav-slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view> -->
   </view>
 
   <view class="tab-panel">
 
-    <view class="content" hidden="{{activeIndex != 0}}">
+    <view class="content" hidden="{{activeIndex != 1}}">
 
       <block wx:for="{{content}}" wx:for-index="idy" wx:for-item="cellData" wx:key="u">
         <block wx:if="{{cellData.type == 'view'}}">
@@ -73,7 +73,7 @@
       </block>
 
     </view>
-    <view class="content" hidden="{{activeIndex != 1}}"wx:for="{{imgList}}" wx:key="u" wx:if="{{imgList.length>0}}">
+    <view class="content" hidden="{{activeIndex != 0}}"wx:for="{{imgList}}" wx:key="u" wx:if="{{imgList.length>0}}">
         <image class="vol-picture" mode="widthFix" lazy-load="true" src="{{item}}"   data-index='{{index}}' bindtap='previewImg'></image>
     </view>
       <view class='padding'></view>

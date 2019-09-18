@@ -8,6 +8,8 @@ const initialState = {
     recommendName: '',
     // 推荐人简介
     introduction: '',
+    // 二维码首页URL
+    pageUrl: '',
     // 小程序码
     mpUrl: '',
     // 广告语
@@ -31,6 +33,12 @@ export default handleActions({
         return {
             ...state,
             introduction: action.payload
+        }
+    },
+    [RecommenderSettingDetailActionType.setPageUrl]: (state, action) => {
+        return {
+            ...state,
+            pageUrl: action.payload
         }
     },
     [RecommenderSettingDetailActionType.setMpUrl]: (state, action) => {

@@ -42,6 +42,13 @@ class RecommenderSettingDetail extends React.Component {
     };
 
     /**
+     * 更新 二维码首页URL
+     */
+    changePageUrl = (event) => {
+        this.props.setPageUrl(event.target.value);
+    };
+
+    /**
      * 显示 生成广告语
      */
     showAdvertisingModal = () => {
@@ -73,8 +80,9 @@ class RecommenderSettingDetail extends React.Component {
                     </div>
 
                     <div className="col s12 padding-top20">
-                        <Input s={12} label="推荐人名称" maxLength="20" value={recommenderSettingDetailReducer.recommendName} onChange={this.changeRecommendName}/>
+                        <Input s={12} label={<span><span className="must-input">*</span>推荐人名称</span>} maxLength="20" value={recommenderSettingDetailReducer.recommendName} onChange={this.changeRecommendName}/>
                         <Input s={12} label="推荐人简介" maxLength="50" value={recommenderSettingDetailReducer.introduction} onChange={this.changeIntroduction}/>
+                        <Input s={12} label="推荐码首页URL" maxLength="50" value={recommenderSettingDetailReducer.pageUrl} onChange={this.changePageUrl}/>
                     </div>
                     <div className="col s12 padding-top10 padding-bottom20 right-align">
                         <button type="button" className="btn confirm-btn margin-right10" onClick={saveRecommend}>修改</button>
@@ -127,6 +135,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setIntroduction: (value) => {
         dispatch(RecommenderSettingDetailActionType.setIntroduction(value));
+    },
+    setPageUrl: (value) => {
+        dispatch(RecommenderSettingDetailActionType.setPageUrl(value));
     },
     // 修改基本信息
     saveRecommend: () => {

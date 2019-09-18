@@ -40,6 +40,13 @@ class NewRecommenderModal extends React.Component {
     };
 
     /**
+     * 更新 推荐码首页URL
+     */
+    changeCommendPageUrl = (event) => {
+        this.props.setCommendPageUrl(event.target.value);
+    };
+
+    /**
      * 渲染(挂载)画面。
      */
     render() {
@@ -58,6 +65,7 @@ class NewRecommenderModal extends React.Component {
                     <div className="row margin-top20">
                         <Input s={12} label={<span><span className="must-input">*</span>推荐人名称</span>} maxLength="20" value={newRecommenderModalReducer.recommendName} onChange={this.changeCommendName}/>
                         <Input s={12} label="推荐人简介" maxLength="50" value={newRecommenderModalReducer.introduction} onChange={this.changeCommendIntroduction}/>
+                        <Input s={12} label="推荐码首页URL" maxLength="50" value={newRecommenderModalReducer.pageUrl} onChange={this.changeCommendPageUrl}/>
                     </div>
                 </div>
 
@@ -89,6 +97,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setCommendIntroduction: (value) => {
         dispatch(NewRecommenderModalActionType.setCommendIntroduction(value));
+    },
+    setCommendPageUrl: (value) => {
+        dispatch(NewRecommenderModalActionType.setCommendPageUrl(value));
     },
     addReCommend: () => {
         // 设置保存成功后的推荐人编号，默认值：空

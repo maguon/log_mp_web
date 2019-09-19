@@ -34,6 +34,19 @@ class ProductDetail extends React.Component {
         let viewer = new Viewer(document.getElementById('viewer'), {
             url: 'data-original'
         });
+
+        // $('#startSaleTime').pickatime({
+        //     default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+        //     // fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+        //     twelvehour: false, // Use AM/PM or 24-hour format
+        //     donetext: '确定', // text for done-button
+        //     cleartext: '清除', // text for clear-button
+        //     canceltext: '取消', // Text for cancel-button
+        //     autoclose: true, // automatic close timepicker
+        //     // ampmclickable: true, // make AM PM clickable
+        //     // aftershow: function () {
+        //     // } //Function for after opening timepicker
+        // });
     }
 
     // 商品描述照片 使用 Viewer.js 组件
@@ -67,6 +80,20 @@ class ProductDetail extends React.Component {
      */
     changeProductionDate = (event, value) => {
         this.props.setProductionDate(value);
+    };
+
+    /**
+     * 更新 商品信息：开售日期
+     */
+    changeStartSaleDate = (event, value) => {
+        this.props.setStartSaleDate(value);
+    };
+
+    /**
+     * 更新 商品信息：开售时间
+     */
+    changeStartSaleTime = (event, value) => {
+        this.props.setStartSaleTime(value);
     };
 
     /**
@@ -152,12 +179,16 @@ class ProductDetail extends React.Component {
                         <div className="row z-depth-1 detail-box margin-top40 margin-left50 margin-right50">
                             {/* 商品信息：商品编号 上架时间 */}
                             {productDetailReducer.productInfo.length > 0 &&
-                            <div className="row detail-box-header">
+                            <div className="row detail-box-header padding-top15">
                                 <div className="col s6">商品编号：{productDetailReducer.productInfo[0].id}</div>
-                                {productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[0].value &&
+
+                                {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[2].value && productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[0].value &&
                                 <div className="col s6 fz14 right-align grey-text">上架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].created_on)}</div>}
-                                {productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[1].value &&
+                                {productDetailReducer.productInfo[0].status !== sysConst.PRODUCT_SALE_STATUS[2].value && productDetailReducer.productInfo[0].show_status === sysConst.SALE_STATUS[1].value &&
                                 <div className="col s6 fz14 right-align grey-text">下架时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].updated_on)}</div>}
+
+                                {productDetailReducer.productInfo[0].status === sysConst.PRODUCT_SALE_STATUS[2].value &&
+                                <div className="col s6 fz14 right-align grey-text">售罄时间：{formatUtil.getDateTime(productDetailReducer.productInfo[0].sell_out_time)}</div>}
                             </div>}
 
                             {/* 商品信息：商品基本信息 */}
@@ -210,6 +241,24 @@ class ProductDetail extends React.Component {
                                     <Input s={4} label="实际售价 (元)" type="number" className="right-align fz16 red-font" value={productDetailReducer.actualPrice} onChange={this.changeActualPrice}/>
                                     {productDetailReducer.productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value &&
                                     <Input s={4} label="定金 (元)" type="number" className="right-align fz16 red-font" value={productDetailReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
+                                </div>
+
+                                <div className="row margin-left20 margin-right20 margin-top20 margin-bottom40">
+                                    {/* 开售日期 */}
+                                    <div className="input-field col s4 custom-input-field">
+                                        <Input s={12} label="开售日期" type='date' options={sysConst.DATE_PICKER_OPTION} value={productDetailReducer.startSaleDate} onChange={this.changeStartSaleDate} />
+                                        <span className="mdi data-icon mdi-table-large"/>
+                                    </div>
+
+                                    {/* 开售时间 */}
+                                    <div className="input-field col s4 custom-input-field">
+                                        {/*<input type="text" id= "startSaleTime" className="col s12" value={productDetailReducer.startSaleTime} onChange={this.changeStartSaleTime}/>*/}
+                                        {/*<label htmlFor="startSaleTime">开售时间</label>*/}
+
+                                        <Input s={12} label="开售时间" type='time' options={sysConst.TIME_PICKER_OPTION} value={productDetailReducer.startSaleTime} onChange={this.changeStartSaleTime}/>
+                                        <span className="mdi data-icon mdi-table-large"/>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -350,7 +399,7 @@ class ProductDetail extends React.Component {
                                                 <td>{item.id}</td>
                                                 <td>{item.title}</td>
                                                 <td>{item.name}</td>
-                                                <td>{"http://" + apiHost + "/api/commodity/" + item.commodity_id + "/recommend/" + item.recommend_id + "/view"}</td>
+                                                <td>{"http://" + apiHost + "/api/commodity/" + item.commodity_id + "/poster/" + item.id + "/view"}</td>
                                                 <td>{formatUtil.formatNumber(item.view_count)}</td>
                                                 <td className="operation center">
                                                     <i className="mdi mdi-pencil fz20 pointer pink-font" onClick={() => {this.showEditProductRecommendModal('edit',item)}}/>
@@ -405,6 +454,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     setProductionDate: (value) => {
         dispatch(ProductDetailActionType.setProductionDate(value))
+    },
+    setStartSaleDate: (value) => {
+        dispatch(ProductDetailActionType.setStartSaleDate(value))
+    },
+    setStartSaleTime: (value) => {
+        dispatch(ProductDetailActionType.setStartSaleTime(value))
     },
     changeProductSaleType: (value) => {
         dispatch(ProductDetailActionType.setProductSaleType(value))

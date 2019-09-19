@@ -51,6 +51,20 @@ class NewProductModal extends React.Component {
     };
 
     /**
+     * 更新 商品信息：开售日期
+     */
+    changeStartSaleDate = (event, value) => {
+        this.props.setStartSaleDate(value);
+    };
+
+    /**
+     * 更新 商品信息：开售时间
+     */
+    changeStartSaleTime = (event, value) => {
+        this.props.setStartSaleTime(value);
+    };
+
+    /**
      * 更新 商品信息：定金
      */
     changeEarnestMoney = (event, value) => {
@@ -136,6 +150,20 @@ class NewProductModal extends React.Component {
                         {newProductModalReducer.productSaleType != null && newProductModalReducer.productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value &&
                         <Input s={4} label="定金 (元)" type="number" className="right-align fz16 red-font" value={newProductModalReducer.earnestMoney} onChange={this.changeEarnestMoney}/>}
                     </div>
+
+                    <div className="row">
+                        {/* 开售日期 */}
+                        <div className="input-field col s4 custom-input-field">
+                            <Input s={12} label="开售日期" type='date' options={sysConst.DATE_PICKER_OPTION} value={newProductModalReducer.startSaleDate} onChange={this.changeStartSaleDate} />
+                            <span className="mdi data-icon mdi-table-large"/>
+                        </div>
+
+                        {/* 开售日期 */}
+                        <div className="input-field col s4 custom-input-field">
+                            <Input s={12} label="开售时间" type='time' options={sysConst.TIME_PICKER_OPTION} value={newProductModalReducer.startSaleTime} onChange={this.changeStartSaleTime} />
+                            <span className="mdi data-icon mdi-table-large"/>
+                        </div>
+                    </div>
                 </div>
 
                 {/** Modal固定底部：取消/确定按钮 */}
@@ -173,6 +201,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
     setProductionDate: (value) => {
         dispatch(NewProductModalActionType.setProductionDate(value))
+    },
+    setStartSaleDate: (value) => {
+        dispatch(NewProductModalActionType.setStartSaleDate(value))
+    },
+    setStartSaleTime: (value) => {
+        dispatch(NewProductModalActionType.setStartSaleTime(value))
     },
     changeProductSaleType: (value) => {
         dispatch(NewProductModalActionType.setProductSaleType(value))

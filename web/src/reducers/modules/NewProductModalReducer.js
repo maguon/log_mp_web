@@ -12,6 +12,10 @@ const initialState = {
     city: null,
     // 商品信息 - 生产日期
     productionDate: '',
+    // 商品信息 - 开售日期
+    startSaleDate: '',
+    // 商品信息 - 开售时间
+    startSaleTime: '',
     // 商品信息 - 销售类型
     productSaleType: null,
     // 商品信息 - 定金
@@ -51,6 +55,18 @@ export default handleActions({
         return {
             ...state,
             productionDate: action.payload
+        }
+    },
+    [NewProductModalActionType.setStartSaleDate]: (state, action) => {
+        return {
+            ...state,
+            startSaleDate: action.payload
+        }
+    },
+    [NewProductModalActionType.setStartSaleTime]: (state, action) => {
+        return {
+            ...state,
+            startSaleTime: action.payload
         }
     },
     [NewProductModalActionType.setProductSaleType]: (state, action) => {

@@ -3,6 +3,7 @@ import {ProductDetailActionType} from '../../actionTypes';
 
 const httpUtil = require('../../util/HttpUtil');
 const localUtil = require('../../util/LocalUtil');
+const formatUtil = require('../../util/FormatUtil');
 const commonUtil = require('../../util/CommonUtil');
 const sysConst = require('../../util/SysConst');
 
@@ -21,6 +22,14 @@ export const getProductInfo = (id) => async (dispatch) => {
                 dispatch({type: ProductDetailActionType.setQuantity, payload: res.result[0].quantity});
                 dispatch({type: ProductDetailActionType.setProductCity, payload: {value: res.result[0].city_id, label: res.result[0].city_name}});
                 dispatch({type: ProductDetailActionType.setProductionDate, payload: res.result[0].production_date});
+                if (res.result[0].sale_time != null && res.result[0].sale_time !== "") {
+                    let saleTime = formatUtil.getDateTime(res.result[0].sale_time);
+                    dispatch({type: ProductDetailActionType.setStartSaleDate, payload: saleTime.substring(0,10)});
+                    dispatch({type: ProductDetailActionType.setStartSaleTime, payload: saleTime.substring(11,16)});
+                } else {
+                    dispatch({type: ProductDetailActionType.setStartSaleDate, payload: ''});
+                    dispatch({type: ProductDetailActionType.setStartSaleTime, payload: ''});
+                }
                 dispatch({type: ProductDetailActionType.setProductSaleType, payload: {value: res.result[0].type, label: commonUtil.getJsonValue(sysConst.PRODUCT_SALE_TYPE, res.result[0].type)}});
                 dispatch({type: ProductDetailActionType.setEarnestMoney, payload: res.result[0].earnest_money});
                 dispatch({type: ProductDetailActionType.setOriginalPrice, payload: res.result[0].original_price});
@@ -59,6 +68,11 @@ export const saveProductInfo = () => async (dispatch, getState) => {
     const city = getState().ProductDetailReducer.city;
     // 商品管理详细：生产日期
     const productionDate = getState().ProductDetailReducer.productionDate;
+    // 商品管理详细：开售日期
+    const startSaleDate = getState().ProductDetailReducer.startSaleDate;
+    // 商品管理详细：开售时间
+    const startSaleTime = getState().ProductDetailReducer.startSaleTime;
+
     // 商品管理详细：销售类型
     const productSaleType = getState().ProductDetailReducer.productSaleType;
     // 商品管理详细：定金
@@ -68,7 +82,8 @@ export const saveProductInfo = () => async (dispatch, getState) => {
     // 商品管理详细：实际售价
     const actualPrice = getState().ProductDetailReducer.actualPrice;
     try {
-        if (productName === '' || quantity === '' || city == null || productionDate === '' || productSaleType == null || originalPrice === '' || actualPrice === '') {
+        if (productName === '' || quantity === '' || city == null || productionDate === '' || startSaleDate === ''
+            || startSaleTime === '' || productSaleType == null || originalPrice === '' || actualPrice === '') {
             swal('保存失败', '请输入完整的商品信息！', 'warning');
         } else {
             if (productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value && earnestMoney === '') {
@@ -80,6 +95,7 @@ export const saveProductInfo = () => async (dispatch, getState) => {
                 quantity: quantity,
                 cityId: city.value,
                 productionDate: productionDate,
+                saleTime: startSaleDate + ' ' + startSaleTime,
                 type: productSaleType.value,
                 earnestMoney: productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value ? earnestMoney : 0,
                 originalPrice: originalPrice,

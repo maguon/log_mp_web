@@ -602,6 +602,20 @@ export const DATE_PICKER_OPTION = {
     // container: undefined, // ex. 'body' will append picker to body
 };
 
+export const TIME_PICKER_OPTION = {
+    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+    twelvehour: false, // Use AM/PM or 24-hour format
+    donetext: '确认', // text for done-button
+    cleartext: '清除', // text for clear-button
+    canceltext: '关闭', // Text for cancel-button,
+    autoclose: true, // automatic close timepicker
+    // container: undefined, // ex. 'body' will append picker to body
+    // ampmclickable: true, // make AM PM clickable
+    // aftershow: function(){
+    //     console.log('aftershow')
+    // } //Function for after opening timepicker
+};
+
 /**
  * 单选下拉菜单样式
  */

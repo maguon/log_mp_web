@@ -20,6 +20,10 @@ export const initNewProductModal = () => async (dispatch) => {
     dispatch({type: NewProductModalActionType.setProductCity, payload: null});
     // 生产日期
     dispatch({type: NewProductModalActionType.setProductionDate, payload: ''});
+    // 开售日期
+    dispatch({type: NewProductModalActionType.setStartSaleDate, payload: ''});
+    // 开售时间
+    dispatch({type: NewProductModalActionType.setStartSaleTime, payload: ''});
     // 销售类型
     dispatch({type: NewProductModalActionType.setProductSaleType, payload: null});
     // 定金
@@ -40,6 +44,11 @@ export const addProduct = () => async (dispatch, getState) => {
         const city = getState().NewProductModalReducer.city;
         // 商品管理详细：生产日期
         const productionDate = getState().NewProductModalReducer.productionDate;
+        // 商品管理详细：开售日期
+        const startSaleDate = getState().NewProductModalReducer.startSaleDate;
+        // 商品管理详细：开售时间
+        const startSaleTime = getState().NewProductModalReducer.startSaleTime;
+
         // 商品管理详细：销售类型
         const productSaleType = getState().NewProductModalReducer.productSaleType;
         // 商品管理详细：定金
@@ -49,7 +58,8 @@ export const addProduct = () => async (dispatch, getState) => {
         // 商品管理详细：实际售价
         const actualPrice = getState().NewProductModalReducer.actualPrice;
 
-        if (productName === '' || quantity === '' || city == null || productionDate === '' || productSaleType == null || originalPrice === '' || actualPrice === '') {
+        if (productName === '' || quantity === '' || city == null || productionDate === '' || startSaleDate === '' ||
+            startSaleTime === '' || productSaleType == null || originalPrice === '' || actualPrice === '') {
             swal('保存失败', '请输入完整的商品信息！', 'warning');
         } else {
             if (productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value && earnestMoney === '') {
@@ -61,6 +71,7 @@ export const addProduct = () => async (dispatch, getState) => {
                 quantity: quantity,
                 cityId: city.value,
                 productionDate: productionDate,
+                saleTime: startSaleDate + ' ' + startSaleTime,
                 type: productSaleType.value,
                 earnestMoney: productSaleType.value === sysConst.PRODUCT_SALE_TYPE[1].value ? earnestMoney : 0,
                 originalPrice: originalPrice,

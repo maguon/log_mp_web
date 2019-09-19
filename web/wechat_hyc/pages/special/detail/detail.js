@@ -86,9 +86,8 @@ Page({
       //编译时间
       if (res.sell_out_time!=null){
       var t = new Date(res.sell_out_time);
-      var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate();
-      var time = olddata.replace(/-/g, "/");
-      res.sell_out_time=time;
+      var timeData = t.getFullYear() + '年' + (t.getMonth() + 1) + '月' + t.getDate()+'日';
+        res.sell_out_time = timeData;
       }
 
       that.data.timer = setInterval(() => {

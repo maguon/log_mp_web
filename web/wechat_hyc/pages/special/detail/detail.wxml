@@ -113,7 +113,7 @@
 </view>
 
 <view hidden='{{detail.status!=4}}' class='footer02'>
-  <view class='pay-text'>已售罄{{detail.sell_out_time?detail.sell_out_time:""}}</view>
+  <view class='pay-text'>{{detail.sell_out_time?detail.sell_out_time:""}} 已售罄</view>
 </view>
 
 <loading hidden="{{!loadingHidden}}">加载中</loading>

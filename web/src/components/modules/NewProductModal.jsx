@@ -6,9 +6,7 @@ import {NewProductModalActionType} from "../../actionTypes";
 import Select from "react-select";
 
 const newProductModalAction = require('../../actions/modules/NewProductModalAction');
-const commonAction = require('../../actions/main/CommonAction');
 const sysConst = require('../../util/SysConst');
-const formatUtil = require('../../util/FormatUtil');
 
 /**
  * UI组件：新增商品 模块。

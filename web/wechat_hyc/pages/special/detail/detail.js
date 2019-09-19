@@ -15,11 +15,11 @@ Page({
     autoplay: false,
     indicatordots: false,
     duration: 500,
-    datetimeTo: "2019/09/18 09:46:00 GMT+0800", // 秒杀开始时间 后台数据
+    datetimeTo: "2019/09/19 09:46:00 GMT+0800", // 秒杀开始时间 后台数据
     timeLeft: "" ,  
     timeflag:false,
 
-    tabs: ["车辆信息", "车辆图片"],
+    tabs: ["车辆信息", "特殊说明"],
     activeIndex: 0,
     sliderLeft: 0,
     sliderOffset: 0,
@@ -83,12 +83,19 @@ Page({
           imglist.push(url + res.pord_images[i])
         }
       }
+      //编译时间
+      if (res.sell_out_time!=null){
+      var t = new Date(res.sell_out_time);
+      var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate();
+      var time = olddata.replace(/-/g, "/");
+      res.sell_out_time=time;
+      }
 
       that.data.timer = setInterval(() => {
         that.setData({
-          timeLeft: util.getTimeLeft(that.data.datetimeTo)
+          timeLeft: util.getTimeLeft(res.sale_time)
         });
-
+        
         if (that.data.timeLeft == "0") {
           that.setData({
             timeflag: false

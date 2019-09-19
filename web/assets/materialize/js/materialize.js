@@ -8985,7 +8985,8 @@ if (Vel) {
     // Hide when clicking or tabbing on any element except the clock and input
     $doc.on('click.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id, function (e) {
       var target = $(e.target);
-      if (target.closest(self.popover.find('.picker__wrap')).length === 0 && target.closest(self.input).length === 0) {
+      // if (target.closest(self.popover.find('.picker__wrap')).length === 0 && target.closest(self.input).length === 0) {
+      if (target.closest(self.popover.find('.picker__wrap')).length === 0 && self.input.closest(target).length === 0) {
         self.hide();
       }
     });

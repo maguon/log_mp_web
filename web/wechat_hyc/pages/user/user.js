@@ -69,10 +69,10 @@ Page({
     var session_key = app.globalData.session_key;
     var iv = e.detail.iv;
     var encryptedData = e.detail.encryptedData;
-    console.log(e)
-    console.log(session_key)
-    console.log(iv)
-    console.log(encryptedData)
+    // console.log(e)
+    // console.log(session_key)
+    // console.log(iv)
+    // console.log(encryptedData)
 
     if (e.detail.errMsg != 'getPhoneNumber:ok') {
       wx.navigateTo({
@@ -85,8 +85,8 @@ Page({
         encryptedData: encryptedData
       }
       reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/wechatBindPhone",params,(err,res)=>{
-        console.log(res)
-        console.log(err)
+        // console.log(res)
+        // console.log(err)
         if(res.data.success){
           wx.showModal({
             title: '提示',

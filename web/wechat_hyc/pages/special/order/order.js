@@ -107,7 +107,7 @@ Page({
       var address = that.data.address;
 
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/productOrderPayment?productOrderId=" + order.id +"&type="+1, (err, rea) => {
-        console.log(rea)
+        // console.log(rea)
         var payment_time = "";
         var payment_refund_time = "";
         if (rea.data.result != "") {
@@ -130,8 +130,8 @@ Page({
       } else if (order.status == 8) {
         index = 3;
       }
-      console.log(order.status)
-      console.log(index)
+      // console.log(order.status)
+      // console.log(index)
       //判断用户点击
       for (var i = 0; i < orderState.length; i++) {
         if (index == i) {
@@ -154,7 +154,7 @@ Page({
         orderState: orderState,
         loadingHidden: false,
       })
-      console.log(order)
+      // console.log(order)
     })
     reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/productOrder/" + id + "/productOrderItem", (err, res) => {
       var orderItem = res.data.result;
@@ -162,7 +162,7 @@ Page({
       for (var i = 0; i < orderItem.length; i++) {
         imglist.push(url + orderItem[i].image)
       } 
-      console.log(imglist)
+      // console.log(imglist)
     
       that.setData({
         imglist: imglist,
@@ -240,7 +240,7 @@ Page({
     wx.removeStorage({
       key: 'address',
       success(res) {
-        console.log(res)
+        // console.log(res)
       }
     })
   },

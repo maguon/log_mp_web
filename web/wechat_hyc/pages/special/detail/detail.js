@@ -37,7 +37,7 @@ Page({
 
     wx.getSystemInfo({
       success: function(res) {
-        console.log(res)
+        // console.log(res)
         that.setData({
           sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 5,
           sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
@@ -55,7 +55,7 @@ Page({
 
   onSlideChange: function(event) {
     var postId = event.detail.current;
-    console.log(postId);
+    // console.log(postId);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -123,16 +123,8 @@ Page({
    */
   previewImg: function(e) {
     var index = e.currentTarget.dataset.index;
-    // var url=this.data.url;
-    // var imgArr = this.data.detail.pord_images;
     var imgList = this.data.imgList;
     var image = imgList[index];
-    // for (var i = 0; i < imgArr.length; i++) {
-    //   imgList.push(url + imgArr[i]);
-    // }
-
-    console.log(imgList)
-    console.log(image)
 
     wx.previewImage({
       current: image, //当前图片地址

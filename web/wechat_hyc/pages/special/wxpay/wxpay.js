@@ -44,7 +44,7 @@ Page({
     var userId = app.globalData.userId;
     var orderId = that.data.orderId;
     
-    console.log(orderId)
+    // console.log(orderId)
     
 
     //支付完成跳转页面
@@ -53,9 +53,9 @@ Page({
       // totalFee: that.data.totalPrice, //支付金额
        totalFee: 0.01,
     }
-    console.log(userId)
-    console.log(params)
-    console.log(orderId)
+    // console.log(userId)
+    // console.log(params)
+    // console.log(orderId)
     //发送Post请求
     reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/productOrder/" + orderId + "/wechatPayment", params, (err, res) => {
 
@@ -66,10 +66,10 @@ Page({
         signType: "MD5",
         paySign: res.data.result[0].paySign,
         success: (res) => {
-          console.log(res)
+          // console.log(res)
 
           that.data.num++;
-          console.log(that.data.num)
+          // console.log(that.data.num)
 
           wx.showToast({
             title: '支付成功',

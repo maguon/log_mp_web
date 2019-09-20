@@ -32,14 +32,14 @@
 <view class='cost-text'>支付金额:</view>
 <view class='cost-num'>{{item.total_fee}}</view>
 <view class='yuan01'>元</view>
- <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
+ <!-- <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image> -->
 </view>
 
 <view hidden='{{item.type}}'  class='pay-num'>
 <view class='cost-text'>退款金额:</view>
 <view class='cost-num'>{{item.refund}}</view>
 <view class='yuan01'>元</view>
- <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image>
+ <!-- <image  bindtap="bindDel"  data-index='{{index}}' hover-class='weui-cell_active' class='bank-sure' src='../../../../../images/no_02.png'></image> -->
 </view>
 <view hidden='{{item.status}}'>
 <view hidden='{{item.payment_type}}' bindtap="bindModify" data-index='{{index}}' class='bankcard'>

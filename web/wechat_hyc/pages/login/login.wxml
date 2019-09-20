@@ -1,17 +1,16 @@
-
 <view wx:if="{{canIUse}}">
- <loading hidden="{{!loadingHidden}}">加载中</loading>
-    <view class='header'>
-        <image src='../../images/wechat.png'></image>
-    </view>
- 
-    <view class='content'>
-        <view>申请获取以下权限</view>
-        <text>获得你的公开信息(昵称，头像等)</text>
-    </view>
+  <view class='header'>
+    <image class='bg-img' mode="widthFix" src='../../images/bg.png'></image>
+    <view class='bg-text'>小程序提供车辆出售和商品车私家车运输功能</view>
     <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
-        授权登录
+      申请登录
     </button>
+     <view class='text'>登录即代表您同意我们的服务协议和隐私政策</view>
+  </view>
 </view>
- 
+
+
 <view wx:else>请升级微信版本</view>
+
+
+<loading hidden="{{!loadingHidden}}">加载中</loading>

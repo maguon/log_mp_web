@@ -66,6 +66,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    var userId = app.globalData.userId;
+    if (!userId) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
   },
 
   

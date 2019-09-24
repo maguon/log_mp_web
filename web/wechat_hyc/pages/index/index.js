@@ -52,6 +52,11 @@ Page({
   onShow:function(){
     var that=this;
     var userId=app.globalData.userId;
+    if (!userId) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
 
      //始发城市设置
     if (app.globalData.trainBeginCity!='' ){

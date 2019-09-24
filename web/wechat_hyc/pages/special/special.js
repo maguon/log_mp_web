@@ -21,7 +21,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var userId = app.globalData.userId;
+    if (!userId){
+     wx.navigateTo({
+       url: '/pages/login/login',
+     })
+    }
   },
 
   /**
@@ -44,7 +49,7 @@ Page({
        specialList:res.data.result,
        loadingHidden:false
      })
-     console.log(this.data.specialList)
+    //  console.log(this.data.specialList)
     })
 
  
@@ -53,7 +58,6 @@ Page({
 
 
   bindDetail:function(e){
-    console.log(e)
     var index=e.currentTarget.dataset.index;
     var id = this.data.specialList[index].id;
   wx.navigateTo({

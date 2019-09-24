@@ -70,7 +70,7 @@ Page({
 
       res.data.result[0].apply_time = reqUtil.getTime(res.data.result[0].apply_time)
       res.data.result[0].invoiced_time = reqUtil.getTime(res.data.result[0].invoiced_time)
-      console.log(res.data.result[0].invoiced_status)
+      // console.log(res.data.result[0].invoiced_status)
       if (res.data.result[0].invoiced_status == 1) {
         this.setData({
           invoiceFlag: true,

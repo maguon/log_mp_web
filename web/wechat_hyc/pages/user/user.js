@@ -9,7 +9,7 @@ Page({
    */
   data: {
     user:[],
-    version:"0.0.8",
+    version:"0.0.11",
     headFlag:false,
     url:"",
     name:"",
@@ -21,7 +21,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
+    var userId = app.globalData.userId;
+    if (!userId) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面显示
@@ -69,10 +74,10 @@ Page({
     var session_key = app.globalData.session_key;
     var iv = e.detail.iv;
     var encryptedData = e.detail.encryptedData;
-    console.log(e)
-    console.log(session_key)
-    console.log(iv)
-    console.log(encryptedData)
+    // console.log(e)
+    // console.log(session_key)
+    // console.log(iv)
+    // console.log(encryptedData)
 
     if (e.detail.errMsg != 'getPhoneNumber:ok') {
       wx.navigateTo({
@@ -85,8 +90,8 @@ Page({
         encryptedData: encryptedData
       }
       reqUtil.httpPost(config.host.apiHost + "/api/user/" + userId + "/wechatBindPhone",params,(err,res)=>{
-        console.log(res)
-        console.log(err)
+        // console.log(res)
+        // console.log(err)
         if(res.data.success){
           wx.showModal({
             title: '提示',

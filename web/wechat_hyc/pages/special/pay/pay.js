@@ -45,7 +45,6 @@ Page({
     wx.getStorage({
       key: 'address',
       success: function(res) {
-        console.log(res)
         that.setData({
           address: res.data,
           flag: false
@@ -127,7 +126,7 @@ Page({
     wx.removeStorage({
       key: 'address',
       success(res) {
-        console.log(res)
+        // console.log(res)
       }
     })
   },

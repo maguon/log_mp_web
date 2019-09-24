@@ -12,7 +12,6 @@ Page({
    paymentlist:[],
    orderId:"",
    paymentId:"",
-   hidden:false,
    orderPay:"",
    butFlag:false,
     applyfee:"",

@@ -66,6 +66,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    var userId = app.globalData.userId;
+    if (!userId) {
+      wx.navigateTo({
+        url: '/pages/login/login',
+      })
+    }
   },
 
   
@@ -154,7 +160,7 @@ Page({
         prompt: false,
       })
       reqUtil.httpGet(config.host.apiHost + "/api/user/" + userId + "/inquiry?statusList=" + "0,1"+ "&start=" + 0 +"&size="+this.data.size, (err, res) => {
-        console.log(res.data.result)
+        // console.log(res.data.result)
         if (res.data.result!=""){
         for(var i=0; i<res.data.result.length;i++){
          //协商费用

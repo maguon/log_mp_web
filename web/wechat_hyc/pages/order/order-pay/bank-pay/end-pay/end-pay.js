@@ -45,7 +45,7 @@ Page({
     var _remain =0;
     reqUtil.httpGet(config.host.apiHost + '/api/user/' + userId + "/payment?orderId=" + orderId, (err, res) => {
      
-   
+      // console.log(res)
       if (res.data.result!=''){
         var refundSum = 0;
 

@@ -37,7 +37,7 @@ Page({
 
     wx.getSystemInfo({
       success: function(res) {
-        console.log(res)
+        // console.log(res)
         that.setData({
           sliderLeft: (res.windowWidth / that.data.tabs.length - sliderWidth) / 5,
           sliderOffset: res.windowWidth / that.data.tabs.length * that.data.activeIndex
@@ -55,7 +55,7 @@ Page({
 
   onSlideChange: function(event) {
     var postId = event.detail.current;
-    console.log(postId);
+    // console.log(postId);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -86,9 +86,8 @@ Page({
       //编译时间
       if (res.sell_out_time!=null){
       var t = new Date(res.sell_out_time);
-      var olddata = t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate();
-      var time = olddata.replace(/-/g, "/");
-      res.sell_out_time=time;
+      var timeData = t.getFullYear() + '年' + (t.getMonth() + 1) + '月' + t.getDate()+'日';
+        res.sell_out_time = timeData;
       }
 
       that.data.timer = setInterval(() => {
@@ -124,16 +123,8 @@ Page({
    */
   previewImg: function(e) {
     var index = e.currentTarget.dataset.index;
-    // var url=this.data.url;
-    // var imgArr = this.data.detail.pord_images;
     var imgList = this.data.imgList;
     var image = imgList[index];
-    // for (var i = 0; i < imgArr.length; i++) {
-    //   imgList.push(url + imgArr[i]);
-    // }
-
-    console.log(imgList)
-    console.log(image)
 
     wx.previewImage({
       current: image, //当前图片地址

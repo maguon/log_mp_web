@@ -27,7 +27,7 @@ Page({
 
     try {
       const value = wx.getStorageSync('openid')
-      console.log(value)
+      // console.log(value)
       if (value) {
 
         if (value.openid != "" && value.session_key != "") {
@@ -37,7 +37,7 @@ Page({
         }
       }
     } catch (e) {
-      console.log("000000")
+
     }
  
 
@@ -49,7 +49,7 @@ Page({
           app.globalData.userId = value.userId;
           app.globalData.accessToken = value.accessToken;
         }
-        console.log(value.accessToken)
+        // console.log(value.accessToken)
         //更换新的Token
         reqUtil.httpGet(config.host.apiHost + "/api/user/" + value.userId + "/token/" + value.accessToken, (err, rec) => {
 
@@ -79,6 +79,7 @@ Page({
    */
   bindGetUserInfo: function (e) {
     var that = this;
+    // console.log(e)
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       if (e.detail.userInfo.gender==2){
@@ -92,10 +93,10 @@ Page({
         success:ree => {
           //获取code
           var code = ree.code;
-          console.log(code)
+          // console.log(code)
           //发送code 请求openid
           reqUtil.httpGet(config.host.apiHost + "/api/wechat/" + code + "/openid", (err, rea) => {
-            console.log(rea.data.result.openid)
+            // console.log(rea.data.result.openid)
             // //保存openid 到全局
             app.globalData.openid = rea.data.result.openid;
             app.globalData.session_key = rea.data.result.session_key;
@@ -113,9 +114,8 @@ Page({
               avatar: e.detail.userInfo.avatarUrl,
               recommendId: parseInt(that.data.scene),
             }
+            // console.log(that.data.scene)
             reqUtil.httpPost(config.host.apiHost + "/api" + "/userLogin", params, (err, res) => {
-
-
               app.globalData.userId = res.data.result.userId;
               app.globalData.accessToken = res.data.result.accessToken;
 
@@ -146,16 +146,18 @@ Page({
       })
     } else {
       //用户按了拒绝按钮
-      wx.showModal({
-        title: '警告',
-        content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
-        showCancel: false,
-        confirmText: '返回授权',
-        success: function (res) {
-          if (res.confirm) {
-
-          }
-        }
+      // wx.showModal({
+      //   title: '警告',
+      //   content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
+      //   showCancel: false,
+      //   confirmText: '返回授权',
+      //   success: function (res) {
+      //     if (res.confirm) {
+      //     }
+      //   }
+      // })
+      wx.navigateBack({
+        
       })
     }
   },
@@ -168,7 +170,7 @@ Page({
   */
   queryUsreInfo: function () {
     var userId = app.globalData.userId;
-
+    // console.log(userId)
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
 
       if (res.data != '') {

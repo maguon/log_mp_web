@@ -73,4 +73,5 @@ page {
 .special {
   font-size: 15px;
   color: #d43286;
+  margin-right: 10px;
 }

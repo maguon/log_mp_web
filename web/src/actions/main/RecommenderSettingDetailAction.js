@@ -18,7 +18,7 @@ export const getRecommendInfo = (recommendId) => async (dispatch) => {
                 dispatch({type: RecommenderSettingDetailActionType.setRecommendId, payload: res.result[0].id});
                 dispatch({type: RecommenderSettingDetailActionType.setRecommendName, payload: res.result[0].name});
                 dispatch({type: RecommenderSettingDetailActionType.setIntroduction, payload: res.result[0].introduction});
-                dispatch({type: RecommenderSettingDetailActionType.setPageUrl, payload: res.result[0].page_url});
+                dispatch({type: RecommenderSettingDetailActionType.setPageUrl, payload: res.result[0].page_url == null ? '' : res.result[0].page_url});
                 dispatch({type: RecommenderSettingDetailActionType.setMpUrl, payload: res.result[0].mp_url});
                 dispatch({type: RecommenderSettingDetailActionType.setContent, payload: res.result[0].content});
             }

@@ -68,8 +68,8 @@ Page({
   onLoad: function (e) {
     var userId = app.globalData.userId;
     if (!userId) {
-      wx.navigateTo({
-        url: '/pages/login/login',
+      wx.reLaunch({
+        url: '/pages/login/login?name='+"order",
       })
     }
   },

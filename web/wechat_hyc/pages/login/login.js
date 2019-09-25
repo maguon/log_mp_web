@@ -9,6 +9,7 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     loadingHidden: false,
     scene:0,
+    name:"",
   },
 
   /**
@@ -18,8 +19,8 @@ Page({
     var that = this;
     // scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
     const scene = decodeURIComponent(query.scene)
-
-    if (scene != "" && scene !="undefined"){
+    if (query.name != "" && query.name != undefined) { that.setData({ name: query.name })}
+    if (scene != "" && scene !=undefined){
        that.setData({
        scene:scene
       })
@@ -170,6 +171,7 @@ Page({
   */
   queryUsreInfo: function () {
     var userId = app.globalData.userId;
+    var name=this.data.name;
     // console.log(userId)
     reqUtil.httpGet(config.host.apiHost + "/api/user?userId=" + userId, (err, res) => {
 
@@ -182,10 +184,16 @@ Page({
         })
         return;
       }
-      //用户已经授权过
-      wx.switchTab({
-        url: '/pages/index/index',
-      })
+      if(name=="special"){
+        wx.switchTab({
+          url: '/pages/special/special',
+        })
+      }else{
+        //用户已经授权过
+        wx.switchTab({
+          url: '/pages/index/index',
+        })
+      }
     })
   },
 

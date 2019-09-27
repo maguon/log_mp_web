@@ -50,8 +50,8 @@ Page({
     //支付完成跳转页面
     var params = {
       openid: app.globalData.openid,
-      // totalFee: that.data.totalPrice, //支付金额
-       totalFee: 0.01,
+      totalFee: that.data.totalPrice, //支付金额
+      //  totalFee: 0.01,
     }
     // console.log(userId)
     // console.log(params)
